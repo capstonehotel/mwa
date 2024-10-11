@@ -1,0 +1,16 @@
+
+#brand{
+	color:#eca62d;
+}
+#intro{
+	height: 80vh;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+#carousel-item{
+	height: 400px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+}
