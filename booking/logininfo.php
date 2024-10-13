@@ -1,5 +1,5 @@
 <?php 
-
+require_once 'sendOTP.php';
 if (!isset($_SESSION['monbela_cart'])) {
   # code...
   redirect('https://mcchmhotelreservation.com/index.php');
@@ -81,6 +81,42 @@ if (!isset($_SESSION['monbela_cart'])) {
       </div>
     </form> 
 </div>
+<script>
+    $(document).ready(function() {
+      $('#signInBtn').on('click', function(e) {
+        e.preventDefault();
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+        // Send AJAX request to verify OTP
+        $.ajax({
+          type: "POST",
+          url: "otp_verify.php",
+          data: { otp: "<?php echo $_SESSION['otp']; ?>", email: username },
+          success: function(response) {
+            if (response == 'valid') {
+              // OTP is valid, allow sign in
+              Swal.fire({
+                icon: 'success',
+                title: 'OTP Verified',
+                text: 'You can now sign in to your account.'
+              }).then(function() {
+                // Submit the form
+                document.getElementById("signInForm").submit();
+              });
+            } else {
+              // OTP is invalid, show error message
+              Swal.fire({
+                icon: 'error',
+                title: 'Invalid OTP',
+                text: 'Please enter a valid OTP.'
+              });
+            }
+          }
+        });
+      });
+    });
+  </script>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 function validateForm() {
@@ -211,3 +247,26 @@ for ($i=0; $i < $count_cart  ; $i++) {
 <!-- end content -->
 <!-- =========================================================================== -->
 <?php } ?>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+                 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function detectXSS(inputField, fieldName) {
+            const xssPattern =  /[<>:\/\$\;\,\?\!]/;
+            inputField.addEventListener('input', function() {
+                if (xssPattern.test(this.value)) {
+                  Swal.fire("XSS Detected", `Please avoid using invalid characters in your ${fieldName}.`, "error");
+                    this.value = "";
+                }
+            });
+        }
+        
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        
+        detectXSS(usernameInput, 'Username');
+        detectXSS(passwordInput, 'Password');
+    });
+</script>
+<?php
+
+?>

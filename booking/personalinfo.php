@@ -8,12 +8,22 @@ if (isset($_POST['submit'])){
   $fileName = basename($_FILES["image"]["name"]);
   $uploadOk = 1;
   $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+ // Allow only certain file formats
+ $allowedExtensions = array('jpg', 'jpeg', 'png');
+ $check = getimagesize($_FILES["image"]["tmp_name"]);
 
-  if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
-      echo "The file ". basename( $_FILES["image"]["name"]). " has been uploaded.";
-  } else {
-      echo "Sorry, there was an error uploading your file.";
-  }
+ if ($check !== false && in_array($imageFileType, $allowedExtensions)) {
+     // File is an image and has a valid extension
+     if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
+         echo "The file " . $fileName . " has been uploaded.";
+     } else {
+         echo "Sorry, there was an error uploading your file.";
+     }
+ } else {
+     // If not an image, set an error message
+     echo "Sorry, only JPG, JPEG, and PNG files are allowed.";
+     $_SESSION['ERRMSG_ARR'][] = "Only JPG, JPEG, and PNG files are allowed.";
+ }
 	    
 
     // Server-side DOB validation
@@ -217,14 +227,8 @@ var_dump($_SESSION['otp']);
 
       <div class="form-group">
     <label  class ="control-label" for="password">Password:</label>
-    <input name="pass" type="password" class="form-control input-sm" id="password" onkeyup="validatePassword()" minlength="8" maxlength="12" required  placeholder="Ex@mple123"/>
-    <!-- <span id="password-error" style="color: red;"></span> -->
-    <ul id="password-requirements" style="color: red; list-style-type: none; padding-left: 0;">
-        <li id="length-error">Password must be 8-12 characters long.</li>
-        <li id="capital-error">Password must contain at least one uppercase letter.</li>
-        <li id="number-error">Password must contain at least one number.</li>
-        <li id="special-error">Password must contain at least one special character.</li>
-    </ul>
+    <input name="pass" type="password" class="form-control input-sm" id="password" onkeyup="validatePassword()" required / placeholder="Ex@mple123">
+					            <span id="password-error" style="color: red;"></span>
 </div>
 			            </div>
 			          </div>
@@ -274,7 +278,7 @@ function validateDOB(input) {
     }
 }
 </script>
-<!-- <script>
+<script>
 function validatePassword() {
     var passwordInput = document.getElementById("password");
     var password = passwordInput.value;
@@ -301,8 +305,8 @@ function validatePassword() {
         passwordInput.setCustomValidity("");
     }
 }
-</script> -->
-<script>
+</script>
+<!-- <script>
 function validatePassword() {
     const password = document.getElementById('password').value;
 
@@ -333,7 +337,7 @@ function validatePassword() {
     // Set form validation state based on all requirements being met or not
     document.getElementById('password').setCustomValidity(allValid ? '' : 'Invalid password');
 }
-</script>
+</script> -->
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
                  <script>

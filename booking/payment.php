@@ -334,7 +334,9 @@ $_SESSION['GUESTID'] =   $lastguest;
 </div>
                     <div class="col-md-12 col-sm-2">
     <label id="paymentLabel">Payment Method:</label>
-
+<br>
+    <form method="POST" action="paymongo.php" id="paymentForm">
+    <input type="hidden" name="payment_method" id="payment_method" value="">
     <form method="POST" action="paymongo.php" id="paymentForm">
     <input type="hidden" name="payment_method" id="payment_method" value="">
     
@@ -347,6 +349,23 @@ $_SESSION['GUESTID'] =   $lastguest;
         <img src="../paymaya.png" alt="Pay with PayMaya" style="height: 20px; margin-right: 5px;">
         Pay with PayMaya
     </button>
+    <!-- <label style="display: inline-flex; align-items: center; margin-bottom: 10px; cursor: pointer;">
+        <input type="radio" name="payment_option" value="Gcash" onclick="selectPaymentMethod('Gcash')" style="margin-right: 10px;">
+        <span style="display: inline-block; padding: 5px 10px; border: 2px solid #0056b3; border-radius: 8px; background-color: #0056b3; color: #ffffff; font-weight: bold;">
+            <img src="../gcash.png" alt="Pay with GCash" style="height: 20px; margin-right: 5px;">
+            Pay with GCash
+        </span>
+    </label>
+    <br>
+
+    <label style="display: inline-flex; align-items: center; margin-bottom: 10px; cursor: pointer;">
+        <input type="radio" name="payment_option" value="Paymaya" onclick="selectPaymentMethod('Paymaya')" style="margin-right: 10px;">
+        <span style="display: inline-block; padding: 5px 10px; border: 2px solid #0056b3; border-radius: 8px; background-color: #0056b3; color: #ffffff; font-weight: bold;">
+            <img src="../paymaya.png" alt="Pay with PayMaya" style="height: 20px; margin-right: 5px;">
+            Pay with PayMaya
+        </span>
+    </label> -->
+
 </form>
 
 <script>

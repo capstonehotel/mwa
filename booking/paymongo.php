@@ -1,14 +1,11 @@
 <?php
 require_once('../paymentmethod/vendor/autoload.php');
 
-
-
-// Set content type to application/json to ensure the response is valid JSON
+// Set content type to application/json
 header('Content-Type: application/json');
 
 // Retrieve the POST data
-$input = json_decode(file_get_contents('php://input'), true);
-$payment_method = $input['payment_method'] ?? '';
+$payment_method = $_POST['payment_method'] ?? '';
 
 if ($payment_method) {
     // PayMongo API Key (replace with your actual test key)

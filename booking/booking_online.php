@@ -1,4 +1,5 @@
 <?php
+
 if (isset($_GET['id'])) {
     removetocart($_GET['id']);
 }
@@ -7,17 +8,18 @@ if (isset($_POST['clear'])) {
     unset($_SESSION['pay']);
     unset($_SESSION['monbela_cart']);
     message("The cart is empty.", "success");
-    redirect(WEB_ROOT . "booking/");
+    redirect("https://mcchmhotelreservation.com/booking/");
 }
 
 ?>
+
 <div class="card rounded" style="padding: 10px;">
     <div class="pagetitle">
         <h1>Booking Cart</h1>
     </div>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb" style="margin-top: 10px;">
-            <li class="breadcrumb-item"><a href="<?php echo WEB_ROOT; ?>index.php">Home</a></li>
+            <li class="breadcrumb-item"><a href="../index.php">Home</a></li>
             <li class="breadcrumb-item active" aria-current="page">Booking Cart</li>
         </ol>
     </nav>
@@ -81,17 +83,17 @@ if (isset($_POST['clear'])) {
                     <?php
                     if (isset($_SESSION['monbela_cart'])) {
                         ?>
-                        <a href="<?php echo WEB_ROOT; ?>index.php?p=rooms" class="btn btn-primary" align="right" name="clear">Add Another Room</a>
-                        <button type="submit" class="btn btn-primary" align="right" name="clear">Clear Cart</button>
+                        <a href="https://mcchmhotelreservation.com/index.php?p=rooms" class="btn btn-primary" align="right" name="clear">Add Another Room</a>
+                        <button type="submit" class="btn btn-primary" align="right" name="clear" id="clearCartBtn">Clear Cart</button>
                         <?php
                         if (isset($_SESSION['GUESTID'])) {
                             ?>
-                            <a href="<?php echo WEB_ROOT; ?>booking/index.php?view=payment" class="btn btn-primary" align="right" name="continue">Continue Booking</a>
+                            <a href="https://mcchmhotelreservation.com/booking/index.php?view=payment" class="btn btn-primary" align="right" name="continue">Continue Booking</a>
                             <?php
                             
                         } else {
                             ?>
-                            <a href="<?php echo WEB_ROOT; ?>booking/index.php?view=logininfo" class="btn btn-primary" align="right" name="continue">Continue Booking</a>
+                            <a href="https://mcchmhotelreservation.com/booking/index.php?view=logininfo" class="btn btn-primary" align="right" name="continue">Continue Booking</a>
                             <?php
                         }
                     } else {
