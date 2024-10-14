@@ -472,8 +472,8 @@ function submitBooking() {
 </div>
 
     <div class="pull-right flex-end" align="right">
-    <!-- <button  type="button" id="submitBookingButton" class="btn btn-primary" align="right" data-toggle="modal" data-target="#confirmModal">Submit Booking</button> -->
-       <button  type="button"  id="submitBookingButton" class="btn btn-primary" align="right" onclick="submitBooking()" >Submit Booking</button>
+    <button  type="button" id="submitBookingButton" class="btn btn-primary" align="right" data-toggle="modal" data-target="#confirmModal">Submit Booking</button>
+       <!-- <button  type="button"  id="submitBookingButton" class="btn btn-primary" align="right" onclick="submitBooking()" >Submit Booking</button> -->
     </div>
 </form>
   </div>  
