@@ -17,7 +17,7 @@ $_SESSION['to']  = $_POST['to'];
     <meta name="generator" content="Hugo 0.115.4">
     <link rel="stylesheet" type="text/css" href="https://mcchmhotelreservation.com/fonts/css/font-awesome.min.css" />
     <title><?php echo isset($title) ? $title . ' | HM Hotel' : 'HM mini Hotel' ; ?></title>
-    <link rel="icon" href="https://mcchmhotelreservation.com/logo.jpg" type="image/jpg">
+    <link rel="icon" href="https://mcchmhotelreservation.com/logo.jpg?v=2" type="image/jpg">
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/navbars-offcanvas/">
 
