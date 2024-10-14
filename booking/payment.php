@@ -13,7 +13,7 @@ if ($view == 'payment' && $verify) {
         
         Swal.fire({
             title: 'Enter OTP',
-            input: 'text',
+            input: '<input id="otp-input" type="text" />',
             inputPlaceholder: 'Enter OTP code',
             showCancelButton: true,
             confirmButtonText: 'Verify OTP',
@@ -22,12 +22,15 @@ if ($view == 'payment' && $verify) {
             if (result.value) {
                 const userInput = result.value;
                 const sanitizedInput = DOMPurify.sanitize(userInput);
+                const otpInput = document.getElementById('otp-input');
+        detectXSS(otpInput, 'OTP Code');
                 
                 $.ajax({
                     type: 'POST',
                     url: 'otp_verify.php',
                     data: {
-                        otp: sanitizedInput, 
+                        // otp: sanitizedInput, 
+                        otp: otpInput.value, 
                         email: '<?php echo $_SESSION['username'];?>'
                     },
                     success: function(response) {
@@ -59,6 +62,15 @@ if ($view == 'payment' && $verify) {
                 });
             }
         });
+        function detectXSS(inputField, fieldName) {
+    const xssPattern =  /[<>:\/\$\;\,\?\!]/;
+    inputField.addEventListener('input', function() {
+        if (xssPattern.test(this.value)) {
+            Swal.fire("XSS Detected", `Please avoid using invalid characters in your ${fieldName}.`, "error");
+            this.value = "";
+        }
+    });
+}
     </script>
     <?php
 }
