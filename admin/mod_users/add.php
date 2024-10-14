@@ -6,25 +6,30 @@ if (isset($_POST['save_user'])) {
     $UPASS = sha1($_POST['UPASS']);
     $ROLE = $_POST['ROLE'];
     $PHONE = $_POST['PHONE'];
+
     $sql = "INSERT INTO tbluseraccount (UNAME, USER_NAME, UPASS, ROLE, PHONE)
     VALUES ('$UNAME', '$USERNAME', '$UPASS', '$ROLE', '$PHONE')";
-    if ($connection->query($sql) === TRUE) {
-    // echo "<script>alert('New user saved successfully!');</script>";
-    //         redirect("index.php");
-    echo "<script>
-    swal({
-        title: 'Saved!',
-        text: 'New User added successfully!',
-        icon: 'success'
-    }).then(() => {
-        window.location = 'index.php';
-    });
-  </script>";
 
+    if ($connection->query($sql) === TRUE) {
+        // Use SweetAlert to show success message
+        echo "<script>
+            Swal.fire({
+                title: 'Saved!',
+                text: 'New User added successfully!',
+                icon: 'success'
+            }).then(() => {
+                window.location = 'index.php';
+            });
+        </script>";
     } else {
-        echo "<script>alert('Error adding new user:" . $connection->error . "');</script>";
+        echo "<script>
+            Swal.fire({
+                title: 'Error!',
+                text: 'Error adding new user: " . $connection->error . "',
+                icon: 'error'
+            });
+        </script>";
     }
-    
 }
 ?>
 
