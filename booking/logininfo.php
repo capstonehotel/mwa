@@ -51,94 +51,89 @@ if (!isset($_SESSION['monbela_cart'])) {
 
 
 <?php
-
-  function logintab(){
-
-    ?>  
+function logintab() {
+  ?>  
   <div class="col-md-12">
-    <form action="<?php echo "https://mcchmhotelreservation.com/login.php" ?>" method="post" onsubmit="return validateForm()" >
-      <div class="form-group has-feedback">
-        <input type="text" id="username" class="form-control" name="username" placeholder="Username">
-        <span class="glyphicon glyphicon-user form-control-feedback"></span>
-      </div>
-      <div class="form-group has-feedback" style="margin-top: 10px;">
-        <input type="password" id="password" class="form-control" name="pass" placeholder="Password">
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-      </div>
-      <div class="row">
-        <div class="col-xs-8">
-          <div class="checkbox icheck">
-            <label>
-              <input type="checkbox"> Remember Me
-            </label>
+      <form action="<?php echo "https://mcchmhotelreservation.com/login.php" ?>" method="post" onsubmit="return validateForm()" id="signInForm">
+          <div class="form-group has-feedback">
+              <input type="text" id="username" class="form-control" name="username" placeholder="Username" required>
+              <span class="glyphicon glyphicon-user form-control-feedback"></span>
           </div>
-        </div>
-        <!-- /.col -->
-        <div class="col-xs-4">
-          <button type="submit" name="gsubmit" class="btn btn-primary btn-block btn-flat" >Sign In</button>
-        </div>
-        <!-- /.col -->
-      </div>
-    </form> 
-</div>
-<script>
-    $(document).ready(function() {
-      $('#signInBtn').on('click', function(e) {
-        e.preventDefault();
-        var username = document.getElementById("username").value;
-        var password = document.getElementById("password").value;
-        // Send AJAX request to verify OTP
-        $.ajax({
-          type: "POST",
-          url: "otp_verify.php",
-          data: { otp: "<?php echo $_SESSION['otp']; ?>", email: username },
-          success: function(response) {
-            if (response == 'valid') {
-              // OTP is valid, allow sign in
-              Swal.fire({
-                icon: 'success',
-                title: 'OTP Verified',
-                text: 'You can now sign in to your account.'
-              }).then(function() {
-                // Submit the form
-                document.getElementById("signInForm").submit();
+          <div class="form-group has-feedback" style="margin-top: 10px;">
+              <input type="password" id="password" class="form-control" name="pass" placeholder="Password" required>
+              <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          </div>
+          <div class="row">
+              <div class="col-xs-8">
+                  <div class="checkbox icheck">
+                      <label>
+                          <input type="checkbox"> Remember Me
+                      </label>
+                  </div>
+              </div>
+              <div class="col-xs-4">
+                  <button type="submit" name="gsubmit" class="btn btn-primary btn-block btn-flat" id="signInBtn">Sign In</button>
+              </div>
+          </div>
+      </form> 
+  </div>
+  <script>
+      $(document).ready(function() {
+          $('#signInBtn').on('click', function(e) {
+              e.preventDefault(); // Prevent default form submission
+              var username = $("#username").val();
+              var password = $("#password").val();
+              
+              $.ajax({
+                  type: "POST",
+                  url: "https://mcchmhotelreservation.com/login.php", // Your login handler
+                  data: { username: username, pass: password, gsubmit: true },
+                  success: function(response) {
+                      if (response === 'email_exists') { // Check if the email exists
+                          Swal.fire({
+                              icon: 'warning',
+                              title: 'Email Exists',
+                              text: 'An OTP has been sent to your email. Please check your inbox.',
+                          }).then(() => {
+                              // Redirect to send OTP
+                              window.location.href = 'sendOTP.php';
+                          });
+                      } else if (response === 'invalid') {
+                          Swal.fire({
+                              icon: 'error',
+                              title: 'Invalid Credentials',
+                              text: 'Please check your username and password.',
+                          });
+                      } else {
+                          // Submit the form if credentials are valid
+                          $("#signInForm").submit();
+                      }
+                  }
               });
-            } else {
-              // OTP is invalid, show error message
-              Swal.fire({
-                icon: 'error',
-                title: 'Invalid OTP',
-                text: 'Please enter a valid OTP.'
-              });
-            }
-          }
-        });
+          });
       });
-    });
   </script>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-function validateForm() {
-  var username = document.getElementById("username").value;
-  var password = document.getElementById("password").value;
+  <script>
+  function validateForm() {
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
 
-  if (username === "" || password === "") {
-    Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: 'Please fill in both username and password fields!'
-    });
-    return false; // Prevent form submission
+      if (username === "" || password === "") {
+          Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Please fill in both username and password fields!'
+          });
+          return false; // Prevent form submission
+      }
+
+      return true; // Allow form submission
   }
-
-  return true; // Allow form submission
+  </script>
+  <?php
 }
-</script>
- 
 
-<?php
-  }
 
 function listofbooking(){
 
