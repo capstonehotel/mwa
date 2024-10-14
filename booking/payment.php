@@ -176,9 +176,7 @@ $guest->G_CADDRESS       = $_SESSION['caddress'];
 $guest->G_TERMS          = 1;    
 $guest->G_UNAME          = $_SESSION['username'];    
 $guest->G_PASS           = sha1($_SESSION['pass']);
-$guest->OTPCODE          = $_SESSION['otp'];
-$guest->OTP_EXPIRE_AT   = date('Y-m-d H:i:s', strtotime('+5 minutes')); 
-   
+
 
 $guest->create(); 
   $lastguest=$guest->id; 
@@ -221,14 +219,10 @@ $_SESSION['GUESTID'] =   $lastguest;
             }
 
            $item = count($_SESSION['monbela_cart']);
-           $paymentstatus = $_POST['txtstatus'];
+         
 
-            $target_dir = "../uploads/";
-            $target_file = $target_dir . $_POST['realconfirmation'] ."_". basename($_FILES["proofOfPayment"]["name"]);
-            $file_name = $_POST['realconfirmation'] ."_". basename($_FILES["proofOfPayment"]["name"]);
-
-      $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`,`PAYMENT_STATUS`, `PROOF_OF_PAYMENT`  )
-       VALUES ('" .date('Y-m-d h:i:s')."','" . $_POST['realconfirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '".$paymentstatus."', '".$file_name."' )" ;
+      $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`  )
+       VALUES ('" .date('Y-m-d h:i:s')."','" . $_POST['realconfirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending' )" ;
         // mysql_query($sql);
 
 
@@ -237,8 +231,6 @@ $_SESSION['GUESTID'] =   $lastguest;
 
      $mydb->setQuery($sql);
      $msg = $mydb->executeQuery();
-
-     move_uploaded_file($_FILES["proofOfPayment"]["tmp_name"], $target_file);
 
     //   $lastreserv=mysql_insert_id(); 
     //   $mydb->setQuery("INSERT INTO `comments` (`firstname`, `lastname`, `email`, `comment`) VALUES('$name','$last','$email','$message')");
@@ -489,8 +481,8 @@ function submitBooking() {
 </div>
 
     <div class="pull-right flex-end" align="right">
-    <button  type="button" id="submitBookingButton" class="btn btn-primary" align="right" data-toggle="modal" data-target="#confirmModal">Submit Booking</button>
-       <!-- <button  type="button"  id="submitBookingButton" class="btn btn-primary" align="right" onclick="submitBooking()" >Submit Booking</button> -->
+    <!-- <button  type="button" id="submitBookingButton" class="btn btn-primary" align="right" data-toggle="modal" data-target="#confirmModal">Submit Booking</button> -->
+       <button  type="button"  id="submitBookingButton" class="btn btn-primary" align="right" onclick="submitBooking()" >Submit Booking</button>
     </div>
 </form>
   </div>  
