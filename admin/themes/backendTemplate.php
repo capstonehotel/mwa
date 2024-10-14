@@ -49,10 +49,10 @@ if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
 
 */
 
-// Secure session cookie settings
-ini_set('session.cookie_secure', '1');    // Enforces HTTPS-only session cookies
-ini_set('session.cookie_httponly', '1');  // Prevents JavaScript from accessing session cookies
-ini_set('session.cookie_samesite', 'Strict'); // Prevents CSRF by limiting cross-site cookie usage
+// // Secure session cookie settings
+// ini_set('session.cookie_secure', '1');    // Enforces HTTPS-only session cookies
+// ini_set('session.cookie_httponly', '1');  // Prevents JavaScript from accessing session cookies
+// ini_set('session.cookie_samesite', 'Strict'); // Prevents CSRF by limiting cross-site cookie usage
 
 
 // Additional security headers
