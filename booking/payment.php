@@ -271,7 +271,7 @@ $_SESSION['GUESTID'] =   $lastguest;
     }).then((result) => {
         if (result.isConfirmed) {
             // Redirect after confirmation
-            window.location.href = "<?php echo WEB_ROOT . 'index.php'; ?>";
+            window.location.href = "index.php";
         }
     });
 </script>
