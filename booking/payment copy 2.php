@@ -1,20 +1,9 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
-
-
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> Include SweetAlert2 -->
 <?php
-
 if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])) {
-    
     var_dump($_GET['view']);
     var_dump($_GET['verify']);
 
@@ -23,79 +12,68 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
     console.log('SweetAlert2 script is running');
     
     Swal.fire({
-    title: 'Enter OTP',
-    input: 'text',
-    inputPlaceholder: 'Enter OTP code',
-    showCancelButton: true,
-    confirmButtonText: 'Verify OTP',
-    cancelButtonText: 'Cancel',
-    footer: '<button type="button" id="resend-otp-button" class="btn btn-primary">Resend OTP</button>'
-}).then((result) => {
-    if (result.value) {
-        // Verify OTP
-        //console.log('Entered OTP:', result.value);
+        title: 'Enter OTP',
+        input: 'text',
+        inputPlaceholder: 'Enter OTP code',
+        showCancelButton: true,
+        confirmButtonText: 'Verify OTP',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.value) {
+            // Verify OTP
+            //console.log('Entered OTP:', result.value);
 
-        $.ajax({
-            type: 'POST',
-            url: 'otp_verify.php',
-            data: {
-                otp: result.value, email: '<?php echo $_SESSION['username'];?>'
-               
-            },
-            success: function(response) {
-                if (response.trim() == 'valid') {
-                    // OTP is valid, display success message with icon and timer
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'OTP Verified!',
-                        text: 'You will be redirected to the payment in 3 seconds.',
-                        timer: 3000,
-                        timerProgressBar: true,
-                        showConfirmButton: false,
-                        willClose: () => {
-                            window.location.href = 'index.php?view=payment';
-                        }
-                    });
-                } else {
-                    // OTP is invalid, display error message with icon
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Invalid OTP!',
-                        text: response,
-                        showConfirmButton: true
-                    }).then(() => {
-                        window.location.href = 'index.php?view=logininfo';
-                    });
-                }
+            $.ajax({
+                type: 'POST',
+                url: 'otp_verify.php',
+                data: {
+                    otp: result.value, email: '<?php echo $_SESSION['username'];?>'
+                   
+                },
+                success: function(response) {
+    if (response.trim() == 'valid') {
+        // OTP is valid, display success message with icon and timer
+        Swal.fire({
+            icon: 'success',
+            title: 'OTP Verified!',
+            text: 'You will be redirected to the payment in 3 seconds.',
+            timer: 3000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+            willClose: () => {
+                window.location.href = 'index.php?view=payment';
             }
         });
+    } else {
+        // OTP is invalid, display error message with icon
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid OTP!',
+            text: response,
+            showConfirmButton: true
+        }).then(() => {
+        window.location.href = 'index.php?view=logininfo';
+   
+        });
     }
-});
+}
 
-// Add event listener to resend OTP button
-document.getElementById('resend-otp-button').addEventListener('click', function() {
-    // Send AJAX request to resend OTP
-    $.ajax({
-        type: 'POST',
-        url: 'resend_otp.php',
-        data: {
-            email: '<?php echo $_SESSION['username'];?>'
-        },
-        success: function(response) {
-            Swal.fire({
-                icon: 'success',
-                title: 'OTP Resent!',
-                text: 'Please check your email for the new OTP.',
-                showConfirmButton: true
             });
         }
     });
-});
 </script>
 
     <?php
 }
 ?>
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>  -->
+
+
+
 
 <?php
 if (!isset($_SESSION['monbela_cart'])) {
@@ -168,7 +146,7 @@ if(isset($_POST['btnsubmitbooking'])){
 // }
 //   $payable= $rate*$days;
 //   $_SESSION['pay']= $payable;
-
+// if (verifyOTP($_SESSION['otp'])) {
 if(!isset($_SESSION['GUESTID'])){
 
   // var_dump($_SESSION);exit;
@@ -181,23 +159,23 @@ $guest->G_GENDER         = $_SESSION['gender'];
 $guest->G_CITY           = $_SESSION['city'];
 $guest->G_ADDRESS        = $_SESSION['address'] ;        
 $guest->DBIRTH           = date_format(date_create($_SESSION['dbirth']), 'Y-m-d');   
-$guest->G_PHONE          = $_SESSION['phone'];    
+$guest->G_PHONE          = $_SESSION['phone'];  
+$guest->ZIP              = $_SESSION['zip'];  
 $guest->G_NATIONALITY    = $_SESSION['nationality'];          
 $guest->G_COMPANY        = $_SESSION['company'];      
 $guest->G_CADDRESS       = $_SESSION['caddress'];        
 $guest->G_TERMS          = 1;    
 $guest->G_UNAME          = $_SESSION['username'];    
-$guest->G_PASS           = sha1($_SESSION['pass']);    
-$guest->ZIP              = $_SESSION['zip'];
-$guest->OTP              = $_SESSION['otp'];
-   
+$guest->G_PASS           = sha1($_SESSION['pass']);
+
+
 $guest->create(); 
   $lastguest=$guest->id; 
    
 $_SESSION['GUESTID'] =   $lastguest;
 
 }
- 
+
     $count_cart = count($_SESSION['monbela_cart']);
   
 
@@ -232,7 +210,7 @@ $_SESSION['GUESTID'] =   $lastguest;
             }
 
            $item = count($_SESSION['monbela_cart']);
-           
+         
 
       $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`  )
        VALUES ('" .date('Y-m-d h:i:s')."','" . $_POST['realconfirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending' )" ;
@@ -244,8 +222,6 @@ $_SESSION['GUESTID'] =   $lastguest;
 
      $mydb->setQuery($sql);
      $msg = $mydb->executeQuery();
-
-     
 
     //   $lastreserv=mysql_insert_id(); 
     //   $mydb->setQuery("INSERT INTO `comments` (`firstname`, `lastname`, `email`, `comment`) VALUES('$name','$last','$email','$message')");
@@ -262,7 +238,22 @@ $_SESSION['GUESTID'] =   $lastguest;
             $_SESSION['activity'] = 1;
 
             ?> 
-<script type="text/javascript">
+            
+    <script type="text/javascript">
+        Swal.fire({
+            title: 'Success!',
+            text: 'Booking is successfully submitted!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirect after confirmation
+                window.location.href = "index.php";
+            }
+        });
+    </script>
+   
+<!-- <script type="text/javascript">
     Swal.fire({
         title: 'Success!',
         text: 'Booking is successfully submitted!',
@@ -271,12 +262,25 @@ $_SESSION['GUESTID'] =   $lastguest;
     }).then((result) => {
         if (result.isConfirmed) {
             // Redirect after confirmation
-            window.location.href = "<?php echo WEB_ROOT . 'index.php'; ?>";
+            window.location.href = "index.php";
         }
     });
-</script>
-<?php }?>
+</script>-->
+<?php }?> 
+<!-- <style>
+ .btn-group .btn {
+    padding: 5px 10px; /* Reduce padding for smaller button size */
+}
 
+.payment-icon {
+    width: 25px; /* Set a smaller width for the icons */
+    height: 25px; /* Set a smaller height for the icons */
+    margin-right: 5px; /* Space between the icon and text */
+    vertical-align: middle; /* Align image vertically in the middle of the button */
+}
+
+
+</style> -->
  
 <!-- Add this in your HTML head section -->
 
@@ -314,7 +318,6 @@ $_SESSION['GUESTID'] =   $lastguest;
                         <?php echo date("m/d/Y"); ?>
                     </div>
                     <div class="col-md-12">
-                    <div class="col-md-12">
     <label style="display: none;">Transaction Id:</label>
     <span style="display: none;"><?php echo $_SESSION['confirmation']; ?></span>
     <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
@@ -322,7 +325,9 @@ $_SESSION['GUESTID'] =   $lastguest;
 </div>
                     <div class="col-md-12 col-sm-2">
     <label id="paymentLabel">Payment Method:</label>
-
+<br>
+    <form method="POST" action="paymongo.php" id="paymentForm">
+    <input type="hidden" name="payment_method" id="payment_method" value="">
     <form method="POST" action="paymongo.php" id="paymentForm">
     <input type="hidden" name="payment_method" id="payment_method" value="">
     
@@ -335,6 +340,23 @@ $_SESSION['GUESTID'] =   $lastguest;
         <img src="../paymaya.png" alt="Pay with PayMaya" style="height: 20px; margin-right: 5px;">
         Pay with PayMaya
     </button>
+    <!-- <label style="display: inline-flex; align-items: center; margin-bottom: 10px; cursor: pointer;">
+        <input type="radio" name="payment_option" value="Gcash" onclick="selectPaymentMethod('Gcash')" style="margin-right: 10px;">
+        <span style="display: inline-block; padding: 5px 10px; border: 2px solid #0056b3; border-radius: 8px; background-color: #0056b3; color: #ffffff; font-weight: bold;">
+            <img src="../gcash.png" alt="Pay with GCash" style="height: 20px; margin-right: 5px;">
+            Pay with GCash
+        </span>
+    </label>
+    <br>
+
+    <label style="display: inline-flex; align-items: center; margin-bottom: 10px; cursor: pointer;">
+        <input type="radio" name="payment_option" value="Paymaya" onclick="selectPaymentMethod('Paymaya')" style="margin-right: 10px;">
+        <span style="display: inline-block; padding: 5px 10px; border: 2px solid #0056b3; border-radius: 8px; background-color: #0056b3; color: #ffffff; font-weight: bold;">
+            <img src="../paymaya.png" alt="Pay with PayMaya" style="height: 20px; margin-right: 5px;">
+            Pay with PayMaya
+        </span>
+    </label> -->
+
 </form>
 
 <script>
@@ -345,9 +367,16 @@ $_SESSION['GUESTID'] =   $lastguest;
             document.getElementById('paymentForm').submit();
         }
     </script>
-    <div>
+
+        <!-- <button type="button" class="btn btn-primary" id="gcash-btn">
+            <img src="../gcash.png" alt="GCash Icon" class="payment-icon" onclick="payWithGcash()"> GCash
+        </button>
+        <button type="button" class="btn btn-primary" id="paymaya-btn" onclick="payWithPaymaya()">
+            <img src="../paymaya.png" alt="PayMaya Icon" class="payment-icon"> PayMaya
+        </button>
+        </div> -->
     </div>
-                  
+</div>
 
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -399,6 +428,7 @@ for ($i=0; $i < $count_cart  ; $i++) {
                  </table>
             </div>
 
+
                 <div id="confirmModal" class="modal fade" role="dialog" >
     <div class="modal-dialog modal-sm" >
         <div class="modal-content" >
@@ -412,7 +442,30 @@ for ($i=0; $i < $count_cart  ; $i++) {
         </div>
     </div>
 </div>
-
+<!-- <script>
+function submitBooking() {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: 'You want to submit the booking?',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Yes',
+    cancelButtonText: 'No',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Submit the booking form
+      var button = document.querySelector('[name="btnsubmitbooking"]');
+      var event = new MouseEvent('click', {
+        view: window,
+        bubbles: true,
+        cancelable: true
+      });
+      button.dispatchEvent(event);
+    }
+  });
+}
+</script> -->
 
 <div class="row"> 
   <h3 align="right">Total: &#8369 <?php echo   $_SESSION['pay'] ;?></h3>
@@ -430,3 +483,4 @@ for ($i=0; $i < $count_cart  ; $i++) {
         </div>
       </div>
 </div>
+
