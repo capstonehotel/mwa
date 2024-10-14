@@ -17,8 +17,8 @@ $_SESSION['to']  = $_POST['to'];
     <meta name="generator" content="Hugo 0.115.4">
     <link rel="stylesheet" type="text/css" href="https://mcchmhotelreservation.com/fonts/css/font-awesome.min.css" />
     <title><?php echo isset($title) ? $title . ' | HM Hotel' : 'HM mini Hotel' ; ?></title>
-<!-- For .png format -->
-<link rel="icon" href="../logo.jpg" type="image/jpg">
+    <link rel="icon" href="https://mcchmhotelreservation.com/logo.jpg" type="image/jpg">
+
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/navbars-offcanvas/">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
@@ -55,10 +55,10 @@ if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
 
 */
 
-// Secure session cookie settings
-// ini_set('session.cookie_secure', '1');    // Enforces HTTPS-only session cookies
-// ini_set('session.cookie_httponly', '1');  // Prevents JavaScript from accessing session cookies
-// ini_set('session.cookie_samesite', 'Strict'); // Prevents CSRF by limiting cross-site cookie usage
+//Secure session cookie settings
+ini_set('session.cookie_secure', '1');    // Enforces HTTPS-only session cookies
+ini_set('session.cookie_httponly', '1');  // Prevents JavaScript from accessing session cookies
+ini_set('session.cookie_samesite', 'Strict'); // Prevents CSRF by limiting cross-site cookie usage
 
 
 // Additional security headers
