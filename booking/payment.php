@@ -3,75 +3,66 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
 <?php
-$view = filter_input(INPUT_GET, 'view', FILTER_SANITIZE_STRING);
-$verify = filter_input(INPUT_GET, 'verify', FILTER_SANITIZE_STRING);
+if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])) {
+    var_dump($_GET['view']);
+    var_dump($_GET['verify']);
 
-if ($view == 'payment' && $verify) {
     ?>
-    <script>
-        console.log('SweetAlert2 script is running');
-        
+  <script>
+    console.log('SweetAlert2 script is running');
+    
+    Swal.fire({
+        title: 'Enter OTP',
+        input: 'text',
+        inputPlaceholder: 'Enter OTP code',
+        showCancelButton: true,
+        confirmButtonText: 'Verify OTP',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.value) {
+            // Verify OTP
+            //console.log('Entered OTP:', result.value);
+
+            $.ajax({
+                type: 'POST',
+                url: 'otp_verify.php',
+                data: {
+                    otp: result.value, email: '<?php echo $_SESSION['username'];?>'
+                   
+                },
+                success: function(response) {
+    if (response.trim() == 'valid') {
+        // OTP is valid, display success message with icon and timer
         Swal.fire({
-            title: 'Enter OTP',
-            input: '<input id="otp-input" type="text" />',
-            inputPlaceholder: 'Enter OTP code',
-            showCancelButton: true,
-            confirmButtonText: 'Verify OTP',
-            cancelButtonText: 'Cancel'
-        }).then((result) => {
-            if (result.value) {
-                const userInput = result.value;
-                const sanitizedInput = DOMPurify.sanitize(userInput);
-                const otpInput = document.getElementById('otp-input');
-        detectXSS(otpInput, 'OTP Code');
-                
-                $.ajax({
-                    type: 'POST',
-                    url: 'otp_verify.php',
-                    data: {
-                        // otp: sanitizedInput, 
-                        otp: otpInput.value, 
-                        email: '<?php echo $_SESSION['username'];?>'
-                    },
-                    success: function(response) {
-                        if (response.trim() == 'valid') {
-                            // OTP is valid, display success message with icon and timer
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'OTP Verified!',
-                                text: 'You will be redirected to the payment in 3 seconds.',
-                                timer: 3000,
-                                timerProgressBar: true,
-                                showConfirmButton: false,
-                                willClose: () => {
-                                    window.location.href = 'index.php?view=payment';
-                                }
-                            });
-                        } else {
-                            // OTP is invalid, display error message with icon
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Invalid OTP!',
-                                text: response,
-                                showConfirmButton: true
-                            }).then(() => {
-                                window.location.href = 'index.php?view=logininfo';
-                            });
-                        }
-                    }
-                });
+            icon: 'success',
+            title: 'OTP Verified!',
+            text: 'You will be redirected to the payment in 3 seconds.',
+            timer: 3000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+            willClose: () => {
+                window.location.href = 'index.php?view=payment';
             }
         });
-        function detectXSS(inputField, fieldName) {
-    const xssPattern =  /[<>:\/\$\;\,\?\!]/;
-    inputField.addEventListener('input', function() {
-        if (xssPattern.test(this.value)) {
-            Swal.fire("XSS Detected", `Please avoid using invalid characters in your ${fieldName}.`, "error");
-            this.value = "";
+    } else {
+        // OTP is invalid, display error message with icon
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid OTP!',
+            text: response,
+            showConfirmButton: true
+        }).then(() => {
+        window.location.href = 'index.php?view=logininfo';
+   
+        });
+    }
+}
+
+            });
         }
     });
-}
-    </script>
+</script>
+
     <?php
 }
 ?>
