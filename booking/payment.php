@@ -428,8 +428,7 @@ for ($i=0; $i < $count_cart  ; $i++) {
                  </table>
             </div>
 
-
-                <div id="confirmModal" class="modal fade" role="dialog" >
+            <div id="confirmModal" class="modal fade" role="dialog" >
     <div class="modal-dialog modal-sm" >
         <div class="modal-content" >
             <div class="modal-body">
@@ -437,11 +436,17 @@ for ($i=0; $i < $count_cart  ; $i++) {
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                <button type="submit" class="btn btn-primary" align="right" name="btnsubmitbooking">Yes</button>
+                <button type="button" class="btn btn-primary" id="yesButton">Yes</button>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('yesButton').addEventListener('click', function() {
+        document.querySelector('[name="btnsubmitbooking"]').click();
+    });
+</script>
 <!-- <script>
 function submitBooking() {
   Swal.fire({
