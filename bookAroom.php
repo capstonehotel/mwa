@@ -223,6 +223,13 @@ align-items: center;
 .zoom-buttons button i {
     pointer-events: none;
 }
+.comments-scrollable {
+    height: 200px; /* adjust the height as needed */
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
 </style>
 
 <div class="col-md-4 col-sm-12 py-2">
@@ -293,6 +300,29 @@ align-items: center;
                         <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID ;?>">
                         <?php echo $btn ;?>
                     </form>
+                    <div class="rating">
+                            <h5>Rating: <?php echo getAverageRating($result->ROOMID); ?>/5</h5>
+                            <div class="stars">
+                                <?php for($i = 1; $i <= 5; $i++): ?>
+                                    <i class="fas fa-star <?php echo ($i <= getAverageRating($result->ROOMID)) ? 'checked' : ''; ?>"></i>
+                                <?php endfor; ?>
+                            </div>
+                        </div>
+                        <div class="comments-container">
+                            <h5>Comments:</h5>
+                            <div class="comments-scrollable">
+                                <ul class="comments">
+                                    <?php foreach(getComments($result->ROOMID) as $comment): ?>
+                                        <li>
+                                            <p><?php echo $comment->COMMENT; ?></p>
+                                            <p>Rating: <?php echo $comment->RATING; ?>/5</p>
+                                            <p>Posted by: <?php echo $comment->USERNAME; ?></p>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        </div>
+                    
                 </div>
             </div>
         </div>
