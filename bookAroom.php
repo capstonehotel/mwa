@@ -241,73 +241,64 @@ align-items: center;
     margin-bottom: 10px;
 }
 
+/* Adjust star rating and comment section */
 .comment-section {
-        display: flex;
-        flex-direction: column;
-        margin-top: 20px;
-    }
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
 
-    .comment-label-star {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start; /* Align the label and star rating to the left */
-        gap: 10px; /* Space between label and stars */
-        margin-bottom: 10px;
-    }
+.comment-section label {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
 
-    .comment-label-star label {
-        font-weight: bold;
-        margin: 0;
-    }
+.star-rating {
+    direction: rtl;
+    display: inline-flex;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    align-items: flex-start;
+}
 
-    .star-rating {
-        display: inline-flex;
-        font-size: 1.5em;
-        direction: ltr; /* Ensure left-to-right direction */
-        cursor: pointer; /* Change cursor to pointer for better UX */
-    }
+.star-rating input {
+    display: none;
+}
 
-    .star-rating input {
-        display: none; /* Hide the radio inputs */
-    }
+.star-rating label {
+    color: #ddd;
+    cursor: pointer;
+}
 
-    .star-rating label {
-        color: #ddd; /* Default star color */
-        transition: color 0.2s; /* Smooth transition for color change */
-    }
+.star-rating label:hover,
+.star-rating label:hover ~ label,
+.star-rating input:checked ~ label {
+    color: #f5c518;
+}
 
-    .star-rating label:hover,
-    .star-rating input:checked ~ label,
-    .star-rating input:checked + label {
-        color: #f5c518; /* Color when hovered or selected */
-    }
+.comment-card {
+    width: 100%;
+    margin-bottom: 10px;
+}
 
-    .star-rating input:checked ~ label {
-        color: #f5c518; /* Color for filled stars */
-    }
+.comment-card textarea {
+    width: 100%;
+    height: 100px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    resize: none;
+}
 
-    .comment-card {
-        width: 100%;
-        margin-bottom: 10px;
-    }
+.comment-buttons {
+    display: flex;
+    justify-content: flex-end;
+}
 
-    .comment-card textarea {
-        width: 100%;
-        height: 100px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        padding: 10px;
-        resize: none;
-    }
+.comment-buttons button {
+    margin-left: 10px;
+}
 
-    .comment-buttons {
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    .comment-buttons button {
-        margin-left: 10px;
-    }
 </style>
 
 <div class="col-md-4 col-sm-12 py-2">
@@ -395,22 +386,20 @@ align-items: center;
         </div>
        <!-- Comment Section -->
                     <div class="comment-section">
-                    <div class="comment-label-star">
                         <!-- Comment Label and Star Rating aligned to left -->
                         <label for="comment">Leave a Comment:</label>
                         <div class="star-rating">
-            <input type="radio" id="5-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="5" />
-            <label for="5-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-            <input type="radio" id="4-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="4" />
-            <label for="4-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-            <input type="radio" id="3-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="3" />
-            <label for="3-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-            <input type="radio" id="2-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="2" />
-            <label for="2-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-            <input type="radio" id="1-star-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="1" />
-            <label for="1-star-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-        </div>
-                </div>
+                            <input type="radio" id="5-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="5" />
+                            <label for="5-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+                            <input type="radio" id="4-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="4" />
+                            <label for="4-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+                            <input type="radio" id="3-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="3" />
+                            <label for="3-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+                            <input type="radio" id="2-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="2" />
+                            <label for="2-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+                            <input type="radio" id="1-star-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="1" />
+                            <label for="1-star-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+                        </div>
 
                         <!-- Comment Message Card -->
                         <div class="comment-card">
