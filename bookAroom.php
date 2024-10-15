@@ -272,40 +272,6 @@ align-items: center;
                 <li>Remaining Rooms : <?php echo $resNum ;?></li>   
                 <li style="list-style:none; text-align: center; margin: 20px 25px 0 0;"><?php echo $btn ;?></li>  
             </ul>
-             <!-- Add Star Rating and Comment Section -->
-             <div class="card mt-3">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="comment-box ml-2">
-                                        <h4>Add a Comment</h4>
-                                        <div class="rating">
-                                            <input type="radio" name="rating<?php echo $result->ROOMID; ?>" value="5" id="5<?php echo $result->ROOMID; ?>"><label for="5<?php echo $result->ROOMID; ?>">☆</label>
-                                            <input type="radio" name="rating<?php echo $result->ROOMID; ?>" value="4" id="4<?php echo $result->ROOMID; ?>"><label for="4<?php echo $result->ROOMID; ?>">☆</label>
-                                            <input type="radio" name="rating<?php echo $result->ROOMID; ?>" value="3" id="3<?php echo $result->ROOMID; ?>"><label for="3<?php echo $result->ROOMID; ?>">☆</label>
-                                            <input type="radio" name="rating<?php echo $result->ROOMID; ?>" value="2" id="2<?php echo $result->ROOMID; ?>"><label for="2<?php echo $result->ROOMID; ?>">☆</label>
-                                            <input type="radio" name="rating<?php echo $result->ROOMID; ?>" value="1" id="1<?php echo $result->ROOMID; ?>"><label for="1<?php echo $result->ROOMID; ?>">☆</label>
-                                        </div>
-
-                                        <div class="comment-area mt-2">
-                                            <textarea class="form-control" placeholder="What is your view?" rows="4"></textarea>
-                                        </div>
-
-                                        <div class="comment-btns mt-2">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <button class="btn btn-success btn-sm">Cancel</button>
-                                                </div>
-                                                <div class="col-6 text-right">
-                                                    <button class="btn btn-success btn-sm">Send <i class="fa fa-long-arrow-right ml-1"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Star Rating and Comment Section -->
-
         </div>
     </div>
 </form>
@@ -363,6 +329,40 @@ align-items: center;
                 <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID ;?>">
                 <?php echo $btn ;?>
             </form>
+             <!-- Add Star Rating and Comment Section -->
+             <div class="card mt-3">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="comment-box ml-2">
+                                        <h4>Add a Comment</h4>
+                                        <div class="rating">
+                                            <input type="radio" name="rating<?php echo $result->ROOMID; ?>" value="5" id="5<?php echo $result->ROOMID; ?>"><label for="5<?php echo $result->ROOMID; ?>">☆</label>
+                                            <input type="radio" name="rating<?php echo $result->ROOMID; ?>" value="4" id="4<?php echo $result->ROOMID; ?>"><label for="4<?php echo $result->ROOMID; ?>">☆</label>
+                                            <input type="radio" name="rating<?php echo $result->ROOMID; ?>" value="3" id="3<?php echo $result->ROOMID; ?>"><label for="3<?php echo $result->ROOMID; ?>">☆</label>
+                                            <input type="radio" name="rating<?php echo $result->ROOMID; ?>" value="2" id="2<?php echo $result->ROOMID; ?>"><label for="2<?php echo $result->ROOMID; ?>">☆</label>
+                                            <input type="radio" name="rating<?php echo $result->ROOMID; ?>" value="1" id="1<?php echo $result->ROOMID; ?>"><label for="1<?php echo $result->ROOMID; ?>">☆</label>
+                                        </div>
+
+                                        <div class="comment-area mt-2">
+                                            <textarea class="form-control" placeholder="What is your view?" rows="4"></textarea>
+                                        </div>
+
+                                        <div class="comment-btns mt-2">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <button class="btn btn-success btn-sm">Cancel</button>
+                                                </div>
+                                                <div class="col-6 text-right">
+                                                    <button class="btn btn-success btn-sm">Send <i class="fa fa-long-arrow-right ml-1"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Star Rating and Comment Section -->
+
         </div>
     </div>
 </div>
