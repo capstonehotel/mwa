@@ -247,7 +247,13 @@ align-items: center;
     flex-direction: column;
     margin-top: 20px;
 }
-
+.comment-label-star {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start; /* Align the label and star rating to the left */
+        gap: 10px; /* Space between label and stars */
+        margin-bottom: 10px;
+    }
 .comment-section label {
     font-weight: bold;
     margin-bottom: 10px;
