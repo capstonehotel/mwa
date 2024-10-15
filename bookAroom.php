@@ -246,6 +246,7 @@ align-items: center;
     display: flex;
     flex-direction: column;
     margin-top: 20px;
+    align-self: flex-start;
 }
 
 .comment-section label {
@@ -258,6 +259,7 @@ align-items: center;
     display: inline-flex;
     font-size: 1.5em;
     margin-bottom: 10px;
+    align-self: flex-start;
 }
 
 .star-rating input {
