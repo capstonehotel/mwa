@@ -239,7 +239,7 @@ align-items: center;
 }
 
 .star-rating {
-    direction: ltr;
+    direction: rtl;
     display: inline-flex;
     font-size: 1.5em;
     margin-bottom: 10px;
