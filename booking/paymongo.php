@@ -1,5 +1,5 @@
 <?php
-require_once('../paymentmethod/vendor/autoload.php');
+require_once('../paymongo/vendor/autoload.php');
 
 // Set content type to application/json
 header('Content-Type: application/json');
