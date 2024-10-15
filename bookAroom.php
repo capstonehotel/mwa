@@ -227,7 +227,22 @@ align-items: center;
 
 </style>
 <style>
-    .comment-section {
+  /* Add scrollable review section */
+.scrollable-reviews {
+    max-height: 150px; /* Adjust as per your requirement */
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 15px;
+}
+
+.review-item {
+    margin-bottom: 10px;
+}
+
+/* Adjust star rating and comment section */
+.comment-section {
     display: flex;
     flex-direction: column;
     margin-top: 20px;
@@ -243,6 +258,7 @@ align-items: center;
     display: inline-flex;
     font-size: 1.5em;
     margin-bottom: 10px;
+    align-items: flex-start;
 }
 
 .star-rating input {
@@ -368,38 +384,52 @@ align-items: center;
                 <?php echo $btn ;?>
             </form>
         </div>
-        <!-- Comment Section -->
-        <div class="comment-section">
-                    <!-- Comment Label -->
-                    <label for="comment">Leave a Comment:</label>
+       <!-- Comment Section -->
+       <div class="comment-section">
+                        <!-- Comment Label and Star Rating aligned to left -->
+                        <label for="comment">Leave a Comment:</label>
+                        <div class="star-rating">
+                            <input type="radio" id="5-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="5" />
+                            <label for="5-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+                            <input type="radio" id="4-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="4" />
+                            <label for="4-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+                            <input type="radio" id="3-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="3" />
+                            <label for="3-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+                            <input type="radio" id="2-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="2" />
+                            <label for="2-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+                            <input type="radio" id="1-star-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="1" />
+                            <label for="1-star-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+                        </div>
 
-                    <!-- Star Rating -->
-                    <div class="star-rating">
-                        <input type="radio" id="5-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="5" />
-                        <label for="5-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-                        <input type="radio" id="4-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="4" />
-                        <label for="4-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-                        <input type="radio" id="3-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="3" />
-                        <label for="3-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-                        <input type="radio" id="2-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="2" />
-                        <label for="2-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-                        <input type="radio" id="1-star-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="1" />
-                        <label for="1-star-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+                        <!-- Comment Message Card -->
+                        <div class="comment-card">
+                            <textarea name="comment" id="comment<?php echo $result->ROOMID; ?>" placeholder="Write your comment here..."></textarea>
+                        </div>
+
+                        <!-- Submit and Cancel Buttons -->
+                        <div class="comment-buttons">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        </div>
                     </div>
 
-                    <!-- Comment Message Card -->
-                    <div class="comment-card">
-                        <textarea name="comment" id="comment<?php echo $result->ROOMID; ?>" placeholder="Write your comment here..."></textarea>
-                    </div>
-
-                    <!-- Submit and Cancel Buttons -->
-                    <div class="comment-buttons">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <!-- Scrollable Reviews Section -->
+                    <div class="scrollable-reviews">
+                        <div class="review-item">
+                            <strong>User1:</strong>
+                            <p>Great room, very comfortable!</p>
+                        </div>
+                        <div class="review-item">
+                            <strong>User2:</strong>
+                            <p>Nice view, but could be cleaner.</p>
+                        </div>
+                        <div class="review-item">
+                            <strong>User3:</strong>
+                            <p>Excellent service and good ambiance.</p>
+                        </div>
+                        <!-- Add more reviews dynamically -->
                     </div>
                 </div>
-            
-    </div>
 </div>
 
        
