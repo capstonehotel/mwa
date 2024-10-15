@@ -254,31 +254,25 @@ align-items: center;
 }
 
 .star-rating {
-    display: inline-flex; /* Use inline-flex for star alignment */
+    direction: rtl;
+    display: inline-flex;
     font-size: 1.5em;
     margin-bottom: 10px;
-    align-items: flex-start; /* Align items to the top */
 }
 
 .star-rating input {
-    display: none; /* Hide the radio inputs */
+    display: none;
 }
 
 .star-rating label {
-    color: #ddd; /* Default star color */
-    cursor: pointer; /* Pointer cursor for interaction */
-    transition: color 0.3s; /* Smooth transition for hover effect */
+    color: #ddd;
+    cursor: pointer;
 }
 
-/* Fill effect on hover and when checked */
-.star-rating label:hover,
+.star-rating label:hover, 
 .star-rating label:hover ~ label,
 .star-rating input:checked ~ label {
-    color: #f5c518; /* Color when hovered or selected */
-}
-
-.star-rating input:checked + label {
-    color: #f5c518; /* Color for selected star */
+    color: #f5c518;
 }
 
 .comment-card {
