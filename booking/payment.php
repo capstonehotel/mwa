@@ -28,8 +28,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
     inputPlaceholder: 'Enter OTP code',
     showCancelButton: true,
     confirmButtonText: 'Verify OTP',
-    cancelButtonText: 'Cancel',
-    footer: '<button type="button" id="resend-otp-button" class="btn btn-primary">Resend OTP</button>'
+    resendButtonText: 'Resend OTP',
 }).then((result) => {
     if (result.value) {
         // Verify OTP
@@ -326,12 +325,12 @@ $_SESSION['GUESTID'] =   $lastguest;
     <form method="POST" action="paymongo.php" id="paymentForm">
     <input type="hidden" name="payment_method" id="payment_method" value="">
     
-    <button type="button" class="btn btn-primary" onclick="selectPaymentMethod('Gcash')">
+    <button type="submit" class="btn btn-primary" onclick="selectPaymentMethod('Gcash')">
         <img src="../gcash.png" alt="Pay with GCash" style="height: 20px; margin-right: 5px;">
         Pay with GCash
     </button>
     
-    <button type="button" class="btn btn-primary" onclick="selectPaymentMethod('Paymaya')">
+    <button type="submit" class="btn btn-primary" onclick="selectPaymentMethod('Paymaya')">
         <img src="../paymaya.png" alt="Pay with PayMaya" style="height: 20px; margin-right: 5px;">
         Pay with PayMaya
     </button>

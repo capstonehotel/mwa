@@ -7,6 +7,15 @@ header('Content-Type: application/json');
 // Retrieve the POST data
 $payment_method = $_POST['payment_method'] ?? '';
 
+// Ensure that session is started and session value is set
+session_start();
+if (!isset($_SESSION['pay']) || empty($_SESSION['pay'])) {
+    echo json_encode(['error' => 'Payment amount is missing']);
+    exit;
+}
+
+$amount = $_SESSION['pay']; // Amount in PHP centavos
+
 if ($payment_method) {
     // PayMongo API Key (replace with your actual test key)
     $apiKey = 'sk_test_8FHikGJxuzFP3ix4itFTcQCv';
@@ -24,7 +33,7 @@ if ($payment_method) {
             'json' => [
                 'data' => [
                     'attributes' => [
-                        'amount' => 10000, // Example amount in centavos (100 PHP)
+                        'amount' => $amount, // Amount from session in centavos
                         'description' => 'Test Payment',
                         'payment_method_types' => [$payment_method]
                     ]
@@ -32,11 +41,18 @@ if ($payment_method) {
             ]
         ]);
 
+        // Decode the JSON response body
         $body = json_decode($response->getBody(), true);
-        $paymentLink = $body['data']['attributes']['checkout_url'];
 
-        // Return the payment link as a JSON response
-        echo json_encode(['checkout_url' => $paymentLink]);
+        // Extract the payment link from the response
+        if (isset($body['data']['attributes']['checkout_url'])) {
+            $paymentLink = $body['data']['attributes']['checkout_url'];
+            // Return the payment link as a JSON response
+            echo json_encode(['checkout_url' => $paymentLink]);
+        } else {
+            // Handle case where checkout_url is not present
+            echo json_encode(['error' => 'Payment link could not be generated']);
+        }
 
     } catch (Exception $e) {
         // Return an error message in JSON format

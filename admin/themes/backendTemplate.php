@@ -221,9 +221,9 @@ try {
 ?>
 <!-- <?php
 // Start the session if not already started
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+// if (session_status() == PHP_SESSION_NONE) {
+//     session_start();
+// }
 
 // Check if the message notification has been viewed
 if (isset($_SESSION['message_notification_viewed'])) {
