@@ -227,7 +227,7 @@ align-items: center;
 
 </style>
 <style>
-  /* Add scrollable review section */
+ /* Add scrollable review section */
 .scrollable-reviews {
     max-height: 150px; /* Adjust as per your requirement */
     overflow-y: auto;
@@ -254,26 +254,31 @@ align-items: center;
 }
 
 .star-rating {
-    direction: rtl;
-    display: inline-flex;
+    display: inline-flex; /* Use inline-flex for star alignment */
     font-size: 1.5em;
     margin-bottom: 10px;
-    align-items: flex-start;
+    align-items: flex-start; /* Align items to the top */
+    justify-content: flex-start; /* Align stars to the left */
 }
 
 .star-rating input {
-    display: none;
+    display: none; /* Hide the radio inputs */
 }
 
 .star-rating label {
-    color: #ddd;
-    cursor: pointer;
+    color: #ddd; /* Default star color */
+    cursor: pointer; /* Pointer cursor for interaction */
 }
 
+/* Fill effect on hover and when checked */
 .star-rating label:hover,
 .star-rating label:hover ~ label,
 .star-rating input:checked ~ label {
-    color: #f5c518;
+    color: #f5c518; /* Color when hovered or selected */
+}
+
+.star-rating input:checked + label {
+    color: #f5c518; /* Color for selected star */
 }
 
 .comment-card {
@@ -298,6 +303,7 @@ align-items: center;
 .comment-buttons button {
     margin-left: 10px;
 }
+
 
 </style>
 
