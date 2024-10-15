@@ -247,20 +247,14 @@ align-items: center;
     flex-direction: column;
     margin-top: 20px;
 }
-.comment-label-star {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start; /* Align the label and star rating to the left */
-        gap: 10px; /* Space between label and stars */
-        margin-bottom: 10px;
-    }
+
 .comment-section label {
     font-weight: bold;
     margin-bottom: 10px;
 }
 
 .star-rating {
-    direction: rtl;
+    direction: ltr;
     display: inline-flex;
     font-size: 1.5em;
     margin-bottom: 10px;
@@ -391,7 +385,7 @@ align-items: center;
             </form>
         </div>
        <!-- Comment Section -->
-       <div class="comment-section">
+                    <div class="comment-section">
                         <!-- Comment Label and Star Rating aligned to left -->
                         <label for="comment">Leave a Comment:</label>
                         <div class="star-rating">
