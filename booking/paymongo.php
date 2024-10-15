@@ -8,7 +8,7 @@ header('Content-Type: application/json');
 $payment_method = $_POST['payment_method'] ?? '';
 
 // Ensure that session is started and session value is set
-session_start();
+// session_start();
 if (!isset($_SESSION['pay']) || empty($_SESSION['pay'])) {
     echo json_encode(['error' => 'Payment amount is missing']);
     exit;
