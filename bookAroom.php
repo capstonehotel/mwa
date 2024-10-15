@@ -223,13 +223,28 @@ align-items: center;
 .zoom-buttons button i {
     pointer-events: none;
 }
-.comments-scrollable {
-    height: 200px; /* adjust the height as needed */
-    overflow-y: auto;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.star-rating {
+    direction: rtl;
+    display: inline-flex;
+    font-size: 1.5em;
+    margin-bottom: 10px;
 }
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    color: #ddd;
+    cursor: pointer;
+}
+
+.star-rating label:hover, 
+.star-rating label:hover ~ label,
+.star-rating input:checked ~ label {
+    color: #f5c518;
+}
+
 </style>
 
 <div class="col-md-4 col-sm-12 py-2">
@@ -273,59 +288,52 @@ align-items: center;
             </button>
         </div>
         <div class="modal-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="img-container">
-                        <?php if(is_file('https://mcchmhotelreservation.com/admin/mod_room/'.$result->ROOMIMAGE)): ?>
-                            <img id="roomImage<?php echo $result->ROOMID; ?>" class="img-responsive img-hover" src="room.jpg"> 
-                        <?php else: ?>
-                            <img id="roomImage<?php echo $result->ROOMID; ?>" class="img-responsive img-hover" src="../admin/mod_room/<?php echo $result->ROOMIMAGE; ?>"> 
-                        <?php endif; ?>
-                        <div class="zoom-buttons">
-                            <button id="zoomInBtn<?php echo $result->ROOMID; ?>" class="btn btn-secondary btn-sm" data-zoom="1.3"><i class="fas fa-search-plus"></i></button>
-                            <button id="zoomOutBtn<?php echo $result->ROOMID; ?>" class="btn btn-secondary btn-sm" data-zoom="0.7"><i class="fas fa-search-minus"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6"> 
-                    
-                    <ul>
-                    <h4><p> &#8369 <?php echo $result->PRICE ;?></p></h4>
-                <li><?php echo $result->ROOMDESC ;?></li>
-                <li>Number Person : <?php echo $result->NUMPERSON ;?></li>
-                <li>Remaining Rooms : <?php echo $resNum ;?></li> 
-                    </ul>
-                    <form method="POST" action="index.php?p=accomodation">
-                        <input type="hidden" name="ROOMPRICE" value="<?php echo $result->PRICE ;?>">
-                        <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID ;?>">
-                        <?php echo $btn ;?>
-                    </form>
-                    <div class="rating">
-                            <h5>Rating: <?php echo getAverageRating($result->ROOMID); ?>/5</h5>
-                            <div class="stars">
-                                <?php for($i = 1; $i <= 5; $i++): ?>
-                                    <i class="fas fa-star <?php echo ($i <= getAverageRating($result->ROOMID)) ? 'checked' : ''; ?>"></i>
-                                <?php endfor; ?>
-                            </div>
-                        </div>
-                        <div class="comments-container">
-                            <h5>Comments:</h5>
-                            <div class="comments-scrollable">
-                                <ul class="comments">
-                                    <?php foreach(getComments($result->ROOMID) as $comment): ?>
-                                        <li>
-                                            <p><?php echo $comment->COMMENT; ?></p>
-                                            <p>Rating: <?php echo $comment->RATING; ?>/5</p>
-                                            <p>Posted by: <?php echo $comment->USERNAME; ?></p>
-                                        </li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            </div>
-                        </div>
-                    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="img-container">
+                <?php if(is_file('https://mcchmhotelreservation.com/admin/mod_room/'.$result->ROOMIMAGE)): ?>
+                    <img id="roomImage<?php echo $result->ROOMID; ?>" class="img-responsive img-hover" src="room.jpg"> 
+                <?php else: ?>
+                    <img id="roomImage<?php echo $result->ROOMID; ?>" class="img-responsive img-hover" src="../admin/mod_room/<?php echo $result->ROOMIMAGE; ?>"> 
+                <?php endif; ?>
+                <div class="zoom-buttons">
+                    <button id="zoomInBtn<?php echo $result->ROOMID; ?>" class="btn btn-secondary btn-sm" data-zoom="1.3"><i class="fas fa-search-plus"></i></button>
+                    <button id="zoomOutBtn<?php echo $result->ROOMID; ?>" class="btn btn-secondary btn-sm" data-zoom="0.7"><i class="fas fa-search-minus"></i></button>
                 </div>
             </div>
         </div>
+        <div class="col-md-6"> 
+            <ul>
+                <h4><p> &#8369 <?php echo $result->PRICE ;?></p></h4>
+                <li><?php echo $result->ROOMDESC ;?></li>
+                <li>Number Person : <?php echo $result->NUMPERSON ;?></li>
+                <li>Remaining Rooms : <?php echo $resNum ;?></li>
+            </ul>
+
+            <!-- Star Rating System -->
+            <div class="star-rating">
+                <input type="radio" id="5-stars<?php echo $result->ROOMID; ?>" name="rating<?php echo $result->ROOMID; ?>" value="5" />
+                <label for="5-stars<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+                <input type="radio" id="4-stars<?php echo $result->ROOMID; ?>" name="rating<?php echo $result->ROOMID; ?>" value="4" />
+                <label for="4-stars<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+                <input type="radio" id="3-stars<?php echo $result->ROOMID; ?>" name="rating<?php echo $result->ROOMID; ?>" value="3" />
+                <label for="3-stars<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+                <input type="radio" id="2-stars<?php echo $result->ROOMID; ?>" name="rating<?php echo $result->ROOMID; ?>" value="2" />
+                <label for="2-stars<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+                <input type="radio" id="1-star<?php echo $result->ROOMID; ?>" name="rating<?php echo $result->ROOMID; ?>" value="1" />
+                <label for="1-star<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+            </div>
+
+            <form method="POST" action="index.php?p=accomodation">
+                <input type="hidden" name="ROOMPRICE" value="<?php echo $result->PRICE ;?>">
+                <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID ;?>">
+                <?php echo $btn ;?>
+            </form>
+        </div>
+    </div>
+</div>
+
+       
     </div>
 </div>
 </div>
