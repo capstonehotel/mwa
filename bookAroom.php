@@ -245,7 +245,63 @@ align-items: center;
     color: #f5c518;
 }
 
+</style>
+<style>
+    .comment-section {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
 
+.comment-section label {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.star-rating {
+    direction: rtl;
+    display: inline-flex;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    color: #ddd;
+    cursor: pointer;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label,
+.star-rating input:checked ~ label {
+    color: #f5c518;
+}
+
+.comment-card {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.comment-card textarea {
+    width: 100%;
+    height: 100px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    resize: none;
+}
+
+.comment-buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.comment-buttons button {
+    margin-left: 10px;
+}
 
 </style>
 
@@ -331,41 +387,38 @@ align-items: center;
                 <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID ;?>">
                 <?php echo $btn ;?>
             </form>
-             <!-- Add Star Rating and Comment Section -->
-             <div class="card mt-3">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="comment-box ml-2">
-                                        <h4>Add a Comment</h4>
-                                        <div class="rating">
-                                            <input type="radio" name="rating<?php echo $result->ROOMID; ?>" value="5" id="5<?php echo $result->ROOMID; ?>"><label for="5<?php echo $result->ROOMID; ?>">☆</label>
-                                            <input type="radio" name="rating<?php echo $result->ROOMID; ?>" value="4" id="4<?php echo $result->ROOMID; ?>"><label for="4<?php echo $result->ROOMID; ?>">☆</label>
-                                            <input type="radio" name="rating<?php echo $result->ROOMID; ?>" value="3" id="3<?php echo $result->ROOMID; ?>"><label for="3<?php echo $result->ROOMID; ?>">☆</label>
-                                            <input type="radio" name="rating<?php echo $result->ROOMID; ?>" value="2" id="2<?php echo $result->ROOMID; ?>"><label for="2<?php echo $result->ROOMID; ?>">☆</label>
-                                            <input type="radio" name="rating<?php echo $result->ROOMID; ?>" value="1" id="1<?php echo $result->ROOMID; ?>"><label for="1<?php echo $result->ROOMID; ?>">☆</label>
-                                        </div>
-
-                                        <div class="comment-area mt-2">
-                                            <textarea class="form-control" placeholder="What is your view?" rows="4"></textarea>
-                                        </div>
-
-                                        <div class="comment-btns mt-2">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <button class="btn btn-success btn-sm">Cancel</button>
-                                                </div>
-                                                <div class="col-6 text-right">
-                                                    <button class="btn btn-success btn-sm">Send <i class="fa fa-long-arrow-right ml-1"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Star Rating and Comment Section -->
-
         </div>
+        <!-- Comment Section -->
+        <div class="comment-section">
+                    <!-- Comment Label -->
+                    <label for="comment">Leave a Comment:</label>
+
+                    <!-- Star Rating -->
+                    <div class="star-rating">
+                        <input type="radio" id="5-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="5" />
+                        <label for="5-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+                        <input type="radio" id="4-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="4" />
+                        <label for="4-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+                        <input type="radio" id="3-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="3" />
+                        <label for="3-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+                        <input type="radio" id="2-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="2" />
+                        <label for="2-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+                        <input type="radio" id="1-star-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="1" />
+                        <label for="1-star-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+                    </div>
+
+                    <!-- Comment Message Card -->
+                    <div class="comment-card">
+                        <textarea name="comment" id="comment<?php echo $result->ROOMID; ?>" placeholder="Write your comment here..."></textarea>
+                    </div>
+
+                    <!-- Submit and Cancel Buttons -->
+                    <div class="comment-buttons">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            
     </div>
 </div>
 
