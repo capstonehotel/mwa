@@ -258,7 +258,6 @@ align-items: center;
     font-size: 1.5em;
     margin-bottom: 10px;
     align-items: flex-start; /* Align items to the top */
-    justify-content: flex-start; /* Align stars to the left */
 }
 
 .star-rating input {
@@ -268,6 +267,7 @@ align-items: center;
 .star-rating label {
     color: #ddd; /* Default star color */
     cursor: pointer; /* Pointer cursor for interaction */
+    transition: color 0.3s; /* Smooth transition for hover effect */
 }
 
 /* Fill effect on hover and when checked */
