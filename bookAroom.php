@@ -293,69 +293,14 @@ align-items: center;
                         <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID ;?>">
                         <?php echo $btn ;?>
                     </form>
-                    <!-- Star Rating and Comments -->
-                    <div class="rating">
-                            <h5>Rating: <?php echo getAverageRating($result->ROOMID); ?>/5</h5>
-                            <div class="stars">
-                                <?php for($i = 1; $i <= 5; $i++): ?>
-                                    <i class="fas fa-star <?php echo ($i <= getAverageRating($result->ROOMID)) ? 'checked' : ''; ?>"></i>
-                                <?php endfor; ?>
-                            </div>
-                        </div>
-
-                        <h5>Comments:</h5>
-                        <ul class="comments">
-                            <?php foreach(getComments($result->ROOMID) as $comment): ?>
-                                <li>
-                                    <p><?php echo $comment->COMMENT; ?></p>
-                                    <p>Rating: <?php echo $comment->RATING; ?>/5</p>
-                                    <p>Posted by: <?php echo $comment->USERNAME; ?></p>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-
-                        <!-- Add Comment Form -->
-                        <form method="POST" action="index.php?p=accomodation">
-                            <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID; ?>">
-                            <label for="rating">Rating:</label>
-                            <select name="rating" id="rating">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                            <label for="comment">Comment:</label>
-                            <textarea name="comment" id="comment"></textarea>
-                            <button type="submit">Add Comment</button>
-                        </form>
-
+                    
                 </div>
             </div>
         </div>
     </div>
 </div>
 </div>
-<?php
-function getAverageRating($roomId) {
-    // Query to get the average rating for the room
-    $query = "SELECT AVG(rating) as average_rating FROM comments WHERE room_id = '$roomId'";
-    $result = mysqli_query($conn, $query);
-    $row = mysqli_fetch_assoc($result);
-    return $row['average_rating'];
-}
 
-function getComments($roomId) {
-    // Query to get the comments for the room
-    $query = "SELECT * FROM comments WHERE room_id = '$roomId'";
-    $result = mysqli_query($conn, $query);
-    $comments = array();
-    while($row = mysqli_fetch_assoc($result)) {
-        $comments[] = $row;
-    }
-    return $comments;
-}
-?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
