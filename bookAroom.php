@@ -223,27 +223,7 @@ align-items: center;
 .zoom-buttons button i {
     pointer-events: none;
 }
-.star-rating {
-    direction: rtl;
-    display: inline-flex;
-    font-size: 1.5em;
-    margin-bottom: 10px;
-}
 
-.star-rating input {
-    display: none;
-}
-
-.star-rating label {
-    color: #ddd;
-    cursor: pointer;
-}
-
-.star-rating label:hover, 
-.star-rating label:hover ~ label,
-.star-rating input:checked ~ label {
-    color: #f5c518;
-}
 
 </style>
 <style>
@@ -259,7 +239,7 @@ align-items: center;
 }
 
 .star-rating {
-    direction: rtl;
+    direction: ltr;
     display: inline-flex;
     font-size: 1.5em;
     margin-bottom: 10px;
@@ -369,7 +349,7 @@ align-items: center;
             </ul>
 
             <!-- Star Rating System -->
-            <div class="star-rating">
+            <!-- <div class="star-rating">
                 <input type="radio" id="5-stars<?php echo $result->ROOMID; ?>" name="rating<?php echo $result->ROOMID; ?>" value="5" />
                 <label for="5-stars<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
                 <input type="radio" id="4-stars<?php echo $result->ROOMID; ?>" name="rating<?php echo $result->ROOMID; ?>" value="4" />
@@ -380,7 +360,7 @@ align-items: center;
                 <label for="2-stars<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
                 <input type="radio" id="1-star<?php echo $result->ROOMID; ?>" name="rating<?php echo $result->ROOMID; ?>" value="1" />
                 <label for="1-star<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-            </div>
+            </div> -->
 
             <form method="POST" action="index.php?p=accomodation">
                 <input type="hidden" name="ROOMPRICE" value="<?php echo $result->PRICE ;?>">
