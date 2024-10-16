@@ -438,9 +438,10 @@ $ratingCounts = [
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="roomModalLabel<?php echo $result->ROOMID; ?>"><?php echo $result->ROOM; ?></h5>
-            <button type="button" class="close" onclick="closeRoomModal(<?php echo $result->ROOMID; ?>)" aria-label="Close">
+            <button type="button" class="close" onclick="closeRoomModal(<?php echo $result->ROOMID; ?>)" aria-label="Close" style="border: none; background: transparent;">
     <span aria-hidden="true"><i class="fas fa-times"></i></span>
 </button>
+
         </div>
         <div class="modal-body">
     <div class="row">
