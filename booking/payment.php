@@ -188,7 +188,7 @@ $guest->G_TERMS          = 1;
 $guest->G_UNAME          = $_SESSION['username'];    
 $guest->G_PASS           = sha1($_SESSION['pass']);    
 $guest->ZIP              = $_SESSION['zip'];
-$guest->OTP              = $_SESSION['otp'];
+
    
 $guest->create(); 
   $lastguest=$guest->id; 
@@ -314,8 +314,8 @@ $_SESSION['GUESTID'] =   $lastguest;
                     </div>
                     <div class="col-md-12">
                     <div class="col-md-12">
-    <label style="display: none;">Transaction Id:</label>
-    <span style="display: none;"><?php echo $_SESSION['confirmation']; ?></span>
+    <label >Transaction Id:</label>
+    <span ><?php echo $_SESSION['confirmation']; ?></span>
     <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
     <input type="hidden" id="payment_status_input"  name="txtstatus">
 </div>
