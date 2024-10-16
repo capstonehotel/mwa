@@ -311,7 +311,7 @@ align-items: center;
 .review-item {
     margin-bottom: 15px; /* Space between reviews */
     padding: 10px; /* Padding inside each review */
-    border-bottom: 1px solid #f1f1f1; /* Light separator line */
+   
 }
 
 /* Remove the last border for the last review item */
@@ -341,7 +341,7 @@ align-items: center;
 
 /* Name Styling */
 .review-info strong {
-    font-size: 1em; /* Font size for name */
+    font-size: 2em; /* Font size for name */
     color: #333; /* Darker text color for contrast */
 }
 
