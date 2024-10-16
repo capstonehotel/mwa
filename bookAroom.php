@@ -231,11 +231,11 @@ align-items: center;
  .scrollable-reviews {
     max-height: 300px; /* Increased height */
     overflow-y: auto;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    margin-top: 15px;
     width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    resize: none;
    
 }
 
