@@ -431,6 +431,20 @@ $ratingCounts = [
     1 => 1
 ];
 ?>
+<style>
+.price {
+    display: inline-block; /* Keeps it inline with other elements */
+    font-size: 1.5rem; /* Adjust font size as needed */
+    font-weight: bold; /* Makes the price stand out */
+    margin: 0; /* Remove default margin */
+    padding: 10px 0; /* Adds vertical space for better alignment */
+}
+
+.btn {
+    display: inline-block; /* Ensure button is inline with other elements */
+    margin-top: 10px; /* Adds some space above the button */
+}
+</style>
 <!-- Modal -->
 <div class="modal fade zoom" id="roomModal<?php echo $result->ROOMID; ?>" tabindex="-1" role="dialog" aria-labelledby="roomModalLabel<?php echo $result->ROOMID; ?>" aria-hidden="true">
 <div class="modal-dialog modal-xl" role="document">
@@ -457,18 +471,22 @@ $ratingCounts = [
             </div>
         </div>
         <div class="col-md-6"> 
-            <ul>
-                <h4><p> &#8369 <?php echo $result->PRICE ;?></p></h4>
-                <li><?php echo $result->ROOMDESC ;?></li>
-                <li>Number Person : <?php echo $result->NUMPERSON ;?></li>
-                <li>Remaining Rooms : <?php echo $resNum ;?></li>
-            </ul>
+    <ul>
+        <li>
+            <h4 class="price">&#8369 <?php echo $result->PRICE; ?></h4> <!-- Wrap price in a class -->
+        </li>
+        <li><?php echo $result->ROOMDESC; ?></li>
+        <li>Number of Persons: <?php echo $result->NUMPERSON; ?></li>
+        <li>Remaining Rooms: <?php echo $resNum; ?></li>
+    </ul>
 
-            <form method="POST" action="index.php?p=accomodation">
-                <input type="hidden" name="ROOMPRICE" value="<?php echo $result->PRICE ;?>">
-                <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID ;?>">
-                <?php echo $btn ;?>
-            </form>
+    <form method="POST" action="index.php?p=accomodation">
+        <input type="hidden" name="ROOMPRICE" value="<?php echo $result->PRICE; ?>">
+        <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID; ?>">
+        <button type="submit" class="btn btn-primary"><?php echo $btn; ?></button> <!-- Ensure this is consistent -->
+    </form>
+</div>
+
             <!-- Rating Section -->
             <div class="rating-section mb-4" style="margin-top: 30px;">
                             <!-- Overall Average Rating -->
