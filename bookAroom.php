@@ -309,7 +309,7 @@ align-items: center;
 
 /* Review Item Structure */
 .review-item {
-    margin-bottom: 10cpx;
+    margin-bottom: 10px;
     padding: 5px;
     border-bottom: 1px solid #ddd;
 }
