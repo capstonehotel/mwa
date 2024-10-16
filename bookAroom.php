@@ -233,7 +233,7 @@ align-items: center;
     overflow-y: auto;
     border: 1px solid #ccc;
     border-radius: 5px;
-    padding: 50px;
+    padding: 10px;
     margin-top: 15px;
    
 }
