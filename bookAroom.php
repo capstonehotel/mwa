@@ -421,16 +421,32 @@ align-items: center;
                         </div>
                     </div>
 
-                    <!-- Scrollable Reviews Section -->
                     <div class="scrollable-reviews">
-                        <div class="review-item">
-                            <strong>User1:</strong>
-                            <p>Great room, very comfortable!</p>
-                        </div>
-                        <div class="review-item">
-                            <strong>User2:</strong>
-                            <p>Nice view, but could be cleaner.</p>
-                        </div>
+    <div class="review-item">
+        <div class="review-header">
+            <img src="profile1.jpg" alt="User1 Profile" class="profile-image">
+            <div class="review-info">
+                <strong>User1</strong>
+                <div class="star-rating">
+                    <span>⭐⭐⭐⭐</span> <!-- Adjust the stars accordingly -->
+                </div>
+            </div>
+        </div>
+        <p>Great room, very comfortable!</p>
+    </div>
+    
+    <div class="review-item">
+        <div class="review-header">
+            <img src="profile2.jpg" alt="User2 Profile" class="profile-image">
+            <div class="review-info">
+                <strong>User2</strong>
+                <div class="star-rating">
+                    <span>⭐⭐⭐</span>
+                </div>
+            </div>
+        </div>
+        <p>Nice view, but could be cleaner.</p>
+    </div>
                         <div class="review-item">
                             <strong>User3:</strong>
                             <p>Excellent service and good ambiance.</p>
@@ -508,7 +524,23 @@ $('[id^="roomModal"]').on('shown.bs.modal', function () {
 
 </script>
 
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // XSS Detection Function
+        function detectXSS(inputField, fieldName) {
+            const xssPattern = /[<>:\/\$\;\,\?\!]/;
+            inputField.addEventListener('input', function() {
+                if (xssPattern.test(this.value)) {
+                    Swal.fire("XSS Detected", `Please avoid using invalid characters in your ${fieldName}.`, "error");
+                    this.value = "";
+                }
+            });
+        }
+        const commentInput = document.getElementById('comment<?php echo $result->ROOMID; ?>'); // Comment field
+        detectXSS(commentInput, 'Comment'); // XSS detection for the comment card
+    });
+</script>
 
 
 
