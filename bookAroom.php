@@ -498,7 +498,7 @@ $ratingCounts = [
         </div>
         <?php endforeach; ?>
     </div>
-
+</div>
 
        <!-- Comment Section -->
                     <div class="comment-section">
