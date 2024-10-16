@@ -341,7 +341,7 @@ align-items: center;
 
 /* Name Styling */
 .review-info strong {
-    font-size: 2em; /* Font size for name */
+    font-size: 1em; /* Font size for name */
     color: #333; /* Darker text color for contrast */
 }
 
