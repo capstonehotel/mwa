@@ -550,11 +550,23 @@ $ratingCounts = [
 
                         <!-- Submit and Cancel Buttons -->
                         <div class="comment-buttons">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary " onclick="submitComment(<?php echo $result->ROOMID; ?>)">Submit</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         </div>
                     </div>
+                    <script>
+function submitComment(roomId) {
+    const textarea = document.getElementById(`comment${roomId}`);
+    let comment = textarea.value;
 
+    // Basic sanitization: strip HTML tags
+    comment = comment.replace(/<\/?[^>]+(>|$)/g, "");
+
+    // Submit the comment via AJAX or form submission
+    // Example: AJAX submission
+    // You can implement your AJAX logic here to send the sanitized comment to the server
+}
+</script>
                     <!-- Scrollable Reviews Section -->
 <div class="scrollable-reviews">
     <div class="review-item">
