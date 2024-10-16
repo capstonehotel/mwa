@@ -233,7 +233,7 @@ align-items: center;
     overflow-y: auto;
     border: 1px solid #ccc;
     border-radius: 5px;
-    padding: 10px;
+    padding: 5px;
     margin-top: 15px;
     margin-left: 0;  /* Ensure no additional margin on the left */
     margin-right: 0; /* Ensure no additional margin on the right */
