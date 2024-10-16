@@ -35,13 +35,7 @@ $code=$_GET['code'];
     <?php } ?>
 <?php } ?> -->
 <?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
-    <?php if ($row['STATUS'] == "Confirmed" && $row['PAYMENT_STATUS'] == "Partial") { ?>
-        <a href="../mod_payment/index.php?view=view&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-primary btn-sm ml-2" ><i class="icon-edit">Pay Balance</a>
-    <?php } ?>
     <?php if ($row['STATUS'] == "Confirmed" ) { ?>
-    <?php if ($row['PAYMENT_STATUS'] == "Fully Paid") { ?>
-        <a href="controller.php?action=checkin&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-success btn-sm ml-2" onclick="checkinBooking(event)"><i class="icon-edit">Check in</a>
-    <?php } else { ?>
         <button class="btn btn-success btn-sm ml-2" disabled>Check in</button>
     <?php } ?>
     <a href="controller.php?action=cancel&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-danger btn-sm ml-2" onclick="cancelBooking(event)"><i class="icon-edit">Cancel</a>
@@ -86,7 +80,7 @@ $code=$_GET['code'];
 
  </div> <br> <hr>
   <?php } 
-            }
+            
         
 
 
