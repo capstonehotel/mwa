@@ -227,18 +227,25 @@ align-items: center;
 
 </style>
 <style>
- /* Add scrollable review section */
-.scrollable-reviews {
+ .scrollable-reviews {
     max-height: 150px; /* Adjust as per your requirement */
     overflow-y: auto;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
     margin-top: 15px;
+    font-size: 1.2em; /* Increase the font size for the reviews */
 }
 
 .review-item {
     margin-bottom: 10px;
+    font-size: 1.1em; /* Slightly increase the font size for each review item */
+}
+
+/* Optional: Add styles for strong elements */
+.review-item strong {
+    font-weight: bold; /* Make the user name bold */
+    font-size: 1.1em; /* Increase the font size for user names */
 }
 
 /* Adjust star rating and comment section */
