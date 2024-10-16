@@ -388,8 +388,8 @@ align-items: center;
                 <li style="list-style:none; margin: 20px 25px 0 0;">
                         <!-- Flex container to align rating left and button centered -->
                         <div style="display: flex; justify-content: center; align-items: center; position: relative;">
-                            <!-- Rating on the left -->
-                            <div style="position: absolute; left: 0;"><?php echo $result->PRICE ;?> <span>&#9733;</span></div>
+                            <!-- Rating on the left with a little left margin -->
+                            <div style="position: absolute; left: 0; margin-left: -10px;"><?php echo $result->PRICE ;?> <span>&#9733;</span></div>
                             <!-- Button in the center -->
                             <div><?php echo $btn ;?></div>
                         </div>
