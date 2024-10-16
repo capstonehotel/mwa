@@ -307,7 +307,7 @@ align-items: center;
 }
 
 
-/* Review Item Structure */
+//* Review Item Structure */
 .review-item {
     margin-bottom: 15px; /* Space between reviews */
     padding: 10px; /* Padding inside each review */
@@ -335,23 +335,21 @@ align-items: center;
 
 /* Reviewer Info (Name and Star Rating) */
 .review-info {
+    margin-top: 10px;
     display: flex;
     flex-direction: column; /* Stack the name and star rating vertically */
-    align-items: center; /* Center items horizontally */
 }
 
 /* Name Styling */
 .review-info strong {
     font-size: 1em; /* Font size for name */
-   
-    margin-bottom: 3px; /* Reduced space between name and stars */
 }
 
 /* Star Rating Styling */
 .star-rating {
     font-size: 0.9em; /* Adjusted size for stars */
     color: #f5c518; /* Gold color for stars */
-    margin-bottom: 3px; /* Reduced space between stars and comment */
+    margin-top: 2px; /* Space above the star rating */
 }
 
 /* Comment Text */
@@ -359,7 +357,7 @@ align-items: center;
     font-size: 0.95em; /* Font size for review text */
    
     margin-left: 50px; /* Indent to align with star rating */
-    margin-top: 0; /* Remove additional top margin */
+    /* Adding this margin-left will ensure the comment text is aligned with the stars */
 }
 </style>
 
