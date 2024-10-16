@@ -235,6 +235,7 @@ align-items: center;
     border-radius: 5px;
     padding: 10px;
     margin-top: 15px;
+    width: 100%;
    
 }
 
@@ -248,6 +249,7 @@ align-items: center;
     flex-direction: column;
     margin-top: 20px;
     align-self: flex-start;
+    
 }
 
 .comment-section label {
