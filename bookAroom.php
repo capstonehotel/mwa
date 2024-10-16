@@ -362,45 +362,48 @@ align-items: center;
 </style>
 
 <div class="col-md-4 col-sm-12 py-2">
-<form method="POST" action="index.php?p=accomodation">
-    <input type="hidden" name="ROOMPRICE" value="<?php echo $result->PRICE ;?>">
-    <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID ;?>">
-    <a href="#" data-toggle="modal" data-target="#roomModal<?php echo $result->ROOMID; ?>">
-    <div class="card">
-        <figure class="gallery-item" style="text-align: center; margin-top: 10px;">
-            <a href="#" data-toggle="modal" data-target="#roomModal<?php echo $result->ROOMID; ?>">
-                <?php if(is_file('https://mcchmhotelreservation.com/admin/mod_room/'.$result->ROOMIMAGE)): ?>
-                    <img class="img-responsive img-hover" src="room.jpg" style="height: 250px; width: 90%;"> 
-                <?php else: ?>
-                    <img class="img-responsive img-hover" src="../admin/mod_room/<?php echo $result->ROOMIMAGE; ?>" style="height: 250px; width: 90%;"> 
-                <?php endif; ?>
-            
-            <figcaption class="img-title-active"><br>
-                <h5> &#8369 <?php echo $result->PRICE ;?></h5>    
-            </figcaption>
-        </figure> 
-        <div class="descRoom">
-            <ul>
-                <h4><p><?php echo $result->ROOM ;?></p></h4>
-                <li><?php echo $result->ROOMDESC ;?></li>
-                <li>Number Person : <?php echo $result->NUMPERSON ;?></li>
-                <li>Remaining Rooms : <?php echo $resNum ;?></li>   
-                
-                <li style="list-style:none; margin: 20px 25px 0 0;">
-                        <!-- Flex container to align rating left and button centered -->
+    <form method="POST" action="index.php?p=accomodation">
+        <input type="hidden" name="ROOMPRICE" value="<?php echo $result->PRICE ;?>">
+        <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID ;?>">
+
+        <!-- Card container -->
+        <div class="card" style="cursor: pointer; position: relative;" id="cardTrigger<?php echo $result->ROOMID; ?>">
+            <figure class="gallery-item" style="text-align: center; margin-top: 10px;">
+                <img class="img-responsive img-hover" src="<?php echo is_file('https://mcchmhotelreservation.com/admin/mod_room/'.$result->ROOMIMAGE) ? 'room.jpg' : '../admin/mod_room/'.$result->ROOMIMAGE; ?>" style="height: 250px; width: 90%;">
+                <figcaption class="img-title-active"><br>
+                    <h5> &#8369 <?php echo $result->PRICE ;?></h5>    
+                </figcaption>
+            </figure> 
+
+            <!-- Text content inside the card -->
+            <div class="descRoom" style="position: relative; z-index: 1;">
+                <ul>
+                    <h4><p><?php echo $result->ROOM ;?></p></h4>
+                    <li><?php echo $result->ROOMDESC ;?></li>
+                    <li>Number Person : <?php echo $result->NUMPERSON ;?></li>
+                    <li>Remaining Rooms : <?php echo $resNum ;?></li>   
+
+                    <li style="list-style:none; margin: 20px 25px 0 0;">
                         <div style="display: flex; justify-content: center; align-items: center; position: relative;">
-                            <!-- Rating on the left with a little left margin -->
                             <div style="position: absolute; left: 0; margin-left: -10px;"><?php echo $result->PRICE ;?> <span>&#9733;</span></div>
-                            <!-- Button in the center -->
                             <div><?php echo $btn ;?></div>
                         </div>
                     </li>  
-            </ul>
+                </ul>
+            </div>
+
+            <!-- Invisible trigger layer over the card image only -->
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;" id="cardClickTrigger<?php echo $result->ROOMID; ?>"></div>
         </div>
-    </div>
-    </a>
-</form>
+    </form>
 </div>
+<!-- JavaScript to handle modal opening -->
+<script>
+    // Trigger modal only when clicking on the card (excluding text)
+    document.getElementById("cardClickTrigger<?php echo $result->ROOMID; ?>").addEventListener("click", function() {
+        $('#roomModal<?php echo $result->ROOMID; ?>').modal('show');
+    });
+</script>
 
 <!-- Modal -->
 <div class="modal fade zoom" id="roomModal<?php echo $result->ROOMID; ?>" tabindex="-1" role="dialog" aria-labelledby="roomModalLabel<?php echo $result->ROOMID; ?>" aria-hidden="true">
