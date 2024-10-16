@@ -309,23 +309,28 @@ align-items: center;
 
 /* Review Item Structure */
 .review-item {
-    margin-bottom: 10px;
-    padding: 5px;
-    border-bottom: 1px solid #ddd;
+    margin-bottom: 15px; /* Space between reviews */
+    padding: 10px; /* Padding inside each review */
+    border-bottom: 1px solid #f1f1f1; /* Light separator line */
+}
+
+/* Remove the last border for the last review item */
+.review-item:last-child {
+    border-bottom: none;
 }
 
 /* Review Header Structure */
 .review-header {
-    display: flex;
-    align-items: center;
+    display: flex; /* Flexbox for layout */
+    align-items: center; /* Center items vertically */
 }
 
 /* Profile Image Styling */
 .profile-image {
-    width: 30px; /* Smaller image */
-    height: 30px;
-    border-radius: 50%;
-    margin-right: 8px; /* Space between image and name */
+    width: 40px; /* Adjusted for a slightly larger image */
+    height: 40px;
+    border-radius: 50%; /* Circular image */
+    margin-right: 10px; /* Space between image and name */
 }
 
 /* Reviewer Info (Name and Star Rating) */
@@ -334,17 +339,23 @@ align-items: center;
     flex-direction: column; /* Stack the name and star rating vertically */
 }
 
+/* Name Styling */
+.review-info strong {
+    font-size: 1em; /* Font size for name */
+    color: #333; /* Darker text color for contrast */
+}
+
 /* Star Rating Styling */
-.star-rating span {
-    font-size: 0.9em; /* Smaller star size */
-    color: #f5c518;
+.star-rating {
+    font-size: 0.9em; /* Adjusted size for stars */
+    color: #f5c518; /* Gold color for stars */
 }
 
 /* Comment Text */
-.review-item p {
-    font-size: 0.9em; /* Smaller font for comments */
-    color: #555;
-    margin: 5px 0 0;
+.review-text {
+    font-size: 0.95em; /* Font size for review text */
+    color: #666; /* Grey color for comment text */
+    margin-top: 5px; /* Space above the comment */
 }
 </style>
 
@@ -460,18 +471,19 @@ align-items: center;
                         </div>
                     </div>
 
-                    <div class="scrollable-reviews">
+                    <!-- Scrollable Reviews Section -->
+<div class="scrollable-reviews">
     <div class="review-item">
         <div class="review-header">
-            <img src="gcash.png" alt="User1 Profile" class="profile-image">
+            <img src="profile1.jpg" alt="User1 Profile" class="profile-image">
             <div class="review-info">
                 <strong>User1</strong>
                 <div class="star-rating">
-                    <span>⭐⭐⭐⭐</span> <!-- Adjust the stars accordingly -->
+                    <span>⭐⭐⭐⭐⭐</span> <!-- 5 stars for a perfect rating -->
                 </div>
             </div>
         </div>
-        <p>Great room, very comfortable!</p>
+        <p class="review-text">Great room, very comfortable!</p>
     </div>
     <div class="review-item">
         <div class="review-header">
