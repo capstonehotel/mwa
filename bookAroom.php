@@ -386,7 +386,7 @@ align-items: center;
                 <li>Remaining Rooms : <?php echo $resNum ;?></li>   
                 
                 <li style="list-style:none; text-align: center; margin: 20px 25px 0 0;"><?php echo $btn ;?></li> 
-                <span style="display: inline-block;"> <?php echo $result->PRICE ;?> <span>&#9733;</span></span> 
+                <span style="display: inline-block; text-align: left; margin: 20px 25px 0 0;"> <?php echo $result->PRICE ;?> <span>&#9733;</span></span> 
             </ul>
         </div>
     </div>
