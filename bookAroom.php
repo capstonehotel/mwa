@@ -669,12 +669,12 @@ $('[id^="roomModal"]').on('shown.bs.modal', function () {
         detectXSS(commentInput, 'Comment'); // XSS detection for the comment card
     });
 </script>
-<!-- <script>
+<script>
     function openModal(roomId) {
     $('#roomModal' + roomId).modal('show');
 }
 
-</script> -->
+</script>
 <script>
 $(document).ready(function() {
     // Add click handler for close button
