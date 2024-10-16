@@ -635,12 +635,6 @@ $('[id^="roomModal"]').on('shown.bs.modal', function () {
 });
 });
 
-
-
-function openModal(roomId) {
-    $('#roomModal' + roomId).modal('show');
-}
-
 </script>
 
 
@@ -661,7 +655,12 @@ function openModal(roomId) {
         detectXSS(commentInput, 'Comment'); // XSS detection for the comment card
     });
 </script>
+<script>
+    function openModal(roomId) {
+    $('#roomModal' + roomId).modal('show');
+}
 
+</script>
 
 
 <?php  
