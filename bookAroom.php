@@ -389,7 +389,7 @@ align-items: center;
                         <!-- Flex container to keep button and rating on the same line -->
                         <div style="display: flex; align-items: center; justify-content: center;">
                             <div style="margin-right: 10px;"><?php echo $btn ;?></div>
-                            <div>Rating: <?php echo $result->RATING ;?> <span>&#9733;</span></div>
+                            <div><?php echo $result->PRICE ;?> <span>&#9733;</span></div>
                         </div>
                     </li> 
             </ul>
