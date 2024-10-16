@@ -386,7 +386,7 @@ $_SESSION['departure'] =date_format(date_create($_POST['departure']),"Y-m-d");
 .review-date {
     margin-left: 10px; /* Space between stars and date */
     font-size: 0.9rem; /* Adjust font size for date */
-    color: #555; /* Optional: change color for the date */
+   
 }
 </style>
 
