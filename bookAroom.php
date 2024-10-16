@@ -307,6 +307,45 @@ align-items: center;
 }
 
 
+/* Review Item Structure */
+.review-item {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Review Header Structure */
+.review-header {
+    display: flex;
+    align-items: center; /* Align image and name horizontally */
+}
+
+/* Profile Image Styling */
+.profile-image {
+    width: 40px; /* Smaller image */
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px; /* Space between image and name */
+}
+
+/* Reviewer Info (Name and Star Rating) */
+.review-info {
+    display: flex;
+    flex-direction: column; /* Stack the name and star rating vertically */
+}
+
+/* Star Rating Styling */
+.star-rating span {
+    font-size: 1.2em;
+    color: #f5c518; /* Gold color for the stars */
+}
+
+/* Comment Text */
+.review-item p {
+    margin: 0;
+    padding: 0;
+    color: #555;
+}
 </style>
 
 <div class="col-md-4 col-sm-12 py-2">
