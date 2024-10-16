@@ -342,7 +342,7 @@ align-items: center;
 /* Name Styling */
 .review-info strong {
     font-size: 1em; /* Font size for name */
-    color: #333; /* Darker text color for contrast */
+   
 }
 
 /* Star Rating Styling */
@@ -354,7 +354,7 @@ align-items: center;
 /* Comment Text */
 .review-text {
     font-size: 0.95em; /* Font size for review text */
-    color: #666; /* Grey color for comment text */
+    
     margin-top: 5px; /* Space above the comment */
 }
 </style>
