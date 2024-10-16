@@ -431,6 +431,22 @@ align-items: center;
                             <strong>User3:</strong>
                             <p>Excellent service and good ambiance.</p>
                         </div>
+                        <div class="review-item">
+                            <strong>User3:</strong>
+                            <p>Excellent service and good ambiance.</p>
+                        </div>
+                        <div class="review-item">
+                            <strong>User3:</strong>
+                            <p>Excellent service and good ambiance.</p>
+                        </div>
+                        <div class="review-item">
+                            <strong>User3:</strong>
+                            <p>Excellent service and good ambiance.</p>
+                        </div>
+                        <div class="review-item">
+                            <strong>User3:</strong>
+                            <p>Excellent service and good ambiance.</p>
+                        </div>
                         <!-- Add more reviews dynamically -->
                     </div>
                 </div>
