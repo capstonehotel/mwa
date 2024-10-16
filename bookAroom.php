@@ -482,7 +482,10 @@ $ratingCounts = [
             <form method="POST" action="index.php?p=accomodation">
                 <input type="hidden" name="ROOMPRICE" value="<?php echo $result->PRICE ;?>">
                 <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID ;?>">
-                <?php echo $btn ;?>
+                <div>
+                                <!-- Add an onclick event to the button to prevent modal opening -->
+                                <button type="button" onclick="event.stopPropagation();"><?php echo $btn; ?></button>
+                            </div>
             </form>
             <!-- Rating Section -->
             <div class="rating-section mb-4" style="margin-top: 30px;">
