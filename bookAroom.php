@@ -260,7 +260,7 @@ align-items: center;
     margin-bottom: 10px;
 }
 
-.star-rating {
+.star-rating-top {
     direction: rtl;
     display: inline-flex;
     font-size: 1.5em;
@@ -268,18 +268,18 @@ align-items: center;
     align-self: flex-start;
 }
 
-.star-rating input {
+.star-rating-top input {
     display: none;
 }
 
-.star-rating label {
+.star-rating-top label {
     color: #ddd;
     cursor: pointer;
 }
 
-.star-rating label:hover, 
-.star-rating label:hover ~ label,
-.star-rating input:checked ~ label {
+.star-rating-top label:hover, 
+.star-rating-top label:hover ~ label,
+.star-rating-top input:checked ~ label {
     color: #f5c518;
 }
 
@@ -448,7 +448,7 @@ align-items: center;
                     <div class="comment-section">
                         <!-- Comment Label and Star Rating aligned to left -->
                         <label for="comment">Leave a Comment:</label>
-                        <div class="star-rating">
+                        <div class="star-rating-top">
                             <input type="radio" id="5-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="5" />
                             <label for="5-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
                             <input type="radio" id="4-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="4" />
