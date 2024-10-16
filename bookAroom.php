@@ -439,7 +439,7 @@ $ratingCounts = [
         <div class="modal-header">
             <h5 class="modal-title" id="roomModalLabel<?php echo $result->ROOMID; ?>"><?php echo $result->ROOM; ?></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    <span aria-hidden="true"><i class="fas fa-times"></i></span>
+            <i class="fas fa-times"></i>
 </button>
 
         </div>
