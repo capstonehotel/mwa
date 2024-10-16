@@ -235,8 +235,9 @@ align-items: center;
     border-radius: 5px;
     padding: 10px;
     margin-top: 15px;
-    margin-left: 10px;  /* Add margin to match the comment card */
-    margin-right: 50px; /* Add margin to match the comment card */
+    margin-left: 0;  /* Ensure no additional margin on the left */
+    margin-right: 0; /* Ensure no additional margin on the right */
+    box-sizing: border-box; /* Include padding in width calculations */
 }
 
 .review-item {
