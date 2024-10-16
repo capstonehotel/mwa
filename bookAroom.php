@@ -386,9 +386,11 @@ align-items: center;
                 <li>Remaining Rooms : <?php echo $resNum ;?></li>   
                 
                 <li style="list-style:none; margin: 20px 25px 0 0;">
-                        <!-- Flex container to align rating left and button right -->
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div><?php echo $result->PRICE ;?> <span>&#9733;</span></div>
+                        <!-- Flex container to align rating left and button centered -->
+                        <div style="display: flex; justify-content: center; align-items: center; position: relative;">
+                            <!-- Rating on the left -->
+                            <div style="position: absolute; left: 0;"><?php echo $result->PRICE ;?> <span>&#9733;</span></div>
+                            <!-- Button in the center -->
                             <div><?php echo $btn ;?></div>
                         </div>
                     </li>  
