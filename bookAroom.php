@@ -423,6 +423,7 @@ align-items: center;
                 <li><?php echo $result->ROOMDESC ;?></li>
                 <li>Number Person : <?php echo $result->NUMPERSON ;?></li>
                 <li>Remaining Rooms : <?php echo $resNum ;?></li>
+                <li>Rating: <?php echo $result->PRICE ;?> <span>&#9733;</span> <!-- Star icon --></li>
             </ul>
 
             <!-- Star Rating System -->
