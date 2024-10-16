@@ -366,6 +366,8 @@ $_SESSION['departure'] =date_format(date_create($_POST['departure']),"Y-m-d");
     font-size: 0.9em; /* Adjusted size for stars */
     color: #f5c518; /* Gold color for stars */
     margin-top: 2px; /* Space above the star rating */
+    display: flex;
+    align-items: center;
 }
 
 /* Comment Text */
@@ -554,7 +556,7 @@ $ratingCounts = [
                     </div>
 
                     <!-- Scrollable Reviews Section -->
-                    <div class="scrollable-reviews">
+<div class="scrollable-reviews">
     <div class="review-item">
         <div class="review-header">
             <img src="profile.jpg" alt="User1 Profile" class="profile-image">
@@ -565,14 +567,13 @@ $ratingCounts = [
                     <span class="icon-star"><i class="fas fa-star"></i></span>
                     <span class="icon-star"><i class="fas fa-star"></i></span>
                     <span class="icon-star"><i class="fas fa-star"></i></span>
-                    <span class="icon-star"><i class="fas fa-star"></i></span>
                     <span class="review-date"> 10/15/2024</span> <!-- Example date -->
                 </div>
             </div>
         </div>
         <p class="review-text">Great room, very comfortable!</p>
     </div>
-</div>
+
 
     <div class="review-item">
         <div class="review-header">
