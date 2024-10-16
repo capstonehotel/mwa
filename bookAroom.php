@@ -612,39 +612,45 @@ $ratingCounts = [
 <script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
 <script>
 $(document).ready(function () {
-$('[id^="roomModal"]').on('shown.bs.modal', function () {
-    const roomId = $(this).attr('id').replace('roomModal', '');
-    const img = document.getElementById('roomImage' + roomId);
+    // Initialize variables for Panzoom and the zoom buttons outside the modal open handler
+    let panzoom;
+    
+    $('[id^="roomModal"]').on('shown.bs.modal', function () {
+        const roomId = $(this).attr('id').replace('roomModal', '');
+        const img = document.getElementById('roomImage' + roomId);
+        
+        if (!img) {
+            console.error('Image element not found');
+            return;
+        }
 
-    if (!img) {
-        console.error('Image element not found');
-        return;
-    }
+        // Initialize Panzoom on the image only once
+        panzoom = Panzoom(img, {
+            maxScale: 3, // Adjust max zoom level if needed
+            minScale: 1, // Minimum zoom level
+            contain: 'outside' // Prevent zooming out of view
+        });
 
-    // Initialize Panzoom on the image
-    const panzoom = Panzoom(img, {
-        maxScale: 3, // Adjust max zoom level if needed
-        minScale: 1, // Minimum zoom level
-        contain: 'outside' // Prevent zooming out of view
-    });
+        // Zoom buttons
+        const zoomInBtn = document.getElementById('zoomInBtn' + roomId);
+        const zoomOutBtn = document.getElementById('zoomOutBtn' + roomId);
 
-    // Zoom buttons
-    const zoomInBtn = document.getElementById('zoomInBtn' + roomId);
-    const zoomOutBtn = document.getElementById('zoomOutBtn' + roomId);
+        $(zoomInBtn).off('click').on('click', function () {
+            panzoom.zoomIn(); // Zoom in using Panzoom
+        });
 
-    $(zoomInBtn).on('click', function () {
-        panzoom.zoomIn(); // Zoom in using Panzoom
-    });
-
-    $(zoomOutBtn).on('click', function () {
-        panzoom.zoomOut(); // Zoom out using Panzoom
+        $(zoomOutBtn).off('click').on('click', function () {
+            panzoom.zoomOut(); // Zoom out using Panzoom
+        });
     });
 
     // Reset Panzoom when modal is closed
     $('[id^="roomModal"]').on('hidden.bs.modal', function () {
-        panzoom.reset(); // Reset the zoom and pan when the modal is closed
+        if (panzoom) {
+            panzoom.reset(); // Reset the zoom and pan when the modal is closed
+            panzoom = null; // Reset panzoom instance
+        }
     });
-});
 });
 
 </script>
