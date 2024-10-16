@@ -439,7 +439,7 @@ $ratingCounts = [
         <div class="modal-header">
             <h5 class="modal-title" id="roomModalLabel<?php echo $result->ROOMID; ?>"><?php echo $result->ROOM; ?></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <i class="fas fa-times"></i>
+    <span aria-hidden="true"><i class="fas fa-times"></i></span>
 </button>
 
         </div>
@@ -669,11 +669,46 @@ $('[id^="roomModal"]').on('shown.bs.modal', function () {
         detectXSS(commentInput, 'Comment'); // XSS detection for the comment card
     });
 </script>
-<script>
+<!-- <script>
     function openModal(roomId) {
     $('#roomModal' + roomId).modal('show');
 }
 
+</script> -->
+<script>
+$(document).ready(function() {
+    // Add click handler for close button
+    $('.modal .close').on('click', function() {
+        $(this).closest('.modal').modal('hide');
+    });
+
+    // Alternative close methods
+    $('.modal').on('click', '.close', function() {
+        $(this).closest('.modal').modal('hide');
+    });
+
+    // Add keyboard escape key handler
+    $(document).on('keydown', function(e) {
+        if (e.key === 'Escape') {
+            $('.modal').modal('hide');
+        }
+    });
+
+    // Ensure proper modal initialization
+    $('[data-dismiss="modal"]').on('click', function() {
+        $(this).closest('.modal').modal('hide');
+    });
+
+    // Function to open modal
+    window.openModal = function(roomId) {
+        $('#roomModal' + roomId).modal({
+            backdrop: true,
+            keyboard: true,
+            focus: true,
+            show: true
+        });
+    };
+});
 </script>
 
 
