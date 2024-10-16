@@ -675,41 +675,6 @@ $('[id^="roomModal"]').on('shown.bs.modal', function () {
 }
 
 </script>
-<script>
-$(document).ready(function() {
-    // Add click handler for close button
-    $('.modal .close').on('click', function() {
-        $(this).closest('.modal').modal('hide');
-    });
-
-    // Alternative close methods
-    $('.modal').on('click', '.close', function() {
-        $(this).closest('.modal').modal('hide');
-    });
-
-    // Add keyboard escape key handler
-    $(document).on('keydown', function(e) {
-        if (e.key === 'Escape') {
-            $('.modal').modal('hide');
-        }
-    });
-
-    // Ensure proper modal initialization
-    $('[data-dismiss="modal"]').on('click', function() {
-        $(this).closest('.modal').modal('hide');
-    });
-
-    // Function to open modal
-    window.openModal = function(roomId) {
-        $('#roomModal' + roomId).modal({
-            backdrop: true,
-            keyboard: true,
-            focus: true,
-            show: true
-        });
-    };
-});
-</script>
 
 
 <?php  
