@@ -475,7 +475,7 @@ align-items: center;
 <div class="scrollable-reviews">
     <div class="review-item">
         <div class="review-header">
-            <img src="profile1.jpg" alt="User1 Profile" class="profile-image">
+            <img src="profile.jpg" alt="User1 Profile" class="profile-image">
             <div class="review-info">
                 <strong>User1</strong>
                 <div class="star-rating">
@@ -487,36 +487,53 @@ align-items: center;
     </div>
     <div class="review-item">
         <div class="review-header">
-            <img src="profile2.jpg" alt="User2 Profile" class="profile-image">
+            <img src="profile.jpg" alt="User1 Profile" class="profile-image">
             <div class="review-info">
-                <strong>User2</strong>
+                <strong>User1</strong>
                 <div class="star-rating">
-                    <span>⭐⭐⭐</span>
+                    <span>⭐⭐⭐⭐⭐</span> <!-- 5 stars for a perfect rating -->
                 </div>
             </div>
         </div>
-        <p>Nice view, but could be cleaner.</p>
+        <p class="review-text">Great room, very comfortable!</p>
     </div>
-                        <div class="review-item">
-                            <strong>User3:</strong>
-                            <p>Excellent service and good ambiance.</p>
-                        </div>
-                        <div class="review-item">
-                            <strong>User3:</strong>
-                            <p>Excellent service and good ambiance.</p>
-                        </div>
-                        <div class="review-item">
-                            <strong>User3:</strong>
-                            <p>Excellent service and good ambiance.</p>
-                        </div>
-                        <div class="review-item">
-                            <strong>User3:</strong>
-                            <p>Excellent service and good ambiance.</p>
-                        </div>
-                        <div class="review-item">
-                            <strong>User3:</strong>
-                            <p>Excellent service and good ambiance.</p>
-                        </div>
+    <div class="review-item">
+        <div class="review-header">
+            <img src="profile.jpg" alt="User1 Profile" class="profile-image">
+            <div class="review-info">
+                <strong>User1</strong>
+                <div class="star-rating">
+                    <span>⭐⭐⭐⭐⭐</span> <!-- 5 stars for a perfect rating -->
+                </div>
+            </div>
+        </div>
+        <p class="review-text">Great room, very comfortable!</p>
+    </div>
+    <div class="review-item">
+        <div class="review-header">
+            <img src="profile.jpg" alt="User1 Profile" class="profile-image">
+            <div class="review-info">
+                <strong>User1</strong>
+                <div class="star-rating">
+                    <span>⭐⭐⭐⭐⭐</span> <!-- 5 stars for a perfect rating -->
+                </div>
+            </div>
+        </div>
+        <p class="review-text">Great room, very comfortable!</p>
+    </div>
+    <div class="review-item">
+        <div class="review-header">
+            <img src="profile.jpg" alt="User1 Profile" class="profile-image">
+            <div class="review-info">
+                <strong>User1</strong>
+                <div class="star-rating">
+                    <span>⭐⭐⭐⭐⭐</span> <!-- 5 stars for a perfect rating -->
+                </div>
+            </div>
+        </div>
+        <p class="review-text">Great room, very comfortable!</p>
+    </div>
+                
                         <!-- Add more reviews dynamically -->
                     </div>
                 </div>
