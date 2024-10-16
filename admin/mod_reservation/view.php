@@ -21,34 +21,20 @@ $code=$_GET['code'];
         $result = mysqli_query($connection, $query);
         if ($result) {
             while ($row = mysqli_fetch_assoc($result)) { ?>
-
-                                <?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
+ <?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
                                     <?php if ($row['STATUS'] == "Confirmed" ) { ?>
-        <button class="btn btn-danger btn-sm ml-2 action-btn" data-action="cancel" data-code="<?php echo $row['CONFIRMATIONCODE']; ?>"><i class="icon-edit">Cancel</i></button>
-        <button class="btn btn-success btn-sm ml-2 action-btn" data-action="checkin" data-code="<?php echo $row['CONFIRMATIONCODE']; ?>"><i class="icon-edit">Check in</i></button>
-    <?php } elseif($row['STATUS'] == 'Checkedin') {?>
-        <button class="btn btn-warning btn-sm ml-2 action-btn" data-action="checkout" data-code="<?php echo $row['CONFIRMATIONCODE'];?>"><i class="icon-edit">Check out</i></button>
-    <?php } elseif($row['STATUS'] == 'Checkedout') {?>
-        <button class="btn btn-danger btn-sm ml-2 action-btn" data-action="delete" data-code="<?php echo $row['CONFIRMATIONCODE'];?>"><i class="icon-edit">Delete</i></button>
-    <?php } else {?>
-        <button class="btn btn-success btn-sm ml-2 action-btn" data-action="confirm" data-code="<?php echo $row['CONFIRMATIONCODE']; ?>"><i class="icon-edit">Confirm</i></button>
-    <?php } ?>
-<?php } ?>
-<!-- <?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
-    <?php if ($row['STATUS'] == "Confirmed" ) { ?>
-        <button class="btn btn-success btn-sm ml-2" disabled>Check in</button>
-    <?php } ?>
-    <a href="controller.php?action=cancel&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-danger btn-sm ml-2" onclick="cancelBooking(event)"><i class="icon-edit">Cancel</a>
+                                        <a href="controller.php?action=cancel&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-danger btn-sm ml-2" ><i class="icon-edit">Cancel</a>
+                                        <a href="controller.php?action=checkin&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-success btn-sm ml-2" ><i class="icon-edit">Check in</a>
+                                    <?php } elseif($row['STATUS'] == 'Checkedin') {?>
+                                        <a href="controller.php?action=checkout&code=<?php echo $row['CONFIRMATIONCODE'];?>" class="btn btn-warning btn-sm ml-2" ><i class="icon-edit">Check out</a>
+                                    <?php } elseif($row['STATUS'] == 'Checkedout') {?>
+                                <a href="controller.php?action=delete&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-danger btn-sm ml-2    " ><i class="icon-edit">Delete</a>
+                                    <?php } else {?>
+                                        <a href="controller.php?action=confirm&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-success btn-sm ml-2"  ><i class="icon-edit">Confirm</a>
 
-    <?php } elseif($row['STATUS'] == 'Checkedin') {?>
-        <a href="controller.php?action=checkout&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-warning btn-sm ml-2" onclick="checkoutBooking(event)"><i class="icon-edit">Check out</a>
-    <?php } elseif($row['STATUS'] == 'Checkedout') {?>
-        <a href="controller.php?action=delete&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-danger btn-sm ml-2" onclick="deleteBooking(event)"><i class="icon-edit">Delete</a>
-    <?php } else {?>
-        <a href="controller.php?action=confirm&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-success btn-sm ml-2" onclick="confirmBooking(event)"><i class="icon-edit">Confirm</a>
-    <?php } ?>
-<?php } ?> -->
 
+                                            <?php } ?>
+                                 <?php } ?>
 
                                  <!-- <a href="controller.php?action=delete&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-danger btn-sm " style="margin-left: 3px!important;"><i class="icon-edit">Delete</a>  -->
             
@@ -80,7 +66,7 @@ $code=$_GET['code'];
 
  </div> <br> <hr>
   <?php } 
-            
+            }
         
 
 
