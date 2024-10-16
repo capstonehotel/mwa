@@ -389,7 +389,7 @@ align-items: center;
                         <!-- Flex container to align rating left and button centered -->
                         <div style="display: flex; justify-content: center; align-items: center; position: relative;">
                             <!-- Rating on the left -->
-                            <div style="position: absolute; left: 5;"><?php echo $result->PRICE ;?> <span>&#9733;</span></div>
+                            <div style="position: absolute; left: -5;"><?php echo $result->PRICE ;?> <span>&#9733;</span></div>
                             <!-- Button in the center -->
                             <div><?php echo $btn ;?></div>
                         </div>
