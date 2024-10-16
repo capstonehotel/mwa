@@ -233,9 +233,9 @@ align-items: center;
     overflow-y: auto;
     border: 1px solid #ccc;
     border-radius: 5px;
-    padding: 10px;
+    padding: 20px;
     margin-top: 15px;
-    padding: 10px;/* Add margin to match the comment card */
+   
 }
 
 .review-item {
