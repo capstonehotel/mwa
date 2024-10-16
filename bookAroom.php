@@ -460,7 +460,7 @@ $ratingCounts = [
                 <?php echo $btn ;?>
             </form>
             <!-- Rating Section -->
-            <div class="rating-section mb-4">
+            <div class="rating-section mb-4" style="margin-top: 10px;">
                             <!-- Overall Average Rating -->
                             <div class="average-rating d-flex align-items-center mb-2">
                                 <span class="stars mr-2">
