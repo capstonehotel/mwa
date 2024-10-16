@@ -406,7 +406,21 @@ align-items: center;
     </div>
 </form>
 </div>
+<?php
+// Assuming you have fetched $result from your database containing room details
+// Also, fetch $averageRating, $totalReviews, $ratingCounts, and $reviews for the room
 
+// Example Variables (Replace with actual data fetching logic)
+$averageRating = 4.2; // Calculated from user reviews
+$totalReviews = 200;
+$ratingCounts = [
+    5 => 160,
+    4 => 30,
+    3 => 8,
+    2 => 1,
+    1 => 1
+];
+?>
 <!-- Modal -->
 <div class="modal fade zoom" id="roomModal<?php echo $result->ROOMID; ?>" tabindex="-1" role="dialog" aria-labelledby="roomModalLabel<?php echo $result->ROOMID; ?>" aria-hidden="true">
 <div class="modal-dialog modal-xl" role="document">
@@ -440,25 +454,51 @@ align-items: center;
                 <li>Remaining Rooms : <?php echo $resNum ;?></li>
             </ul>
 
-            <!-- Star Rating System -->
-            <!-- <div class="star-rating">
-                <input type="radio" id="5-stars<?php echo $result->ROOMID; ?>" name="rating<?php echo $result->ROOMID; ?>" value="5" />
-                <label for="5-stars<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-                <input type="radio" id="4-stars<?php echo $result->ROOMID; ?>" name="rating<?php echo $result->ROOMID; ?>" value="4" />
-                <label for="4-stars<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-                <input type="radio" id="3-stars<?php echo $result->ROOMID; ?>" name="rating<?php echo $result->ROOMID; ?>" value="3" />
-                <label for="3-stars<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-                <input type="radio" id="2-stars<?php echo $result->ROOMID; ?>" name="rating<?php echo $result->ROOMID; ?>" value="2" />
-                <label for="2-stars<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-                <input type="radio" id="1-star<?php echo $result->ROOMID; ?>" name="rating<?php echo $result->ROOMID; ?>" value="1" />
-                <label for="1-star<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-            </div> -->
-
             <form method="POST" action="index.php?p=accomodation">
                 <input type="hidden" name="ROOMPRICE" value="<?php echo $result->PRICE ;?>">
                 <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID ;?>">
                 <?php echo $btn ;?>
             </form>
+            <!-- Rating Section -->
+            <div class="rating-section mb-4">
+                            <!-- Overall Average Rating -->
+                            <div class="average-rating d-flex align-items-center mb-2">
+                                <span class="stars mr-2">
+                                    <?php
+                                        // Display filled and empty stars based on average rating
+                                        $fullStars = floor($averageRating);
+                                        $halfStar = ($averageRating - $fullStars) >= 0.5 ? 1 : 0;
+                                        $emptyStars = 5 - $fullStars - $halfStar;
+                                        for ($i = 0; $i < $fullStars; $i++) {
+                                            echo '<i class="fas fa-star text-warning"></i>';
+                                        }
+                                        if ($halfStar) {
+                                            echo '<i class="fas fa-star-half-alt text-warning"></i>';
+                                        }
+                                        for ($i = 0; $i < $emptyStars; $i++) {
+                                            echo '<i class="far fa-star text-warning"></i>';
+                                        }
+                                    ?>
+                                </span>
+                                <span class="average-rating-value mr-2"><?php echo number_format($averageRating, 1); ?> / 5</span>
+                                <span class="total-reviews text-muted">(<?php echo $totalReviews; ?> Reviews)</span>
+                            </div>
+
+                            <!-- Rating Breakdown -->
+                            <div class="rating-breakdown">
+                                <?php foreach (array_reverse($ratingCounts, true) as $star => $count): 
+                                    $percentage = $totalReviews > 0 ? ($count / $totalReviews) * 100 : 0;
+                                ?>
+                                <div class="rating-row d-flex align-items-center mb-1">
+                                    <span class="star-label mr-2"><?php echo $star; ?> Stars</span>
+                                    <div class="progress flex-grow-1 mr-2" style="height: 10px;">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $percentage; ?>%;" aria-valuenow="<?php echo $percentage; ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <span class="rating-count text-muted"><?php echo $count; ?></span>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
         </div>
        <!-- Comment Section -->
                     <div class="comment-section">
