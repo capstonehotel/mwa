@@ -500,7 +500,6 @@ $ratingCounts = [
                             </div>
                         </div>
         </div>
-                                </div>
        <!-- Comment Section -->
                     <div class="comment-section">
                         <!-- Comment Label and Star Rating aligned to left -->
