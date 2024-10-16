@@ -681,7 +681,7 @@ $('[id^="roomModal"]').on('shown.bs.modal', function () {
 </script>
 
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // XSS Detection Function
@@ -697,7 +697,7 @@ $('[id^="roomModal"]').on('shown.bs.modal', function () {
         const commentInput = document.getElementById('comment<?php echo $result->ROOMID; ?>'); // Comment field
         detectXSS(commentInput, 'Comment'); // XSS detection for the comment card
     });
-</script>
+</script> -->
 <script>
     function openModal(roomId) {
     $('#roomModal' + roomId).modal('show');
