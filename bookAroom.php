@@ -375,6 +375,17 @@ $_SESSION['departure'] =date_format(date_create($_POST['departure']),"Y-m-d");
     margin-left: 50px; /* Indent to align with star rating */
     /* Adding this margin-left will ensure the comment text is aligned with the stars */
 }
+
+.icon-star {
+    color: gold; /* Star color */
+    margin-right: 3px; /* Space between stars */
+}
+
+.review-date {
+    margin-left: 10px; /* Space between stars and date */
+    font-size: 0.9rem; /* Adjust font size for date */
+    color: #555; /* Optional: change color for the date */
+}
 </style>
 
 <div class="col-md-4 col-sm-12 py-2">
@@ -543,19 +554,26 @@ $ratingCounts = [
                     </div>
 
                     <!-- Scrollable Reviews Section -->
-<div class="scrollable-reviews">
+                    <div class="scrollable-reviews">
     <div class="review-item">
         <div class="review-header">
             <img src="profile.jpg" alt="User1 Profile" class="profile-image">
             <div class="review-info">
                 <strong>User1</strong>
                 <div class="star-rating">
-                    <span>⭐⭐⭐⭐⭐</span> <!-- 5 stars for a perfect rating -->
+                    <span class="icon-star"><i class="fas fa-star"></i></span>
+                    <span class="icon-star"><i class="fas fa-star"></i></span>
+                    <span class="icon-star"><i class="fas fa-star"></i></span>
+                    <span class="icon-star"><i class="fas fa-star"></i></span>
+                    <span class="icon-star"><i class="fas fa-star"></i></span>
+                    <span class="review-date"> 10/15/2024</span> <!-- Example date -->
                 </div>
             </div>
         </div>
         <p class="review-text">Great room, very comfortable!</p>
     </div>
+</div>
+
     <div class="review-item">
         <div class="review-header">
             <img src="profile.jpg" alt="User1 Profile" class="profile-image">
