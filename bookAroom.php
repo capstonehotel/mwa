@@ -368,13 +368,13 @@ align-items: center;
     
     <div class="card" style="cursor: pointer;" onclick="openModal(<?php echo $result->ROOMID; ?>)">
         <figure class="gallery-item" style="text-align: center; margin-top: 10px;">
-            <a href="#" data-toggle="modal" data-target="#roomModal<?php echo $result->ROOMID; ?>">
+            <!-- <a href="#" data-toggle="modal" data-target="#roomModal<?php echo $result->ROOMID; ?>"> -->
                 <?php if(is_file('https://mcchmhotelreservation.com/admin/mod_room/'.$result->ROOMIMAGE)): ?>
                     <img class="img-responsive img-hover" src="room.jpg" style="height: 250px; width: 90%;"> 
                 <?php else: ?>
                     <img class="img-responsive img-hover" src="../admin/mod_room/<?php echo $result->ROOMIMAGE; ?>" style="height: 250px; width: 90%;"> 
                 <?php endif; ?>
-            </a>
+            <!-- </a> -->
             <figcaption class="img-title-active"><br>
                 <h5> &#8369 <?php echo $result->PRICE ;?></h5>    
             </figcaption>
