@@ -377,17 +377,17 @@ $_SESSION['departure'] =date_format(date_create($_POST['departure']),"Y-m-d");
     margin-left: 50px; /* Indent to align with star rating */
     /* Adding this margin-left will ensure the comment text is aligned with the stars */
 }
-.review-date {
-    margin-left: 10px; /* Space between stars and date */
-    font-size: 0.9rem; /* Adjust font size for date */
-   
-}
+
 .icon-star {
     color: gold; /* Star color */
     margin-right: 3px; /* Space between stars */
 }
 
-
+.review-date {
+    margin-left: 10px; /* Space between stars and date */
+    font-size: 0.9rem; /* Adjust font size for date */
+    color: #555; /* Optional: change color for the date */
+}
 </style>
 
 <div class="col-md-4 col-sm-12 py-2">
