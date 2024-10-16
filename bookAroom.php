@@ -365,8 +365,8 @@ align-items: center;
 <form method="POST" action="index.php?p=accomodation">
     <input type="hidden" name="ROOMPRICE" value="<?php echo $result->PRICE ;?>">
     <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID ;?>">
-    <a href="#" data-toggle="modal" data-target="#roomModal<?php echo $result->ROOMID; ?>" style="text-decoration: none;">
-    <div class="card">
+    
+    <div class="card" style="cursor: pointer;" onclick="openModal(<?php echo $result->ROOMID; ?>)">
         <figure class="gallery-item" style="text-align: center; margin-top: 10px;">
             <a href="#" data-toggle="modal" data-target="#roomModal<?php echo $result->ROOMID; ?>">
                 <?php if(is_file('https://mcchmhotelreservation.com/admin/mod_room/'.$result->ROOMIMAGE)): ?>
@@ -374,7 +374,7 @@ align-items: center;
                 <?php else: ?>
                     <img class="img-responsive img-hover" src="../admin/mod_room/<?php echo $result->ROOMIMAGE; ?>" style="height: 250px; width: 90%;"> 
                 <?php endif; ?>
-            
+            </a>
             <figcaption class="img-title-active"><br>
                 <h5> &#8369 <?php echo $result->PRICE ;?></h5>    
             </figcaption>
@@ -398,7 +398,6 @@ align-items: center;
             </ul>
         </div>
     </div>
-    </a>
 </form>
 </div>
 
@@ -601,6 +600,12 @@ $('[id^="roomModal"]').on('shown.bs.modal', function () {
     });
 });
 });
+
+
+
+function openModal(roomId) {
+    $('#roomModal' + roomId).modal('show');
+}
 
 </script>
 
