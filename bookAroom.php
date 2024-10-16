@@ -438,7 +438,7 @@ $ratingCounts = [
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="roomModalLabel<?php echo $result->ROOMID; ?>"><?php echo $result->ROOM; ?></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" onclick="closeRoomModal(<?php echo $result->ROOMID; ?>)" aria-label="Close">
     <span aria-hidden="true"><i class="fas fa-times"></i></span>
 </button>
         </div>
@@ -670,6 +670,11 @@ $('[id^="roomModal"]').on('shown.bs.modal', function () {
     function openModal(roomId) {
     $('#roomModal' + roomId).modal('show');
 }
+
+    function closeRoomModal(roomId) {
+        $('#roomModal' + roomId).modal('hide');
+    }
+
 
 </script>
 
