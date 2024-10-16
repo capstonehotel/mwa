@@ -231,12 +231,12 @@ align-items: center;
  .scrollable-reviews {
     max-height: 300px; /* Increased height */
     overflow-y: auto;
-    width: 100%;
-    border-radius: 5px;
     border: 1px solid #ccc;
+    border-radius: 5px;
     padding: 10px;
-    resize: none;
-   
+    margin-top: 15px;
+    margin-left: 10px;  /* Add margin to match the comment card */
+    margin-right: 50px; /* Add margin to match the comment card */
 }
 
 .review-item {
@@ -249,7 +249,6 @@ align-items: center;
     flex-direction: column;
     margin-top: 20px;
     align-self: flex-start;
-    
 }
 
 .comment-section label {
