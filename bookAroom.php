@@ -501,7 +501,7 @@ $ratingCounts = [
                                 ?>
                                 <div class="rating-row d-flex align-items-center mb-1">
     <span class="star-label mr-2 font-weight-bold" style="width: 30px;"><?php echo $star; ?></span>
-    <div class="progress" style="width: 200px; height: 10px; margin-right: 10px;"> <!-- Set a fixed width -->
+    <div class="progress" style="width: 400px; height: 10px; margin-right: 10px;"> <!-- Set a fixed width -->
         <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $percentage; ?>%;" aria-valuenow="<?php echo $percentage; ?>" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
     <span class="rating-count text-muted"><?php echo $count; ?></span>
