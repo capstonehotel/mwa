@@ -400,155 +400,262 @@ align-items: center;
 </form>
 </div>
 
+<?php
+// Assuming you have fetched $result from your database containing room details
+// Also, fetch $averageRating, $totalReviews, $ratingCounts, and $reviews for the room
+
+// Example Variables (Replace with actual data fetching logic)
+$averageRating = 4.2; // Calculated from user reviews
+$totalReviews = 200;
+$ratingCounts = [
+    5 => 160,
+    4 => 30,
+    3 => 8,
+    2 => 1,
+    1 => 1
+];
+$reviews = [
+    [
+        'username' => 'User1',
+        'profile_image' => 'profile1.jpg',
+        'rating' => 5,
+        'comment' => 'Great room, very comfortable!'
+    ],
+    // Add more reviews as needed
+];
+?>
+
 <!-- Modal -->
 <div class="modal fade zoom" id="roomModal<?php echo $result->ROOMID; ?>" tabindex="-1" role="dialog" aria-labelledby="roomModalLabel<?php echo $result->ROOMID; ?>" aria-hidden="true">
-<div class="modal-dialog modal-xl" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="roomModalLabel<?php echo $result->ROOMID; ?>"><?php echo $result->ROOM; ?></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="img-container">
-                <?php if(is_file('https://mcchmhotelreservation.com/admin/mod_room/'.$result->ROOMIMAGE)): ?>
-                    <img id="roomImage<?php echo $result->ROOMID; ?>" class="img-responsive img-hover" src="room.jpg"> 
-                <?php else: ?>
-                    <img id="roomImage<?php echo $result->ROOMID; ?>" class="img-responsive img-hover" src="../admin/mod_room/<?php echo $result->ROOMIMAGE; ?>"> 
-                <?php endif; ?>
-                <div class="zoom-buttons">
-                    <button id="zoomInBtn<?php echo $result->ROOMID; ?>" class="btn btn-secondary btn-sm" data-zoom="1.3"><i class="fas fa-search-plus"></i></button>
-                    <button id="zoomOutBtn<?php echo $result->ROOMID; ?>" class="btn btn-secondary btn-sm" data-zoom="0.7"><i class="fas fa-search-minus"></i></button>
-                </div>
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="roomModalLabel<?php echo $result->ROOMID; ?>"><?php echo htmlspecialchars($result->ROOM); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-        </div>
-        <div class="col-md-6"> 
-            <ul>
-                <h4><p> &#8369 <?php echo $result->PRICE ;?></p></h4>
-                <li><?php echo $result->ROOMDESC ;?></li>
-                <li>Number Person : <?php echo $result->NUMPERSON ;?></li>
-                <li>Remaining Rooms : <?php echo $resNum ;?></li>
-            </ul>
 
-            <!-- Star Rating System -->
-            <!-- <div class="star-rating">
-                <input type="radio" id="5-stars<?php echo $result->ROOMID; ?>" name="rating<?php echo $result->ROOMID; ?>" value="5" />
-                <label for="5-stars<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-                <input type="radio" id="4-stars<?php echo $result->ROOMID; ?>" name="rating<?php echo $result->ROOMID; ?>" value="4" />
-                <label for="4-stars<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-                <input type="radio" id="3-stars<?php echo $result->ROOMID; ?>" name="rating<?php echo $result->ROOMID; ?>" value="3" />
-                <label for="3-stars<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-                <input type="radio" id="2-stars<?php echo $result->ROOMID; ?>" name="rating<?php echo $result->ROOMID; ?>" value="2" />
-                <label for="2-stars<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-                <input type="radio" id="1-star<?php echo $result->ROOMID; ?>" name="rating<?php echo $result->ROOMID; ?>" value="1" />
-                <label for="1-star<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-            </div> -->
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <div class="row">
+                    <!-- Room Image and Zoom Buttons -->
+                    <div class="col-md-6">
+                        <div class="img-container position-relative">
+                            <?php if(is_file('https://mcchmhotelreservation.com/admin/mod_room/'.$result->ROOMIMAGE)): ?>
+                                <img id="roomImage<?php echo $result->ROOMID; ?>" class="img-responsive img-hover" src="room.jpg" alt="Room Image"> 
+                            <?php else: ?>
+                                <img id="roomImage<?php echo $result->ROOMID; ?>" class="img-responsive img-hover" src="../admin/mod_room/<?php echo htmlspecialchars($result->ROOMIMAGE); ?>" alt="Room Image"> 
+                            <?php endif; ?>
+                            <div class="zoom-buttons position-absolute">
+                                <button id="zoomInBtn<?php echo $result->ROOMID; ?>" class="btn btn-secondary btn-sm zoom-btn" data-zoom="1.3" title="Zoom In"><i class="fas fa-search-plus"></i></button>
+                                <button id="zoomOutBtn<?php echo $result->ROOMID; ?>" class="btn btn-secondary btn-sm zoom-btn" data-zoom="0.7" title="Zoom Out"><i class="fas fa-search-minus"></i></button>
+                            </div>
+                        </div>
+                    </div>
 
-            <form method="POST" action="index.php?p=accomodation">
-                <input type="hidden" name="ROOMPRICE" value="<?php echo $result->PRICE ;?>">
-                <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID ;?>">
-                <?php echo $btn ;?>
-            </form>
-        </div>
-       <!-- Comment Section -->
-                    <div class="comment-section">
-                        <!-- Comment Label and Star Rating aligned to left -->
-                        <label for="comment">Leave a Comment:</label>
-                        <div class="star-rating-top">
-                            <input type="radio" id="5-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="5" />
-                            <label for="5-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-                            <input type="radio" id="4-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="4" />
-                            <label for="4-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-                            <input type="radio" id="3-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="3" />
-                            <label for="3-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-                            <input type="radio" id="2-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="2" />
-                            <label for="2-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-                            <input type="radio" id="1-star-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="1" />
-                            <label for="1-star-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+                    <!-- Room Details and Booking Button -->
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <h4><p>&#8369; <?php echo number_format($result->PRICE, 2); ?></p></h4>
+                            <li><?php echo htmlspecialchars($result->ROOMDESC); ?></li>
+                            <li>Number of Persons: <?php echo intval($result->NUMPERSON); ?></li>
+                            <li>Remaining Rooms: <?php echo intval($resNum); ?></li>
+                        </ul>
+
+                        <!-- Rating Section -->
+                        <div class="rating-section mb-4">
+                            <!-- Overall Average Rating -->
+                            <div class="average-rating d-flex align-items-center mb-2">
+                                <span class="stars mr-2">
+                                    <?php
+                                        // Display filled and empty stars based on average rating
+                                        $fullStars = floor($averageRating);
+                                        $halfStar = ($averageRating - $fullStars) >= 0.5 ? 1 : 0;
+                                        $emptyStars = 5 - $fullStars - $halfStar;
+                                        for ($i = 0; $i < $fullStars; $i++) {
+                                            echo '<i class="fas fa-star text-warning"></i>';
+                                        }
+                                        if ($halfStar) {
+                                            echo '<i class="fas fa-star-half-alt text-warning"></i>';
+                                        }
+                                        for ($i = 0; $i < $emptyStars; $i++) {
+                                            echo '<i class="far fa-star text-warning"></i>';
+                                        }
+                                    ?>
+                                </span>
+                                <span class="average-rating-value mr-2"><?php echo number_format($averageRating, 1); ?> / 5</span>
+                                <span class="total-reviews text-muted">(<?php echo $totalReviews; ?> Reviews)</span>
+                            </div>
+
+                            <!-- Rating Breakdown -->
+                            <div class="rating-breakdown">
+                                <?php foreach (array_reverse($ratingCounts, true) as $star => $count): 
+                                    $percentage = $totalReviews > 0 ? ($count / $totalReviews) * 100 : 0;
+                                ?>
+                                <div class="rating-row d-flex align-items-center mb-1">
+                                    <span class="star-label mr-2"><?php echo $star; ?> Stars</span>
+                                    <div class="progress flex-grow-1 mr-2" style="height: 10px;">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $percentage; ?>%;" aria-valuenow="<?php echo $percentage; ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <span class="rating-count text-muted"><?php echo $count; ?></span>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
 
-                        <!-- Comment Message Card -->
-                        <div class="comment-card">
-                            <textarea name="comment" id="comment<?php echo $result->ROOMID; ?>" placeholder="Write your comment here..."></textarea>
-                        </div>
+                        <!-- Booking Form -->
+                        <form method="POST" action="index.php?p=accomodation">
+                            <input type="hidden" name="ROOMPRICE" value="<?php echo htmlspecialchars($result->PRICE); ?>">
+                            <input type="hidden" name="ROOMID" value="<?php echo htmlspecialchars($result->ROOMID); ?>">
+                            <?php echo $btn; ?>
+                        </form>
+                    </div>
+                </div>
 
-                        <!-- Submit and Cancel Buttons -->
-                        <div class="comment-buttons">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                <!-- Comment Section -->
+                <div class="comment-section mt-4">
+                    <h5>Leave a Comment:</h5>
+                    <form method="POST" action="submit_review.php">
+                        <input type="hidden" name="ROOMID" value="<?php echo htmlspecialchars($result->ROOMID); ?>">
+                        <div class="form-group">
+                            <label for="rating-comment<?php echo $result->ROOMID; ?>">Your Rating:</label>
+                            <div class="star-rating">
+                                <?php for ($i = 5; $i >=1; $i--): ?>
+                                    <input type="radio" id="<?php echo $i; ?>-stars-comment<?php echo $result->ROOMID; ?>" name="rating" value="<?php echo $i; ?>" required />
+                                    <label for="<?php echo $i; ?>-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+                                <?php endfor; ?>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="comment<?php echo $result->ROOMID; ?>">Your Comment:</label>
+                            <textarea name="comment" id="comment<?php echo $result->ROOMID; ?>" class="form-control" rows="3" placeholder="Write your comment here..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Submit Review</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         </div>
-                    </div>
+                    </form>
+                </div>
 
-                    <!-- Scrollable Reviews Section -->
-<div class="scrollable-reviews">
-    <div class="review-item">
-        <div class="review-header">
-            <img src="profile.jpg" alt="User1 Profile" class="profile-image">
-            <div class="review-info">
-                <strong>User1</strong>
-                <div class="star-rating">
-                    <span>⭐⭐⭐⭐⭐</span> <!-- 5 stars for a perfect rating -->
+                <!-- Existing Reviews -->
+                <div class="scrollable-reviews mt-4">
+                    <h5>Reviews:</h5>
+                    <?php if(!empty($reviews)): ?>
+                        <?php foreach ($reviews as $review): ?>
+                            <div class="review-item mb-3">
+                                <div class="review-header d-flex align-items-center mb-1">
+                                    <img src="<?php echo htmlspecialchars($review['profile_image'] ?: 'default-profile.jpg'); ?>" alt="<?php echo htmlspecialchars($review['username']); ?> Profile" class="profile-image rounded-circle mr-2" width="40" height="40">
+                                    <div class="review-info">
+                                        <strong><?php echo htmlspecialchars($review['username']); ?></strong>
+                                        <div class="star-rating">
+                                            <?php for ($i = 0; $i < $review['rating']; $i++): ?>
+                                                <i class="fas fa-star text-warning"></i>
+                                            <?php endfor; ?>
+                                            <?php for ($i = $review['rating']; $i < 5; $i++): ?>
+                                                <i class="far fa-star text-warning"></i>
+                                            <?php endfor; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="review-text"><?php echo htmlspecialchars($review['comment']); ?></p>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="text-muted">No reviews yet. Be the first to review this room!</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
-        <p class="review-text">Great room, very comfortable!</p>
     </div>
-    <div class="review-item">
-        <div class="review-header">
-            <img src="profile.jpg" alt="User1 Profile" class="profile-image">
-            <div class="review-info">
-                <strong>User1</strong>
-                <div class="star-rating">
-                    <span>⭐⭐⭐⭐⭐</span> <!-- 5 stars for a perfect rating -->
-                </div>
-            </div>
-        </div>
-        <p class="review-text">Great room, very comfortable!</p>
-    </div>
-    <div class="review-item">
-        <div class="review-header">
-            <img src="profile.jpg" alt="User1 Profile" class="profile-image">
-            <div class="review-info">
-                <strong>User1</strong>
-                <div class="star-rating">
-                    <span>⭐⭐⭐⭐⭐</span> <!-- 5 stars for a perfect rating -->
-                </div>
-            </div>
-        </div>
-        <p class="review-text">Great room, very comfortable!</p>
-    </div>
-    <div class="review-item">
-        <div class="review-header">
-            <img src="profile.jpg" alt="User1 Profile" class="profile-image">
-            <div class="review-info">
-                <strong>User1</strong>
-                <div class="star-rating">
-                    <span>⭐⭐⭐⭐⭐</span> <!-- 5 stars for a perfect rating -->
-                </div>
-            </div>
-        </div>
-        <p class="review-text">Great room, very comfortable!</p>
-    </div>
-    <div class="review-item">
-        <div class="review-header">
-            <img src="profile.jpg" alt="User1 Profile" class="profile-image">
-            <div class="review-info">
-                <strong>User1</strong>
-                <div class="star-rating">
-                    <span>⭐⭐⭐⭐⭐</span> <!-- 5 stars for a perfect rating -->
-                </div>
-            </div>
-        </div>
-        <p class="review-text">Great room, very comfortable!</p>
-    </div>
-                
-                        <!-- Add more reviews dynamically -->
-                    </div>
-                </div>
 </div>
+
+<!-- CSS Styles -->
+<style>
+    .img-container {
+        position: relative;
+    }
+    .zoom-buttons {
+        bottom: 10px;
+        left: 10px;
+    }
+    .zoom-btn {
+        margin-right: 5px;
+    }
+    .star-rating {
+        display: flex;
+        direction: row-reverse;
+        justify-content: flex-end;
+    }
+    .star-rating input {
+        display: none;
+    }
+    .star-rating label {
+        font-size: 1.5em;
+        color: #ccc;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+    .star-rating input:checked ~ label,
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+        color: #FFD700;
+    }
+    .average-rating .stars i {
+        margin-right: 2px;
+    }
+    .progress {
+        height: 10px;
+    }
+    .profile-image {
+        object-fit: cover;
+    }
+    .scrollable-reviews {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+    .scrollable-reviews::-webkit-scrollbar {
+        width: 8px;
+    }
+    .scrollable-reviews::-webkit-scrollbar-thumb {
+        background-color: rgba(0,0,0,0.2);
+        border-radius: 4px;
+    }
+</style>
+
+<!-- JavaScript for Zoom Functionality and Interactive Stars -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Ensure you have included Bootstrap JS and Font Awesome -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function(){
+        // Zoom In and Zoom Out Functionality
+        $('.zoom-btn').on('click', function(e){
+            e.preventDefault();
+            var zoomValue = $(this).data('zoom');
+            var img = $(this).closest('.img-container').find('img');
+            var currentScale = img.data('scale') || 1;
+            var newScale = currentScale * zoomValue;
+            img.css('transform', 'scale(' + newScale + ')');
+            img.data('scale', newScale);
+        });
+
+        // Reset zoom when modal is closed
+        $('.modal').on('hidden.bs.modal', function () {
+            $(this).find('.img-container img').css('transform', 'scale(1)');
+            $(this).find('.img-container img').data('scale', 1);
+        });
+
+        // Interactive Star Ratings in Comment Section
+        $('.star-rating input').on('change', function(){
+            var rating = $(this).val();
+            // You can add additional logic here if needed
+        });
+    });
+</script>
+
 
        
     </div>
