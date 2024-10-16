@@ -236,7 +236,7 @@ align-items: center;
     padding: 10px;
     margin-top: 15px;
     margin-left: 10px;  /* Add margin to match the comment card */
-    margin-right: 10px; /* Add margin to match the comment card */
+    margin-right: 5px; /* Add margin to match the comment card */
 }
 
 .review-item {
