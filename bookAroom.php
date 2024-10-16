@@ -421,7 +421,7 @@ $_SESSION['departure'] =date_format(date_create($_POST['departure']),"Y-m-d");
                             <!-- Rating on the left with a little left margin -->
                             <div style="position: absolute; left: 0; margin-left: -10px;"><?php echo $result->PRICE ;?> <span>&#9733;</span></div>
                             <!-- Button in the center -->
-                            <div><?php echo $btn ;?></div>
+                            <div onclick="event.stopPropagation();"><?php echo $btn ;?></div>
                         </div>
                     </li>  
             </ul>
@@ -482,10 +482,7 @@ $ratingCounts = [
             <form method="POST" action="index.php?p=accomodation">
                 <input type="hidden" name="ROOMPRICE" value="<?php echo $result->PRICE ;?>">
                 <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID ;?>">
-                <div>
-                                <!-- Add an onclick event to the button to prevent modal opening -->
-                                <button type="button" onclick="event.stopPropagation();"><?php echo $btn; ?></button>
-                            </div>
+                <?php echo $btn ;?>
             </form>
             <!-- Rating Section -->
             <div class="rating-section mb-4" style="margin-top: 30px;">
@@ -557,7 +554,7 @@ $ratingCounts = [
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         </div>
                     </div>
-                    <script>
+<script>
 function submitComment(roomId) {
     const textarea = document.getElementById(`comment${roomId}`);
     let comment = textarea.value;
