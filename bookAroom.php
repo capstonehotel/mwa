@@ -385,13 +385,13 @@ align-items: center;
                 <li>Number Person : <?php echo $result->NUMPERSON ;?></li>
                 <li>Remaining Rooms : <?php echo $resNum ;?></li>   
                 
-                <li style="list-style:none; text-align: center; margin: 20px 25px 0 0;">
-                        <!-- Flex container to keep button and rating on the same line -->
-                        <div style="display: flex; align-items: center; justify-content: center;">
-                            <div style="margin-right: 10px;"><?php echo $btn ;?></div>
+                <li style="list-style:none; margin: 20px 25px 0 0;">
+                        <!-- Flex container to align rating left and button right -->
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div><?php echo $result->PRICE ;?> <span>&#9733;</span></div>
+                            <div><?php echo $btn ;?></div>
                         </div>
-                    </li> 
+                    </li>  
             </ul>
         </div>
     </div>
