@@ -365,6 +365,8 @@ align-items: center;
 <form method="POST" action="index.php?p=accomodation">
     <input type="hidden" name="ROOMPRICE" value="<?php echo $result->PRICE ;?>">
     <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID ;?>">
+    <!-- Wrapping the card inside an anchor tag to trigger the modal -->
+    <a href="#" data-toggle="modal" data-target="#roomModal<?php echo $result->ROOMID; ?>">
     <div class="card">
         <figure class="gallery-item" style="text-align: center; margin-top: 10px;">
             <a href="#" data-toggle="modal" data-target="#roomModal<?php echo $result->ROOMID; ?>">
