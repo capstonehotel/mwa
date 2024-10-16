@@ -503,7 +503,7 @@ $ratingCounts = [
     </div>
     <?php endforeach; ?>
 </div>
-    </div>
+
        <!-- Comment Section -->
                     <div class="comment-section">
                         <!-- Comment Label and Star Rating aligned to left -->
