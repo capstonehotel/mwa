@@ -459,47 +459,47 @@ $ratingCounts = [
                 <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID ;?>">
                 <?php echo $btn ;?>
             </form>
-           <!-- Rating Section -->
-<div class="rating-section mb-4">
-    <!-- Overall Average Rating -->
-    <div class="average-rating d-flex align-items-center mb-3"> <!-- Added margin-bottom for spacing -->
-        <span class="stars mr-2">
-            <?php
-                // Display filled and empty stars based on average rating
-                $fullStars = floor($averageRating);
-                $halfStar = ($averageRating - $fullStars) >= 0.5 ? 1 : 0;
-                $emptyStars = 5 - $fullStars - $halfStar;
-                for ($i = 0; $i < $fullStars; $i++) {
-                    echo '<i class="fas fa-star text-warning"></i>';
-                }
-                if ($halfStar) {
-                    echo '<i class="fas fa-star-half-alt text-warning"></i>';
-                }
-                for ($i = 0; $i < $emptyStars; $i++) {
-                    echo '<i class="far fa-star text-warning"></i>';
-                }
-            ?>
-        </span>
-        <span class="average-rating-value mr-2"><?php echo number_format($averageRating, 1); ?> / 5</span>
-        <span class="total-reviews text-muted">(<?php echo $totalReviews; ?> Reviews)</span>
-    </div>
+            <!-- Rating Section -->
+            <div class="rating-section mb-4">
+                            <!-- Overall Average Rating -->
+                            <div class="average-rating d-flex align-items-center mb-2">
+                                <span class="stars mr-2">
+                                    <?php
+                                        // Display filled and empty stars based on average rating
+                                        $fullStars = floor($averageRating);
+                                        $halfStar = ($averageRating - $fullStars) >= 0.5 ? 1 : 0;
+                                        $emptyStars = 5 - $fullStars - $halfStar;
+                                        for ($i = 0; $i < $fullStars; $i++) {
+                                            echo '<i class="fas fa-star text-warning"></i>';
+                                        }
+                                        if ($halfStar) {
+                                            echo '<i class="fas fa-star-half-alt text-warning"></i>';
+                                        }
+                                        for ($i = 0; $i < $emptyStars; $i++) {
+                                            echo '<i class="far fa-star text-warning"></i>';
+                                        }
+                                    ?>
+                                </span>
+                                <span class="average-rating-value mr-2"><?php echo number_format($averageRating, 1); ?> / 5</span>
+                                <span class="total-reviews text-muted">(<?php echo $totalReviews; ?> Reviews)</span>
+                            </div>
 
-    <!-- Rating Breakdown -->
-    <div class="rating-breakdown">
-        <?php foreach (array_reverse($ratingCounts, true) as $star => $count): 
-            $percentage = $totalReviews > 0 ? ($count / $totalReviews) * 100 : 0;
-        ?>
-        <div class="rating-row d-flex align-items-center mb-2"> <!-- Increased margin-bottom -->
-            <span class="star-label mr-2"><?php echo $star; ?></span>
-            <div class="progress flex-grow-1 mr-3" style="height: 10px; margin-right: 10px;"> <!-- Added right margin -->
-                <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $percentage; ?>%;" aria-valuenow="<?php echo $percentage; ?>" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <span class="rating-count text-muted"><?php echo $count; ?></span>
+                            <!-- Rating Breakdown -->
+                            <div class="rating-breakdown">
+                                <?php foreach (array_reverse($ratingCounts, true) as $star => $count): 
+                                    $percentage = $totalReviews > 0 ? ($count / $totalReviews) * 100 : 0;
+                                ?>
+                                <div class="rating-row d-flex align-items-center mb-1">
+                                    <span class="star-label mr-2"><?php echo $star; ?></span>
+                                    <div class="progress flex-grow-1 mr-2" style="height: 10px;">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $percentage; ?>%;" aria-valuenow="<?php echo $percentage; ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <span class="rating-count text-muted"><?php echo $count; ?></span>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
         </div>
-        <?php endforeach; ?>
-    </div>
-</div>
-
        <!-- Comment Section -->
                     <div class="comment-section">
                         <!-- Comment Label and Star Rating aligned to left -->
