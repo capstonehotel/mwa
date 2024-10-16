@@ -424,7 +424,7 @@ align-items: center;
                     <div class="scrollable-reviews">
     <div class="review-item">
         <div class="review-header">
-            <img src="../gcash.jpg" alt="User1 Profile" class="profile-image">
+            <img src="gcash.png" alt="User1 Profile" class="profile-image">
             <div class="review-info">
                 <strong>User1</strong>
                 <div class="star-rating">
@@ -434,7 +434,6 @@ align-items: center;
         </div>
         <p>Great room, very comfortable!</p>
     </div>
-    
     <div class="review-item">
         <div class="review-header">
             <img src="profile2.jpg" alt="User2 Profile" class="profile-image">
