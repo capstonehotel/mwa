@@ -605,52 +605,46 @@ $ratingCounts = [
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <!-- 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> -->
 
 <script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
 <script>
 $(document).ready(function () {
-    // Initialize variables for Panzoom and the zoom buttons outside the modal open handler
-    let panzoom;
-    
-    $('[id^="roomModal"]').on('shown.bs.modal', function () {
-        const roomId = $(this).attr('id').replace('roomModal', '');
-        const img = document.getElementById('roomImage' + roomId);
-        
-        if (!img) {
-            console.error('Image element not found');
-            return;
-        }
+$('[id^="roomModal"]').on('shown.bs.modal', function () {
+    const roomId = $(this).attr('id').replace('roomModal', '');
+    const img = document.getElementById('roomImage' + roomId);
 
-        // Initialize Panzoom on the image only once
-        panzoom = Panzoom(img, {
-            maxScale: 3, // Adjust max zoom level if needed
-            minScale: 1, // Minimum zoom level
-            contain: 'outside' // Prevent zooming out of view
-        });
+    if (!img) {
+        console.error('Image element not found');
+        return;
+    }
 
-        // Zoom buttons
-        const zoomInBtn = document.getElementById('zoomInBtn' + roomId);
-        const zoomOutBtn = document.getElementById('zoomOutBtn' + roomId);
+    // Initialize Panzoom on the image
+    const panzoom = Panzoom(img, {
+        maxScale: 3, // Adjust max zoom level if needed
+        minScale: 1, // Minimum zoom level
+        contain: 'outside' // Prevent zooming out of view
+    });
 
-        $(zoomInBtn).off('click').on('click', function () {
-            panzoom.zoomIn(); // Zoom in using Panzoom
-        });
+    // Zoom buttons
+    const zoomInBtn = document.getElementById('zoomInBtn' + roomId);
+    const zoomOutBtn = document.getElementById('zoomOutBtn' + roomId);
 
-        $(zoomOutBtn).off('click').on('click', function () {
-            panzoom.zoomOut(); // Zoom out using Panzoom
-        });
+    $(zoomInBtn).on('click', function () {
+        panzoom.zoomIn(); // Zoom in using Panzoom
+    });
+
+    $(zoomOutBtn).on('click', function () {
+        panzoom.zoomOut(); // Zoom out using Panzoom
     });
 
     // Reset Panzoom when modal is closed
     $('[id^="roomModal"]').on('hidden.bs.modal', function () {
-        if (panzoom) {
-            panzoom.reset(); // Reset the zoom and pan when the modal is closed
-            panzoom = null; // Reset panzoom instance
-        }
+        panzoom.reset(); // Reset the zoom and pan when the modal is closed
     });
+});
 });
 
 </script>
