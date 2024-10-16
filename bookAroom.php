@@ -307,11 +307,11 @@ align-items: center;
 }
 
 
-/* Review Item Structure */
+//* Review Item Structure */
 .review-item {
     margin-bottom: 15px; /* Space between reviews */
     padding: 10px; /* Padding inside each review */
-   
+    border-bottom: 1px solid #f1f1f1; /* Light separator line */
 }
 
 /* Remove the last border for the last review item */
@@ -342,20 +342,21 @@ align-items: center;
 /* Name Styling */
 .review-info strong {
     font-size: 1em; /* Font size for name */
-   
 }
 
 /* Star Rating Styling */
 .star-rating {
     font-size: 0.9em; /* Adjusted size for stars */
     color: #f5c518; /* Gold color for stars */
+    margin-top: 5px; /* Space above the star rating */
 }
 
 /* Comment Text */
 .review-text {
     font-size: 0.95em; /* Font size for review text */
-    
     margin-top: 5px; /* Space above the comment */
+    margin-left: 50px; /* Indent to align with star rating */
+    /* Adding this margin-left will ensure the comment text is aligned with the stars */
 }
 </style>
 
