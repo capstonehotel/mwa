@@ -264,23 +264,34 @@ align-items: center;
     direction: rtl;
     display: inline-flex;
     font-size: 1.5em;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     align-self: flex-start;
+    justify-content: center; /* Center the stars */
+    gap: 10px; /* Add space between stars */
 }
 
 .star-rating-top input {
-    display: none;
+    display: none; /* Hide radio buttons */
 }
 
 .star-rating-top label {
     color: #ddd;
     cursor: pointer;
+    padding: 5px; /* Add padding inside the border */
+    border: 2px solid #ddd; /* Border around each star */
+    border-radius: 5px; /* Rounded borders */
+    transition: all 0.3s ease;
 }
 
 .star-rating-top label:hover, 
 .star-rating-top label:hover ~ label,
 .star-rating-top input:checked ~ label {
-    color: #f5c518;
+    color: #f5c518; /* Change star color on hover and check */
+}
+
+.star-rating-top label:hover, 
+.star-rating-top input:checked + label {
+    border-color: #f5c518; /* Change border color when hovered or checked */
 }
 
 .comment-card {
