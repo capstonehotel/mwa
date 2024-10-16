@@ -384,7 +384,7 @@ align-items: center;
                 <li><?php echo $result->ROOMDESC ;?></li>
                 <li>Number Person : <?php echo $result->NUMPERSON ;?></li>
                 <li>Remaining Rooms : <?php echo $resNum ;?></li>   
-                <li>Rating: <?php echo $result->RATING ;?> <span>&#9733;</span> <!-- Star icon --></li>
+                <li>Rating: <?php echo $result->PRICE ;?> <span>&#9733;</span> <!-- Star icon --></li>
                 <li style="list-style:none; text-align: center; margin: 20px 25px 0 0;"><?php echo $btn ;?></li>  
             </ul>
         </div>
