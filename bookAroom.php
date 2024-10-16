@@ -194,17 +194,27 @@ $_SESSION['departure'] =date_format(date_create($_POST['departure']),"Y-m-d");
 }
 .img-container {
     overflow: hidden;
-width: 100%;
-height: 100%;
-position: relative;
-display: flex;
-justify-content: center;
-align-items: center;
-}
-.img-container img {
     width: 100%;
-    transition: width 0.3s ease;
+    height: auto; /* Adjusts height based on the image */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
 }
+
+.img-container img {
+    max-width: 100%; /* Ensures image scales responsively */
+    height: auto; /* Maintains aspect ratio */
+    transition: transform 0.3s ease, width 0.3s ease; /* Use transform for better zooming performance */
+    display: block;
+}
+
+.img-container img:hover {
+    transform: scale(1.1); /* On hover, image zooms in slightly */
+}
+
+
 .zoom-buttons {
     position: absolute;
     bottom: 10px;
