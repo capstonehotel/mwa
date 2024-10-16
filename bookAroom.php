@@ -369,7 +369,7 @@ align-items: center;
     <a href="#" data-toggle="modal" data-target="#roomModal<?php echo $result->ROOMID; ?>">
     <div class="card">
         <figure class="gallery-item" style="text-align: center; margin-top: 10px;">
-            <a href="#" data-toggle="modal" data-target="#roomModal<?php echo $result->ROOMID; ?>">
+            <!-- <a href="#" data-toggle="modal" data-target="#roomModal<?php echo $result->ROOMID; ?>"> -->
                 <?php if(is_file('https://mcchmhotelreservation.com/admin/mod_room/'.$result->ROOMIMAGE)): ?>
                     <img class="img-responsive img-hover" src="room.jpg" style="height: 250px; width: 90%;"> 
                 <?php else: ?>
