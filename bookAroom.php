@@ -228,13 +228,15 @@ align-items: center;
 </style>
 <style>
  /* Add scrollable review section */
-.scrollable-reviews {
-    max-height: 150px; /* Adjust as per your requirement */
+ .scrollable-reviews {
+    max-height: 300px; /* Increased height */
     overflow-y: auto;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
     margin-top: 15px;
+    margin-left: 10px;  /* Add margin to match the comment card */
+    margin-right: 10px; /* Add margin to match the comment card */
 }
 
 .review-item {
