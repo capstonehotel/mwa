@@ -355,7 +355,7 @@ align-items: center;
 /* Comment Text */
 .review-text {
     font-size: 0.95em; /* Font size for review text */
-   
+    margin-top: 0cpx;
     margin-left: 50px; /* Indent to align with star rating */
     /* Adding this margin-left will ensure the comment text is aligned with the stars */
 }
