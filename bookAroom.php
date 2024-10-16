@@ -485,25 +485,21 @@ $ratingCounts = [
                             </div>
 
                             <!-- Rating Breakdown -->
-<div class="rating-breakdown">
-    <?php foreach (array_reverse($ratingCounts, true) as $star => $count): 
-        $percentage = $totalReviews > 0 ? ($count / $totalReviews) * 100 : 0;
-    ?>
-    <div class="rating-row d-flex align-items-center mb-1">
-        <!-- Set a fixed width for the star-label -->
-        <span class="star-label mr-2" style="width: 20px;"><?php echo $star; ?></span> <!-- Added fixed width -->
-        
-        <!-- Make the progress bar flex-grow to fill remaining space -->
-        <div class="progress flex-grow-1" style="height: 10px;">
-            <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $percentage; ?>%;" aria-valuenow="<?php echo $percentage; ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="rating-breakdown">
+                                <?php foreach (array_reverse($ratingCounts, true) as $star => $count): 
+                                    $percentage = $totalReviews > 0 ? ($count / $totalReviews) * 100 : 0;
+                                ?>
+                                <div class="rating-row d-flex align-items-center mb-1">
+                                    <span class="star-label mr-2 font-weight-bold" style="width: 30px;"><?php echo $star; ?></span>
+                                    <div class="progress flex-grow-1 mr-2" style="height: 10px; width: 50px;">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $percentage; ?>%;" aria-valuenow="<?php echo $percentage; ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <span class="rating-count text-muted"><?php echo $count; ?></span>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
         </div>
-        
-        <!-- The count of ratings -->
-        <span class="rating-count text-muted ml-2"><?php echo $count; ?></span>
-    </div>
-    <?php endforeach; ?>
-</div>
-
        <!-- Comment Section -->
                     <div class="comment-section">
                         <!-- Comment Label and Star Rating aligned to left -->
