@@ -22,7 +22,7 @@ $code=$_GET['code'];
         if ($result) {
             while ($row = mysqli_fetch_assoc($result)) { ?>
 
-                                <!-- <?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
+                                <?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
                                     <?php if ($row['STATUS'] == "Confirmed" ) { ?>
         <button class="btn btn-danger btn-sm ml-2 action-btn" data-action="cancel" data-code="<?php echo $row['CONFIRMATIONCODE']; ?>"><i class="icon-edit">Cancel</i></button>
         <button class="btn btn-success btn-sm ml-2 action-btn" data-action="checkin" data-code="<?php echo $row['CONFIRMATIONCODE']; ?>"><i class="icon-edit">Check in</i></button>
@@ -33,8 +33,8 @@ $code=$_GET['code'];
     <?php } else {?>
         <button class="btn btn-success btn-sm ml-2 action-btn" data-action="confirm" data-code="<?php echo $row['CONFIRMATIONCODE']; ?>"><i class="icon-edit">Confirm</i></button>
     <?php } ?>
-<?php } ?> -->
-<?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
+<?php } ?>
+<!-- <?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
     <?php if ($row['STATUS'] == "Confirmed" ) { ?>
         <button class="btn btn-success btn-sm ml-2" disabled>Check in</button>
     <?php } ?>
@@ -47,7 +47,7 @@ $code=$_GET['code'];
     <?php } else {?>
         <a href="controller.php?action=confirm&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-success btn-sm ml-2" onclick="confirmBooking(event)"><i class="icon-edit">Confirm</a>
     <?php } ?>
-<?php } ?>
+<?php } ?> -->
 
 
                                  <!-- <a href="controller.php?action=delete&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-danger btn-sm " style="margin-left: 3px!important;"><i class="icon-edit">Delete</a>  -->
