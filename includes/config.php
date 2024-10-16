@@ -7,18 +7,17 @@
 */
 
 //Database Constants
-defined('DB_SERVER') ? null : define('DB_SERVER','127.0.0.1');//define our database server
-defined('DB_USER') ? null : define('DB_USER','u510162695_hmsystemdb');		  //define our database user	
-defined('DB_PASS') ? null : define('DB_PASS','1Hmsystemdb');			  //define our database Password	
-defined('DB_NAME') ? null : define('DB_NAME','u510162695_hmsystemdb'); //define our database Name
-defined('DB_PORT') ? null : define('DB_PORT', '3306'); // define our database port
+defined('DB_SERVER') ? null : define("DB_SERVER","localhost");//define our database server
+defined('DB_USER') ? null : define("DB_USER","root");		  //define our database user	
+defined('DB_PASS') ? null : define("DB_PASS","");			  //define our database Password	
+defined('DB_NAME') ? null : define("DB_NAME","hmsystemdb"); //define our database Name
 
 $thisFile = str_replace('\\', '/', __FILE__);
-$docRoot =$_SERVER['HTTP_HOST'];
+$docRoot =$_SERVER['DOCUMENT_ROOT'];
 
 $webRoot  = str_replace(array($docRoot, 'includes/config.php'), '', $thisFile);
 $srvRoot  = str_replace('config/config.php','', $thisFile);
-$connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
+$connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
 
 
 define('WEB_ROOT', $webRoot);
