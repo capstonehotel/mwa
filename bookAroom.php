@@ -261,37 +261,32 @@ align-items: center;
 }
 
 .star-rating-top {
-    direction: rtl;
+    direction: rtl; /* Ensures stars are filled from right to left */
     display: inline-flex;
     font-size: 1.5em;
-    margin-bottom: 15px;
     align-self: flex-start;
-    justify-content: center; /* Center the stars */
-    gap: 10px; /* Add space between stars */
+    justify-content: center; /* Centers the stars */
+    gap: 10px; /* Space between stars */
+    margin-bottom: 15px; /* Bottom margin to add space below stars */
 }
 
 .star-rating-top input {
-    display: none; /* Hide radio buttons */
+    display: none; /* Hides the radio inputs */
 }
 
 .star-rating-top label {
-    color: #ddd;
-    cursor: pointer;
-    padding: 5px; /* Add padding inside the border */
-    border: 2px solid #ddd; /* Border around each star */
-    border-radius: 5px; /* Rounded borders */
-    transition: all 0.3s ease;
+    color: #ddd; /* Default color for unselected stars */
+    cursor: pointer; /* Changes cursor to pointer on hover */
+    transition: color 0.3s ease; /* Smooth color transition */
 }
 
-.star-rating-top label:hover, 
-.star-rating-top label:hover ~ label,
+.star-rating-top label:hover,
+.star-rating-top label:hover ~ label {
+    color: #f5c518; /* Change color on hover */
+}
+
 .star-rating-top input:checked ~ label {
-    color: #f5c518; /* Change star color on hover and check */
-}
-
-.star-rating-top label:hover, 
-.star-rating-top input:checked + label {
-    border-color: #f5c518; /* Change border color when hovered or checked */
+    color: #f5c518; /* Color for the selected stars */
 }
 
 .comment-card {
