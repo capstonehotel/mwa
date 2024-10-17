@@ -322,7 +322,7 @@ mysqli_close($conn);
 .notification-badge {
     position: absolute;
     top: -10px;
-    right: 30px;
+    right: 0px;
     font-size: 0.65rem; /* Adjust font size of the badge */
     padding: 3px 6px;
     border-radius: 50%;
