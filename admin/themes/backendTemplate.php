@@ -357,7 +357,7 @@ mysqli_close($conn);
                         <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
                             <div class="notification">
                                 <!-- Profile image -->
-                                <img alt="Profile picture of International Software Inc" src="assets/img/profiles/avatar-02.jpg" />
+                                <img alt="" src="profile.jpg" />
                                 <div class="content">
                                     <p>
                                         <strong><?php echo $user_name; ?></strong> has made a booking of <?php echo $booking_amount; ?>
