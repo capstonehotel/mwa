@@ -339,6 +339,7 @@ mysqli_close($conn);
     <div id="notificationMenu" class="notification-menu">
         <div class="menu-header">
             <span class="menu-title">Notifications</span>
+             <a href="javascript:void(0)" class="clear-noti">Clear All</a>
         </div>
         <div class="menu-content">
             <!-- Bookings -->
@@ -346,7 +347,7 @@ mysqli_close($conn);
                 <h5>Bookings</h5>
                 <ul class="notification-list">
                     <li class="notification-message">
-                        <a href="/HM_HotelReservation/admin/mod_reservation/index.php?viewed=bookings">
+                        <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
                             <?php if ($today_bookings[0] > 0): ?>
                                 <?php echo $today_bookings[0]; ?> New booking<?php echo $today_bookings[0] > 1 ? 's' : ''; ?> for today
                                 <span class="notification-time">2 mins ago</span>
@@ -357,6 +358,9 @@ mysqli_close($conn);
                     </li>
                 </ul>
             </div>
+        </div>
+        <div class="menu-footer">
+            <a href="https://mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=all">View all Notifications</a>
         </div>
     </div>
     <span style="margin-left: 10px;">|</span>
