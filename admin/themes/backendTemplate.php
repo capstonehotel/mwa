@@ -350,7 +350,7 @@ mysqli_close($conn);
                         <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
                             <div class="media">
                                 <span class="avatar avatar-sm">
-                                    <img class="avatar-img rounded-circle" alt="User Image" src="assets/img/profiles/avatar-02.jpg">
+                                    <img class="avatar-img rounded-circle" alt="User Image" src="../../profile.jpg">
                                 </span>
                                 <div class="media-body">
                                     <?php if ($today_bookings[0] > 0): ?>
