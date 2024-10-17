@@ -339,77 +339,29 @@ mysqli_close($conn);
     <div id="notificationMenu" class="notification-menu">
         <div class="menu-header">
             <span class="menu-title">Notifications</span>
-            <!-- <a href="javascript:void(0)" class="clear-noti">Clear All</a> -->
         </div>
         <div class="menu-content">
             <!-- Bookings -->
-<div class="menu-section">
-    <h5>Bookings</h5>
-    <ul class="notification-list">
-        <li class="notification-message">
-            <a href="/HM_HotelReservation/admin/mod_reservation/index.php?viewed=bookings">
-            <?php if ($today_bookings[0] > 0): ?>
-                <?php echo $today_bookings[0]; ?>  New booking<?php echo $today_bookings[0] > 1 ? 's' : ''; ?>  for today
-                    <span class="notification-time">2 mins ago</span>
-                <?php else: ?>
-                    No new bookings for today
-                <?php endif; ?>
-            </a>
-        </li>
-        <!-- Add dynamic bookings -->
-    </ul>
-</div>
-
-
-            <!-- Messages -->
             <div class="menu-section">
-                <h5>Messages</h5>
+                <h5>Bookings</h5>
                 <ul class="notification-list">
                     <li class="notification-message">
-                        <a href="/HM_HotelReservation/admin/mod_contact_us/index.php?viewed=messages">
-                        <?php if ($cnt_message[0] > 0): ?>
-                    You have <?php echo $cnt_message[0]; ?> unread messages
-                    <span class="notification-time">10 mins ago</span>
-                <?php else: ?>
-                    No unread messages
-                <?php endif; ?>
+                        <a href="/HM_HotelReservation/admin/mod_reservation/index.php?viewed=bookings">
+                            <?php if ($today_bookings[0] > 0): ?>
+                                <?php echo $today_bookings[0]; ?> New booking<?php echo $today_bookings[0] > 1 ? 's' : ''; ?> for today
+                                <span class="notification-time">2 mins ago</span>
+                            <?php else: ?>
+                                No new bookings for today
+                            <?php endif; ?>
                         </a>
                     </li>
                 </ul>
             </div>
-
-            <!-- Chatbox -->
-            <div class="menu-section">
-                <h5>Chatbox</h5>
-                <ul class="notification-list">
-                    <li class="notification-message">
-                        <a href="#">
-                            Chat support is online
-                            <span class="notification-time">5 mins ago</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Payment -->
-            <div class="menu-section">
-                <h5>Payments</h5>
-                <ul class="notification-list">
-                    <li class="notification-message">
-                        <a href="#">
-                            Payment for booking #12345 received
-                            <span class="notification-time">15 mins ago</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="menu-footer">
-            <!-- <a href="https://mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=all">View all Notifications</a> -->
         </div>
     </div>
     <span style="margin-left: 10px;">|</span>
 </li>
+
 
 <style>
     .notification-menu {
