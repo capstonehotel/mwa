@@ -339,7 +339,7 @@ mysqli_close($conn);
     <div id="notificationMenu" class="notification-menu">
         <div class="menu-header">
             <span class="menu-title">Notifications</span>
-             <a href="javascript:void(0)" class="clear-noti">Clear All</a>
+            <a href="javascript:void(0)" class="clear-noti">Clear All</a>
         </div>
         <div class="menu-content">
             <!-- Bookings -->
@@ -348,12 +348,25 @@ mysqli_close($conn);
                 <ul class="notification-list">
                     <li class="notification-message">
                         <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
-                            <?php if ($today_bookings[0] > 0): ?>
-                                <?php echo $today_bookings[0]; ?> New booking<?php echo $today_bookings[0] > 1 ? 's' : ''; ?> for today
-                                <span class="notification-time">2 mins ago</span>
-                            <?php else: ?>
-                                No new bookings for today
-                            <?php endif; ?>
+                            <div class="media">
+                                <span class="avatar avatar-sm">
+                                    <img class="avatar-img rounded-circle" alt="User Image" src="assets/img/profiles/avatar-02.jpg">
+                                </span>
+                                <div class="media-body">
+                                    <?php if ($today_bookings[0] > 0): ?>
+                                        <p class="noti-details">
+                                            <span class="noti-title"><?php echo $today_bookings[0]; ?> new booking<?php echo $today_bookings[0] > 1 ? 's' : ''; ?></span> for today
+                                        </p>
+                                        <p class="noti-time">
+                                            <span class="notification-time">2 mins ago</span>
+                                        </p>
+                                    <?php else: ?>
+                                        <p class="noti-details">
+                                            <span class="noti-title">No new bookings</span> for today
+                                        </p>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
                         </a>
                     </li>
                 </ul>
