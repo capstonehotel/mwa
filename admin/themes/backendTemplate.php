@@ -467,7 +467,6 @@ document.addEventListener('click', function(event) {
 });
 
 </script>
-
 <?php
 /// Update session variables based on the URL parameters
 if (isset($_GET['viewed'])) {
