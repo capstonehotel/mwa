@@ -327,6 +327,13 @@ mysqli_close($conn);
     padding: 3px 6px;
     border-radius: 50%;
 }
+.notification img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
 </style>
 <li class="nav-item my-auto" style="position: relative;">
     <a href="javascript:void(0);" class="text-dark" id="bookingNotification" onclick="toggleNotificationMenu()">
@@ -342,29 +349,22 @@ mysqli_close($conn);
             <a href="javascript:void(0)" class="clear-noti">Clear All</a>
         </div>
         <div class="menu-content">
-            <!-- Bookings -->
+            <!-- Notification with image and text -->
             <div class="menu-section">
                 <h5>Bookings</h5>
                 <ul class="notification-list">
                     <li class="notification-message">
                         <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
-                            <div class="media">
-                            <span class="avatar avatar-sm" style="width: 30px; height: 30px;">
-                                    <img class="avatar-img rounded-circle" alt="User Image" src="../../profile.jpg">
-                                </span>
-                                <div class="media-body">
-                                    <?php if ($today_bookings[0] > 0): ?>
-                                        <p class="noti-details">
-                                            <span class="noti-title"><?php echo $today_bookings[0]; ?> new booking<?php echo $today_bookings[0] > 1 ? 's' : ''; ?></span> for today
-                                        </p>
-                                        <p class="noti-time">
-                                            <span class="notification-time">2 mins ago</span>
-                                        </p>
-                                    <?php else: ?>
-                                        <p class="noti-details">
-                                            <span class="noti-title">No new bookings</span> for today
-                                        </p>
-                                    <?php endif; ?>
+                            <div class="notification">
+                                <!-- Profile image -->
+                                <img alt="Profile picture of International Software Inc" src="assets/img/profiles/avatar-02.jpg" />
+                                <div class="content">
+                                    <p>
+                                        <strong><?php echo $user_name; ?></strong> has made a booking of <?php echo $booking_amount; ?>
+                                    </p>
+                                    <p class="time">
+                                        <?php echo $time_ago; ?>
+                                    </p>
                                 </div>
                             </div>
                         </a>
