@@ -349,7 +349,7 @@ mysqli_close($conn);
                     <li class="notification-message">
                         <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
                             <div class="media">
-                                <span class="avatar avatar-sm">
+                            <span class="avatar avatar-sm" style="width: 30px; height: 30px;">
                                     <img class="avatar-img rounded-circle" alt="User Image" src="../../profile.jpg">
                                 </span>
                                 <div class="media-body">
