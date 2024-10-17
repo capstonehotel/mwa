@@ -329,7 +329,7 @@ mysqli_close($conn);
 }
 </style>
 
-<li class="nav-item my-auto" style="position: relative;">
+<li class="nav-item my-auto" style="position: relative; right: 10px;">
     <a href="javascript:void(0);" class="text-dark" id="bookingNotification" onclick="toggleNotificationMenu()">
         <i class="fa fa-bell"></i>
         <?php if ($total_notifications > 0): ?>
@@ -365,8 +365,9 @@ mysqli_close($conn);
             <a href="https://mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=all">View all Notifications</a>
         </div>
     </div>
+    <span style="margin-left: 10px;">|</span>
 </li>
-<span style="margin-left: 10px;">|</span>
+
 <style>
     .notification-menu {
     display: none;
