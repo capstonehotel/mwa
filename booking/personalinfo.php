@@ -307,6 +307,24 @@ function validatePassword() {
     }
 }
 </script>
+<script>
+    document.getElementById('username').addEventListener('input', function() {
+        const emailInput = this.value;
+
+        // Regular expression to validate Gmail addresses
+        const gmailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+        if (emailInput && !gmailPattern.test(emailInput)) {
+            // Show SweetAlert2 if the email is not a valid Gmail address
+            Swal.fire({
+                icon: 'warning',
+                title: 'Invalid Email',
+                text: 'Please enter a valid Gmail address (e.g., User@gmail.com).',
+                showConfirmButton: true
+            });
+        }
+    });
+</script>
 <!-- <script>
 function validatePassword() {
     const password = document.getElementById('password').value;
