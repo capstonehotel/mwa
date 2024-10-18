@@ -368,25 +368,7 @@ mysqli_close($conn);
                         <div class="notification" style="display: flex; align-items: center;">
                         <!-- Profile image -->
                         <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; height: 40px; width:40px;" />
-                        <div class="content">
-                            <p>
-                                <strong>Kath</strong> has made a booking of 112
-                            </p>
-                            <p class="time" style="margin-top: 5px;">
-                                11/22/2002
-                            </p>
-                        </div>
-                    </div>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="notification-list">
-                    <li class="notification-message">
-                        <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
-                        <div class="notification" style="display: flex; align-items: center;">
-                        <!-- Profile image -->
-                        <img alt="" src="../../profile.jpg" class="profile-image" style="margin-right: 10px;" />
-                        <div class="content">
+                        <div class="content" style="font-size: 12px;">
                             <p>
                                 <strong>Kath</strong> has made a booking of 112
                             </p>
@@ -414,7 +396,7 @@ mysqli_close($conn);
     position: absolute;
     top: 50px;
     right: -150px;
-    width: 300px;
+    width: 400px;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -442,7 +424,7 @@ mysqli_close($conn);
 }
 
 .menu-content {
-    max-height: 250px;
+    max-height: 200px;
     overflow-y: auto;
     padding: 10px;
 }
