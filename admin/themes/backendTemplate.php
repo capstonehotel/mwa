@@ -369,11 +369,10 @@ mysqli_close($conn);
                         <!-- Profile image -->
                         <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; height: 40px; width:40px;" />
                         <div class="content" style="font-size: 15px;">
-                            <!-- Full Name of the user -->
-                            <p style="margin: 0; font-weight: bold;">Kathryn Smith</p>
+                          
                             <!-- Message -->
                             <p>
-                                <strong>Kath</strong> has made a booking of 112
+                                <strong>Kath Ungon</strong> has made a booking of 112
                             </p>
                             <p class="time" style="margin-top: 5px;">
                                 11/22/2002
