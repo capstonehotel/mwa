@@ -426,7 +426,7 @@ mysqli_close($conn);
 }
 
 .menu-content {
-    max-height: 200px;
+    max-height: 150px;
     overflow-y: auto;
     padding: 10px;
 }
