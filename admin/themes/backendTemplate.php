@@ -371,10 +371,10 @@ mysqli_close($conn);
                         <div class="content" style="font-size: 15px;">
                           
                             <!-- Message -->
-                            <p style="margin: 0 0 10px 0;">
+                            <p style="margin: 0 0 2px 0;">
                                 <strong>Kath Ungon</strong> has made a booking of 112
                             </p>
-                            <p class="time">
+                            <p class="time" style="margin-bottom: 5px;">
                                 11/22/2002
                             </p>
                         </div>
