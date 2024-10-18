@@ -20,6 +20,24 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
     ?>
   <script>
         console.log('SweetAlert2 script is running'); // JS log
+        // Function to save input values to local storage
+    function saveInputValues() {
+        const inputs = document.querySelectorAll('input, textarea, select'); // Adjust selector as needed
+        inputs.forEach(input => {
+            localStorage.setItem(input.id, input.value);
+        });
+    }
+
+    // Function to load input values from local storage
+    function loadInputValues() {
+        const inputs = document.querySelectorAll('input, textarea, select'); // Adjust selector as needed
+        inputs.forEach(input => {
+            input.value = localStorage.getItem(input.id) || '';
+        });
+    }
+
+    // Load input values on page load
+    window.onload = loadInputValues;
 
         // Function to show the OTP input prompt
         function showOtpInput() {
@@ -73,9 +91,10 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
                     });
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     // Handle cancel action
+                    saveInputValues(); // Save input values before redirecting
                     var referer = document.referrer; // Get the referer URL
                     if (referer.includes('personalinfo.php')) {
-                        window.location.href = 'https://mcchmhotelreservation.com/booking/index.php?view=logininfo.php'; // Redirect to personalinfo.php
+                        window.location.href = 'personalinfo.php'; // Redirect to personalinfo.php
                     } else if (referer.includes('login.php')) {
                         window.location.href = '../logout.php'; // Redirect to logout.php
                     } else {
