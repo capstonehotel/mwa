@@ -75,7 +75,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
                     // Handle cancel action
                     var referer = document.referrer; // Get the referer URL
                     if (referer.includes('personalinfo.php')) {
-                        window.location.href = 'personalinfo.php'; // Redirect to personalinfo.php
+                        window.location.href = 'logininfo.php'; // Redirect to personalinfo.php
                     } else if (referer.includes('login.php')) {
                         window.location.href = '../logout.php'; // Redirect to logout.php
                     } else {
