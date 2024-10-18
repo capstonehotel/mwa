@@ -64,7 +64,7 @@ function logintab() {
                     </div>
                 </div>
                 <div class="col-xs-4">
-                    <button type="submit" name="gsubmit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                    <button type="submit" name="gsubmit" class="btn btn-primary btn-block btn-flat" onclick=" showOtpInput();">Sign In</button>
                 </div>
             </div>
         </form> 
