@@ -372,7 +372,7 @@ mysqli_close($conn);
                           
                             <!-- Message -->
                             <p style="margin: 0 0 2px 0;">
-                                <strong>Kath Ungon</strong> has made a booking of 112
+                                <strong>Kath Ungon</strong> has made a booking of 112jhgkhkghgkgjkhgkjhgkhjkghgkjhj
                             </p>
                             <p class="time" style="margin-bottom: 5px;">
                                 11/22/2002
