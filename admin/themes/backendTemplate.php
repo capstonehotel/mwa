@@ -374,7 +374,7 @@ mysqli_close($conn);
                             <p>
                                 <strong>Kath Ungon</strong> has made a booking of 112
                             </p>
-                            <p class="time" style="margin-top: 5px;">
+                            <p class="time">
                                 11/22/2002
                             </p>
                         </div>
