@@ -327,11 +327,25 @@ mysqli_close($conn);
     padding: 3px 6px;
     border-radius: 50%;
 }
-.notification img {
+.notification {
+    display: flex;
+    align-items: center;
+}
+
+.profile-img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
+}
+
+.content p {
+    margin: 0;
+}
+
+.time {
+    font-size: 0.8em;
+    color: gray;
 }
 
 </style>
