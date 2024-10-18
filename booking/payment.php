@@ -28,7 +28,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
     inputPlaceholder: 'Enter OTP code',
     showCancelButton: true,
     confirmButtonText: 'Verify OTP',
-    resendButtonText: 'Resend OTP',
+    footer: `Didn't receive a code? <a href="#" id="resend-otp-link">Resend</a>`,
 }).then((result) => {
     if (result.value) {
         // Verify OTP
