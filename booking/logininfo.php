@@ -1,9 +1,11 @@
 <?php 
-// session_start(); // Start session management
 
+// session_start(); // Start the session at the beginning
+require_once 'sendOTP.php';
 if (!isset($_SESSION['monbela_cart'])) {
     redirect('https://mcchmhotelreservation.com/index.php');
 }
+
 ?>
 
 <div class="card rounded" style="padding: 10px;">
@@ -42,66 +44,31 @@ if (!isset($_SESSION['monbela_cart'])) {
     </div>
 </div>
 
-<?php
-function logintab() {
-    ?>  
-    <div class="col-md-12">
-        <form id="loginForm" method="post">
-            <div class="form-group has-feedback">
-                <input type="text" class="form-control" name="username" placeholder="Username" required>
-                <span class="glyphicon glyphicon-user form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback" style="margin-top: 10px;">
-                <input type="password" class="form-control" name="pass" placeholder="Password" required>
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-            </div>
-            <div class="row">
-                <div class="col-xs-8">
-                    <div class="checkbox icheck">
-                        <label>
-                            <input type="checkbox"> Remember Me
-                        </label>
-                    </div>
-                </div>
-                <div class="col-xs-4">
-                    <button type="submit" name="gsubmit" class="btn btn-primary btn-block btn-flat">Sign In</button>
-                </div>
-            </div>
-        </form> 
-    </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    $(document).ready(function() {
+        // Handle form submission for login
+        $('form').on('submit', function(e) {
+            e.preventDefault(); // Prevent the default form submission
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <script>
-        $(document).ready(function() {
-            $('#loginForm').on('submit', function(e) {
-                e.preventDefault(); // Prevent default form submission
-
-                $.ajax({
-                    type: 'POST',
-                    url: 'login.php', // URL of the login script
-                    data: $(this).serialize(), // Serialize form data
-                    success: function(response) {
-                        if (response.trim() === 'success') {
-                            // If login is successful, show OTP input prompt
-                            showOtpInput();
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Login Failed',
-                                text: response, // Display the error message
-                            });
-                        }
-                    },
-                    error: function() {
+            $.ajax({
+                type: 'POST',
+                url: 'login.php',
+                data: $(this).serialize(), // Serialize form data
+                success: function(response) {
+                    // Check if the response indicates a successful login
+                    if (response.trim() === 'success') {
+                        // Show the OTP input prompt
+                        showOtpInput();
+                    } else {
+                        // Handle error response (e.g., invalid credentials)
                         Swal.fire({
                             icon: 'error',
-                            title: 'Oops...',
-                            text: 'Something went wrong!',
+                            title: 'Login Failed',
+                            text: 'Invalid Username or Password! Please try again.',
                         });
                     }
-                });
+                }
             });
         });
 
@@ -115,19 +82,20 @@ function logintab() {
                 footer: `Didn't receive a code? <a href="#" id="resend-otp-link">Resend</a>`,
             }).then((result) => {
                 if (result.value) {
+                    // Handle OTP verification
                     $.ajax({
                         type: 'POST',
                         url: 'otp_verify.php',
                         data: {
                             otp: result.value,
-                            email: '<?php echo $_SESSION['username']; ?>' // Use stored username
+                            email: '<?php echo $_SESSION['username']; ?>'
                         },
                         success: function(response) {
-                            if (response.trim() == 'valid') {
+                            if (response.trim() === 'valid') {
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'OTP Verified!',
-                                    text: 'Redirecting to payment...',
+                                    text: 'You will be redirected to the payment in 3 seconds.',
                                     timer: 3000,
                                     timerProgressBar: true,
                                     showConfirmButton: false,
@@ -139,9 +107,9 @@ function logintab() {
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Invalid OTP!',
-                                    text: 'Please try again.',
+                                    text: 'The OTP you entered is incorrect. Please try again or click "Resend" to receive a new code.',
                                 }).then(() => {
-                                    showOtpInput(); // Show OTP input again if invalid
+                                    showOtpInput(); // Show OTP input again
                                 });
                             }
                         }
@@ -154,6 +122,7 @@ function logintab() {
         document.addEventListener('click', function(e) {
             if (e.target && e.target.id === 'resend-otp-link') {
                 e.preventDefault(); // Prevent default link behavior
+
                 $.ajax({
                     type: 'POST',
                     url: 'resendOTP.php',
@@ -165,14 +134,10 @@ function logintab() {
                             icon: 'success',
                             title: 'OTP Resent!',
                             text: 'Please check your email for the new OTP.',
-                        }).then(() => {
-                            showOtpInput(); // Call the function to show the OTP input
                         });
                     }
                 });
             }
         });
-    </script>
-    <?php
-}
-?>
+    });
+</script>
