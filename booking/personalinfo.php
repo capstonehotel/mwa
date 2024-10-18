@@ -279,6 +279,7 @@ function validateDOB(input) {
     }
 }
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.4/purify.min.js"></script>
 <script>
 function validatePassword() {
     var passwordInput = document.getElementById("password");
@@ -399,7 +400,7 @@ function validatePassword() {
         const companyInput = document.getElementById('company');
         const caddressInput = document.getElementById('caddress');
         const emailInput = document.getElementById('username');
-        const passwordInput = document.getElementById('password');
+        // const passwordInput = document.getElementById('password');
         detectXSS(firstInput, 'First Name');
         detectXSS(lastInput, 'Last Name');
         detectXSS(phoneInput, 'Phone');
@@ -410,7 +411,7 @@ function validatePassword() {
         detectXSS(companyInput, 'Company');
         detectXSS(caddressInput, 'Company Address');
         detectXSS(emailInput, 'Email');
-        detectXSS(passwordInput, 'Password');
+        // detectXSS(passwordInput, 'Password');
     });
 </script>
 
