@@ -351,7 +351,6 @@ mysqli_close($conn);
         <div class="menu-content">
             <!-- Notification with image and text -->
             <div class="menu-section">
-                <h5>Bookings</h5>
                 <ul class="notification-list">
                     <li class="notification-message">
                         <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
@@ -360,10 +359,10 @@ mysqli_close($conn);
                                 <img alt="" src="profile.jpg" />
                                 <div class="content">
                                     <p>
-                                        <strong><?php echo $user_name; ?></strong> has made a booking of <?php echo $booking_amount; ?>
+                                        <strong>Kath></strong> has made a booking of 112
                                     </p>
                                     <p class="time">
-                                        <?php echo $time_ago; ?>
+                                        11/22/2002>
                                     </p>
                                 </div>
                             </div>
