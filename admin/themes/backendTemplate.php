@@ -459,6 +459,8 @@ mysqli_close($conn);
     top: 50px;
     right: -150px;
     width: 400px;
+    height: auto; /* Set height to auto to adjust based on content */
+    max-height: 500px;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
