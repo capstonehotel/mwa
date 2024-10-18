@@ -1,5 +1,5 @@
 <?php 
-session_start(); // Start session management
+// session_start(); // Start session management
 
 if (!isset($_SESSION['monbela_cart'])) {
     redirect('https://mcchmhotelreservation.com/index.php');
