@@ -311,15 +311,24 @@ function validatePassword() {
     document.getElementById('username').addEventListener('input', function() {
         const emailInput = this.value;
 
-        // Check if the input contains '@gmail.com'
-        if (emailInput && !emailInput.endsWith('@gmail.com')) {
-            // Show SweetAlert2 warning if '@gmail.com' is not present
-            Swal.fire({
-                icon: 'warning',
-                title: 'Invalid Email',
-                text: 'Please enter a valid Gmail address that ends with @gmail.com.',
-                showConfirmButton: true
-            });
+        // Find the position of the '@' character
+        const atIndex = emailInput.indexOf('@');
+
+        // If there is an '@' and it's not the last character
+        if (atIndex !== -1 && atIndex < emailInput.length - 1) {
+            // Extract the part after '@'
+            const domainPart = emailInput.slice(atIndex + 1);
+
+            // Check if the domain matches 'gmail.com'
+            if (domainPart !== 'gmail.com') {
+                // Show SweetAlert2 warning if the domain is not 'gmail.com'
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Invalid Email Domain',
+                    text: 'Please ensure your email ends with @gmail.com.',
+                    showConfirmButton: true
+                });
+            }
         }
     });
 </script>
