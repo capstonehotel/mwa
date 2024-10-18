@@ -367,7 +367,7 @@ mysqli_close($conn);
                         <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
                         <div class="notification" style="display: flex; align-items: center;">
                         <!-- Profile image -->
-                        <img alt="" src="profile.jpg" class="profile-image" style="margin-right: 10px;" />
+                        <img alt="" src="../../profile.jpg" class="profile-image" style="margin-right: 10px;" />
                         <div class="content">
                             <p>
                                 <strong>Kath</strong> has made a booking of 112
@@ -385,7 +385,7 @@ mysqli_close($conn);
                         <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
                         <div class="notification" style="display: flex; align-items: center;">
                         <!-- Profile image -->
-                        <img alt="" src="profile.jpg" class="profile-image" style="margin-right: 10px;" />
+                        <img alt="" src="../../profile.jpg" class="profile-image" style="margin-right: 10px;" />
                         <div class="content">
                             <p>
                                 <strong>Kath</strong> has made a booking of 112
