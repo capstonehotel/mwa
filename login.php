@@ -1,6 +1,6 @@
 <?php
  require_once ("initialize.php"); 
-
+ require_once 'booking/sendOTP'; 
 
 
  if(isset($_POST['gsubmit'])){
@@ -18,7 +18,7 @@
         $res = $guest::guest_login($email,$h_upass);
 
         if ($res==true){
-           redirect("https://mcchmhotelreservation.com/booking/index.php?view=payment");
+           redirect("https://mcchmhotelreservation.com/booking/index.php?view=payment&verify=true");
         }else{
              message("Invalid Username and Password! Please contact administrator", "error");
              redirect("https://mcchmhotelreservation.com/booking/index.php?view=logininfo");
