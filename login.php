@@ -1,6 +1,6 @@
 <?php
  require_once ("initialize.php"); 
- require_once 'sendOTP.php'; 
+ require_once ("sendOTP.php");
 
 
  if(isset($_POST['gsubmit'])){
