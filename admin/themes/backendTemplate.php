@@ -332,7 +332,7 @@ mysqli_close($conn);
     align-items: center;
 } */
 
-.profile-img {
+.notification-img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -370,7 +370,7 @@ mysqli_close($conn);
                                 <img alt="" src="profile.jpg" />
                                 <div class="content">
                                     <p>
-                                        <strong>Kath></strong> has made a booking of 112
+                                        <strong>Kath</strong> has made a booking of 112
                                     </p>
                                     <p class="time">
                                         11/22/2002>
