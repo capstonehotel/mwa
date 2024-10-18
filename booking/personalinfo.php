@@ -285,28 +285,38 @@ function validatePassword() {
     var password = passwordInput.value;
     var passwordError = document.getElementById("password-error");
     
-    var hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password);
-    var hasNumber = /\d/.test(password);
-    var hasCapital = /[A-Z]/.test(password);
-    
+    // Reset custom validity message and error message
+    passwordInput.setCustomValidity("");
+    passwordError.textContent = "";
+
+    // Validation checks
     if (password.length < 8) {
         passwordError.textContent = "Password must be at least 8 characters long.";
         passwordInput.setCustomValidity("Password must be at least 8 characters long.");
-    } else if (!hasSpecialChar) {
+    } 
+    else if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password)) {
         passwordError.textContent = "Password must contain at least one special character.";
         passwordInput.setCustomValidity("Password must contain at least one special character.");
-    } else if (!hasNumber) {
+    } 
+    else if (!/\d/.test(password)) {
         passwordError.textContent = "Password must contain at least one number.";
         passwordInput.setCustomValidity("Password must contain at least one number.");
-    } else if (!hasCapital) {
+    } 
+    else if (!/[A-Z]/.test(password)) {
         passwordError.textContent = "Password must contain at least one capital letter.";
         passwordInput.setCustomValidity("Password must contain at least one capital letter.");
-    } else {
-        passwordError.textContent = "";
-        passwordInput.setCustomValidity("");
+    } 
+    else {
+        // All checks passed
+        passwordInput.setCustomValidity(""); // Clear any custom validity
     }
+    
+    // Trigger native validation after setting custom validity
+    passwordInput.reportValidity();
 }
 </script>
+
+
 <script>
     document.getElementById('username').addEventListener('input', function() {
         const emailInput = this.value;
