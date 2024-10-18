@@ -14,8 +14,8 @@
 <?php
 
 if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify']) && $_GET['verify'] == 'true') {
-    var_dump($_GET['view']);
-    var_dump($_GET['verify']);
+    // var_dump($_GET['view']);
+    // var_dump($_GET['verify']);
 
     ?>
   <script>
