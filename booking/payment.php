@@ -27,7 +27,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
     inputPlaceholder: 'Enter OTP code',
     showCancelButton: true,
     confirmButtonText: 'Verify OTP',
-    footer: `Didn't receive a code? <a href="#" id="resend">Resend</a>`,
+    footer: `Didn't receive a code? <a href="#" id="resend-otp-link">Resend</a>`,
 }).then((result) => {
     if (result.value) {
         // Verify OTP
@@ -70,27 +70,29 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
     }
 });
 
-// Add event listener to resend OTP button
-document.getElementById('resend-otp-button').addEventListener('click', function() {
-    // Send AJAX request to resend OTP
-    $.ajax({
-        type: 'POST',
-        url: 'resend_otp.php',
-        data: {
-            email: '<?php echo $_SESSION['username'];?>'
-        },
-        success: function(response) {
-            Swal.fire({
-                icon: 'success',
-                title: 'OTP Resent!',
-                text: 'Please check your email for the new OTP.',
-                showConfirmButton: true
-            });
-        }
-    });
-});
-</script>
+/  // Event listener for "Resend OTP" link
+        document.getElementById('resend-otp-link').addEventListener('click', function(e) {
+            e.preventDefault();  // Prevent default link behavior
 
+            // Send AJAX request to resend OTP
+            $.ajax({
+                type: 'POST',
+                url: 'resendOTP.php',
+                data: {
+                    email: '<?php echo $_SESSION['username']; ?>'
+                },
+                success: function(response) {
+                    // Display success message after resending OTP
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'OTP Resent!',
+                        text: 'Please check your email for the new OTP.',
+                        showConfirmButton: true
+                    });
+                }
+            });
+        });
+    </script>
     <?php
 }
 ?>
