@@ -308,7 +308,15 @@ function validatePassword() {
 }
 </script>
 <script>
-    document.getElementById('username').addEventListener('input', function() {
+    function debounce(func, delay) {
+        let timeout;
+        return function(...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), delay);
+        };
+    }
+
+    document.getElementById('username').addEventListener('input', debounce(function() {
         const emailInput = this.value;
 
         // Regular expression to validate Gmail addresses
@@ -323,7 +331,7 @@ function validatePassword() {
                 showConfirmButton: true
             });
         }
-    });
+    }, 500)); // Adjust the delay (in milliseconds) as needed
 </script>
 <!-- <script>
 function validatePassword() {
