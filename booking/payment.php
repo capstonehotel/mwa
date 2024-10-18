@@ -70,29 +70,27 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
     }
 });
 
-/  // Event listener for "Resend OTP" link
-        document.getElementById('resend-otp-link').addEventListener('click', function(e) {
-            e.preventDefault();  // Prevent default link behavior
-
-            // Send AJAX request to resend OTP
-            $.ajax({
-                type: 'POST',
-                url: 'resendOTP.php',
-                data: {
-                    email: '<?php echo $_SESSION['username']; ?>'
-                },
-                success: function(response) {
-                    // Display success message after resending OTP
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'OTP Resent!',
-                        text: 'Please check your email for the new OTP.',
-                        showConfirmButton: true
-                    });
-                }
+// Add event listener to resend OTP button
+document.getElementById('resend-otp-button').addEventListener('click', function() {
+    // Send AJAX request to resend OTP
+    $.ajax({
+        type: 'POST',
+        url: 'resendOTP.php',
+        data: {
+            email: '<?php echo $_SESSION['username'];?>'
+        },
+        success: function(response) {
+            Swal.fire({
+                icon: 'success',
+                title: 'OTP Resent!',
+                text: 'Please check your email for the new OTP.',
+                showConfirmButton: true
             });
-        });
-    </script>
+        }
+    });
+});
+</script>
+
     <?php
 }
 ?>
