@@ -444,7 +444,8 @@ mysqli_close($conn);
                 </ul>
             </div>
         </div>
-        <div class="menu-footer">
+        <!-- Footer with "View all Notifications" outside of scrollable content -->
+        <div class="menu-footer" style="padding: 10px; text-align: center; border-top: 1px solid #eee;">
             <a href="https://mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=all">View all Notifications</a>
         </div>
     </div>
@@ -459,7 +460,7 @@ mysqli_close($conn);
     top: 50px;
     right: -150px;
     width: 400px;
-    max-height: 300px; /* Increased height */
+    max-height: 900px; /* Increased height */
     overflow-y: auto; /* Keep scrolling */
     background-color: #fff;
     border: 1px solid #ccc;
