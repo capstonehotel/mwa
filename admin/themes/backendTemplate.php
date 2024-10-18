@@ -368,7 +368,7 @@ mysqli_close($conn);
                         <div class="notification" style="display: flex; align-items: center;">
                         <!-- Profile image -->
                         <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; height: 40px; width:40px;" />
-                        <div class="content" style="font-size: 12px;">
+                        <div class="content" style="font-size: 20px;">
                             <p>
                                 <strong>Kath</strong> has made a booking of 112
                             </p>
