@@ -367,7 +367,7 @@ mysqli_close($conn);
                         <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
                         <div class="notification" style="display: flex; align-items: center;">
                         <!-- Profile image -->
-                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-top: 10px; height: 40px; width:40px;" />
+                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 10px; height: 40px; width:40px;" />
                         <div class="content" style="font-size: 15px;">
                           
                             <!-- Message -->
