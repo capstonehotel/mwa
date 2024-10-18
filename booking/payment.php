@@ -60,7 +60,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Invalid OTP!',
-                                    text: response,
+                                    text: 'The OTP you entered is incorrect. Please try again or click "Resend" to receive a new code.',
                                     showConfirmButton: true
                                 }).then(() => {
                                     window.location.href = 'index.php?view=logininfo';
