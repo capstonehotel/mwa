@@ -453,19 +453,35 @@ mysqli_close($conn);
 
 
 <style>
-    .notification-menu {
+   .notification-menu {
     display: none;
     position: absolute;
     top: 50px;
     right: -150px;
     width: 400px;
-    height: auto; /* Set height to auto to adjust based on content */
-    max-height: 500px;
+    max-height: 300px; /* Increased height */
+    overflow-y: auto; /* Keep scrolling */
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+}
+
+.menu-content {
+    padding: 10px;
+    max-height: 300px; /* Match the max-height of the notification menu */
+    overflow-y: auto; /* Ensure scrolling is enabled */
+}
+
+.menu-section {
+    margin-bottom: 7px;
+}
+
+.notification-message {
+    padding-top: 8px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px; /* Added padding for better spacing */
 }
 
 .menu-header {
@@ -487,15 +503,7 @@ mysqli_close($conn);
     cursor: pointer;
 }
 
-.menu-content {
-    max-height: 150px;
-    overflow-y: auto;
-    padding: 10px;
-}
 
-.menu-section {
-    margin-bottom: 7px;
-}
 
 .notification-list {
     list-style-type: none;
@@ -503,10 +511,7 @@ mysqli_close($conn);
     margin: 0;
 }
 
-.notification-message {
-    padding-top: 8px;
-    border-bottom: 1px solid #eee;
-}
+
 
 .notification-message a {
     display: block;
