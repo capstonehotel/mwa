@@ -222,7 +222,8 @@ $_SESSION['otp'] = sendOTP($_SESSION['username'],$_SESSION['name'], $_SESSION['l
 
       <div class="form-group">
         <label  class ="control-label" for="username">Email:</label>
-        <input name="username" type="email" class="form-control input-sm" id="username" required  placeholder="User@gmail.com">
+        <input name="username" type="email" class="form-control input-sm" id="username" required  placeholder="User@gmail.com" pattern="[a-zA-Z0-9._%+-]+@gmail\.com$" 
+        title="Please enter a valid Gmail address (e.g., User@gmail.com)">
       </div>
 
       <div class="form-group">
