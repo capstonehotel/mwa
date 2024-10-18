@@ -30,6 +30,8 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
                 inputPlaceholder: 'Enter OTP code',
                 showCancelButton: true,
                 confirmButtonText: 'Verify OTP',
+                cancelButtonText: 'Cancel',
+                allowOutsideClick: false,
                 footer: `Didn't receive a code? <a href="#" id="resend-otp-link">Resend</a>`,
             }).then((result) => {
                 if (result.value) {
@@ -69,6 +71,16 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
                             }
                         }
                     });
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    // Handle cancel action
+                    var referer = document.referrer; // Get the referer URL
+                    if (referer.includes('personalinfo.php')) {
+                        window.location.href = 'personalinfo.php'; // Redirect to personalinfo.php
+                    } else if (referer.includes('login.php')) {
+                        window.location.href = 'logout.php'; // Redirect to logout.php
+                    } else {
+                        window.location.href = 'index.php'; // Default redirect
+                    }
                 }
             });
         }
