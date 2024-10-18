@@ -13,8 +13,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> Include SweetAlert2 -->
 <?php
 
-if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])) {
-    
+if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify']) && $_GET['verify'] == 'true') {
     var_dump($_GET['view']);
     var_dump($_GET['verify']);
 
