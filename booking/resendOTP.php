@@ -1,5 +1,5 @@
 <?php
-// session_start();
+session_start();
 require 'sendOTP.php';  // Ensure sendOTP function is accessible
 
 if (isset($_POST['email'])) {

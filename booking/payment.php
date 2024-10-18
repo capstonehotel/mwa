@@ -19,80 +19,92 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
 
     ?>
   <script>
-    console.log('SweetAlert2 script is running');
-    
-    Swal.fire({
-    title: 'Enter OTP',
-    input: 'text',
-    inputPlaceholder: 'Enter OTP code',
-    showCancelButton: true,
-    confirmButtonText: 'Verify OTP',
-    footer: `Didn't receive a code? <a href="#" id="resend-otp-link">Resend</a>`,
-}).then((result) => {
-    if (result.value) {
-        // Verify OTP
-        //console.log('Entered OTP:', result.value);
+        console.log('SweetAlert2 script is running'); // JS log
 
-        $.ajax({
-            type: 'POST',
-            url: 'otp_verify.php',
-            data: {
-                otp: result.value, email: '<?php echo $_SESSION['username'];?>'
-               
-            },
-            success: function(response) {
-                if (response.trim() == 'valid') {
-                    // OTP is valid, display success message with icon and timer
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'OTP Verified!',
-                        text: 'You will be redirected to the payment in 3 seconds.',
-                        timer: 3000,
-                        timerProgressBar: true,
-                        showConfirmButton: false,
-                        willClose: () => {
-                            window.location.href = 'index.php?view=payment';
+        // Function to show the OTP input prompt
+        function showOtpInput() {
+            console.log('Showing OTP input prompt'); // Debugging log
+            Swal.fire({
+                title: 'Enter OTP',
+                input: 'text',
+                inputPlaceholder: 'Enter OTP code',
+                showCancelButton: true,
+                confirmButtonText: 'Verify OTP',
+                footer: `Didn't receive a code? <a href="#" id="resend-otp-link">Resend</a>`,
+            }).then((result) => {
+                if (result.value) {
+                    console.log('OTP entered:', result.value); // Debugging log for OTP entered
+
+                    $.ajax({
+                        type: 'POST',
+                        url: 'otp_verify.php',
+                        data: {
+                            otp: result.value,
+                            email: '<?php echo $_SESSION['username']; ?>'
+                        },
+                        success: function(response) {
+                            console.log('OTP verification response:', response); // Debugging log for response
+                            if (response.trim() == 'valid') {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'OTP Verified!',
+                                    text: 'You will be redirected to the payment in 3 seconds.',
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    showConfirmButton: false,
+                                    willClose: () => {
+                                        window.location.href = 'index.php?view=payment';
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Invalid OTP!',
+                                    text: response,
+                                    showConfirmButton: true
+                                }).then(() => {
+                                    window.location.href = 'index.php?view=logininfo';
+                                });
+                            }
                         }
-                    });
-                } else {
-                    // OTP is invalid, display error message with icon
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Invalid OTP!',
-                        text: response,
-                        showConfirmButton: true
-                    }).then(() => {
-                        window.location.href = 'index.php?view=logininfo';
-                    });
-                }
-            }
-        });
-    }
-});
-
-// Event listener for "Resend OTP" link
-document.getElementById('resend-otp-link').addEventListener('click', function(e) {
-            e.preventDefault();
-            console.log('Resend OTP clicked'); // Debugging log for Resend OTP
-
-            $.ajax({
-                type: 'POST',
-                url: 'resendOTP.php',
-                data: {
-                    email: '<?php echo $_SESSION['username']; ?>'
-                },
-                success: function(response) {
-                    console.log('OTP resend response:', response); // Debugging log for resend response
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'OTP Resent!',
-                        text: 'Please check your email for the new OTP.',
-                        showConfirmButton: true
                     });
                 }
             });
+        }
+
+        // Show the OTP input prompt when the page loads
+        showOtpInput();
+
+        // Event listener for "Resend OTP" link
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.id === 'resend-otp-link') {
+                e.preventDefault(); // Prevent default link behavior
+                console.log('Resend OTP clicked'); // Debugging log for Resend OTP
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'resendOTP.php',
+                    data: {
+                        email: '<?php echo $_SESSION['username']; ?>'
+                    },
+                    success: function(response) {
+                        console.log('OTP resend response:', response); // Debugging log for resend response
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'OTP Resent!',
+                            text: 'Please check your email for the new OTP.',
+                            showConfirmButton: true
+                        }).then(() => {
+                            // After the user acknowledges the success message, show the OTP input again
+                            showOtpInput(); // Call the function to show the OTP input
+                        });
+                    }
+                });
+            }
         });
     </script>
+
     <?php
 }
 ?>
