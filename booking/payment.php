@@ -20,13 +20,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
     ?>
   <script>
         console.log('SweetAlert2 script is running'); // JS log
-        // Function to save input values to local storage
-    function saveInputValues() {
-        const inputs = document.querySelectorAll('input, textarea, select'); // Adjust selector as needed
-        inputs.forEach(input => {
-            localStorage.setItem(input.id, input.value);
-        });
-    }
+        
 
         // Function to show the OTP input prompt
         function showOtpInput() {
@@ -80,7 +74,6 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
                     });
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     // Handle cancel action
-                    saveInputValues();
                     var referer = document.referrer; // Get the referer URL
                     if (referer.includes('personalinfo.php')) {
                         window.location.href = 'personalinfo.php'; // Redirect to personalinfo.php

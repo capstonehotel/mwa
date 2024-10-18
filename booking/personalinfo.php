@@ -255,18 +255,6 @@ $_SESSION['otp'] = sendOTP($_SESSION['username'],$_SESSION['name'], $_SESSION['l
 			    </div>
 
 			</form>   
-      <script>
-    // Function to load input values from local storage
-    function loadInputValues() {
-        const inputs = document.querySelectorAll('input, textarea, select'); // Adjust selector as needed
-        inputs.forEach(input => {
-            input.value = localStorage.getItem(input.id) || '';
-        });
-    }
-
-    // Load input values on page load
-    window.onload = loadInputValues;
-</script>
 
 
 <script type="text/javascript">
