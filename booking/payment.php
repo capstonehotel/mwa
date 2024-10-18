@@ -63,7 +63,8 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
                                     text: 'The OTP you entered is incorrect. Please try again or click "Resend" to receive a new code.',
                                     showConfirmButton: true
                                 }).then(() => {
-                                    window.location.href = 'index.php?view=logininfo';
+                                    // Show the OTP input again if the OTP is invalid
+                                    showOtpInput(); // Call the function to show the OTP input again
                                 });
                             }
                         }
