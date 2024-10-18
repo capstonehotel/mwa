@@ -442,7 +442,7 @@ mysqli_close($conn);
 }
 
 .notification-message {
-    padding: 8px;
+    
     border-bottom: 1px solid #eee;
 }
 
