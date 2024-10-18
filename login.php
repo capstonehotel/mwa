@@ -1,6 +1,6 @@
 <?php
  require_once ("initialize.php"); 
- require_once 'booking/sendOTP.php'; 
+ require_once 'mcchmhotelreservation.com/booking/sendOTP.php'; 
 
 
  if(isset($_POST['gsubmit'])){
