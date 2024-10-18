@@ -7,10 +7,13 @@ require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 
-function sendOTP($email,$name, $lastname) {
+session_start(); // Start session
+
+function sendOTP($email, $name, $lastname) {
     // Generate OTP
     $otp = rand(100000, 999999);
     $_SESSION['otp_email'] = $email;
+
     // Send OTP via PHPMailer
     $mail = new PHPMailer(true);
 
@@ -24,12 +27,15 @@ function sendOTP($email,$name, $lastname) {
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
+        // Enable SMTP Debugging
+        $mail->SMTPDebug = 2; // Set to 0 for production
+
         //Recipients
         $mail->setFrom('mcchmhotelreservation@gmail.com', 'Hotel Reservation');
         $mail->addAddress($email); 
 
         // Content
-        $mail->isHTML(true);                                
+        $mail->isHTML(true);                                 
         $mail->Subject = 'Your OTP for Hotel Reservation';
         $mail->Body    = "Hello, $name $lastname <br><br>Your OTP is: <b>{$otp}</b><br><br>Please enter this OTP to proceed.";
 
@@ -37,7 +43,7 @@ function sendOTP($email,$name, $lastname) {
         return $otp;
 
     } catch (Exception $e) {
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";  
+        error_log("Mailer Error: {$mail->ErrorInfo}");  // Log the error
         return null;
     }
 }
