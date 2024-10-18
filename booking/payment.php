@@ -77,7 +77,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
                     if (referer.includes('personalinfo.php')) {
                         window.location.href = 'personalinfo.php'; // Redirect to personalinfo.php
                     } else if (referer.includes('login.php')) {
-                        window.location.href = 'logout.php'; // Redirect to logout.php
+                        window.location.href = '../logout.php'; // Redirect to logout.php
                     } else {
                         window.location.href = 'index.php'; // Default redirect
                     }
