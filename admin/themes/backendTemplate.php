@@ -365,18 +365,18 @@ mysqli_close($conn);
                 <ul class="notification-list">
                     <li class="notification-message">
                         <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
-                            <div class="notification">
-                                <!-- Profile image -->
-                                <img alt="" src="profile.jpg" />
-                                <div class="content">
-                                    <p>
-                                        <strong>Kath</strong> has made a booking of 112
-                                    </p>
-                                    <p class="time">
-                                        11/22/2002>
-                                    </p>
-                                </div>
-                            </div>
+                        <div class="notification" style="display: flex; align-items: center;">
+                        <!-- Profile image -->
+                        <img alt="" src="profile.jpg" class="profile-image" style="margin-right: 10px;" />
+                        <div class="content">
+                            <p>
+                                <strong>Kath</strong> has made a booking of 112
+                            </p>
+                            <p class="time" style="margin-top: 5px;">
+                                11/22/2002
+                            </p>
+                        </div>
+                    </div>
                         </a>
                     </li>
                 </ul>
