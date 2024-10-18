@@ -382,6 +382,66 @@ mysqli_close($conn);
                         </a>
                     </li>
                 </ul>
+                <ul class="notification-list">
+                    <li class="notification-message">
+                        <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
+                        <div class="notification" style="display: flex; align-items: center;">
+                        <!-- Profile image -->
+                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
+                        <div class="content" style="font-size: 15px;">
+                          
+                            <!-- Message -->
+                            <p style="margin: 0 0 2px 0;">
+                                <strong>Kath Ungon</strong> has made a booking of 112jhgkhkghgkgjkhgkjhgkhjkghgkjhj
+                            </p>
+                            <p class="time" style="margin-bottom: 5px;">
+                                11/22/2002
+                            </p>
+                        </div>
+                    </div>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="notification-list">
+                    <li class="notification-message">
+                        <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
+                        <div class="notification" style="display: flex; align-items: center;">
+                        <!-- Profile image -->
+                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
+                        <div class="content" style="font-size: 15px;">
+                          
+                            <!-- Message -->
+                            <p style="margin: 0 0 2px 0;">
+                                <strong>Kath Ungon</strong> has made a booking of 112jhgkhkghgkgjkhgkjhgkhjkghgkjhj
+                            </p>
+                            <p class="time" style="margin-bottom: 5px;">
+                                11/22/2002
+                            </p>
+                        </div>
+                    </div>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="notification-list">
+                    <li class="notification-message">
+                        <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
+                        <div class="notification" style="display: flex; align-items: center;">
+                        <!-- Profile image -->
+                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
+                        <div class="content" style="font-size: 15px;">
+                          
+                            <!-- Message -->
+                            <p style="margin: 0 0 2px 0;">
+                                <strong>Kath Ungon</strong> has made a booking of 112jhgkhkghgkgjkhgkjhgkhjkghgkjhj
+                            </p>
+                            <p class="time" style="margin-bottom: 5px;">
+                                11/22/2002
+                            </p>
+                        </div>
+                    </div>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="menu-footer">
