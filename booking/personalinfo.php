@@ -222,8 +222,8 @@ $_SESSION['otp'] = sendOTP($_SESSION['username'],$_SESSION['name'], $_SESSION['l
 
       <div class="form-group">
         <label  class ="control-label" for="username">Email:</label>
-        <input name="username" type="email" class="form-control input-sm" id="username" required  placeholder="User@gmail.com" pattern="[a-zA-Z0-9._%+-]+@gmail\.com$" 
-        title="Please enter a valid Gmail address (e.g., User@gmail.com)">
+        <input name="username" type="email" class="form-control input-sm" id="username" required  placeholder="User@gmail.com">
+    
       </div>
 
       <div class="form-group">
@@ -308,30 +308,20 @@ function validatePassword() {
 }
 </script>
 <script>
-    function debounce(func, delay) {
-        let timeout;
-        return function(...args) {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func.apply(this, args), delay);
-        };
-    }
-
-    document.getElementById('username').addEventListener('input', debounce(function() {
+    document.getElementById('username').addEventListener('input', function() {
         const emailInput = this.value;
 
-        // Regular expression to validate Gmail addresses
-        const gmailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
-
-        if (emailInput && !gmailPattern.test(emailInput)) {
-            // Show SweetAlert2 if the email is not a valid Gmail address
+        // Check if the input contains '@gmail.com'
+        if (emailInput && !emailInput.endsWith('@gmail.com')) {
+            // Show SweetAlert2 warning if '@gmail.com' is not present
             Swal.fire({
                 icon: 'warning',
                 title: 'Invalid Email',
-                text: 'Please enter a valid Gmail address (e.g., User@gmail.com).',
+                text: 'Please enter a valid Gmail address that ends with @gmail.com.',
                 showConfirmButton: true
             });
         }
-    }, 500)); // Adjust the delay (in milliseconds) as needed
+    });
 </script>
 <!-- <script>
 function validatePassword() {
