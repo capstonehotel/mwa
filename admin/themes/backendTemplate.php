@@ -371,7 +371,7 @@ mysqli_close($conn);
                         <div class="content" style="font-size: 15px;">
                           
                             <!-- Message -->
-                            <p style="margin: 0 0 5px 0;">
+                            <p style="margin: 0 0 10px 0;">
                                 <strong>Kath Ungon</strong> has made a booking of 112
                             </p>
                             <p class="time">
