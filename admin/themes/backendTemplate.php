@@ -318,34 +318,6 @@ mysqli_close($conn);
 }
 
 </style> -->
-<style>
-.notification-badge {
-    position: absolute;
-    top: -10px;
-    right: 3px;
-    font-size: 0.65rem; /* Adjust font size of the badge */
-    padding: 3px 6px;
-    border-radius: 50%;
-}
-/* .notification {
-    display: flex;
-    align-items: center;
-} */
-
-.notification-img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-
-.time {
-    font-size: 0.8em;
-    color: gray;
-}
-
-</style>
 <li class="nav-item my-auto" style="position: relative;">
     <a href="javascript:void(0);" class="text-dark" id="bookingNotification" onclick="toggleNotificationMenu()">
         <i class="fa fa-bell"></i>
@@ -360,107 +332,53 @@ mysqli_close($conn);
             <a href="javascript:void(0)" class="clear-noti">Clear All</a>
         </div>
         <div class="menu-content">
-            <!-- Notification with image and text -->
             <div class="menu-section">
                 <ul class="notification-list">
+                    <!-- Notification Item -->
                     <li class="notification-message">
                         <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
-                        <div class="notification" style="display: flex; align-items: center;">
-                        <!-- Profile image -->
-                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
-                        <div class="content" style="font-size: 15px;">
-                          
-                            <!-- Message -->
-                            <p style="margin: 0 0 2px 0;">
-                                <strong>Kath Ungon</strong> has made a booking of 112jhgkhkghgkgjkhgkjhgkhjkghgkjhj
-                            </p>
-                            <p class="time" style="margin-bottom: 5px;">
-                                11/22/2002
-                            </p>
-                        </div>
-                    </div>
+                            <div class="notification" style="display: flex; align-items: center;">
+                                <!-- Profile image -->
+                                <img alt="" src="../../profile.jpg" class="notification-img" />
+                                <div class="content">
+                                    <p style="margin: 0 0 2px 0;">
+                                        <strong>Kath Ungon</strong> has made a booking of 112jhgkhkghgkgjkhgkjhgkhjkghgkjhj
+                                    </p>
+                                    <p class="time">
+                                        11/22/2002
+                                    </p>
+                                </div>
+                            </div>
                         </a>
                     </li>
-                </ul>
-                <ul class="notification-list">
-                    <li class="notification-message">
-                        <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
-                        <div class="notification" style="display: flex; align-items: center;">
-                        <!-- Profile image -->
-                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
-                        <div class="content" style="font-size: 15px;">
-                          
-                            <!-- Message -->
-                            <p style="margin: 0 0 2px 0;">
-                                <strong>Kath Ungon</strong> has made a booking of 112jhgkhkghgkgjkhgkjhgkhjkghgkjhj
-                            </p>
-                            <p class="time" style="margin-bottom: 5px;">
-                                11/22/2002
-                            </p>
-                        </div>
-                    </div>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="notification-list">
-                    <li class="notification-message">
-                        <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
-                        <div class="notification" style="display: flex; align-items: center;">
-                        <!-- Profile image -->
-                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
-                        <div class="content" style="font-size: 15px;">
-                          
-                            <!-- Message -->
-                            <p style="margin: 0 0 2px 0;">
-                                <strong>Kath Ungon</strong> has made a booking of 112jhgkhkghgkgjkhgkjhgkhjkghgkjhj
-                            </p>
-                            <p class="time" style="margin-bottom: 5px;">
-                                11/22/2002
-                            </p>
-                        </div>
-                    </div>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="notification-list">
-                    <li class="notification-message">
-                        <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
-                        <div class="notification" style="display: flex; align-items: center;">
-                        <!-- Profile image -->
-                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
-                        <div class="content" style="font-size: 15px;">
-                          
-                            <!-- Message -->
-                            <p style="margin: 0 0 2px 0;">
-                                <strong>Kath Ungon</strong> has made a booking of 112jhgkhkghgkgjkhgkjhgkhjkghgkjhj
-                            </p>
-                            <p class="time" style="margin-bottom: 5px;">
-                                11/22/2002
-                            </p>
-                        </div>
-                    </div>
-                        </a>
-                    </li>
+                    <!-- Repeat for other notifications -->
                 </ul>
             </div>
         </div>
-        <!-- Footer with "View all Notifications" outside of scrollable content -->
-        <div class="menu-footer" style="padding: 10px; text-align: center; border-top: 1px solid #eee;">
+        <div class="menu-footer">
             <a href="https://mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=all">View all Notifications</a>
         </div>
     </div>
     <span style="margin-left: 10px;">|</span>
 </li>
 
-
 <style>
-   .notification-menu {
+.notification-badge {
+    position: absolute;
+    top: -10px;
+    right: 3px;
+    font-size: 0.65rem; /* Adjust font size of the badge */
+    padding: 3px 6px;
+    border-radius: 50%;
+}
+
+.notification-menu {
     display: none;
     position: absolute;
     top: 50px;
-    right: -150px;
-    width: 400px;
-    max-height: 900px; /* Increased height */
+    right: 0; /* Change to 0 for full width */
+    width: 100%; /* Make it full width on mobile */
+    max-height: 90vh; /* Limit height to 90% of the viewport height */
     overflow-y: auto; /* Keep scrolling */
     background-color: #fff;
     border: 1px solid #ccc;
@@ -471,18 +389,8 @@ mysqli_close($conn);
 
 .menu-content {
     padding: 10px;
-    max-height: 300px; /* Match the max-height of the notification menu */
+    max-height: 300px; /* Keep this to allow scrolling */
     overflow-y: auto; /* Ensure scrolling is enabled */
-}
-
-.menu-section {
-    margin-bottom: 7px;
-}
-
-.notification-message {
-    padding-top: 8px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 8px; /* Added padding for better spacing */
 }
 
 .menu-header {
@@ -495,7 +403,7 @@ mysqli_close($conn);
 
 .menu-title {
     font-weight: bold;
-    font-size: 16px;
+    font-size: 1rem; /* Increased font size */
 }
 
 .clear-noti {
@@ -504,15 +412,17 @@ mysqli_close($conn);
     cursor: pointer;
 }
 
-
-
 .notification-list {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-
+.notification-message {
+    padding-top: 8px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px; /* Added padding for better spacing */
+}
 
 .notification-message a {
     display: block;
@@ -520,11 +430,16 @@ mysqli_close($conn);
     text-decoration: none;
 }
 
-.notification-time {
-    font-size: 12px;
-    color: #999;
-    display: block;
-    margin-top: 5px;
+.notification-img {
+    width: 40px; /* Reduced size for better fit on mobile */
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.time {
+    font-size: 0.8em;
+    color: gray;
 }
 
 .menu-footer {
@@ -538,7 +453,28 @@ mysqli_close($conn);
     color: #007bff;
 }
 
+/* Media Queries for Mobile Responsiveness */
+@media (max-width: 768px) {
+    .notification-menu {
+        right: 0; /* Align to the left on mobile */
+        width: 100%; /* Full width */
+    }
+    .menu-title {
+        font-size: 1rem; /* Ensure titles are readable */
+    }
+    .notification-img {
+        width: 35px; /* Adjust image size for mobile */
+        height: 35px;
+    }
+    .time {
+        font-size: 0.7em; /* Smaller time font */
+    }
+    .notification-message {
+        padding: 10px; /* Increased padding for touch targets */
+    }
+}
 </style>
+
 <script>
     function toggleNotificationMenu() {
     var menu = document.getElementById("notificationMenu");
