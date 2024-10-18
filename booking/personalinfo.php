@@ -320,8 +320,8 @@ function validatePassword() {
             // Extract the domain part of the email
             const domainPart = emailInput.slice(atIndex + 1);
 
-            // Check if the domain matches 'gmail.com'
-            if (domainPart !== gmailDomain) {
+            // Check if the domain part starts with 'gmail.com' or if it matches letter by letter
+            if (!gmailDomain.startsWith(domainPart)) {
                 // Show SweetAlert2 warning if it does not match
                 Swal.fire({
                     icon: 'warning',
