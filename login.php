@@ -1,7 +1,7 @@
 <?php
  require_once ("initialize.php"); 
  require_once ("sendOTP.php");
-
+ ob_start(); 
 
  if(isset($_POST['gsubmit'])){
 
@@ -34,5 +34,6 @@
          }
      }
  }
+ ob_end_flush();
  
 ?>
