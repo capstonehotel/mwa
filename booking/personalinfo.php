@@ -400,7 +400,7 @@ function validatePassword() {
         const companyInput = document.getElementById('company');
         const caddressInput = document.getElementById('caddress');
         const emailInput = document.getElementById('username');
-        // const passwordInput = document.getElementById('password');
+        const passwordInput = document.getElementById('password');
         detectXSS(firstInput, 'First Name');
         detectXSS(lastInput, 'Last Name');
         detectXSS(phoneInput, 'Phone');
@@ -411,7 +411,7 @@ function validatePassword() {
         detectXSS(companyInput, 'Company');
         detectXSS(caddressInput, 'Company Address');
         detectXSS(emailInput, 'Email');
-        // detectXSS(passwordInput, 'Password');
+        detectXSS(passwordInput, 'Password');
     });
 </script>
 
