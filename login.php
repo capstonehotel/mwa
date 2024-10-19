@@ -1,7 +1,7 @@
 <?php
  require_once ("initialize.php"); 
  require_once ("sendOTP.php");
- ob_start(); 
+
 
  if(isset($_POST['gsubmit'])){
 
@@ -27,13 +27,12 @@
              // Store the OTP in session if needed
              $_SESSION['otp'] = $otp;
              // Redirect to a page to enter OTP
-             redirect("https://mcchmhotelreservation.com/booking/index.php?view=payment&verify=true");
+            //  redirect("https://mcchmhotelreservation.com/booking/index.php?view=payment&verify=true");
          } else {
              message("Failed to send OTP. Please try again.", "error");
              redirect("https://mcchmhotelreservation.com/booking/index.php?view=logininfo");
          }
      }
  }
- ob_end_flush();
  
 ?>
