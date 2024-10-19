@@ -7,7 +7,7 @@ require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 
-session_start(); // Start session
+// session_start(); // Start session
 
 function sendOTP($email, $name, $lastname) {
     // Generate OTP
