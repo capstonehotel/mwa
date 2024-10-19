@@ -28,7 +28,7 @@ function sendOTP($email, $name, $lastname) {
         $mail->Port = 587;
 
         // Enable SMTP Debugging
-        $mail->SMTPDebug = 2; // Set to 0 for production
+        // $mail->SMTPDebug = 2; // Set to 0 for production
 
         //Recipients
         $mail->setFrom('mcchmhotelreservation@gmail.com', 'Hotel Reservation');
