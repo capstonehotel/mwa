@@ -35,7 +35,7 @@ if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
                 'attributes' => [
                     'amount' => 10000, // Amount in cents (e.g., 10000 = PHP 100)
                     'redirect' => [
-                        'success' => 'https://mcchmhotelreservation.com/booking/index.php?view=payment&success=true', // Return URL after successful payment
+                        'success' => 'https://mcchmhotelreservation.com/booking/index.php?view=payment', // Return URL after successful payment
                         'failed' => 'https://mcchmhotelreservation.com/booking/payment.php', // Return URL if payment fails
                     ],
                     'type' => $paymentMethod === 'Gcash' ? 'gcash' : 'paymaya',
@@ -49,7 +49,6 @@ if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
 
         // Get the checkout URL from the source response
         $checkoutUrl = $sourceResponse->data->attributes->redirect->checkout_url;
-        $_SESSION['payment_status'] = 'success';
 
         // Return the checkout URL as JSON
         header('Content-Type: application/json');
