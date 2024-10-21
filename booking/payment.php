@@ -481,29 +481,29 @@ for ($i=0; $i < $count_cart  ; $i++) {
       </div>
 </div>
 <script>
-    document.getElementById('payNowButton').addEventListener('click', function() {
-        const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
-        if (selectedMethod) {
-            // Prepare form data
-            const formData = new FormData();
-            formData.append('payment_method', selectedMethod.value);
-            formData.append('realconfirmation', '<?php echo $_SESSION['confirmation']; ?>');
-            formData.append('txtstatus', document.getElementById('payment_status_input').value);
+   document.getElementById('payNowButton').addEventListener('click', function() {
+    const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
+    
+    if (selectedMethod) {
+        // Prepare form data with only the payment method
+        const formData = new FormData();
+        formData.append('payment_method', selectedMethod.value);
 
-            // Send the form data via fetch to paymongo.php
-            fetch('paymongo.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                console.log(data); // Handle success, maybe redirect
-            })
-            .catch(error => {
-                console.error('Error:', error); // Handle error
-            });
-        } else {
-            alert('Please select a payment method.'); // Ensure a payment method is selected
-        }
-    });
+        // Send the form data via fetch to paymongo.php
+        fetch('paymongo.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log(data); // Handle success, maybe redirect
+        })
+        .catch(error => {
+            console.error('Error:', error); // Handle error
+        });
+    } else {
+        alert('Please select a payment method.'); // Ensure a payment method is selected
+    }
+});
+
 </script>
