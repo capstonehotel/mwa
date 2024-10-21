@@ -339,7 +339,7 @@ $_SESSION['GUESTID'] =   $lastguest;
                         <label>Transaction Date:</label>
                         <?php echo date("m/d/Y"); ?>
                     </div>
-                    <div class="col-md-12">
+                    
                     <div class="col-md-12">
     <label style="display: none;">Transaction Id:</label>
     <span style="display: none;"><?php echo $_SESSION['confirmation']; ?></span>
@@ -371,7 +371,7 @@ $_SESSION['GUESTID'] =   $lastguest;
             document.getElementById('paymentForm').submit();
         }
     </script>
-    <div>
+    
     </div>
                   
 

@@ -1,65 +1,81 @@
 <?php
-require_once('../paymongo/vendor/autoload.php');
+// paymongo.php
 
-// Set content type to application/json
-header('Content-Type: application/json');
+// Replace these with your PayMongo API keys
+$paymongo_secret_key = 'sk_test_8FHikGJxuzFP3ix4itFTcQCv'; // Use your secret key here
+$paymongo_public_key = 'pk_test_WLnVGBjNdZeqPjoSUpyDk7qu'; // Use your public key here
 
-// Retrieve the POST data
-$payment_method = $_POST['payment_method'] ?? '';
+// Retrieve the selected payment method from the form
+$paymentMethod = isset($_POST['payment_method']) ? $_POST['payment_method'] : '';
 
-// Ensure that session is started and session value is set
-// session_start();
-if (!isset($_SESSION['pay']) || empty($_SESSION['pay'])) {
-    echo json_encode(['error' => 'Payment amount is missing']);
-    exit;
-}
-
-$amount = $_SESSION['pay']; // Amount in PHP centavos
-
-if ($payment_method) {
-    // PayMongo API Key (replace with your actual test key)
-    $apiKey = 'sk_test_8FHikGJxuzFP3ix4itFTcQCv';
-
+// Handle different payment methods (in this case, GCash)
+if ($paymentMethod === 'Gcash') {
     try {
-        $client = new \GuzzleHttp\Client();
-
-        // Create the payment link request
-        $response = $client->request('POST', 'https://api.paymongo.com/v1/links', [
-            'headers' => [
-                'accept' => 'application/json',
-                'authorization' => 'Basic ' . base64_encode($apiKey . ':'),
-                'content-type' => 'application/json',
-            ],
-            'json' => [
-                'data' => [
-                    'attributes' => [
-                        'amount' => $amount, // Amount from session in centavos
-                        'description' => 'Test Payment',
-                        'payment_method_types' => [$payment_method]
-                    ]
+        // Step 1: Create a Payment Intent
+        $paymentIntentData = [
+            'data' => [
+                'attributes' => [
+                    'amount' => 10000, // Amount in cents (e.g., 10000 = PHP 100)
+                    'payment_method_allowed' => ['gcash'],
+                    'currency' => 'PHP',
+                    'description' => 'Payment for booking', // Add your own description
+                    'statement_descriptor' => 'Booking Payment'
                 ]
             ]
-        ]);
+        ];
 
-        // Decode the JSON response body
-        $body = json_decode($response->getBody(), true);
+        $response = createPaymongoRequest('https://api.paymongo.com/v1/payment_intents', $paymentIntentData, $paymongo_secret_key);
 
-        // Extract the payment link from the response
-        if (isset($body['data']['attributes']['checkout_url'])) {
-            $paymentLink = $body['data']['attributes']['checkout_url'];
-            // Return the payment link as a JSON response
-            echo json_encode(['checkout_url' => $paymentLink]);
-        } else {
-            // Handle case where checkout_url is not present
-            echo json_encode(['error' => 'Payment link could not be generated']);
-        }
+        // Extract the payment intent ID
+        $paymentIntentId = $response->data->id;
 
+        // Step 2: Attach the Payment Method (GCash)
+        $attachPaymentData = [
+            'data' => [
+                'attributes' => [
+                    'payment_method' => 'gcash', // Payment method identifier
+                    'client_key' => $paymongo_public_key,
+                    'return_url' => 'https://mcchmhotelreservation.com/payment.php', // Return URL after successful payment
+                ]
+            ]
+        ];
+
+        // Create a source for GCash
+        $sourceResponse = createPaymongoRequest('https://api.paymongo.com/v1/sources', $attachPaymentData, $paymongo_secret_key);
+
+        // Redirect to GCash payment page
+        header('Location: ' . $sourceResponse->data->attributes->redirect->checkout_url);
+        exit();
     } catch (Exception $e) {
-        // Return an error message in JSON format
-        echo json_encode(['error' => $e->getMessage()]);
+        echo 'Error processing payment: ' . $e->getMessage();
     }
-} else {
-    // Return an error if no payment method is selected
-    echo json_encode(['error' => 'No payment method selected']);
+}
+
+// Function to make PayMongo API requests
+function createPaymongoRequest($url, $data, $secretKey)
+{
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Authorization: Basic ' . base64_encode($secretKey . ':'),
+        'Content-Type: application/json',
+    ]);
+
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    if (!$response) {
+        throw new Exception('Unable to process PayMongo API request.');
+    }
+
+    $decodedResponse = json_decode($response);
+
+    if (isset($decodedResponse->errors)) {
+        throw new Exception('API Error: ' . $decodedResponse->errors[0]->detail);
+    }
+
+    return $decodedResponse;
 }
 ?>
