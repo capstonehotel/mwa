@@ -29,22 +29,27 @@ if ($paymentMethod === 'Gcash') {
         // Extract the payment intent ID
         $paymentIntentId = $response->data->id;
 
-        // Step 2: Attach the Payment Method (GCash)
-        $attachPaymentData = [
+        // Step 2: Create a Source for GCash
+        $sourceData = [
             'data' => [
                 'attributes' => [
-                    'payment_method' => 'gcash', // Payment method identifier
-                    'client_key' => $paymongo_public_key,
-                    'return_url' => 'https://mcchmhotelreservation.com/payment.php', // Return URL after successful payment
+                    'amount' => 10000, // Amount in cents (e.g., 10000 = PHP 100)
+                    'redirect' => [
+                        'success' => 'https://mcchmhotelreservation.com/booking/index.php?view=payment.php', // Return URL after successful payment
+                        'failed' => 'https://mcchmhotelreservation.com/booking/payment.php', // Return URL if payment fails
+                    ],
+                    'type' => 'gcash',
+                    'currency' => 'PHP'
                 ]
             ]
         ];
 
         // Create a source for GCash
-        $sourceResponse = createPaymongoRequest('https://api.paymongo.com/v1/sources', $attachPaymentData, $paymongo_secret_key);
+        $sourceResponse = createPaymongoRequest('https://api.paymongo.com/v1/sources', $sourceData, $paymongo_secret_key);
 
         // Redirect to GCash payment page
-        header('Location: ' . $sourceResponse->data->attributes->redirect->checkout_url);
+        $gcashCheckoutUrl = $sourceResponse->data->attributes->redirect->checkout_url;
+        header('Location: ' . $gcashCheckoutUrl);
         exit();
     } catch (Exception $e) {
         echo 'Error processing payment: ' . $e->getMessage();
@@ -59,7 +64,7 @@ function createPaymongoRequest($url, $data, $secretKey)
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        'Authorization: Basic ' . base64_encode($secretKey . ':'),
+        'Authorization: Basic ' . base64_encode($secretKey . ':'), // Basic Auth
         'Content-Type: application/json',
     ]);
 
