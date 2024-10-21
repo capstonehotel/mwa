@@ -177,7 +177,7 @@ $_SESSION['confirmation'] = $confirmation;
 
  $count_cart = count($_SESSION['monbela_cart']);
 
-if(isset($_POST['btnsubmitbooking'])){
+// if(isset($_POST['btnsubmitbooking'])){
   // $message = $_POST['message'];
 
  
@@ -194,7 +194,7 @@ if(isset($_POST['btnsubmitbooking'])){
 // }
 //   $payable= $rate*$days;
 //   $_SESSION['pay']= $payable;
-if (isset($_GET['success']) && $_GET['success'] === 'true') {
+if (isset($_SESSION['payment_status']) && $_SESSION['payment_status'] === 'success') {
 
 if(!isset($_SESSION['GUESTID'])){
 
@@ -280,6 +280,7 @@ $_SESSION['GUESTID'] =   $lastguest;
     //   message("New [". $name ."] created successfully!", "success");
 
   //  unsetSessions();
+  unset($_SESSION['payment_status']);
 
             unset($_SESSION['monbela_cart']);
             // unset($_SESSION['confirmation']);
@@ -302,7 +303,7 @@ $_SESSION['GUESTID'] =   $lastguest;
         }
     });
 </script>
-<?php }}?>
+<?php }?>
 
  
 <!-- Add this in your HTML head section -->
@@ -482,16 +483,15 @@ for ($i=0; $i < $count_cart  ; $i++) {
       </div>
 </div>
 <script>
-document.getElementById('confirmSubmitButton').addEventListener('click', function() {
+document.getElementById('confirmBookingButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
-    
+
     if (selectedMethod) {
-        // Prepare form data with payment method
+        // Prepare form data with only the payment method
         const formData = new FormData();
         formData.append('payment_method', selectedMethod.value);
-        formData.append('btnsubmitbooking', ''); // Append the button to indicate form submission
 
-        // Send the form data via fetch to paymongo.php for checkout
+        // Send the form data via fetch to paymongo.php
         fetch('paymongo.php', {
             method: 'POST',
             body: formData
@@ -499,7 +499,7 @@ document.getElementById('confirmSubmitButton').addEventListener('click', functio
         .then(response => response.json()) // Expecting a JSON response
         .then(data => {
             if (data.checkout_url) {
-                // Redirect to the GCash checkout URL
+                // Redirect to the checkout URL for payment authorization
                 window.location.href = data.checkout_url;
             } else {
                 alert('Error: ' + data.message); // Handle the error response
@@ -512,6 +512,7 @@ document.getElementById('confirmSubmitButton').addEventListener('click', functio
         alert('Please select a payment method.'); // Ensure a payment method is selected
     }
 });
+
 </script>
 <!-- <script>
 document.getElementById('payNowButton').addEventListener('click', function() {

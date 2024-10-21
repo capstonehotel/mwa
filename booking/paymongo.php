@@ -49,6 +49,7 @@ if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
 
         // Get the checkout URL from the source response
         $checkoutUrl = $sourceResponse->data->attributes->redirect->checkout_url;
+        $_SESSION['payment_status'] = 'success';
 
         // Return the checkout URL as JSON
         header('Content-Type: application/json');
