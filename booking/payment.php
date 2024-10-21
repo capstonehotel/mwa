@@ -346,7 +346,30 @@ $_SESSION['GUESTID'] =   $lastguest;
     <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
     <input type="hidden" id="payment_status_input"  name="txtstatus">
 </div>
-                    <div class="col-md-12 col-sm-2">
+<div class="col-md-12 col-sm-2">
+        <label id="paymentLabel">Payment Method:</label>
+        <div>
+            <input type="radio" id="gcash" name="payment_method" value="Gcash" required>
+            <label for="gcash">
+                <img src="../gcash.png" alt="Pay with GCash" style="height: 20px; margin-right: 5px;">
+                Pay with GCash
+            </label>
+        </div>
+        <div>
+            <input type="radio" id="paymaya" name="payment_method" value="Paymaya" required>
+            <label for="paymaya">
+                <img src="../paymaya.png" alt="Pay with PayMaya" style="height: 20px; margin-right: 5px;">
+                Pay with PayMaya
+            </label>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <button type="button" class="btn btn-primary" id="payNowButton">
+            Pay Now
+        </button>
+    </div>
+                    <!-- <div class="col-md-12 col-sm-2">
     <label id="paymentLabel">Payment Method:</label>
 
     <form method="POST" action="paymongo.php" id="paymentForm">
@@ -373,7 +396,8 @@ $_SESSION['GUESTID'] =   $lastguest;
     </script>
     
     </div>
-                  
+                   -->
+    
 
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -456,3 +480,30 @@ for ($i=0; $i < $count_cart  ; $i++) {
         </div>
       </div>
 </div>
+<script>
+    document.getElementById('payNowButton').addEventListener('click', function() {
+        const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
+        if (selectedMethod) {
+            // Prepare form data
+            const formData = new FormData();
+            formData.append('payment_method', selectedMethod.value);
+            formData.append('realconfirmation', '<?php echo $_SESSION['confirmation']; ?>');
+            formData.append('txtstatus', document.getElementById('payment_status_input').value);
+
+            // Send the form data via fetch to paymongo.php
+            fetch('paymongo.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data); // Handle success, maybe redirect
+            })
+            .catch(error => {
+                console.error('Error:', error); // Handle error
+            });
+        } else {
+            alert('Please select a payment method.'); // Ensure a payment method is selected
+        }
+    });
+</script>
