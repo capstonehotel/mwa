@@ -194,6 +194,7 @@ if(isset($_POST['btnsubmitbooking'])){
 // }
 //   $payable= $rate*$days;
 //   $_SESSION['pay']= $payable;
+if (isset($_GET['success']) && $_GET['success'] === 'true') {
 
 if(!isset($_SESSION['GUESTID'])){
 
@@ -301,7 +302,7 @@ $_SESSION['GUESTID'] =   $lastguest;
         }
     });
 </script>
-<?php }?>
+<?php }}?>
 
  
 <!-- Add this in your HTML head section -->
