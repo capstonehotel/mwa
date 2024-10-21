@@ -457,7 +457,7 @@ for ($i=0; $i < $count_cart  ; $i++) {
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                <button type="submit" class="btn btn-primary" align="right" name="btnsubmitbooking">Yes</button>
+                <button type="button" class="btn btn-primary" id="confirmSubmitButton">Yes</button>
             </div>
         </div>
     </div>
@@ -481,6 +481,38 @@ for ($i=0; $i < $count_cart  ; $i++) {
       </div>
 </div>
 <script>
+document.getElementById('confirmSubmitButton').addEventListener('click', function() {
+    const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
+    
+    if (selectedMethod) {
+        // Prepare form data with payment method
+        const formData = new FormData();
+        formData.append('payment_method', selectedMethod.value);
+        formData.append('btnsubmitbooking', ''); // Append the button to indicate form submission
+
+        // Send the form data via fetch to paymongo.php for checkout
+        fetch('paymongo.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json()) // Expecting a JSON response
+        .then(data => {
+            if (data.checkout_url) {
+                // Redirect to the GCash checkout URL
+                window.location.href = data.checkout_url;
+            } else {
+                alert('Error: ' + data.message); // Handle the error response
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error); // Handle error
+        });
+    } else {
+        alert('Please select a payment method.'); // Ensure a payment method is selected
+    }
+});
+</script>
+<!-- <script>
 document.getElementById('payNowButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
     
@@ -511,4 +543,4 @@ document.getElementById('payNowButton').addEventListener('click', function() {
     }
 });
 
-</script>
+</script> -->

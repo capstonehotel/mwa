@@ -58,13 +58,7 @@ if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
         // Return error message as JSON
         header('Content-Type: application/json');
         echo json_encode(['message' => 'Error processing payment: ' . $e->getMessage()]);
-        exit(); // Ensure the script exits after handling the error
     }
-} else {
-    // Handle case where no valid payment method is selected
-    header('Content-Type: application/json');
-    echo json_encode(['message' => 'Invalid payment method selected.']);
-    exit();
 }
 
 // Function to make PayMongo API requests
