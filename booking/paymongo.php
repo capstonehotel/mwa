@@ -47,12 +47,17 @@ if ($paymentMethod === 'Gcash') {
         // Create a source for GCash
         $sourceResponse = createPaymongoRequest('https://api.paymongo.com/v1/sources', $sourceData, $paymongo_secret_key);
 
-        // Redirect to GCash payment page
+        // Get the checkout URL from the source response
         $gcashCheckoutUrl = $sourceResponse->data->attributes->redirect->checkout_url;
-        header('Location: ' . $gcashCheckoutUrl);
+
+        // Return the checkout URL as JSON
+        header('Content-Type: application/json');
+        echo json_encode(['checkout_url' => $gcashCheckoutUrl]);
         exit();
     } catch (Exception $e) {
-        echo 'Error processing payment: ' . $e->getMessage();
+        // Return error message as JSON
+        header('Content-Type: application/json');
+        echo json_encode(['message' => 'Error processing payment: ' . $e->getMessage()]);
     }
 }
 

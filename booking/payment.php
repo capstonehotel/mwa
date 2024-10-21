@@ -481,7 +481,7 @@ for ($i=0; $i < $count_cart  ; $i++) {
       </div>
 </div>
 <script>
-   document.getElementById('payNowButton').addEventListener('click', function() {
+document.getElementById('payNowButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
     
     if (selectedMethod) {
@@ -494,9 +494,14 @@ for ($i=0; $i < $count_cart  ; $i++) {
             method: 'POST',
             body: formData
         })
-        .then(response => response.text())
+        .then(response => response.json()) // Expecting a JSON response
         .then(data => {
-            console.log(data); // Handle success, maybe redirect
+            if (data.checkout_url) {
+                // Redirect to the GCash checkout URL
+                window.location.href = data.checkout_url;
+            } else {
+                alert('Error: ' + data.message); // Handle the error response
+            }
         })
         .catch(error => {
             console.error('Error:', error); // Handle error
