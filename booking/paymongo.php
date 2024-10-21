@@ -43,46 +43,6 @@ if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
                 ]
             ]
         ];
-        
-        // Assuming you're sending the payment request and receiving a response
-        $response = sendPaymentRequest($sourceData); // This function should handle the payment request
-        
-        if ($response['status'] === 'success') {
-            // Payment was successful, run SweetAlert
-            echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script> 
-            <script type='text/javascript'>
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'Booking is successfully submitted!',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Redirect after confirmation
-                        window.location.href = 'index.php';
-                    }
-                });
-            </script>
-            ";
-        } else {
-            // Handle payment failure or other scenarios
-            echo "
-            <script type='text/javascript'>
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'There was an issue with your payment.',
-                    icon: 'error',
-                    confirmButtonText: 'Retry'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Redirect to payment page or retry payment
-                        window.location.href = 'https://mcchmhotelreservation.com/booking/payment.php';
-                    }
-                });
-            </script>
-            ";
-        }
-        
 
         // Create a source for the selected payment method
         $sourceResponse = createPaymongoRequest('https://api.paymongo.com/v1/sources', $sourceData, $paymongo_secret_key);
