@@ -49,7 +49,7 @@ if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
                     'billing' => [
                         'name' => 'Kyebe',
                         'email' => 'kyebe@gmail.com',
-                        'phone' => '09354353453'
+                        'phone' => '09354353453',
                     ]
                 ]
             ]
