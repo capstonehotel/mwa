@@ -1,24 +1,31 @@
 <?php
 // paymongo.php
 
-// Replace these with your PayMongo API keys
-$paymongo_secret_key = 'sk_test_8FHikGJxuzFP3ix4itFTcQCv'; // Use your secret key here
-$paymongo_public_key = 'pk_test_WLnVGBjNdZeqPjoSUpyDk7qu'; // Use your public key here
+// PayMongo API keys
+$paymongo_secret_key = 'sk_test_8FHikGJxuzFP3ix4itFTcQCv'; 
+$paymongo_public_key = 'pk_test_WLnVGBjNdZeqPjoSUpyDk7qu'; 
 
-// Retrieve the selected payment method from the form
+// Retrieve the selected payment method
 $paymentMethod = isset($_POST['payment_method']) ? $_POST['payment_method'] : '';
 
-// Retrieve the amount from session and convert it to cents (PayMongo requires amount in cents)
-$amountInCents = isset($_SESSION['pay']) ? $_SESSION['pay'] * 100 : 0; // Multiply by 100 to convert PHP to cents
+// Retrieve the amount from session and convert it to centavos (PayMongo requires amount in cents)
+$amountInCents = isset($_SESSION['pay']) ? $_SESSION['pay'] * 100 : 0; // PHP * 100
 
-// Handle different payment methods (GCash and PayMaya)
+// Validate that the amount is over the minimum and correct for PayMongo
+if ($amountInCents < 2000) {
+    header('Content-Type: application/json');
+    echo json_encode(['message' => 'Error: Payment amount must be at least PHP 20.00.']);
+    exit();
+}
+
+// Proceed with the payment intent creation if amount is valid
 if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
     try {
-        // Step 1: Create a Payment Intent
+        // Step 1: Create a Payment Intent with the correct amount
         $paymentIntentData = [
             'data' => [
                 'attributes' => [
-                    'amount' => $amountInCents, // Use dynamic amount from session
+                    'amount' => $amountInCents, // Use dynamic amount in centavos
                     'payment_method_allowed' => [$paymentMethod === 'Gcash' ? 'gcash' : 'paymaya'],
                     'currency' => 'PHP',
                     'description' => 'Payment for booking', // Add your own description
