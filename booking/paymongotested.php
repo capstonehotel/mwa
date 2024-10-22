@@ -4,7 +4,6 @@ session_start();
 
 // Assuming the session variable 'pay' is set
 $pay = isset($_SESSION['pay']) ? $_SESSION['pay'] : '';
-$pay='123';
 // Return JSON response
 header('Content-Type: application/json');
 echo json_encode(['pay' => $pay]);
