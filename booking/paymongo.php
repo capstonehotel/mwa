@@ -9,99 +9,137 @@ $paymongo_public_key = 'pk_test_WLnVGBjNdZeqPjoSUpyDk7qu';
 $paymentMethod = isset($_POST['payment_method']) ? $_POST['payment_method'] : '';
 
 // Retrieve the amount from session and convert it to centavos (PayMongo requires amount in cents)
-$amountInCents = isset($_SESSION['pay']) ? $_SESSION['pay'] * 100 : 0; // PHP * 100
+$amountInCents = isset($_SESSION['pay']) ? (int)($_SESSION['pay'] * 100) : 0; // Ensure integer conversion
 
-// Validate that the amount is over the minimum and correct for PayMongo
-if ($amountInCents < 2000) {
+// Validate that the amount is over the minimum and within PayMongo limits
+if ($amountInCents < 2000) { // Minimum 20 PHP
     header('Content-Type: application/json');
     echo json_encode(['message' => 'Error: Payment amount must be at least PHP 20.00.']);
     exit();
 }
 
-// Proceed with the payment intent creation if amount is valid
-if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
-    try {
-        // Step 1: Create a Payment Intent with the correct amount
-        $paymentIntentData = [
-            'data' => [
-                'attributes' => [
-                    'amount' => $amountInCents, // Use dynamic amount in centavos
-                    'payment_method_allowed' => [$paymentMethod === 'Gcash' ? 'gcash' : 'paymaya'],
-                    'currency' => 'PHP',
-                    'description' => 'Payment for booking', // Add your own description
-                    'statement_descriptor' => 'Booking Payment'
-                ]
-            ]
-        ];
+// PayMongo maximum limit is 100,000 PHP (10,000,000 centavos)
+if ($amountInCents > 10000000) {
+    header('Content-Type: application/json');
+    echo json_encode(['message' => 'Error: Payment amount cannot exceed PHP 100,000.00.']);
+    exit();
+}
 
-        $response = createPaymongoRequest('https://api.paymongo.com/v1/payment_intents', $paymentIntentData, $paymongo_secret_key);
-
-        // Extract the payment intent ID
-        $paymentIntentId = $response->data->id;
-
-        // Step 2: Create a Source for the selected payment method
-        $sourceData = [
-            'data' => [
-                'attributes' => [
-                    'amount' => $amountInCents, // Use dynamic amount from session
-                    'redirect' => [
-                        'success' => 'https://mcchmhotelreservation.com/booking/index.php?view=payment', // Return URL after successful payment
-                        'failed' => 'https://mcchmhotelreservation.com/booking/payment.php', // Return URL if payment fails
-                    ],
-                    'type' => $paymentMethod === 'Gcash' ? 'gcash' : 'paymaya',
-                    'currency' => 'PHP'
-                ]
-            ]
-        ];
-
-        // Create a source for the selected payment method
-        $sourceResponse = createPaymongoRequest('https://api.paymongo.com/v1/sources', $sourceData, $paymongo_secret_key);
-
-        // Get the checkout URL from the source response
-        $checkoutUrl = $sourceResponse->data->attributes->redirect->checkout_url;
-
-        // Return the checkout URL as JSON
-        header('Content-Type: application/json');
-        echo json_encode(['checkout_url' => $checkoutUrl]);
-        exit();
-    } catch (Exception $e) {
-        // Return error message as JSON
-        header('Content-Type: application/json');
-        echo json_encode(['message' => 'Error processing payment: ' . $e->getMessage()]);
-        exit(); // Ensure the script exits after handling the error
-    }
-} else {
-    // Handle case where no valid payment method is selected
+// Validate payment method
+if (!in_array($paymentMethod, ['Gcash', 'Paymaya'])) {
     header('Content-Type: application/json');
     echo json_encode(['message' => 'Invalid payment method selected.']);
     exit();
 }
 
-// Function to make PayMongo API requests
-function createPaymongoRequest($url, $data, $secretKey)
-{
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        'Authorization: Basic ' . base64_encode($secretKey . ':'), // Basic Auth
-        'Content-Type: application/json',
+try {
+    // Step 1: Create a Payment Intent
+    $paymentIntentData = [
+        'data' => [
+            'attributes' => [
+                'amount' => $amountInCents,
+                'payment_method_allowed' => [$paymentMethod === 'Gcash' ? 'gcash' : 'paymaya'],
+                'currency' => 'PHP',
+                'description' => 'Payment for booking',
+                'statement_descriptor' => 'Booking Payment',
+                'payment_method_options' => [
+                    'card' => [
+                        'request_three_d_secure' => 'any'
+                    ]
+                ]
+            ]
+        ]
+    ];
+
+    $response = createPaymongoRequest('https://api.paymongo.com/v1/payment_intents', $paymentIntentData, $paymongo_secret_key);
+
+    // Step 2: Create a Source
+    $sourceData = [
+        'data' => [
+            'attributes' => [
+                'amount' => $amountInCents,
+                'redirect' => [
+                    'success' => 'https://mcchmhotelreservation.com/booking/index.php?view=payment',
+                    'failed' => 'https://mcchmhotelreservation.com/booking/payment.php'
+                ],
+                'type' => strtolower($paymentMethod),
+                'currency' => 'PHP',
+                'billing' => [
+                    'address' => [
+                        'country' => 'PH'
+                    ]
+                ]
+            ]
+        ]
+    ];
+
+    $sourceResponse = createPaymongoRequest('https://api.paymongo.com/v1/sources', $sourceData, $paymongo_secret_key);
+    
+    if (!isset($sourceResponse->data->attributes->redirect->checkout_url)) {
+        throw new Exception('Invalid response from PayMongo: Missing checkout URL');
+    }
+
+    $checkoutUrl = $sourceResponse->data->attributes->redirect->checkout_url;
+    
+    // Return success response
+    header('Content-Type: application/json');
+    echo json_encode([
+        'success' => true,
+        'checkout_url' => $checkoutUrl
     ]);
+    exit();
 
+} catch (Exception $e) {
+    header('Content-Type: application/json');
+    echo json_encode([
+        'success' => false,
+        'message' => 'Error processing payment: ' . $e->getMessage()
+    ]);
+    exit();
+}
+
+function createPaymongoRequest($url, $data, $secretKey) {
+    $ch = curl_init($url);
+    
+    $options = [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => [
+            'Authorization: Basic ' . base64_encode($secretKey . ':'),
+            'Content-Type: application/json',
+            'Accept: application/json'
+        ],
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ];
+    
+    curl_setopt_array($ch, $options);
+    
     $response = curl_exec($ch);
+    $error = curl_error($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    
     curl_close($ch);
-
-    if (!$response) {
-        throw new Exception('Unable to process PayMongo API request.');
+    
+    if ($error) {
+        throw new Exception('cURL Error: ' . $error);
     }
-
+    
+    if ($httpCode >= 400) {
+        $errorData = json_decode($response);
+        throw new Exception(isset($errorData->errors[0]->detail) ? 
+            $errorData->errors[0]->detail : 
+            'HTTP Error: ' . $httpCode
+        );
+    }
+    
     $decodedResponse = json_decode($response);
-
-    if (isset($decodedResponse->errors)) {
-        throw new Exception('API Error: ' . $decodedResponse->errors[0]->detail);
+    
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception('Invalid JSON response from PayMongo');
     }
-
+    
     return $decodedResponse;
 }
 ?>
