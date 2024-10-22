@@ -346,6 +346,27 @@ mysqli_close($conn);
 }
 
 </style>
+<?php 
+// Get today's date
+$today = date('Y-m-d');
+
+// Query to fetch today's bookings
+$query = "
+    SELECT g.G_FNAME, g.G_LNAME, r.ROOM 
+    FROM tblpayment p 
+    JOIN tblguest g ON p.GUESTID = g.GUESTID 
+    JOIN tblreservation r ON r.GUESTID = g.GUESTID 
+    WHERE DATE(p.TRANSDATE) = '$today'
+";
+$result = mysqli_query($connection, $query);
+
+// Initialize an empty array to store notifications
+$notifications = [];
+if ($result) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $notifications[] = $row; // Store each notification in the array
+    }
+}?>
 <li class="nav-item my-auto" style="position: relative;">
     <a href="javascript:void(0);" class="text-dark" id="bookingNotification" onclick="toggleNotificationMenu()">
         <i class="fa fa-bell"></i>
@@ -403,6 +424,7 @@ mysqli_close($conn);
                     </li>
                 </ul>
                 <ul class="notification-list">
+                <?php foreach ($notifications as $notification) { ?>
                     <li class="notification-message">
                         <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
                         <div class="notification" style="display: flex; align-items: center;">
@@ -412,15 +434,16 @@ mysqli_close($conn);
                           
                             <!-- Message -->
                             <p style="margin: 0 0 2px 0;">
-                                <strong><?php echo $_SESSION['name'] . ' ' . $_SESSION['last']; ?></strong> has made a booking in roomggg  <?php echo  $result->ROOM.' '. $result->ROOMDESC; ?>
+                                <strong><?php echo $notification['G_FNAME'] . ' ' . $notification['G_LNAME']; ?></strong> has made a booking in room <?php echo $notification['ROOM']; ?>
                             </p>
                             <p class="time" style="margin-bottom: 5px;">
-                                11/22/2002
+                            <?php echo date('m/d/Y'); 
                             </p>
                         </div>
                     </div>
                         </a>
                     </li>
+                    <?php } ?>
                 </ul>
                 <ul class="notification-list">
                     <li class="notification-message">
