@@ -1,14 +1,20 @@
 <?php
 // paymongo.php
+session_start();
 
+// Assuming the session variable 'pay' is set
+$pay = isset($_SESSION['pay']) ? $_SESSION['pay'] : '';
+
+// Return JSON response
+header('Content-Type: application/json');
+echo json_encode(['pay' => $pay]);
 // Replace these with your PayMongo API keys
 $paymongo_secret_key = 'sk_test_8FHikGJxuzFP3ix4itFTcQCv'; // Use your secret key here
 $paymongo_public_key = 'pk_test_WLnVGBjNdZeqPjoSUpyDk7qu'; // Use your public key here
 
 // Retrieve the selected payment method from the form
 $paymentMethod = isset($_POST['payment_method']) ? $_POST['payment_method'] : '';
-echo $_SESSION['pay'];
-echo '<script>alert('.$_SESSION['pay'].');</script>';
+
 // Handle different payment methods (GCash and PayMaya)
 if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
     try {
