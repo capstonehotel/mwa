@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 define('PAYMONGO_SECRET_KEY', 'sk_test_8FHikGJxuzFP3ix4itFTcQCv');
 define('PAYMONGO_API_URL', 'https://api.paymongo.com/v1');
 
-echo '<script>alert("test");</script>';
+
 // Function to make API requests to PayMongo
 function makePayMongoRequest($endpoint, $data) {
     $ch = curl_init(PAYMONGO_API_URL . $endpoint);
