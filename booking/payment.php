@@ -490,7 +490,7 @@ document.getElementById('confirmBookingButton').addEventListener('click', functi
         formData.append('payment_method', selectedMethod.value);
 
         // Send the form data via fetch to paymongo.php
-        fetch('paymongotested.php', {
+        fetch('paymongo.php', {
             method: 'POST',
             body: formData
         })
