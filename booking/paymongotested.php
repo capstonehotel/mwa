@@ -8,6 +8,10 @@ $pay = isset($_SESSION['pay']) ? $_SESSION['pay'] : '';
 // Return JSON response
 header('Content-Type: application/json');
 echo json_encode(['pay' => $pay]);
+exit();
+?>
+
+<?php
 // Replace these with your PayMongo API keys
 $paymongo_secret_key = 'sk_test_8FHikGJxuzFP3ix4itFTcQCv'; // Use your secret key here
 $paymongo_public_key = 'pk_test_WLnVGBjNdZeqPjoSUpyDk7qu'; // Use your public key here
