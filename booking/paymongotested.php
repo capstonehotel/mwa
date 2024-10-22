@@ -3,11 +3,7 @@
 session_start();
 
 // Assuming the session variable 'pay' is set
-$pay = isset($_SESSION['pay']) ? $_SESSION['pay'] : '';
-// Return JSON response
-header('Content-Type: application/json');
-echo json_encode(['pay' => $pay]);
-exit();
+$amount = $_SESSION['pay'] * 100;
 ?>
 
 <?php
@@ -25,7 +21,7 @@ if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
         $paymentIntentData = [
             'data' => [
                 'attributes' => [
-                    'amount' => 200000, // Amount in cents (e.g., 10000 = PHP 100)
+                    'amount' => $amount, // Amount in cents (e.g., 10000 = PHP 100)
                     'payment_method_allowed' => [$paymentMethod === 'Gcash' ? 'gcash' : 'paymaya'],
                     'currency' => 'PHP',
                     'description' => 'Payment for booking', // Add your own description
@@ -43,7 +39,7 @@ if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
         $sourceData = [
             'data' => [
                 'attributes' => [
-                    'amount' => 200000, // Amount in cents (e.g., 10000 = PHP 100)
+                    'amount' => $amount, // Amount in cents (e.g., 10000 = PHP 100)
                     'redirect' => [
                         'success' => 'https://mcchmhotelreservation.com/booking/index.php?view=payment', // Return URL after successful payment
                         'failed' => 'https://mcchmhotelreservation.com/booking/payment.php', // Return URL if payment fails
