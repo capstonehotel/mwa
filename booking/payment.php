@@ -502,7 +502,7 @@ document.getElementById('confirmBookingButton').addEventListener('click', functi
                 // Redirect to the GCash/PayMaya checkout URL
                 window.location.href = data.checkout_url;
             } else {
-                alert('Error: ' + data.message); // Handle the error response
+                alert('Error: ' + data.pay); // Handle the error response
             }
         })
         .catch(error => {
