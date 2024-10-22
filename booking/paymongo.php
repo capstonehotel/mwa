@@ -37,10 +37,10 @@ try {
     }
     
     // Get customer details from session
-    $firstName = $_SESSION['name'] ?? '';
-    $lastName = $_SESSION['last'] ?? '';
-    $phone = $_SESSION['phone'] ?? '';
-    $username = $_SESSION['username'] ?? '';
+    $firstName = $_SESSION['name'];
+    $lastName = $_SESSION['last'];
+    $phone = $_SESSION['phone'];
+    $username = $_SESSION['username'];
     
     // Validate customer details
     if (empty($firstName) || empty($lastName) || empty($phone)) {
