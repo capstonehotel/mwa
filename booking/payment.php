@@ -506,7 +506,7 @@ document.getElementById('confirmBookingButton').addEventListener('click', functi
             }
         })
         .catch(error => {
-            console.error('Error:', error); // Handle error
+            console.error('Error:', pay); // Handle error
         });
     } else {
         alert('Please select a payment method.'); // Ensure a payment method is selected
