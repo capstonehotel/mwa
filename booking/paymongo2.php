@@ -15,27 +15,27 @@ $clientPhone = $_SESSION['phone'];
 if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
     try {
         // Step 1: Create a Payment Intent with client details
-        $paymentIntentData = [
-            'data' => [
-                'attributes' => [
-                    'amount' => 10000, // Amount in cents (e.g., 10000 = PHP 100)
-                    'payment_method_allowed' => [$paymentMethod === 'Gcash' ? 'gcash' : 'paymaya'],
-                    'currency' => 'PHP',
-                    'description' => 'Payment for booking', // Add your own description
-                    'statement_descriptor' => 'Booking Payment',
-                    'customer' => [
-                        'name' => $clientName,
-                        'email' => $clientEmail,
-                        'phone' => $clientPhone
-                    ]
-                ]
-            ]
-        ];
+        // $paymentIntentData = [
+        //     'data' => [
+        //         'attributes' => [
+        //             'amount' => 10000, // Amount in cents (e.g., 10000 = PHP 100)
+        //             'payment_method_allowed' => [$paymentMethod === 'Gcash' ? 'gcash' : 'paymaya'],
+        //             'currency' => 'PHP',
+        //             'description' => 'Payment for booking', // Add your own description
+        //             'statement_descriptor' => 'Booking Payment',
+        //             'customer' => [
+        //                 'name' => $clientName,
+        //                 'email' => $clientEmail,
+        //                 'phone' => $clientPhone
+        //             ]
+        //         ]
+        //     ]
+        // ];
 
-        $response = createPaymongoRequest('https://api.paymongo.com/v1/payment_intents', $paymentIntentData, $paymongo_secret_key);
+        // $response = createPaymongoRequest('https://api.paymongo.com/v1/payment_intents', $paymentIntentData, $paymongo_secret_key);
 
-        // Extract the payment intent ID
-        $paymentIntentId = $response->data->id;
+        // // Extract the payment intent ID
+        // $paymentIntentId = $response->data->id;
 
         // Step 2: Create a Source for the selected payment method with client details
         $sourceData = [
