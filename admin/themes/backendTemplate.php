@@ -354,24 +354,24 @@ mysqli_close($conn);
         <?php endif; ?>
     </a>
     <!-- Notification menu -->
-    <div id="notificationMenu" class="notification-menu" style="display: none; position: absolute; z-index: 1000;  border: 1px solid #ccc; width: 200px;">
-        <!-- <div class="menu-header">
+    <div id="notificationMenu" class="notification-menu">
+        <div class="menu-header">
             <span class="menu-title">Notifications</span>
             <a href="javascript:void(0)" class="clear-noti">Clear All</a>
         </div>
-        <div class="menu-content"> -->
+        <div class="menu-content">
             <!-- Notification with image and text -->
-            <!-- <div class="menu-section">
+            <div class="menu-section">
                 <ul class="notification-list">
                     <li class="notification-message">
                         <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
-                        <div class="notification" style="display: flex; align-items: center;"> -->
+                        <div class="notification" style="display: flex; align-items: center;">
                         <!-- Profile image -->
-                        <!-- <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
+                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
                         <div class="content" style="font-size: 15px;">
-                           -->
+                          
                             <!-- Message -->
-                            <!-- <p style="margin: 0 0 2px 0;">
+                            <p style="margin: 0 0 2px 0;">
                                 <strong><?php echo $_SESSION['name'] . ' ' . $_SESSION['last']; ?></strong> has made a booking <?php echo $row['ROOM']; ?>
                             </p>
                             <p class="time" style="margin-bottom: 5px;">
@@ -381,9 +381,68 @@ mysqli_close($conn);
                     </div>
                         </a>
                     </li>
-                </ul> -->
-                
-            <!-- </div> -->
+                </ul>
+                <ul class="notification-list">
+                    <li class="notification-message">
+                        <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
+                        <div class="notification" style="display: flex; align-items: center;">
+                        <!-- Profile image -->
+                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
+                        <div class="content" style="font-size: 15px;">
+                          
+                            <!-- Message -->
+                            <p style="margin: 0 0 2px 0;">
+                                <strong>Kath Ungon</strong> has made a booking of 112jhgkhkghgkgjkhgkjhgkhjkghgkjhj
+                            </p>
+                            <p class="time" style="margin-bottom: 5px;">
+                                11/22/2002
+                            </p>
+                        </div>
+                    </div>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="notification-list">
+                    <li class="notification-message">
+                        <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
+                        <div class="notification" style="display: flex; align-items: center;">
+                        <!-- Profile image -->
+                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
+                        <div class="content" style="font-size: 15px;">
+                          
+                            <!-- Message -->
+                            <p style="margin: 0 0 2px 0;">
+                                <strong><?php echo $_SESSION['name'] . ' ' . $_SESSION['last']; ?></strong> has made a booking in roomggg  <?php echo  $result->ROOM.' '. $result->ROOMDESC; ?>
+                            </p>
+                            <p class="time" style="margin-bottom: 5px;">
+                                11/22/2002
+                            </p>
+                        </div>
+                    </div>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="notification-list">
+                    <li class="notification-message">
+                        <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
+                        <div class="notification" style="display: flex; align-items: center;">
+                        <!-- Profile image -->
+                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
+                        <div class="content" style="font-size: 15px;">
+                          
+                            <!-- Message -->
+                            <p style="margin: 0 0 2px 0;">
+                                <strong>Kath Ungon</strong> has made a booking of 112jhgkhkghgkgjkhgkjhgkhjkghgkjhj
+                            </p>
+                            <p class="time" style="margin-bottom: 5px;">
+                                11/22/2002
+                            </p>
+                        </div>
+                    </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
         <!-- Footer with "View all Notifications" outside of scrollable content -->
         <div class="menu-footer" style="padding: 10px; text-align: center; border-top: 1px solid #eee;">
@@ -501,7 +560,7 @@ mysqli_close($conn);
 }
 
 </style>
-<!-- <script>
+<script>
     function toggleNotificationMenu() {
     var menu = document.getElementById("notificationMenu");
     if (menu.style.display === "block") {
@@ -521,47 +580,6 @@ document.addEventListener('click', function(event) {
     }
 });
 
-</script> -->
-<script>
-    function toggleNotificationMenu() {
-        var menu = document.getElementById("notificationMenu");
-        if (menu.style.display === "block") {
-            menu.style.display = "none";
-        } else {
-            menu.style.display = "block";
-        }
-    }
-
-    function fetchNotifications() {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "notification.php", true); // Change this to your PHP script path
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                // Process the response
-                var notifications = JSON.parse(xhr.responseText);
-                // Update your notification menu with the fetched notifications
-                // For example:
-                var menu = document.getElementById("notificationMenu");
-                menu.innerHTML = ""; // Clear previous notifications
-                notifications.forEach(function(notification) {
-                    var li = document.createElement("li");
-                    li.textContent = notification.message; // Adjust as needed
-                    menu.appendChild(li);
-                });
-            }
-        };
-        xhr.send();
-    }
-
-    // Close the menu when clicking outside
-    document.addEventListener('click', function(event) {
-        var menu = document.getElementById("notificationMenu");
-        var bellIcon = document.getElementById("bookingNotification");
-        
-        if (!menu.contains(event.target) && !bellIcon.contains(event.target)) {
-            menu.style.display = "none";
-        }
-    });
 </script>
 <?php
 /// Update session variables based on the URL parameters
