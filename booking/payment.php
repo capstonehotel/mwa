@@ -483,7 +483,7 @@ for ($i=0; $i < $count_cart  ; $i++) {
     <script>
 document.getElementById('confirmBookingButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
-    alert('test');
+    
     if (selectedMethod) {
         // Prepare form data with only the payment method
         const formData = new FormData();
@@ -496,7 +496,9 @@ document.getElementById('confirmBookingButton').addEventListener('click', functi
         })
         .then(response => response.json()) // Expecting a JSON response
         .then(data => {
+            alert('test');
             if (data.checkout_url) {
+                alert('test1');
                 // Redirect to the GCash/PayMaya checkout URL
                 window.location.href = data.checkout_url;
             } else {
