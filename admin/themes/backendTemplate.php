@@ -479,8 +479,27 @@ mysqli_close($conn);
     </div>
     <span style="margin-left: 10px;">|</span>
 </li>
+<?php
+// Assuming you have a database connection already established
+$notifications = []; // Initialize the notifications array
 
+// Query to fetch notifications
+$query = "SELECT g.G_FNAME, g.G_LNAME, r.ROOM, p.CONFIRMATIONCODE
+          FROM tblpayment p
+          JOIN tblguest g ON p.GUESTID = g.GUESTID
+          JOIN tblreservation r ON r.GUESTID = g.GUESTID
+          WHERE p.STATUS <> 'Cancelled'"; // Adjust the WHERE clause as needed
 
+$result = mysqli_query($connection, $query);
+if ($result) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $notifications[] = $row; // Populate the notifications array
+    }
+} else {
+    // Handle query error
+    echo "Error fetching notifications: " . mysqli_error($connection);
+}
+?>
 <style>
     /* Media Queries for Mobile Responsiveness */
 @media (max-width: 768px) {
