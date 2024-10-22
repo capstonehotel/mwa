@@ -483,7 +483,7 @@ for ($i=0; $i < $count_cart  ; $i++) {
     <script>
 document.getElementById('confirmBookingButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
-    
+    alert('test');
     if (selectedMethod) {
         // Prepare form data with only the payment method
         const formData = new FormData();
