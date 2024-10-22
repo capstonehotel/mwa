@@ -366,11 +366,7 @@ $_SESSION['GUESTID'] =   $lastguest;
         </div>
     </div>
 
-    <div class="col-md-12">
-        <button type="button" class="btn btn-primary" id="payNowButton">
-            Pay Now
-        </button>
-    </div>
+    
                     <!-- <div class="col-md-12 col-sm-2">
     <label id="paymentLabel">Payment Method:</label>
 
@@ -459,7 +455,8 @@ for ($i=0; $i < $count_cart  ; $i++) {
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                <button type="submit" class="btn btn-primary" align="right" name="btnsubmitbooking">Yes</button>
+                <button type="button" id="confirmBookingButton" class="btn btn-primary">Yes</button>
+                <!-- <button type="submit" class="btn btn-primary" align="right" name="btnsubmitbooking">Yes</button> -->
             </div>
         </div>
     </div>
@@ -471,7 +468,7 @@ for ($i=0; $i < $count_cart  ; $i++) {
 </div>
 
     <div class="pull-right flex-end" align="right">
-    <button  type="button" id="submitBookingButton" class="btn btn-primary" align="right" data-toggle="modal" data-target="#confirmModal">Submit Booking</button>
+    <button  type="button" id="submitBookingButton" class="btn btn-primary" align="right" data-toggle="modal" data-target="#confirmModal">Pay and Submit Booking</button>
        <!-- <button  type="button"  id="submitBookingButton" class="btn btn-primary" align="right" onclick="submitBooking()" >Submit Booking</button> -->
     </div>
 </form>
@@ -482,7 +479,40 @@ for ($i=0; $i < $count_cart  ; $i++) {
         </div>
       </div>
 </div>
-<script>
+
+    <script>
+document.getElementById('confirmBookingButton').addEventListener('click', function() {
+    const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
+    
+    if (selectedMethod) {
+        // Prepare form data with only the payment method
+        const formData = new FormData();
+        formData.append('payment_method', selectedMethod.value);
+
+        // Send the form data via fetch to paymongo.php
+        fetch('paymongo.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json()) // Expecting a JSON response
+        .then(data => {
+            if (data.checkout_url) {
+                // Redirect to the GCash/PayMaya checkout URL
+                window.location.href = data.checkout_url;
+            } else {
+                alert('Error: ' + data.message); // Handle the error response
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error); // Handle error
+        });
+    } else {
+        alert('Please select a payment method.'); // Ensure a payment method is selected
+    }
+});
+</script>
+
+<!-- <script>
 document.getElementById('payNowButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
     
@@ -513,4 +543,4 @@ document.getElementById('payNowButton').addEventListener('click', function() {
     }
 });
 
-</script>
+</script> -->
