@@ -26,15 +26,7 @@
 }
 
 </style>
-<li class="nav-item my-auto" style="position: relative;">
-    <a href="javascript:void(0);" class="text-dark" id="bookingNotification" onclick="toggleNotificationMenu()">
-        <i class="fa fa-bell"></i>
-        <?php if ($total_notifications > 0): ?>
-            <span class="badge badge-pill badge-danger notification-badge"><?php echo $total_notifications; ?></span>
-        <?php endif; ?>
-    </a>
-    <!-- Notification menu -->
-    <div id="notificationMenu" class="notification-menu">
+
         <div class="menu-header">
             <span class="menu-title">Notifications</span>
             <a href="javascript:void(0)" class="clear-noti">Clear All</a>
@@ -123,7 +115,7 @@
                     </li>
                 </ul>
             </div> -->
-            <div class="menu-section">
+        
     <ul class="notification-list">
         <?php
         // Assuming you have fetched notifications into an array called $notifications
@@ -156,7 +148,7 @@
         <div class="menu-footer" style="padding: 10px; text-align: center; border-top: 1px solid #eee;">
             <a href="https://mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=all">View all Notifications</a>
         </div>
-    </div>
+    
     <span style="margin-left: 10px;">|</span>
 </li>
 
