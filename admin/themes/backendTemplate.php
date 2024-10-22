@@ -372,7 +372,7 @@ mysqli_close($conn);
                           
                             <!-- Message -->
                             <p style="margin: 0 0 2px 0;">
-                                <strong><?php echo $_SESSION['name'] . ' ' . $_SESSION['last']; ?></strong> has made a booking <?php echo $_SESSION['ROOM']; ?>
+                                <strong><?php echo $_SESSION['name'] . ' ' . $_SESSION['last']; ?></strong> has made a booking <?php echo ['ROOM']; ?>
                             </p>
                             <p class="time" style="margin-bottom: 5px;">
                                 11/22/2002
@@ -403,7 +403,6 @@ mysqli_close($conn);
                     </li>
                 </ul>
                 <ul class="notification-list">
-                <?php foreach ($notifications as $notification) { ?>
                     <li class="notification-message">
                         <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
                         <div class="notification" style="display: flex; align-items: center;">
@@ -413,16 +412,15 @@ mysqli_close($conn);
                           
                             <!-- Message -->
                             <p style="margin: 0 0 2px 0;">
-                                <strong><?php echo $notification['G_FNAME'] . ' ' . $notification['G_LNAME']; ?></strong> has made a booking in room <?php echo $notification['ROOM']; ?>
+                                <strong><?php echo $_SESSION['name'] . ' ' . $_SESSION['last']; ?></strong> has made a booking in roomggg  <?php echo  $result->ROOM.' '. $result->ROOMDESC; ?>
                             </p>
                             <p class="time" style="margin-bottom: 5px;">
-                            <?php echo date('m/d/Y'); 
+                                11/22/2002
                             </p>
                         </div>
                     </div>
                         </a>
                     </li>
-                     <?php } ?>
                 </ul>
                 <ul class="notification-list">
                     <li class="notification-message">
