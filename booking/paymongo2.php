@@ -46,13 +46,15 @@ if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
                         'success' => 'https://mcchmhotelreservation.com/booking/index.php?view=payment', // Return URL after successful payment
                         'failed' => 'https://mcchmhotelreservation.com/booking/payment.php', // Return URL if payment fails
                     ],
-                    'type' => $paymentMethod === 'Gcash' ? 'gcash' : 'paymaya',
-                    'currency' => 'PHP',
+                   
                     'billing' => [
-                        'name' => $clientName,
-                        'email' => $clientEmail,
-                        'phone' => $clientPhone
-                    ]
+                        'name' => 'Kyebe',
+                        'email' => 'kyebe@gmail.com',
+                        'phone' => '09354353453'
+                    ],
+                    'type' => $paymentMethod === 'Gcash' ? 'gcash' : 'paymaya',
+                    'currency' => 'PHP'
+                    
                 ]
             ]
         ];

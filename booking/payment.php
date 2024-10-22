@@ -488,7 +488,7 @@ document.getElementById('confirmBookingButton').addEventListener('click', functi
         // Prepare form data with only the payment method
         const formData = new FormData();
         formData.append('payment_method', selectedMethod.value);
-
+      
         // Send the form data via fetch to paymongo.php
         fetch('paymongo2.php', {
             method: 'POST',
@@ -496,9 +496,9 @@ document.getElementById('confirmBookingButton').addEventListener('click', functi
         })
         .then(response => response.json()) // Expecting a JSON response
         .then(data => {
-            alert('test');
+           
             if (data.checkout_url) {
-                alert('test1');
+             
                 // Redirect to the GCash/PayMaya checkout URL
                 window.location.href = data.checkout_url;
             } else {
