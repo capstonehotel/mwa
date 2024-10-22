@@ -1,5 +1,4 @@
 <?php
-// session_start();
 header('Content-Type: application/json');
 
 // PayMongo API Configuration
@@ -37,15 +36,15 @@ try {
         throw new Exception('Payment method is required');
     }
     
-    // Get and validate customer details
-    $customerName = isset($_SESSION['name']) && isset($_SESSION['last']) 
-        ? trim($_SESSION['name'] . ' ' . $_SESSION['last'])
-        : '';
-    $customerPhone = $_SESSION['phone'] ?? '';
-    $customerUsername = $_SESSION['username'] ?? '';
+    // Get customer details from session
+    $firstName = $_SESSION['name'] ?? '';
+    $lastName = $_SESSION['last'] ?? '';
+    $phone = $_SESSION['phone'] ?? '';
+    $username = $_SESSION['username'] ?? '';
     
-    if (empty($customerName)) {
-        throw new Exception('Customer name is required');
+    // Validate customer details
+    if (empty($firstName) || empty($lastName) || empty($phone)) {
+        throw new Exception('Customer details are incomplete');
     }
     
     $paymentMethod = $_POST['payment_method'];
@@ -56,14 +55,13 @@ try {
         throw new Exception('Invalid amount');
     }
     
-    // Create reference number for tracking
-    $referenceNumber = 'BOOK-' . time() . '-' . substr(uniqid(), -4);
-    $_SESSION['reference_number'] = $referenceNumber;
-    
     // Create payment source based on selected payment method
-    $sourceType = strtolower($paymentMethod) === 'gcash' ? 'gcash' : 'paymaya';
+    $sourceType = strtolower($paymentMethod) === 'gcash' ? 'gcash' : 'grab_pay';
     
-    // Create a source with complete customer details
+    // Prepare customer name
+    $fullName = trim($firstName . ' ' . $lastName);
+    
+    // Create a source with complete billing information
     $sourceData = [
         'data' => [
             'attributes' => [
@@ -71,18 +69,21 @@ try {
                 'currency' => 'PHP',
                 'redirect' => [
                     'success' => 'https://mcchmhotelreservation.com/booking/index.php?view=payment',
-                    'failed' => 'https://mcchmhotelreservation.com/booking/index.php?'
+                    'failed' => 'https://your-domain.com/failed.php'
                 ],
                 'type' => $sourceType,
                 'billing' => [
-                    'name' => $customerName,
-                    'phone' => $customerPhone,
-                    'email' => $customerUsername . '@example.com', // Add proper email field if available
+                    'name' => $fullName,
+                    'phone' => $phone,
+                    'email' => $username,
+                    'metadata' => [
+                        'first_name' => $firstName,
+                        'last_name' => $lastName
+                    ]
                 ],
                 'metadata' => [
-                    'reference_number' => $referenceNumber,
-                    'username' => $customerUsername,
-                    'phone' => $customerPhone
+                    'customer_username' => $username,
+                    'payment_method' => $paymentMethod
                 ]
             ]
         ]
@@ -103,31 +104,25 @@ try {
     // Log the payment attempt
     $logData = [
         'timestamp' => date('Y-m-d H:i:s'),
-        'reference_number' => $referenceNumber,
-        'customer_name' => $customerName,
-        'customer_phone' => $customerPhone,
-        'username' => $customerUsername,
+        'customer_name' => $fullName,
         'amount' => $amount / 100, // Convert back to PHP for logging
         'payment_method' => $paymentMethod,
         'source_id' => $sourceResponse['data']['id']
     ];
     
-    // Log to file (you may want to use a database instead)
-    file_put_contents(
-        'payment_logs.txt', 
-        json_encode($logData) . "\n", 
-        FILE_APPEND
-    );
+    // You might want to implement proper logging here
+    error_log("Payment Attempt: " . json_encode($logData));
     
-    // Return the checkout URL and reference number to the frontend
+    // Return the checkout URL to the frontend
     echo json_encode([
         'success' => true,
         'checkout_url' => $sourceResponse['data']['attributes']['checkout_url'],
-        'reference_number' => $referenceNumber
+        'source_id' => $sourceResponse['data']['id']
     ]);
     
 } catch (Exception $e) {
     http_response_code(400);
+    error_log("Payment Error: " . $e->getMessage());
     echo json_encode([
         'success' => false,
         'message' => $e->getMessage()
