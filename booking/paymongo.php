@@ -8,6 +8,9 @@ $paymongo_public_key = 'pk_test_WLnVGBjNdZeqPjoSUpyDk7qu'; // Use your public ke
 // Retrieve the selected payment method from the form
 $paymentMethod = isset($_POST['payment_method']) ? $_POST['payment_method'] : '';
 
+// Retrieve the amount from session and convert it to cents (PayMongo requires amount in cents)
+$amountInCents = isset($_SESSION['pay']) ? $_SESSION['pay'] * 100 : 0; // Multiply by 100 to convert PHP to cents
+
 // Handle different payment methods (GCash and PayMaya)
 if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
     try {
@@ -15,7 +18,7 @@ if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
         $paymentIntentData = [
             'data' => [
                 'attributes' => [
-                    'amount' => 10000, // Amount in cents (e.g., 10000 = PHP 100)
+                    'amount' => $amountInCents, // Use dynamic amount from session
                     'payment_method_allowed' => [$paymentMethod === 'Gcash' ? 'gcash' : 'paymaya'],
                     'currency' => 'PHP',
                     'description' => 'Payment for booking', // Add your own description
@@ -33,7 +36,7 @@ if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
         $sourceData = [
             'data' => [
                 'attributes' => [
-                    'amount' => 10000, // Amount in cents (e.g., 10000 = PHP 100)
+                    'amount' => $amountInCents, // Use dynamic amount from session
                     'redirect' => [
                         'success' => 'https://mcchmhotelreservation.com/booking/index.php?view=payment', // Return URL after successful payment
                         'failed' => 'https://mcchmhotelreservation.com/booking/payment.php', // Return URL if payment fails
