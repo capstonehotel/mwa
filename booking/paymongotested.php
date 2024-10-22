@@ -39,16 +39,22 @@ if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
         $sourceData = [
             'data' => [
                 'attributes' => [
-                    'amount' => $amount, // Amount in cents (e.g., 10000 = PHP 100)
+                    'amount' => $amount, // Amount in centavos (e.g., 23400 = PHP 234)
                     'redirect' => [
-                        'success' => 'https://mcchmhotelreservation.com/booking/index.php?view=payment', // Return URL after successful payment
-                        'failed' => 'https://mcchmhotelreservation.com/booking/payment.php', // Return URL if payment fails
+                        'success' => 'https://mcchmhotelreservation.com/booking/index.php?view=payment', // Success URL
+                        'failed' => 'https://mcchmhotelreservation.com/booking/payment.php', // Failure URL
                     ],
                     'type' => $paymentMethod === 'Gcash' ? 'gcash' : 'paymaya',
-                    'currency' => 'PHP'
+                    'currency' => 'PHP',
+                    'billing' => [
+                        'name' => 'Kyebe',
+                        'email' => 'kyebe@gmail.com',
+                        'phone' => '09354353453'
+                    ]
                 ]
             ]
         ];
+        
 
         // Create a source for the selected payment method
         $sourceResponse = createPaymongoRequest('https://api.paymongo.com/v1/sources', $sourceData, $paymongo_secret_key);
