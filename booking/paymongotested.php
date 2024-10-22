@@ -100,8 +100,7 @@
 
 //     return $decodedResponse;
 // }
-?>
-<?php
+?><?php
 session_start();
 
 // Assuming the session variable 'pay' is set
@@ -130,10 +129,11 @@ if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
             ]
         ];
 
-        $response = createPaymongoRequest('https://api.paymongo.com/v1/payment_intents', $paymentIntentData, $paymongo_secret_key);
+        // Create payment intent
+        $paymentIntentResponse = createPaymongoRequest('https://api.paymongo.com/v1/payment_intents', $paymentIntentData, $paymongo_secret_key);
 
         // Extract the payment intent ID
-        $paymentIntentId = $response->data->id;
+        $paymentIntentId = $paymentIntentResponse->data->id;
 
         // Step 2: Create a Source for the selected payment method
         $sourceData = [
@@ -150,7 +150,11 @@ if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
                         'name' => 'Kyebe', // Client's name
                         'email' => 'kyebe@gmail.com', // Client's email
                         'phone' => '09354353453', // Client's phone number
-                    ]
+                    ],
+                    // Here we specify the payment method
+                    'payment_method' => [
+                        'type' => $paymentMethod === 'Gcash' ? 'gcash' : 'paymaya',
+                    ],
                 ]
             ]
         ];
