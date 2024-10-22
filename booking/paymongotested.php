@@ -15,7 +15,7 @@ if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
         $paymentIntentData = [
             'data' => [
                 'attributes' => [
-                    'amount' => 10000, // Amount in cents (e.g., 10000 = PHP 100)
+                    'amount' => 1000000, // Amount in cents (e.g., 10000 = PHP 100)
                     'payment_method_allowed' => [$paymentMethod === 'Gcash' ? 'gcash' : 'paymaya'],
                     'currency' => 'PHP',
                     'description' => 'Payment for booking', // Add your own description
