@@ -100,7 +100,8 @@
 
 //     return $decodedResponse;
 // }
-?><?php
+?>
+<?php
 session_start();
 
 // Assuming the session variable 'pay' is set
@@ -121,10 +122,10 @@ if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
             'data' => [
                 'attributes' => [
                     'amount' => $amount, // Amount in cents
-                    'payment_method_allowed' => [$paymentMethod === 'Gcash' ? 'gcash' : 'paymaya'],
                     'currency' => 'PHP',
                     'description' => 'Payment for booking',
-                    'statement_descriptor' => 'Booking Payment'
+                    'statement_descriptor' => 'Booking Payment',
+                    'payment_method_allowed' => [$paymentMethod === 'Gcash' ? 'gcash' : 'paymaya'], // Specify allowed payment method
                 ]
             ]
         ];
@@ -150,11 +151,7 @@ if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
                         'name' => 'Kyebe', // Client's name
                         'email' => 'kyebe@gmail.com', // Client's email
                         'phone' => '09354353453', // Client's phone number
-                    ],
-                    // Here we specify the payment method
-                    'payment_method' => [
-                        'type' => $paymentMethod === 'Gcash' ? 'gcash' : 'paymaya',
-                    ],
+                    ]
                 ]
             ]
         ];
