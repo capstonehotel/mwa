@@ -7,7 +7,8 @@ $paymongo_public_key = 'pk_test_WLnVGBjNdZeqPjoSUpyDk7qu'; // Use your public ke
 
 // Retrieve the selected payment method from the form
 $paymentMethod = isset($_POST['payment_method']) ? $_POST['payment_method'] : '';
-
+echo $_SESSION['pay'];
+echo '<script>alert('.$_SESSION['pay'].');</script>';
 // Handle different payment methods (GCash and PayMaya)
 if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
     try {
