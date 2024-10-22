@@ -120,15 +120,17 @@ if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
         // Step 1: Create a Payment Intent
         $paymentIntentData = [
             'data' => [
+                'type' => 'payment_method', // Specify the type of resource
                 'attributes' => [
                     'amount' => $amount, // Amount in cents
                     'currency' => 'PHP',
                     'description' => 'Payment for booking',
                     'statement_descriptor' => 'Booking Payment',
-                    'payment_method_allowed' => [$paymentMethod === 'Gcash' ? 'gcash' : 'paymaya'], // Specify allowed payment method
+                    'payment_method_allowed' => [$paymentMethod === 'Gcash' ? 'gcash' : 'paymaya'], // Allowed payment method
                 ]
             ]
         ];
+        
 
         // Create payment intent
         $paymentIntentResponse = createPaymongoRequest('https://api.paymongo.com/v1/payment_intents', $paymentIntentData, $paymongo_secret_key);
