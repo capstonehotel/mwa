@@ -56,13 +56,13 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
                 ]
             ]
         ];
-        header('Content-Type: application/json');
-        echo json_encode(['message' => '1']);
-        exit();
+       
 
         // Create a source for the selected payment method
         $sourceResponse = createPaymongoRequest('https://api.paymongo.com/v1/sources', $sourceData, $paymongo_secret_key);
-
+        header('Content-Type: application/json');
+        echo json_encode(['message' => '1']);
+        exit();
         // Get the checkout URL from the source response
         $checkoutUrl = $sourceResponse->data->attributes->redirect->checkout_url;
 
