@@ -3,7 +3,7 @@
 function processGcashPayment() {
     $source_id = $_SESSION['paymongo_source_id'] ?? '';
     if (empty($source_id)) {
-        error_log("PayMongo source ID not found in session");
+        $_SESSION['error_message'] = "PayMongo source ID not found in session";
         return false;
     }
     
@@ -56,20 +56,18 @@ function processGcashPayment() {
         if ($payment_result['data']['attributes']['status'] === 'paid') {
             // Payment was successful
             unset($_SESSION['paymongo_source_id']);
-            
-            // Redirect to payment success page
-            header("Location: https://mcchmhotelreservation.com/booking/index.php?view=payment");
-            exit();  // Ensure script stops after redirection
+            return true;
         } else {
-            error_log("GCash payment failed. Status: " . $payment_result['data']['attributes']['status']);
+            $_SESSION['error_message'] = "GCash payment failed. Status: " . $payment_result['data']['attributes']['status'];
             return false;
         }
     } else {
-        error_log("GCash source not chargeable. Status: " . $result['data']['attributes']['status']);
+        $_SESSION['error_message'] = "GCash source not chargeable. Status: " . $result['data']['attributes']['status'];
         return false;
     }
 }
 
+// Process the payment
 if (processGcashPayment()) {
     // Payment successful, redirect to confirmation page
     header("Location: https://mcchmhotelreservation.com/booking/index.php?view=payment");

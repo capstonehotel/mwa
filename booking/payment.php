@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if (isset($_SESSION['error_message'])) {
+    echo "<div class='error-message'>" . htmlspecialchars($_SESSION['error_message']) . "</div>";
+    unset($_SESSION['error_message']); // Clear the message after displaying it
+}
+?>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
