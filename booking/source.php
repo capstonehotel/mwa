@@ -77,10 +77,10 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
 
         // Log the entire result for debugging
         error_log("Decoded PayMongo Response: " . print_r($result, true));
-
-        if (isset($result['data']['id'])) {
+        $_SESSION['paymongo_source_id'] = $result['data']['id'];
+        if ($httpCode == 200 && isset($result['data']['id'])) {
             // Store the source ID in the session for later use
-            $_SESSION['paymongo_source_id'] = $result['data']['id'];
+            
 
             // Check if checkout_url exists in the response
             if (isset($result['data']['attributes']['redirect']['checkout_url'])) {
