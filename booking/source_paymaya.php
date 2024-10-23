@@ -1,18 +1,19 @@
 <?php
-// source_paymaya.php
+//source_paymaya.php
 session_start();
 
 // Assuming the session variable 'pay' is set
 $amount = $_SESSION['pay'] * 100;
 
 // PayMongo Secret Key
-$secret_key = 'sk_test_8FHikGJxuzFP3ix4itFTcQCv';
-$paymongo_public_key = 'pk_test_WLnVGBjNdZeqPjoSUpyDk7qu';
+$secret_key = 'sk_test_8FHikGJxuzFP3ix4itFTcQCv'; // Use your secret key here
+$paymongo_public_key = 'pk_test_WLnVGBjNdZeqPjoSUpyDk7qu'; // Use your public key here
 
 // Retrieve the selected payment method from the form
 $paymentMethod = isset($_POST['payment_method']) ? $_POST['payment_method'] : '';
 
-if ($paymentMethod === 'paymaya') {
+// Handle different payment methods (GCash and PayMaya)
+if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
     // Get order details from the form
     $customerName = 'Kyebe';
     $customerEmail = 'kyebe@gmail.com';
@@ -23,7 +24,7 @@ if ($paymentMethod === 'paymaya') {
     $failedUrl = 'https://mcchmhotelreservation.com/booking/payment.php';
 
     try {
-        // Prepare the payload with the correct source type for PayMaya
+        // Prepare the payload
         $payload = json_encode([
             'data' => [
                 'attributes' => [
@@ -37,14 +38,16 @@ if ($paymentMethod === 'paymaya') {
                         'email' => $customerEmail,
                         'phone' => $customerno
                     ],
-                    'type' => 'paymaya',  // Correct source type for PayMaya
+                    'type' => $paymentMethod === 'paymaya' ? 'gcash' : 'paymaya',
                     'currency' => 'PHP'
                 ]
             ]
         ]);
 
+        // Log the payload for debugging
         error_log("PayMongo API Request Payload: " . $payload);
 
+        // Create a PayMongo source for GCash/PayMaya
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://api.paymongo.com/v1/sources");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -58,21 +61,27 @@ if ($paymentMethod === 'paymaya') {
 
         $response = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        
+
         if(curl_errno($ch)){
             error_log('Curl error: ' . curl_error($ch));
         }
         
         curl_close($ch);
 
+        // Log the full response and HTTP code for debugging
         error_log("PayMongo API Response: " . $response);
         error_log("HTTP Code: " . $httpCode);
 
         $result = json_decode($response, true);
 
+        // Log the decoded result for debugging
+        error_log("Decoded PayMongo Response: " . print_r($result, true));
+
         if ($httpCode == 200 && isset($result['data']['id'])) {
+            // Store the source ID in the session for later use
             $_SESSION['paymongo_source_id'] = $result['data']['id'];
 
+            // Check if checkout_url exists in the response
             if (isset($result['data']['attributes']['redirect']['checkout_url'])) {
                 $checkoutUrl = $result['data']['attributes']['redirect']['checkout_url'];
                 echo json_encode([
@@ -92,7 +101,7 @@ if ($paymentMethod === 'paymaya') {
             error_log("PayMongo Error: Code - " . $errorCode . ", Message - " . $errorMessage);
             echo json_encode([
                 'success' => false,
-                'message' => 'Failed to create PayMaya source: ' . $errorMessage,
+                'message' => 'Failed to create GCash source: ' . $errorMessage,
                 'errorCode' => $errorCode
             ]);
         }
@@ -106,7 +115,7 @@ if ($paymentMethod === 'paymaya') {
 } else {
     echo json_encode([
         'success' => false,
-        'message' => 'Invalid payment method'
+        'message' => 'Invalid request method'
     ]);
 }
 ?>
