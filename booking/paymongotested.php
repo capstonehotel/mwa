@@ -31,9 +31,7 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
                 ]
             ]
         ];
-        header('Content-Type: application/json');
-        echo json_encode(['message' => '1']);
-        exit();
+        
         $response = createPaymongoRequest('https://api.paymongo.com/v1/payment_intents', $paymentIntentData, $paymongo_secret_key);
 
         // Extract the payment intent ID
@@ -58,7 +56,9 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
                 ]
             ]
         ];
-        
+        header('Content-Type: application/json');
+        echo json_encode(['message' => '1']);
+        exit();
 
         // Create a source for the selected payment method
         $sourceResponse = createPaymongoRequest('https://api.paymongo.com/v1/sources', $sourceData, $paymongo_secret_key);
