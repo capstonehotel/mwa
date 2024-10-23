@@ -480,7 +480,7 @@ for ($i=0; $i < $count_cart  ; $i++) {
       </div>
 </div>
 <script>
-    document.getElementById('confirmBookingButton').addEventListener('click', function() {
+  document.getElementById('confirmBookingButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
     
     if (selectedMethod) {
@@ -489,7 +489,15 @@ for ($i=0; $i < $count_cart  ; $i++) {
         formData.append('payment_method', selectedMethod.value);
     
         // Send the form data via fetch to the appropriate PHP file based on the selected method
-        const url = selectedMethod.value === 'gcash' ? 'source.php' : 'source_paymaya.php';
+        let url;
+        if (selectedMethod.value === 'gcash') {
+            url = 'source.php';  // GCash payment handler
+        } else if (selectedMethod.value === 'maya') {
+            url = 'source_paymaya.php';  // PayMaya payment handler
+        } else {
+            alert('Invalid payment method selected.');
+            return;
+        }
         
         fetch(url, {
             method: 'POST',
