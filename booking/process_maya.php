@@ -1,17 +1,14 @@
 <?php
 session_start();
-
-function processMayaPayment() {
-    // Check if PayMongo source ID exists in the session
+function processGcashPayment() {
     $source_id = $_SESSION['paymongo_source_id'] ?? '';
     if (empty($source_id)) {
-        return "PayMongo source ID not found in session.";
+        return "PayMongo source ID not found in session";
     }
     
-    // PayMongo secret key
-    $secret_key = 'sk_test_8FHikGJxuzFP3ix4itFTcQCv'; // Use your secret key here
+    $secret_key = 'sk_test_8FHikGJxuzFP3ix4itFTcQCv';
     
-    // Step 1: Verify the source status using the PayMongo API
+    // Verify the source status
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, "https://api.paymongo.com/v1/sources/$source_id");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -24,26 +21,22 @@ function processMayaPayment() {
     
     $result = json_decode($response, true);
     
-    // Step 2: Check if the PayMaya source is chargeable
-    if (isset($result['data']['attributes']['status']) && $result['data']['attributes']['status'] === 'chargeable') {
-        // Source is chargeable, proceed to create a payment
-        $amount = $result['data']['attributes']['amount']; // Amount should already be in the smallest unit (cents)
-        
+    if ($result['data']['attributes']['status'] === 'chargeable') {
+        // Source is chargeable, create a payment
         $payload = json_encode([
             'data' => [
                 'attributes' => [
-                    'amount' => $amount,
+                    'amount' => $result['data']['attributes']['amount'],
                     'source' => [
                         'id' => $source_id,
                         'type' => 'source'
                     ],
                     'currency' => 'PHP',
-                    'description' => 'PayMaya Online Payment'
+                    'description' => 'Online Payment'
                 ]
             ]
         ]);
         
-        // Step 3: Create the payment using the PayMongo API
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://api.paymongo.com/v1/payments");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -59,34 +52,27 @@ function processMayaPayment() {
         
         $payment_result = json_decode($payment_response, true);
         
-        // Step 4: Check the payment status
-        if (isset($payment_result['data']['attributes']['status']) && $payment_result['data']['attributes']['status'] === 'paid') {
-            // Payment successful, clear the session source ID
+        if ($payment_result['data']['attributes']['status'] === 'paid') {
+            // Payment was successful
             unset($_SESSION['paymongo_source_id']);
-            return true; // Return true to indicate success
+            return true;
         } else {
-            // Log the payment failure and return the failure message
-            $status = $payment_result['data']['attributes']['status'] ?? 'unknown';
-            return "Maya payment failed. Status: " . $status;
+            return "GCash payment failed. Status: " . $payment_result['data']['attributes']['status'];
         }
     } else {
-        // Log the source not being chargeable
-        $status = $result['data']['attributes']['status'] ?? 'unknown';
-        return "Maya source not chargeable. Status: " . $status;
+        return "GCash source not chargeable. Status: " . $result['data']['attributes']['status'];
     }
 }
 
-// Process the PayMaya payment
-$error_message = processMayaPayment();
+// Process the payment
+$error_message = processGcashPayment();
 if ($error_message === true) {
-    // Payment was successful, redirect to the confirmation page
-    $_SESSION['status'] = 'success';
+    // Payment successful, redirect to confirmation page
     header("Location: https://mcchmhotelreservation.com/booking/index.php?view=payment");
+    $_SESSION['status'] = 'success';
     exit();
 } else {
-    // Payment failed, redirect back to the payment page with an error message
-    $_SESSION['status'] = 'failed';
-    error_log($error_message); // Log the error for debugging
+    // Payment failed, redirect back to payment page with error message
     header("Location: https://mcchmhotelreservation.com/booking/payment.php");
     exit();
 }
