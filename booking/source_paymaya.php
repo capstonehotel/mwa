@@ -36,7 +36,7 @@ if ($paymentMethod === 'maya') {
                         'email' => $customerEmail,
                         'phone' => $customerno
                     ],
-                    'type' => 'paymaya', // Ensure this is set to 'paymaya'
+                    'type' => 'maya', // Ensure this is set to 'paymaya'
                     'currency' => 'PHP'
                 ]
             ]
