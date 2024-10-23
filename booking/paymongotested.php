@@ -18,6 +18,7 @@ $paymentMethod = isset($_POST['payment_method']) ? $_POST['payment_method'] : ''
 if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
     header('Content-Type: application/json');
     echo json_encode(['message' => '1']);
+    exit();
     try {
         // Step 1: Create a Payment Intent
         header('Content-Type: application/json');
