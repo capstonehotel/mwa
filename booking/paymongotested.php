@@ -115,7 +115,7 @@ $paymongo_public_key = 'pk_test_WLnVGBjNdZeqPjoSUpyDk7qu'; // Use your public ke
 $paymentMethod = isset($_POST['payment_method']) ? $_POST['payment_method'] : '';
 
 // Handle different payment methods (GCash and PayMaya)
-if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
+if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
     try {
         // Step 1: Create a Payment Intent
         $paymentIntentData = [
@@ -126,7 +126,7 @@ if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
                     'currency' => 'PHP',
                     'description' => 'Payment for booking',
                     'statement_descriptor' => 'Booking Payment',
-                    'payment_method_allowed' => ['gcash', 'paymaya'], // Allowed payment method
+                    'payment_method_allowed' => [$paymentMethod === 'gcash' ? 'gcash' : 'paymaya'], // Allowed payment method
                 ]
             ]
         ];
@@ -147,7 +147,7 @@ if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
                         'success' => 'https://mcchmhotelreservation.com/booking/index.php?view=payment', // Success URL
                         'failed' => 'https://mcchmhotelreservation.com/booking/payment.php', // Failure URL
                     ],
-                    'type' => $paymentMethod === 'Gcash' ? 'gcash' : 'paymaya',
+                    'type' => $paymentMethod === 'gcash' ? 'gcash' : 'paymaya',
                     'currency' => 'PHP',
                     'billing' => [
                         'name' => 'Kyebe', // Client's name

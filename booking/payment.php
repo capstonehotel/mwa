@@ -351,14 +351,14 @@ $_SESSION['GUESTID'] =   $lastguest;
 <div class="col-md-12 col-sm-2">
         <label id="paymentLabel">Payment Method:</label>
         <div>
-            <input type="radio" id="gcash" name="payment_method" value="Gcash" required>
+            <input type="radio" id="gcash" name="payment_method" value="gcash" required>
             <label for="gcash">
                 <img src="../gcash.png" alt="Pay with GCash" style="height: 20px; margin-right: 5px;">
                 Pay with GCash
             </label>
         </div>
         <div>
-            <input type="radio" id="paymaya" name="payment_method" value="Paymaya" required>
+            <input type="radio" id="paymaya" name="payment_method" value="paymaya" required>
             <label for="paymaya">
                 <img src="../paymaya.png" alt="Pay with PayMaya" style="height: 20px; margin-right: 5px;">
                 Pay with PayMaya
