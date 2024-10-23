@@ -63,9 +63,7 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
         
         // Get the checkout URL from the source response
         $checkoutUrl = $sourceResponse->data->attributes->redirect->checkout_url;
-        header('Content-Type: application/json');
-        echo json_encode(['message' => '1']);
-        exit();
+       
         // Return the checkout URL as JSON
         header('Content-Type: application/json');
         echo json_encode(['checkout_url' => $checkoutUrl]);
