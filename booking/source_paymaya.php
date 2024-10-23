@@ -12,7 +12,7 @@ $paymongo_public_key = 'pk_test_WLnVGBjNdZeqPjoSUpyDk7qu'; // Use your public ke
 $paymentMethod = isset($_POST['payment_method']) ? $_POST['payment_method'] : '';
 
 // Handle different payment methods (GCash and PayMaya)
-if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
+if ($paymentMethod === 'gcash' || $paymentMethod === 'maya') {
     // Get order details from the form
   
    $customerName = 'Kyebe';
@@ -22,7 +22,7 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
    
    
     // Construct absolute URLs for success and failed redirects
-    $successUrl = 'https://mcchmhotelreservation.com/booking/process_maya.php';
+    $successUrl = 'https://mcchmhotelreservation.com/booking/process_gcash.php';
     $failedUrl = 'https://mcchmhotelreservation.com/booking/payment.php';
 
     try {
@@ -40,7 +40,7 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
                         'email' => $customerEmail,
                         'phone' => $customerno
                     ],
-                    'type'  => $paymentMethod === 'gcash' ? 'gcash' : 'paymaya',
+                    'type'  => $paymentMethod === 'maya' ? 'gcash' : 'maya',
                     'currency' => 'PHP'
                 ]
             ]
