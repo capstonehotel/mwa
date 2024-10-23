@@ -12,8 +12,7 @@ $paymongo_public_key = 'pk_test_WLnVGBjNdZeqPjoSUpyDk7qu';
 // Retrieve the selected payment method from the form
 $paymentMethod = isset($_POST['payment_method']) ? $_POST['payment_method'] : '';
 
-// Handle different payment methods (GCash and Maya)
-if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
+if ($paymentMethod === 'paymaya') {
     // Get order details from the form
     $customerName = 'Kyebe';
     $customerEmail = 'kyebe@gmail.com';
@@ -24,7 +23,7 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
     $failedUrl = 'https://mcchmhotelreservation.com/booking/payment.php';
 
     try {
-        // Prepare the payload
+        // Prepare the payload with the correct source type for PayMaya
         $payload = json_encode([
             'data' => [
                 'attributes' => [
@@ -38,8 +37,7 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
                         'email' => $customerEmail,
                         'phone' => $customerno
                     ],
-                    // Fix: Set the correct type for Maya/PayMaya (it's maya)
-                    'type' => 'maya',  // Updated to use the correct source type
+                    'type' => 'paymaya',  // Correct source type for PayMaya
                     'currency' => 'PHP'
                 ]
             ]
@@ -94,7 +92,7 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
             error_log("PayMongo Error: Code - " . $errorCode . ", Message - " . $errorMessage);
             echo json_encode([
                 'success' => false,
-                'message' => 'Failed to create Maya source: ' . $errorMessage,
+                'message' => 'Failed to create PayMaya source: ' . $errorMessage,
                 'errorCode' => $errorCode
             ]);
         }
@@ -108,7 +106,7 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
 } else {
     echo json_encode([
         'success' => false,
-        'message' => 'Invalid request method'
+        'message' => 'Invalid payment method'
     ]);
 }
 ?>
