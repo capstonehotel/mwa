@@ -151,7 +151,8 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
                         'name' => 'Kyebe', // Client's name
                         'email' => 'kyebe@gmail.com', // Client's email
                         'phone' => '09354353453', // Client's phone number
-                    ]
+                    ],
+                    'payment_method' => $paymentMethod // Explicitly add the payment method
                 ]
             ]
         ];
