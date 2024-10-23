@@ -353,11 +353,7 @@ mysqli_close($conn);
             <span class="badge badge-pill badge-danger notification-badge"><?php echo $total_notifications; ?></span>
         <?php endif; ?>
     </a>
-    <?php 
-            $g = New Guest() ;
-            $result = $g->single_guest($_SESSION['GUESTID']);
-
-            ?>
+    
     <!-- Notification menu -->
     <div id="notificationMenu" class="notification-menu">
         <div class="menu-header">
