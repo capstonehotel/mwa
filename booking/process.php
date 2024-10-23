@@ -69,6 +69,7 @@ function processGcashPayment() {
 }
 
 if (processGcashPayment()) {
+    error_log("GCash");
     // Payment successful, redirect to confirmation page
     header("Location: https://mcchmhotelreservation.com/booking/index.php?view=payment");
     exit();
