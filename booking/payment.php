@@ -499,9 +499,9 @@ for ($i=0; $i < $count_cart  ; $i++) {
         let url;
         if (selectedMethod.value === 'gcash') {
             url = 'source.php';  // GCash payment handler
-        } else if (selectedMethod.value === 'paymaya') {
+        } else if (selectedMethod.value === 'card') {
             //  if (selectedMethod.value === 'paymaya') {
-            url = 'source_paymaya.php';  // PayMaya payment handler
+            url = 'source_card.php';  // Card payment handler
         } else {
             alert('Invalid payment method selected.');
             return;

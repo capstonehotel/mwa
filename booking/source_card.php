@@ -1,9 +1,9 @@
 <?php
-//source.php
+// source.php
 session_start();
 
 // Assuming the session variable 'pay' is set
-$amount = $_SESSION['pay'] * 100;
+$amount = $_SESSION['pay'] * 100; // Convert amount to cents
 
 // PayMongo Secret Key
 $secret_key = 'sk_test_8FHikGJxuzFP3ix4itFTcQCv'; // Use your secret key here
@@ -12,18 +12,20 @@ $paymongo_public_key = 'pk_test_WLnVGBjNdZeqPjoSUpyDk7qu'; // Use your public ke
 // Retrieve the selected payment method from the form
 $paymentMethod = isset($_POST['payment_method']) ? $_POST['payment_method'] : '';
 
-// Handle different payment methods (GCash and PayMaya)
+// Handle different payment methods (GCash and Card)
 if ($paymentMethod === 'gcash' || $paymentMethod === 'card') {
     // Get order details from the form
-  
-   $customerName = 'Kyebe';
+    $customerName = 'Kyebe';
     $customerEmail = 'kyebe@gmail.com';
     $customerno = '09123456789';
+    $customerpostal = '1234';
+    $customeraddress = 'Talangnan';
+    $customercity = 'Madridejos';
+    $customerprovince = 'Cebu';
+    $customercountry = 'Philippines';
 
-   
-   
     // Construct absolute URLs for success and failed redirects
-    $successUrl = 'https://mcchmhotelreservation.com/booking/process_gcash.php';
+    $successUrl = 'https://mcchmhotelreservation.com/booking/process_card.php';
     $failedUrl = 'https://mcchmhotelreservation.com/booking/payment.php';
 
     try {
@@ -41,15 +43,15 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'card') {
                         'email' => $customerEmail,
                         'phone' => $customerno
                     ],
-                    'type'  => $paymentMethod === 'gcash' ? 'gcash' : 'card',
+                    'type' => $paymentMethod, // Use 'gcash' or 'card' based on user selection
                     'currency' => 'PHP'
                 ]
             ]
         ]);
-        
+
         error_log("PayMongo API Request Payload: " . $payload);
 
-        // Create a PayMongo source for GCash
+        // Create a PayMongo source
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://api.paymongo.com/v1/sources");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -103,7 +105,7 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'card') {
             error_log("PayMongo Error: Code - " . $errorCode . ", Message - " . $errorMessage);
             echo json_encode([
                 'success' => false,
-                'message' => 'Failed to create GCash source: ' . $errorMessage,
+                'message' => 'Failed to create source: ' . $errorMessage,
                 'errorCode' => $errorCode
             ]);
         }
