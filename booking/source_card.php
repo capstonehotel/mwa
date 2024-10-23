@@ -13,7 +13,7 @@ $paymongo_public_key = 'pk_test_WLnVGBjNdZeqPjoSUpyDk7qu'; // Use your public ke
 $paymentMethod = isset($_POST['payment_method']) ? $_POST['payment_method'] : '';
 
 // Handle different payment methods (GCash and Card)
-if ($paymentMethod === 'gcash' || $paymentMethod === 'card') {
+if ( $paymentMethod === 'card') {
     // Get order details from the form
     $customerName = 'Kyebe';
     $customerEmail = 'kyebe@gmail.com';
@@ -43,7 +43,7 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'card') {
                         'email' => $customerEmail,
                         'phone' => $customerno
                     ],
-                    'type' => $paymentMethod, // Use 'gcash' or 'card' based on user selection
+                    'type' => 'card', // Use 'gcash' or 'card' based on user selection
                     'currency' => 'PHP'
                 ]
             ]
