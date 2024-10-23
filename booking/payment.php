@@ -176,7 +176,7 @@ $_SESSION['confirmation'] = $confirmation;
 // echo $dbirth   = $_SESSION['dbirth'];
 
 
- $count_cart = count($_SESSION['monbela_cart']);
+ //$count_cart = count($_SESSION['monbela_cart']);
 
 if(isset($_POST['btnsubmitbooking'])){
   // $message = $_POST['message'];
