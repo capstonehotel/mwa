@@ -497,10 +497,10 @@ document.getElementById('confirmBookingButton').addEventListener('click', functi
         .then(response => response.json()) // Expecting a JSON response
         .then(data => {
            
-            if (data.checkoutUrl) {
+            if (data.checkout_url) {
              
                 // Redirect to the GCash/PayMaya checkout URL
-                window.location.href = data.checkoutUrl;
+                window.location.href = data.checkout_url;
             } else {
                 alert('Error: ' + data.message); // Handle the error response
             }
