@@ -369,12 +369,14 @@ mysqli_close($conn);
                     <?php
                     // Fetch notifications with room details
                     $notifications_query = "
-                        SELECT g.G_AVATAR, g.G_FNAME, g.G_LNAME, r.ROOM, r.ROOMDESC, r.ARRIVAL, r.DEPARTURE
-                        FROM tblguest g
-                        JOIN tblreservation r ON g.GUESTID = r.GUESTID
-                        WHERE r.STATUS <> 'Cancelled'
-                        ORDER BY r.ARRIVAL DESC
-                        LIMIT 5"; // Adjust limit as needed
+                        SELECT * 
+                FROM  `tblreservation` r,  `tblguest` g,  `tblroom` rm, tblaccomodation a
+                WHERE r.`ROOMID` = rm.`ROOMID` 
+                        AND g.`GUESTID` = r.`GUESTID`
+                        WHERE r.STATUS <> 'Pending'
+                        AND  `CONFIRMATIONCODE` 
+                        ORDER BY r.TRANSDATE DESC
+                        "; // Adjust limit as needed
                     
                     $notifications_result = mysqli_query($connection, $notifications_query);
                     if ($notifications_result) {
@@ -383,8 +385,8 @@ mysqli_close($conn);
                             $fullName = htmlspecialchars($notification['G_FNAME'] . ' ' . $notification['G_LNAME']);
                             $roomName = htmlspecialchars($notification['ROOM']);
                             $roomDesc = htmlspecialchars($notification['ROOMDESC']);
-                            $arrivalDate = date_format(date_create($notification['ARRIVAL']), 'm/d/Y');
-                            $departureDate = date_format(date_create($notification['DEPARTURE']), 'm/d/Y');
+                            $todayDate = date_format(date_create($notification['TRANSDATE']), 'm/d/Y');
+                           
                             ?>
                             <li class="notification-message">
                                 <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
@@ -395,7 +397,7 @@ mysqli_close($conn);
                                                 <strong><?php echo $fullName; ?></strong> has made a booking in <strong><?php echo $roomName; ?></strong> (<?php echo $roomDesc; ?>).
                                             </p>
                                             <p class="time" style="margin-bottom: 5px;">
-                                                Check-in: <?php echo $arrivalDate; ?>, Check-out: <?php echo $departureDate; ?>
+                                            <?php echo $todayDate; ?>
                                             </p>
                                         </div>
                                     </div>
