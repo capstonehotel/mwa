@@ -358,9 +358,9 @@ $_SESSION['GUESTID'] =   $lastguest;
             </label>
         </div>
         <div>
-            <input type="radio" id="paymaya" name="payment_method" value="paymaya" required>
+            <input type="radio" id="paymaya" name="payment_method" value="maya" required>
             <label for="paymaya">
-                <img src="../paymaya.png" alt="Pay with PayMaya" style="height: 20px; margin-right: 5px;">
+                <img src="../paymaya.png" alt="Pay with Maya" style="height: 20px; margin-right: 5px;">
                 Pay with PayMaya
             </label>
         </div>
@@ -480,7 +480,7 @@ for ($i=0; $i < $count_cart  ; $i++) {
       </div>
 </div>
 
-    <script>
+    <!-- <script>
 document.getElementById('confirmBookingButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
     
@@ -512,6 +512,41 @@ document.getElementById('confirmBookingButton').addEventListener('click', functi
         alert('Please select a payment method.'); // Ensure a payment method is selected
     }
 });
+</script> -->
+<script>
+    document.getElementById('confirmBookingButton').addEventListener('click', function() {
+    const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
+    
+    if (selectedMethod) {
+        // Prepare form data with only the payment method
+        const formData = new FormData();
+        formData.append('payment_method', selectedMethod.value);
+      
+        // Determine the target URL based on the selected payment method
+        const targetUrl = selectedMethod.value === 'maya' ? 'source2.php' : 'source.php';
+        
+        // Send the form data via fetch to the appropriate URL
+        fetch(targetUrl, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json()) // Expecting a JSON response
+        .then(data => {
+            if (data.checkoutUrl) {
+                // Redirect to the GCash/PayMaya checkout URL
+                window.location.href = data.checkoutUrl;
+            } else {
+                alert('Error: ' + data.message); // Handle the error response
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error); // Handle error
+        });
+    } else {
+        alert('Please select a payment method.'); // Ensure a payment method is selected
+    }
+});
+
 </script>
 
 <!-- <script>

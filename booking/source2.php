@@ -22,7 +22,7 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'maya') {
    
    
     // Construct absolute URLs for success and failed redirects
-    $successUrl = 'https://mcchmhotelreservation.com/booking/process_gcash.php';
+    $successUrl = 'https://mcchmhotelreservation.com/booking/process_maya.php';
     $failedUrl = 'https://mcchmhotelreservation.com/booking/payment.php';
 
     try {
@@ -40,7 +40,7 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'maya') {
                         'email' => $customerEmail,
                         'phone' => $customerno
                     ],
-                    'type' => 'gcash',
+                    'type' => 'maya',
                     'currency' => 'PHP'
                 ]
             ]
@@ -102,7 +102,7 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'maya') {
             error_log("PayMongo Error: Code - " . $errorCode . ", Message - " . $errorMessage);
             echo json_encode([
                 'success' => false,
-                'message' => 'Failed to create GCash source: ' . $errorMessage,
+                'message' => 'Failed to create Maya source: ' . $errorMessage,
                 'errorCode' => $errorCode
             ]);
         }
