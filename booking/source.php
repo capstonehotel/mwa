@@ -40,7 +40,7 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'maya') {
                         'email' => $customerEmail,
                         'phone' => $customerno
                     ],
-                    'type' => 'gcash',
+                    'type'  => $paymentMethod === 'gcash' ? 'gcash' : 'maya',
                     'currency' => 'PHP'
                 ]
             ]
