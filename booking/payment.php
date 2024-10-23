@@ -378,7 +378,7 @@ $_SESSION['GUESTID'] =   $lastguest;
             </label>
         </div>
     </div>
-    <input type="hidden" name="realconfirmation" value="<?php echo $confirmationCode; ?>" />
+    
     
                     <!-- <div class="col-md-12 col-sm-2">
     <label id="paymentLabel">Payment Method:</label>
