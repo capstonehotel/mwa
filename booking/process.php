@@ -68,7 +68,22 @@ function processGcashPayment() {
 $error_message = processGcashPayment();
 if ($error_message === true) {
     // Payment successful, redirect to confirmation page
-    header("Location: https://mcchmhotelreservation.com/booking/index.php?view=payment");
+    ?> 
+    <script type="text/javascript">
+        Swal.fire({
+            title: 'Success!',
+            text: 'Booking is successfully submitted!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirect after confirmation
+                window.location.href = "https://mcchmhotelreservation.com/booking/index.php?view=payment";
+            }
+        });
+    </script>
+    <?php
+    //header("Location: https://mcchmhotelreservation.com/booking/index.php?view=payment");
     exit();
 } else {
     // Payment failed, redirect back to payment page with error message
