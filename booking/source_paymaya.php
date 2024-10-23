@@ -14,13 +14,10 @@ $paymentMethod = isset($_POST['payment_method']) ? $_POST['payment_method'] : ''
 // Handle different payment methods (GCash and PayMaya)
 if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
     // Get order details from the form
-  
-   $customerName = 'Kyebe';
+    $customerName = 'Kyebe';
     $customerEmail = 'kyebe@gmail.com';
     $customerno = '09123456789';
 
-   
-   
     // Construct absolute URLs for success and failed redirects
     $successUrl = 'https://mcchmhotelreservation.com/booking/process_maya.php';
     $failedUrl = 'https://mcchmhotelreservation.com/booking/payment.php';
@@ -40,15 +37,16 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
                         'email' => $customerEmail,
                         'phone' => $customerno
                     ],
-                    'type'  => $paymentMethod === 'paymaya' ? 'gcash' : 'paymaya',
+                    'type' => $paymentMethod === 'paymaya' ? 'gcash' : 'paymaya',
                     'currency' => 'PHP'
                 ]
             ]
         ]);
-        
+
+        // Log the payload for debugging
         error_log("PayMongo API Request Payload: " . $payload);
 
-        // Create a PayMongo source for GCash
+        // Create a PayMongo source for GCash/PayMaya
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://api.paymongo.com/v1/sources");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -62,7 +60,7 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
 
         $response = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        
+
         if(curl_errno($ch)){
             error_log('Curl error: ' . curl_error($ch));
         }
@@ -75,7 +73,7 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
 
         $result = json_decode($response, true);
 
-        // Log the entire result for debugging
+        // Log the decoded result for debugging
         error_log("Decoded PayMongo Response: " . print_r($result, true));
 
         if ($httpCode == 200 && isset($result['data']['id'])) {
