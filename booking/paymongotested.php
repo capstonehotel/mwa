@@ -108,32 +108,55 @@
 
 
 
-Paymongo::setApiKey('sk_test_8FHikGJxuzFP3ix4itFTcQCv'); // Replace with your actual Paymongo secret key
 
 header('Content-Type: application/json');
+
+// Your Paymongo secret key
+$secretKey = 'sk_test_8FHikGJxuzFP3ix4itFTcQCv'; // Replace with your actual Paymongo secret key
 
 // Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if payment_method is set
     if (isset($_POST['payment_method'])) {
         $paymentMethod = $_POST['payment_method'];
-
-        // Create a payment intent (this is a simplified example)
-        try {
-            $paymentIntent = Paymongo::paymentIntents()->create([
-                'amount' => 10000, // Amount in cents (e.g., 10000 cents = 100.00)
-                'currency' => 'PHP',
-                'payment_method' => $paymentMethod,
-                'description' => 'Booking Payment',
-                'metadata' => [
-                    'order_id' => '123456' // Add your order ID or other metadata here
+        
+        // Set up the data for the payment intent
+        $data = [
+            'data' => [
+                'attributes' => [
+                    'amount' => 10000, // Amount in cents (e.g., 10000 cents = 100.00)
+                    'currency' => 'PHP',
+                    'payment_method' => $paymentMethod,
+                    'description' => 'Booking Payment',
+                    'metadata' => [
+                        'order_id' => '123456' // Add your order ID or other metadata here
+                    ]
                 ]
-            ]);
+            ]
+        ];
 
-            // Check for the checkout URL in the payment intent response
-            if (isset($paymentIntent->data->attributes->checkout_url)) {
+        // Initialize cURL
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.paymongo.com/v1/payment_intents');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            'Authorization: Basic ' . base64_encode($secretKey . ':')
+        ]);
+
+        // Execute cURL request
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        // Handle the response
+        if ($httpCode === 200) {
+            $responseData = json_decode($response, true);
+            if (isset($responseData['data']['attributes']['checkout_url'])) {
                 echo json_encode([
-                    'checkoutUrl' => $paymentIntent->data->attributes->checkout_url
+                    'checkoutUrl' => $responseData['data']['attributes']['checkout_url']
                 ]);
             } else {
                 echo json_encode([
@@ -141,10 +164,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'message' => 'Payment intent created but no checkout URL found.'
                 ]);
             }
-        } catch (Exception $e) {
+        } else {
             echo json_encode([
                 'success' => false,
-                'message' => 'Error: ' . $e->getMessage()
+                'message' => 'Error: ' . $response
             ]);
         }
     } else {
@@ -159,5 +182,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'message' => 'Invalid request method.'
     ]);
 }
+?>
 
 ?>
