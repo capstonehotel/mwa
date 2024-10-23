@@ -126,7 +126,7 @@ if ($paymentMethod === 'Gcash' || $paymentMethod === 'Paymaya') {
                     'currency' => 'PHP',
                     'description' => 'Payment for booking',
                     'statement_descriptor' => 'Booking Payment',
-                    'payment_method_allowed' => [$paymentMethod === 'Gcash' ? 'gcash' : 'paymaya'], // Allowed payment method
+                    'payment_method_allowed' => ['gcash', 'paymaya'], // Allowed payment method
                 ]
             ]
         ];
