@@ -3,13 +3,12 @@
 function processGcashPayment() {
     $source_id = $_SESSION['paymongo_source_id'] ?? '';
     if (empty($source_id)) {
-        error_log("PayMongo source ID not found in session");
-        return false;
+        return "PayMongo source ID not found in session";
     }
     
     $secret_key = 'sk_test_8FHikGJxuzFP3ix4itFTcQCv';
     
-    // First, verify the source status
+    // Verify the source status
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, "https://api.paymongo.com/v1/sources/$source_id");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -23,7 +22,7 @@ function processGcashPayment() {
     $result = json_decode($response, true);
     
     if ($result['data']['attributes']['status'] === 'chargeable') {
-        // Source is chargeable, now create a payment
+        // Source is chargeable, create a payment
         $payload = json_encode([
             'data' => [
                 'attributes' => [
@@ -56,27 +55,24 @@ function processGcashPayment() {
         if ($payment_result['data']['attributes']['status'] === 'paid') {
             // Payment was successful
             unset($_SESSION['paymongo_source_id']);
-            
             return true;
         } else {
-            error_log("GCash payment failed. Status: " . $payment_result['data']['attributes']['status']);
-            return false;
+            return "GCash payment failed. Status: " . $payment_result['data']['attributes']['status'];
         }
     } else {
-        error_log("GCash source not chargeable. Status: " . $result['data']['attributes']['status']);
-        return false;
+        return "GCash source not chargeable. Status: " . $result['data']['attributes']['status'];
     }
 }
 
-if (processGcashPayment()) {
-    error_log("GCash");
+// Process the payment
+$error_message = processGcashPayment();
+if ($error_message === true) {
     // Payment successful, redirect to confirmation page
     header("Location: https://mcchmhotelreservation.com/booking/index.php?view=payment");
     exit();
 } else {
-    // Payment failed, redirect back to payment page
-    error_log("GCash");
-    header("Location: https://mcchmhotelreservation.com/booking/payment.php");
+    // Payment failed, redirect back to payment page with error message
+    header("Location: https://mcchmhotelreservation.com/booking/payment.php?error=" . urlencode($error_message));
     exit();
 }
 
