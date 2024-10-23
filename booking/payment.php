@@ -490,9 +490,10 @@ for ($i=0; $i < $count_cart  ; $i++) {
     
         // Send the form data via fetch to the appropriate PHP file based on the selected method
         let url;
-        if (selectedMethod.value === 'gcash') {
-            url = 'source.php';  // GCash payment handler
-        } else if (selectedMethod.value === 'paymaya') {
+        // if (selectedMethod.value === 'gcash') {
+        //     url = 'source.php';  // GCash payment handler
+        // } else if (selectedMethod.value === 'paymaya') {
+             if (selectedMethod.value === 'paymaya') {
             url = 'source_paymaya.php';  // PayMaya payment handler
         } else {
             alert('Invalid payment method selected.');
