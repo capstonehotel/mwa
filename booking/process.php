@@ -72,7 +72,7 @@ if ($error_message === true) {
     exit();
 } else {
     // Payment failed, redirect back to payment page with error message
-    header("Location: https://mcchmhotelreservation.com/booking/payment.php?error=" . urlencode($error_message));
+    header("Location: https://mcchmhotelreservation.com/booking/payment.php");
     exit();
 }
 
