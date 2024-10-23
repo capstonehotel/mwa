@@ -19,9 +19,7 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
     
     try {
         // Step 1: Create a Payment Intent
-        header('Content-Type: application/json');
-        echo json_encode(['message' => '1']);
-        exit();
+        
         $paymentIntentData = [
             'data' => [
                 'attributes' => [
@@ -33,7 +31,9 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
                 ]
             ]
         ];
-
+        header('Content-Type: application/json');
+        echo json_encode(['message' => '1']);
+        exit();
         $response = createPaymongoRequest('https://api.paymongo.com/v1/payment_intents', $paymentIntentData, $paymongo_secret_key);
 
         // Extract the payment intent ID
