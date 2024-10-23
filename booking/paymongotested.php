@@ -16,13 +16,12 @@ $paymentMethod = isset($_POST['payment_method']) ? $_POST['payment_method'] : ''
 
 // Handle different payment methods (GCash and PayMaya)
 if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
-    header('Content-Type: application/json');
-    echo json_encode(['message' => '1']);
-    exit();
+    
     try {
         // Step 1: Create a Payment Intent
         header('Content-Type: application/json');
-        echo json_encode(['message' => '2']);
+        echo json_encode(['message' => '1']);
+        exit();
         $paymentIntentData = [
             'data' => [
                 'attributes' => [
