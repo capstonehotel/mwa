@@ -177,10 +177,16 @@ $_SESSION['confirmation'] = $confirmation;
 
  $count_cart = count($_SESSION['monbela_cart']);
 
-if(isset($_POST['btnsubmitbooking'])){
+// if(isset($_POST['btnsubmitbooking'])){
+    if (isset($_POST['btnsubmitbooking']) || isset($_SESSION['payment_successful'])) { 
+        if (isset($_SESSION['payment_successful'])) {
   // $message = $_POST['message'];
-
- 
+  // If payment was successful, submit the form
+  echo "<script>
+  document.getElementById('bookingForm').submit();
+</script>";
+unset($_SESSION['payment_successful']); // Clear the session variable
+}
 
 
 //    $count_cart = count($_SESSION['monbela_cart']);
@@ -321,7 +327,7 @@ $_SESSION['GUESTID'] =   $lastguest;
     </nav>
     <div class="container">
         <div class="row">
-            <form action="index.php?view=payment" method="post" name="personal" enctype="multipart/form-data">
+            <form action="index.php?view=payment" method="post" name="personal" enctype="multipart/form-data" id="bookingForm">
                 <div class="col-md-8 col-sm-4">
                     <div class="col-md-12">
                         <label>Name:</label>
@@ -372,7 +378,7 @@ $_SESSION['GUESTID'] =   $lastguest;
             </label>
         </div>
     </div>
-
+    <input type="hidden" name="realconfirmation" value="<?php echo $confirmationCode; ?>" />
     
                     <!-- <div class="col-md-12 col-sm-2">
     <label id="paymentLabel">Payment Method:</label>
@@ -529,6 +535,15 @@ for ($i=0; $i < $count_cart  ; $i++) {
 });
 
 </script> -->
+<script>
+    // Event listener for the "Yes" button in the modal
+    document.getElementById('confirmBookingButton').addEventListener('click', function() {
+      
+        
+        // Submit the existing booking form
+        document.getElementById('bookingForm').submit();
+    });
+</script>
     <script>
 document.getElementById('confirmBookingButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
