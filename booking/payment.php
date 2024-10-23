@@ -364,13 +364,13 @@ $_SESSION['GUESTID'] =   $lastguest;
                 Card/Debit Card
             </label>
         </div> -->
-        <!-- <div>
+        <div>
             <input type="radio" id="paymaya" name="payment_method" value="paymaya" required>
             <label for="paymaya">
                 <img src="../paymaya.png" alt="Pay with Maya" style="height: 20px; margin-right: 5px;">
                 Pay with PayMaya
             </label>
-        </div> -->
+        </div>
     </div>
 
     
@@ -486,7 +486,7 @@ for ($i=0; $i < $count_cart  ; $i++) {
         </div>
       </div>
 </div>
-<script>
+<!-- <script>
   document.getElementById('confirmBookingButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
     
@@ -501,7 +501,7 @@ for ($i=0; $i < $count_cart  ; $i++) {
             url = 'source.php';  // GCash payment handler
         } else if (selectedMethod.value === 'card') {
             //  if (selectedMethod.value === 'paymaya') {
-            url = 'source_card.php';  // Card payment handler
+            url = 'source_paymaya.php';  // Card payment handler
         } else {
             alert('Invalid payment method selected.');
             return;
@@ -528,8 +528,8 @@ for ($i=0; $i < $count_cart  ; $i++) {
     }
 });
 
-</script>
-    <!-- <script>
+</script> -->
+    <script>
 document.getElementById('confirmBookingButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
     
@@ -561,7 +561,7 @@ document.getElementById('confirmBookingButton').addEventListener('click', functi
         alert('Please select a payment method.'); // Ensure a payment method is selected
     }
 });
-</script> -->
+</script>
 
 <!-- <script>
 document.getElementById('payNowButton').addEventListener('click', function() {
