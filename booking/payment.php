@@ -357,13 +357,13 @@ $_SESSION['GUESTID'] =   $lastguest;
                 Pay with GCash
             </label>
         </div>
-        <div>
+        <!-- <div>
             <input type="radio" id="card" name="payment_method" value="card" required>
             <label for="card">
                 <img src="../visa.png"  style="height: 20px; margin-right: 5px;">
                 Card/Debit Card
             </label>
-        </div>
+        </div> -->
         <!-- <div>
             <input type="radio" id="paymaya" name="payment_method" value="paymaya" required>
             <label for="paymaya">
