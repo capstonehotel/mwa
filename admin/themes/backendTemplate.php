@@ -361,17 +361,17 @@ mysqli_close($conn);
         </div>
         <div class="menu-content">
             <!-- Notification with image and text -->
-            <div class="menu-section">
+            <!-- <div class="menu-section">
                 <ul class="notification-list">
                     <li class="notification-message">
                         <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
-                        <div class="notification" style="display: flex; align-items: center;">
+                        <div class="notification" style="display: flex; align-items: center;"> -->
                         <!-- Profile image -->
-                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
+                        <!-- <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
                         <div class="content" style="font-size: 15px;">
-                          
+                           -->
                             <!-- Message -->
-                            <p style="margin: 0 0 2px 0;">
+                            <!-- <p style="margin: 0 0 2px 0;">
                                 <strong><?php echo $_SESSION['name'] . ' ' . $_SESSION['last']; ?></strong> has made a booking <?php echo ['ROOM']; ?>
                             </p>
                             <p class="time" style="margin-bottom: 5px;">
@@ -385,13 +385,13 @@ mysqli_close($conn);
                 <ul class="notification-list">
                     <li class="notification-message">
                         <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
-                        <div class="notification" style="display: flex; align-items: center;">
+                        <div class="notification" style="display: flex; align-items: center;"> -->
                         <!-- Profile image -->
-                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
+                        <!-- <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
                         <div class="content" style="font-size: 15px;">
-                          
+                           -->
                             <!-- Message -->
-                            <p style="margin: 0 0 2px 0;">
+                            <!-- <p style="margin: 0 0 2px 0;">
                                 <strong>Kath Ungon</strong> has made a booking of 112jhgkhkghgkgjkhgkjhgkhjkghgkjhj
                             </p>
                             <p class="time" style="margin-bottom: 5px;">
@@ -405,13 +405,13 @@ mysqli_close($conn);
                 <ul class="notification-list">
                     <li class="notification-message">
                         <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
-                        <div class="notification" style="display: flex; align-items: center;">
+                        <div class="notification" style="display: flex; align-items: center;"> -->
                         <!-- Profile image -->
-                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
-                        <div class="content" style="font-size: 15px;">
+                        <!-- <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
+                        <div class="content" style="font-size: 15px;"> -->
                           
                             <!-- Message -->
-                            <p style="margin: 0 0 2px 0;">
+                            <!-- <p style="margin: 0 0 2px 0;">
                                 <strong><?php echo $_SESSION['name'] . ' ' . $_SESSION['last']; ?></strong> has made a booking in roomggg  <?php echo  $result->ROOM.' '. $result->ROOMDESC; ?>
                             </p>
                             <p class="time" style="margin-bottom: 5px;">
@@ -425,13 +425,13 @@ mysqli_close($conn);
                 <ul class="notification-list">
                     <li class="notification-message">
                         <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
-                        <div class="notification" style="display: flex; align-items: center;">
+                        <div class="notification" style="display: flex; align-items: center;"> -->
                         <!-- Profile image -->
-                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
+                        <!-- <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
                         <div class="content" style="font-size: 15px;">
-                          
+                           -->
                             <!-- Message -->
-                            <p style="margin: 0 0 2px 0;">
+                            <!-- <p style="margin: 0 0 2px 0;">
                                 <strong>Kath Ungon</strong> has made a booking of 112jhgkhkghgkgjkhgkjhgkhjkghgkjhj
                             </p>
                             <p class="time" style="margin-bottom: 5px;">
@@ -442,7 +442,35 @@ mysqli_close($conn);
                         </a>
                     </li>
                 </ul>
-            </div>
+            </div> -->
+            <div class="menu-section">
+    <ul class="notification-list">
+        <?php
+        // Assuming you have fetched notifications into an array called $notifications
+        foreach ($notifications as $notification) {
+            $guestFirstName = $notification['G_FNAME'];
+            $guestLastName = $notification['G_LNAME'];
+            $room = $notification['ROOM'];
+            $confirmationCode = $notification['CONFIRMATIONCODE'];
+        ?>
+            <li class="notification-message">
+                <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings&code=<?php echo $confirmationCode; ?>">
+                    <div class="notification" style="display: flex; align-items: center;">
+                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
+                        <div class="content" style="font-size: 15px;">
+                            <p style="margin: 0 0 2px 0;">
+                                <strong><?php echo $guestFirstName . ' ' . $guestLastName; ?></strong> has made a booking for room <?php echo $room; ?>
+                            </p>
+                            <p class="time" style="margin-bottom: 5px;">
+                                <?php echo date('m/d/Y'); // Replace with actual date if available ?>
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        <?php } ?>
+    </ul>
+</div>
         </div>
         <!-- Footer with "View all Notifications" outside of scrollable content -->
         <div class="menu-footer" style="padding: 10px; text-align: center; border-top: 1px solid #eee;">
@@ -451,8 +479,27 @@ mysqli_close($conn);
     </div>
     <span style="margin-left: 10px;">|</span>
 </li>
+<?php
+// Assuming you have a database connection already established
+$notifications = []; // Initialize the notifications array
 
+// Query to fetch notifications
+$query = "SELECT g.G_FNAME, g.G_LNAME, r.ROOM, p.CONFIRMATIONCODE
+          FROM tblpayment p
+          JOIN tblguest g ON p.GUESTID = g.GUESTID
+          JOIN tblreservation r ON r.GUESTID = g.GUESTID
+          WHERE p.STATUS <> 'Cancelled'"; // Adjust the WHERE clause as needed
 
+$result = mysqli_query($connection, $query);
+if ($result) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $notifications[] = $row; // Populate the notifications array
+    }
+} else {
+    // Handle query error
+    echo "Error fetching notifications: " . mysqli_error($connection);
+}
+?>
 <style>
     /* Media Queries for Mobile Responsiveness */
 @media (max-width: 768px) {
