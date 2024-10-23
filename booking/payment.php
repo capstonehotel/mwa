@@ -1,4 +1,3 @@
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
@@ -125,10 +124,10 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
 ?>
 
 <?php
-// if (!isset($_SESSION['monbela_cart'])) {
-//     header('Location: https://mcchmhotelreservation.com/booking/index.php');
-//     exit();  // Make sure to call exit after header to stop further script execution
-// }
+if (!isset($_SESSION['monbela_cart'])) {
+  # code...
+  redirect(WEB_ROOT.'index.php');
+}
 
 function createRandomPassword() {
 
@@ -176,7 +175,7 @@ $_SESSION['confirmation'] = $confirmation;
 // echo $dbirth   = $_SESSION['dbirth'];
 
 
- //$count_cart = count($_SESSION['monbela_cart']);
+ $count_cart = count($_SESSION['monbela_cart']);
 
 if(isset($_POST['btnsubmitbooking'])){
   // $message = $_POST['message'];
@@ -491,7 +490,7 @@ document.getElementById('confirmBookingButton').addEventListener('click', functi
         formData.append('payment_method', selectedMethod.value);
       
         // Send the form data via fetch to paymongo.php
-        fetch('source.php', {
+        fetch('paymongotested.php', {
             method: 'POST',
             body: formData
         })
