@@ -361,18 +361,18 @@ mysqli_close($conn);
         </div>
         <div class="menu-content">
             <!-- Notification with image and text -->
-            <!-- <div class="menu-section">
+            <div class="menu-section">
                 <ul class="notification-list">
                     <li class="notification-message">
                         <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
-                        <div class="notification" style="display: flex; align-items: center;"> -->
+                        <div class="notification" style="display: flex; align-items: center;">
                         <!-- Profile image -->
-                        <!-- <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
+                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
                         <div class="content" style="font-size: 15px;">
-                           -->
+                          
                             <!-- Message -->
-                            <!-- <p style="margin: 0 0 2px 0;">
-                                <strong><?php echo $_SESSION['name'] . ' ' . $_SESSION['last']; ?></strong> has made a booking <?php echo ['ROOM']; ?>
+                            <p style="margin: 0 0 2px 0;">
+                                <strong><?php echo $_SESSION['name'] . ' ' . $_SESSION['last']; ?></strong> has made a booking <?php echo $row['ROOM']; ?>
                             </p>
                             <p class="time" style="margin-bottom: 5px;">
                                 11/22/2002
@@ -385,13 +385,13 @@ mysqli_close($conn);
                 <ul class="notification-list">
                     <li class="notification-message">
                         <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
-                        <div class="notification" style="display: flex; align-items: center;"> -->
+                        <div class="notification" style="display: flex; align-items: center;">
                         <!-- Profile image -->
-                        <!-- <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
+                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
                         <div class="content" style="font-size: 15px;">
-                           -->
+                          
                             <!-- Message -->
-                            <!-- <p style="margin: 0 0 2px 0;">
+                            <p style="margin: 0 0 2px 0;">
                                 <strong>Kath Ungon</strong> has made a booking of 112jhgkhkghgkgjkhgkjhgkhjkghgkjhj
                             </p>
                             <p class="time" style="margin-bottom: 5px;">
@@ -405,13 +405,13 @@ mysqli_close($conn);
                 <ul class="notification-list">
                     <li class="notification-message">
                         <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
-                        <div class="notification" style="display: flex; align-items: center;"> -->
+                        <div class="notification" style="display: flex; align-items: center;">
                         <!-- Profile image -->
-                        <!-- <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
-                        <div class="content" style="font-size: 15px;"> -->
+                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
+                        <div class="content" style="font-size: 15px;">
                           
                             <!-- Message -->
-                            <!-- <p style="margin: 0 0 2px 0;">
+                            <p style="margin: 0 0 2px 0;">
                                 <strong><?php echo $_SESSION['name'] . ' ' . $_SESSION['last']; ?></strong> has made a booking in roomggg  <?php echo  $result->ROOM.' '. $result->ROOMDESC; ?>
                             </p>
                             <p class="time" style="margin-bottom: 5px;">
@@ -425,13 +425,13 @@ mysqli_close($conn);
                 <ul class="notification-list">
                     <li class="notification-message">
                         <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
-                        <div class="notification" style="display: flex; align-items: center;"> -->
+                        <div class="notification" style="display: flex; align-items: center;">
                         <!-- Profile image -->
-                        <!-- <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
+                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
                         <div class="content" style="font-size: 15px;">
-                           -->
+                          
                             <!-- Message -->
-                            <!-- <p style="margin: 0 0 2px 0;">
+                            <p style="margin: 0 0 2px 0;">
                                 <strong>Kath Ungon</strong> has made a booking of 112jhgkhkghgkgjkhgkjhgkhjkghgkjhj
                             </p>
                             <p class="time" style="margin-bottom: 5px;">
@@ -442,35 +442,7 @@ mysqli_close($conn);
                         </a>
                     </li>
                 </ul>
-            </div> -->
-            <div class="menu-section">
-    <ul class="notification-list">
-        <?php
-        // Assuming you have fetched notifications into an array called $notifications
-        foreach ($notifications as $notification) {
-            $guestFirstName = $notification['G_FNAME'];
-            $guestLastName = $notification['G_LNAME'];
-            $room = $notification['ROOM'];
-            $confirmationCode = $notification['CONFIRMATIONCODE'];
-        ?>
-            <li class="notification-message">
-                <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings&code=<?php echo $confirmationCode; ?>">
-                    <div class="notification" style="display: flex; align-items: center;">
-                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
-                        <div class="content" style="font-size: 15px;">
-                            <p style="margin: 0 0 2px 0;">
-                                <strong><?php echo $guestFirstName . ' ' . $guestLastName; ?></strong> has made a booking for room <?php echo $room; ?>
-                            </p>
-                            <p class="time" style="margin-bottom: 5px;">
-                                <?php echo date('m/d/Y'); // Replace with actual date if available ?>
-                            </p>
-                        </div>
-                    </div>
-                </a>
-            </li>
-        <?php } ?>
-    </ul>
-</div>
+            </div>
         </div>
         <!-- Footer with "View all Notifications" outside of scrollable content -->
         <div class="menu-footer" style="padding: 10px; text-align: center; border-top: 1px solid #eee;">
