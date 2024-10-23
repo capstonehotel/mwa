@@ -346,6 +346,9 @@ mysqli_close($conn);
 }
 
 </style>
+<?php 
+
+?>
 <li class="nav-item my-auto" style="position: relative;">
     <a href="javascript:void(0);" class="text-dark" id="bookingNotification" onclick="toggleNotificationMenu()">
         <i class="fa fa-bell"></i>
@@ -361,97 +364,60 @@ mysqli_close($conn);
             <a href="javascript:void(0)" class="clear-noti">Clear All</a>
         </div>
         <div class="menu-content">
-            <!-- Notification with image and text -->
             <div class="menu-section">
                 <ul class="notification-list">
-                    <li class="notification-message">
-                        <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
-                        <div class="notification" style="display: flex; align-items: center;">
-                        <!-- Profile image -->
-                        <img alt="" src="<?php echo '../../images/user_avatar/'.$_SESSION['image'];  ?>" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
-                        <div class="content" style="font-size: 15px;">
-                          
-                            <!-- Message -->
-                            <p style="margin: 0 0 2px 0;">
-                                <strong><?php echo $_SESSION['name'].' '. $_SESSION['last']; ?></strong> has made a booking <?php echo $_SESSION['ROOMID']; ?>
-                            </p>
-                            <p class="time" style="margin-bottom: 5px;">
-                                11/22/2002
-                            </p>
-                        </div>
-                    </div>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="notification-list">
-                    <li class="notification-message">
-                        <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
-                        <div class="notification" style="display: flex; align-items: center;">
-                        <!-- Profile image -->
-                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
-                        <div class="content" style="font-size: 15px;">
-                          
-                            <!-- Message -->
-                            <p style="margin: 0 0 2px 0;">
-                                <strong>Kath Ungon</strong> has made a booking of 112jhgkhkghgkgjkhgkjhgkhjkghgkjhj
-                            </p>
-                            <p class="time" style="margin-bottom: 5px;">
-                                11/22/2002
-                            </p>
-                        </div>
-                    </div>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="notification-list">
-                    <li class="notification-message">
-                        <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
-                        <div class="notification" style="display: flex; align-items: center;">
-                        <!-- Profile image -->
-                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
-                        <div class="content" style="font-size: 15px;">
-                          
-                            <!-- Message -->
-                            <p style="margin: 0 0 2px 0;">
-                                <strong><?php echo $_SESSION['name'] . ' ' . $_SESSION['last']; ?></strong> has made a booking in roomggg  <?php echo  $result->ROOM.' '. $result->ROOMDESC; ?>
-                            </p>
-                            <p class="time" style="margin-bottom: 5px;">
-                                11/22/2002
-                            </p>
-                        </div>
-                    </div>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="notification-list">
-                    <li class="notification-message">
-                        <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
-                        <div class="notification" style="display: flex; align-items: center;">
-                        <!-- Profile image -->
-                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
-                        <div class="content" style="font-size: 15px;">
-                          
-                            <!-- Message -->
-                            <p style="margin: 0 0 2px 0;">
-                                <strong>Kath Ungon</strong> has made a booking of 112jhgkhkghgkgjkhgkjhgkhjkghgkjhj
-                            </p>
-                            <p class="time" style="margin-bottom: 5px;">
-                                11/22/2002
-                            </p>
-                        </div>
-                    </div>
-                        </a>
-                    </li>
+                    <?php
+                    // Fetch notifications with room details
+                    $notifications_query = "
+                        SELECT g.G_AVATAR, g.G_FNAME, g.G_LNAME, r.ROOM, r.ROOMDESC, r.ARRIVAL, r.DEPARTURE
+                        FROM tblguest g
+                        JOIN tblreservation r ON g.GUESTID = r.GUESTID
+                        WHERE r.STATUS <> 'Cancelled'
+                        ORDER BY r.ARRIVAL DESC
+                        LIMIT 5"; // Adjust limit as needed
+                    
+                    $notifications_result = mysqli_query($connection, $notifications_query);
+                    if ($notifications_result) {
+                        while ($notification = mysqli_fetch_assoc($notifications_result)) {
+                            $avatar = '../../images/user_avatar/' . $notification['G_AVATAR'];
+                            $fullName = htmlspecialchars($notification['G_FNAME'] . ' ' . $notification['G_LNAME']);
+                            $roomName = htmlspecialchars($notification['ROOM']);
+                            $roomDesc = htmlspecialchars($notification['ROOMDESC']);
+                            $arrivalDate = date_format(date_create($notification['ARRIVAL']), 'm/d/Y');
+                            $departureDate = date_format(date_create($notification['DEPARTURE']), 'm/d/Y');
+                            ?>
+                            <li class="notification-message">
+                                <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
+                                    <div class="notification" style="display: flex; align-items: center;">
+                                        <img alt="" src="<?php echo $avatar; ?>" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width: 50px;" />
+                                        <div class="content" style="font-size: 15px;">
+                                            <p style="margin: 0 0 2px 0;">
+                                                <strong><?php echo $fullName; ?></strong> has made a booking in <strong><?php echo $roomName; ?></strong> (<?php echo $roomDesc; ?>).
+                                            </p>
+                                            <p class="time" style="margin-bottom: 5px;">
+                                                Check-in: <?php echo $arrivalDate; ?>, Check-out: <?php echo $departureDate; ?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <?php
+                        }
+                    } else {
+                        echo "<li class='notification-message'>No notifications available.</li>";
+                    }
+                    ?>
                 </ul>
             </div>
         </div>
         <!-- Footer with "View all Notifications" outside of scrollable content -->
         <div class="menu-footer" style="padding: 10px; text-align: center; border-top: 1px solid #eee;">
-            <a href="https://mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=all">View all Notifications</a>
+            <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=all">View all Notifications</a>
         </div>
     </div>
     <span style="margin-left: 10px;">|</span>
 </li>
+
 
 
 <style>
