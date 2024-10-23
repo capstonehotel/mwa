@@ -1,6 +1,6 @@
 <?php
 
-function processGcashPayment() {
+//function processGcashPayment() {
  
     
     $source_id = $_SESSION['paymongo_source_id'] ?? '';
@@ -72,16 +72,17 @@ function processGcashPayment() {
         error_log("GCash source not chargeable. Status: " . $result['data']['attributes']['status']);
         return false;
     }
-}
+//}
 
 
   
-    if (processGcashPayment()) {
-        message("Your GCash payment was successful and your order has been created!", "success");
-        redirect("https://mcchmhotelreservation.com/booking/index.php?view=payment");
-    } else {
-        message("GCash payment was not successful. Please try again.", "error");
-        redirect("https://mcchmhotelreservation.com/booking/payment.php");
-    }
+    // if (processGcashPayment()) {
+    //     header('Content-Type: application/json');
+    //     echo json_encode(['checkout_url' => $checkoutUrl]);
+    //     exit();
+    // } else {
+    //     message("GCash payment was not successful. Please try again.", "error");
+    //     redirect("https://mcchmhotelreservation.com/booking/payment.php");
+    // }
 
 ?>
