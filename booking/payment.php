@@ -12,39 +12,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> Include SweetAlert2 -->
 <?php
-session_start();
-if(isset($_SESSION['status'])){
 
-    if($_SESSION['status'] == 'success'){
-        ?>
-        <script type="text/javascript">
-            Swal.fire({
-                title: 'Success!',
-                text: 'Booking is successfully submitted!',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            
-            });
-            window.location.href = "index.php";
-        </script>
-        <?php
-        }
-        else {
-            ?>
-            <script type="text/javascript">
-               Swal.fire({
-                title: 'Booking unsuccessful',
-                text: 'Please try again.',   
-                icon: 'error',
-                confirmButtonText: 'OK'                               
-            
-            });
-            window.location.href = "payment.php";
-            </script>
-            <?php
-        
-        }
-}
 if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify']) && $_GET['verify'] == 'true') {
     // var_dump($_GET['view']);
     // var_dump($_GET['verify']);
