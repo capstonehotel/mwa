@@ -367,12 +367,12 @@ mysqli_close($conn);
                         <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
                         <div class="notification" style="display: flex; align-items: center;">
                         <!-- Profile image -->
-                        <img alt="" src="../../profile.jpg" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
+                        <img alt="" src="<?php echo $_SESSION['image'];?>" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width:50px;" />
                         <div class="content" style="font-size: 15px;">
                           
                             <!-- Message -->
                             <p style="margin: 0 0 2px 0;">
-                                <strong><?php echo $_SESSION['name'].' '. $_SESSION['last']; ?></strong> has made a booking <?php echo isset($_POST['ROOM']); ?>
+                                <strong><?php echo $_SESSION['name'].' '. $_SESSION['last']; ?></strong> has made a booking <?php echo isset($_SESSION['room_name']) ? htmlspecialchars($_SESSION['room_name']) : 'the room'; ?>
                             </p>
                             <p class="time" style="margin-bottom: 5px;">
                                 11/22/2002
