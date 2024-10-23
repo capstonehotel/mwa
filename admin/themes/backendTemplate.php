@@ -372,7 +372,7 @@ mysqli_close($conn);
                           
                             <!-- Message -->
                             <p style="margin: 0 0 2px 0;">
-                                <strong><?php echo $_SESSION['name'].' '. $_SESSION['last']; ?></strong> has made a booking <?php echo $row['ROOM']; ?>
+                                <strong><?php echo $_SESSION['name'].' '. $_SESSION['last']; ?></strong> has made a booking <?php echo isset($_POST['ROOM']) ? htmlspecialchars($_POST['ROOM']) : ''; ?>
                             </p>
                             <p class="time" style="margin-bottom: 5px;">
                                 11/22/2002
