@@ -125,7 +125,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
 
 <?php
 if (!isset($_SESSION['monbela_cart'])) {
-    header('Location: ' . WEB_ROOT . 'index.php');
+    header('Location: https://mcchmhotelreservation.com/booking/index.php');
     exit();  // Make sure to call exit after header to stop further script execution
 }
 
