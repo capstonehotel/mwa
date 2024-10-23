@@ -58,7 +58,7 @@ function processGcashPayment() {
         if ($payment_result['data']['attributes']['status'] === 'paid') {
             // Payment was successful, create the order
          
-            message("Paid", "success");
+            //message("Paid", "success");
             redirect("https://mcchmhotelreservation.com/booking/index.php?view=payment");
             unset($_SESSION['paymongo_source_id']);
       
