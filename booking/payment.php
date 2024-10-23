@@ -479,8 +479,41 @@ for ($i=0; $i < $count_cart  ; $i++) {
         </div>
       </div>
 </div>
+<script>
+    document.getElementById('confirmBookingButton').addEventListener('click', function() {
+    const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
+    
+    if (selectedMethod) {
+        // Prepare form data with only the payment method
+        const formData = new FormData();
+        formData.append('payment_method', selectedMethod.value);
+    
+        // Send the form data via fetch to the appropriate PHP file based on the selected method
+        const url = selectedMethod.value === 'gcash' ? 'source.php' : 'source_paymaya.php';
+        
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.checkoutUrl) {
+                // Redirect to the GCash/PayMaya checkout URL
+                window.location.href = data.checkoutUrl;
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    } else {
+        alert('Please select a payment method.');
+    }
+});
 
-    <script>
+</script>
+    <!-- <script>
 document.getElementById('confirmBookingButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
     
@@ -512,7 +545,7 @@ document.getElementById('confirmBookingButton').addEventListener('click', functi
         alert('Please select a payment method.'); // Ensure a payment method is selected
     }
 });
-</script>
+</script> -->
 
 <!-- <script>
 document.getElementById('payNowButton').addEventListener('click', function() {
