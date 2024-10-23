@@ -12,7 +12,7 @@ $paymongo_public_key = 'pk_test_WLnVGBjNdZeqPjoSUpyDk7qu'; // Use your public ke
 $paymentMethod = isset($_POST['payment_method']) ? $_POST['payment_method'] : '';
 
 // Handle different payment methods (GCash and PayMaya)
-if ($paymentMethod === 'gcash' || $paymentMethod === 'maya') {
+if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
     // Get order details from the form
   
    $customerName = 'Kyebe';
@@ -40,7 +40,7 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'maya') {
                         'email' => $customerEmail,
                         'phone' => $customerno
                     ],
-                    'type'  => $paymentMethod === 'gcash' ? 'gcash' : 'maya',
+                    'type'  => $paymentMethod === 'gcash' ? 'gcash' : 'paymaya',
                     'currency' => 'PHP'
                 ]
             ]

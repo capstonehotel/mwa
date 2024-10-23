@@ -358,7 +358,7 @@ $_SESSION['GUESTID'] =   $lastguest;
             </label>
         </div>
         <div>
-            <input type="radio" id="paymaya" name="payment_method" value="maya" required>
+            <input type="radio" id="paymaya" name="payment_method" value="paymaya" required>
             <label for="paymaya">
                 <img src="../paymaya.png" alt="Pay with Maya" style="height: 20px; margin-right: 5px;">
                 Pay with PayMaya
@@ -492,7 +492,7 @@ for ($i=0; $i < $count_cart  ; $i++) {
         let url;
         if (selectedMethod.value === 'gcash') {
             url = 'source.php';  // GCash payment handler
-        } else if (selectedMethod.value === 'maya') {
+        } else if (selectedMethod.value === 'paymaya') {
             url = 'source_paymaya.php';  // PayMaya payment handler
         } else {
             alert('Invalid payment method selected.');
