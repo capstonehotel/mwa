@@ -120,16 +120,15 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
         // Step 1: Create a Payment Intent
         $paymentIntentData = [
             'data' => [
-                 'attributes' => [
+                'attributes' => [
                     'amount' => $amount, // Amount in cents
                     'currency' => 'PHP',
                     'description' => 'Payment for booking',
                     'statement_descriptor' => 'Booking Payment',
-                    'payment_method_allowed' => 'gcash', //[$paymentMethod === 'gcash' ? 'gcash' : 'paymaya'], // Allowed payment method
+                    'payment_method_allowed' => [$paymentMethod], // Allowed payment method as array
                 ]
             ]
         ];
-        
 
         // Create payment intent
         $paymentIntentResponse = createPaymongoRequest('https://api.paymongo.com/v1/payment_intents', $paymentIntentData, $paymongo_secret_key);
@@ -146,8 +145,7 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
                         'success' => 'https://mcchmhotelreservation.com/booking/index.php?view=payment', // Success URL
                         'failed' => 'https://mcchmhotelreservation.com/booking/payment.php', // Failure URL
                     ],
-                    'type' => 'gcash',//$paymentMethod === 'gcash' ? 'gcash' : 'paymaya',
-                    'payment_method_allowed' => 'gcash',
+                    'type' => $paymentMethod, // Use selected method ('gcash' or 'paymaya')
                     'currency' => 'PHP',
                     'billing' => [
                         'name' => 'Kyebe', // Client's name
