@@ -23,7 +23,7 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
    
     // Construct absolute URLs for success and failed redirects
     $successUrl = 'https://mcchmhotelreservation.com/booking/process.php';
-    $failedUrl = 'https://youtube.com';
+    $failedUrl = 'https://mcchmhotelreservation.com/booking/payment.php';
 
     try {
         // Prepare the payload
