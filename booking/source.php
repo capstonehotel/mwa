@@ -16,9 +16,9 @@ $paymentMethod = isset($_POST['payment_method']) ? $_POST['payment_method'] : ''
 if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
     // Get order details from the form
   
-   $customerName = 'Kyebe';
-    $customerEmail = 'kyebe@gmail.com';
-    $customerno = '09123456789';
+   $customerName = $_SESSION['name'];
+    $customerEmail = $_SESSION['username'];
+    $customerno = $_SESSION['phone'];
 
    
    
@@ -36,6 +36,11 @@ if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
                         'success' => $successUrl,
                         'failed' => $failedUrl
                     ],
+                    'payment_method_allowed' => [
+                        "paymaya",
+                        "card",
+                        "gcash"
+                      ],
                     'billing' => [
                         'name' => $customerName,
                         'email' => $customerEmail,
