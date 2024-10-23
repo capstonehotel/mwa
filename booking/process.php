@@ -1,6 +1,6 @@
 <?php
 
-function processGcashPayment($orderNum) {
+function processGcashPayment() {
  
     
     $source_id = $_SESSION['paymongo_source_id'] ?? '';
@@ -76,7 +76,7 @@ function processGcashPayment($orderNum) {
 
 
   
-    if (processGcashPayment($orderNum)) {
+    if (processGcashPayment()) {
         message("Your GCash payment was successful and your order has been created!", "success");
         redirect("https://mcchmhotelreservation.com/booking/index.php?view=payment");
     } else {
