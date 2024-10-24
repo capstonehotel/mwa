@@ -520,6 +520,19 @@ function time_elapsed_string($datetime, $full = false) {
     border-bottom: 1px solid #eee;
     padding-bottom: 8px; /* Added padding for better spacing */
 }
+.notification-message.unread {
+    background-color: #f9f9f9; /* Light background for unread notifications */
+    font-weight: bold; /* Make unread notifications bold */
+}
+
+.notification-message.read {
+    background-color: #ffffff; /* White background for read notifications */
+    color: #666; /* Lighter color for read notifications */
+}
+
+.notification-message:hover {
+    background-color: #f1f1f1; /* Highlight on hover */
+}
 
 .menu-header {
     padding: 10px;
