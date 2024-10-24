@@ -435,7 +435,7 @@ function time_elapsed_string($datetime, $full = false) {
                         $readClass = $notification['is_read'] ? 'read' : 'unread'; 
                         ?>
                         <li class="notification-message <?php echo $readClass; ?>" >
-                            <a href="/admin/mod_reservation/index.php?viewed=bookings">
+                            <a href="/admin/mod_reservation/index.php">
                                 <div class="notification" style="display: flex; align-items: center;">
                                     <img alt="" src="<?php echo $avatar; ?>" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width: 50px;" />
                                     <div class="content" style="font-size: 15px;">
