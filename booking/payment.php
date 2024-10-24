@@ -178,15 +178,14 @@ $_SESSION['confirmation'] = $confirmation;
  $count_cart = count($_SESSION['monbela_cart']);
 
 // if(isset($_POST['btnsubmitbooking'])){
-    if (isset($_POST['btnsubmitbooking']) || isset($_SESSION['payment_successful'])) { 
+
+    if (isset($_POST['btnsubmitbooking']) || isset($_SESSION['payment_successful'])) {
         if (isset($_SESSION['payment_successful'])) {
-  // $message = $_POST['message'];
-  // If payment was successful, submit the form
-  echo "<script>
-  document.getElementById('bookingForm').submit();
-</script>";
-unset($_SESSION['payment_successful']); // Clear the session variable
-}
+            echo "<script>
+            document.getElementById('bookingForm').submit();
+            </script>";
+            unset($_SESSION['payment_successful']); // Clear session variable after use
+        }
 
 
 //    $count_cart = count($_SESSION['monbela_cart']);
