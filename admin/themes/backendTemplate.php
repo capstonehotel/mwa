@@ -414,6 +414,7 @@ function time_elapsed_string($datetime, $full = false) {
                         rm.ROOM, 
                         rm.ROOMDESC,
                         r.RPRICE,
+                        r.RESERVEID,
                         r.is_read
                     FROM 
                         tblreservation r
@@ -435,20 +436,20 @@ function time_elapsed_string($datetime, $full = false) {
                         $paid = htmlspecialchars($notification['RPRICE']);
                         $readClass = $notification['is_read'] ? 'read' : 'unread'; 
                         ?>
-                        <li class="notification-message <?php echo $readClass; ?>" >
-                            <a href="/admin/mod_reservation/index.php">
-                                <div class="notification" style="display: flex; align-items: center;">
-                                    <img alt="" src="<?php echo $avatar; ?>" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width: 50px;" />
-                                    <div class="content" style="font-size: 15px;">
-                                        <p style="margin: 0 0 2px 0;">
-                                            <strong><?php echo $fullName; ?></strong> has made a booking in <strong><?php echo $roomName; ?></strong> (<?php echo $roomDesc; ?>)and paid ₱ <?php echo $paid; ?>.00 pesos.
-                                        </p>
-                                        <p class="time" style="margin-bottom: 5px;" title="<?php echo $exactDate; ?>">
-                                             <?php echo $bookDate; ?>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
+                        <li class="notification-message <?php echo $readClass; ?>" data-id="<?php echo $notification['RESERVEID']; ?>" >
+                        <a href="javascript:void(0);" onclick="markAsRead(<?php echo $notification['RESERVEID']; ?>, '/admin/mod_reservation/index.php')">
+        <div class="notification" style="display: flex; align-items: center;">
+            <img alt="" src="<?php echo $avatar; ?>" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width: 50px;" />
+            <div class="content" style="font-size: 15px;">
+                <p style="margin: 0 0 2px 0;">
+                    <strong><?php echo $fullName; ?></strong> has made a booking in <strong><?php echo $roomName; ?></strong> (<?php echo $roomDesc; ?>) and paid ₱ <?php echo $paid; ?>.00 pesos.
+                </p>
+                <p class="time" style="margin-bottom: 5px;" title="<?php echo $exactDate; ?>">
+                     <?php echo $bookDate; ?>
+                </p>
+            </div>
+        </div>
+    </a>
                         </li>
                             <?php
                         }
@@ -608,6 +609,34 @@ document.addEventListener('click', function(event) {
         menu.style.display = "none";
     }
 });
+function markAsRead(reservationId, redirectUrl) {
+    // Make an AJAX request to update the read status
+    fetch('update_notification.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: reservationId }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Change the CSS class to 'read'
+            const notificationElement = document.querySelector(`.notification-message[data-id="${reservationId}"]`);
+            if (notificationElement) {
+                notificationElement.classList.remove('unread');
+                notificationElement.classList.add('read');
+            }
+            // Redirect to the specified URL
+            window.location.href = redirectUrl;
+        } else {
+            console.error('Error updating notification status:', data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
 
 </script>
 <?php
