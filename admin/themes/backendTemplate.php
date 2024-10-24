@@ -367,6 +367,41 @@ mysqli_close($conn);
             <div class="menu-section">
                 <ul class="notification-list">
                 <?php
+                function time_elapsed_string($datetime, $full = false) {
+                    $now = new DateTime(); // Current time
+                    $ago = new DateTime($datetime); // Notification time
+                    $diff = $now->diff($ago); // Calculate difference
+                
+                    // Time units
+                    $diff->w = floor($diff->d / 7);
+                    $diff->d -= $diff->w * 7;
+                
+                    // Time strings
+                    $string = [
+                        'y' => 'year',
+                        'm' => 'month',
+                        'w' => 'week',
+                        'd' => 'day',
+                        'h' => 'hour',
+                        'i' => 'minute',
+                        's' => 'second',
+                    ];
+                    
+                    foreach ($string as $k => &$v) {
+                        if ($diff->$k) {
+                            $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : ''); // Pluralize if needed
+                        } else {
+                            unset($string[$k]);
+                        }
+                    }
+                
+                    // Return the first non-zero time string, or "just now"
+                    if (!$full) {
+                        $string = array_slice($string, 0, 1);
+                    }
+                
+                    return $string ? implode(', ', $string) . ' ago' : 'just now';
+                }
                 // Fetch notifications with room details
                 $notifications_query = "
                     SELECT 
@@ -391,7 +426,7 @@ mysqli_close($conn);
                         $fullName = htmlspecialchars($notification['G_FNAME'] . ' ' . $notification['G_LNAME']);
                         $roomName = htmlspecialchars($notification['ROOM']);
                         $roomDesc = htmlspecialchars($notification['ROOMDESC']);
-                        $bookDate = date_format(date_create($notification['TRANSDATE']), 'm/d/Y');
+                        $bookDate = time_elapsed_string($notification['TRANSDATE']);
                        
                         ?>
                         <li class="notification-message">
