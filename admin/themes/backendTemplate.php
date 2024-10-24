@@ -382,7 +382,7 @@ mysqli_close($conn);
                         tblguest g ON r.GUESTID = g.GUESTID
                     JOIN 
                         tblroom rm ON r.ROOMID = rm.ROOMID
-                    "; // Adjust limit as needed
+                    ORDER BY r.TRANSDATE DESC"; // Adjust limit as needed
 
                 $notifications_result = mysqli_query($connection, $notifications_query);
                 if ($notifications_result) {
