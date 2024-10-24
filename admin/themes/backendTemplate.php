@@ -609,20 +609,20 @@ document.addEventListener('click', function(event) {
         menu.style.display = "none";
     }
 });
-function markAsRead(reservationId, redirectUrl) {
+function markAsRead(reserveId, redirectUrl) {
     // Make an AJAX request to update the read status
     fetch('update_notification.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id: reservationId }),
+        body: JSON.stringify({ id: reserveId }),
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
             // Change the CSS class to 'read'
-            const notificationElement = document.querySelector(`.notification-message[data-id="${reservationId}"]`);
+            const notificationElement = document.querySelector(`.notification-message[data-id="${reserveId}"]`);
             if (notificationElement) {
                 notificationElement.classList.remove('unread');
                 notificationElement.classList.add('read');
