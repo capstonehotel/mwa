@@ -350,8 +350,8 @@ $_SESSION['GUESTID'] =   $lastguest;
                     
                     <div class="col-md-12">
     <label style="display: none;">Transaction Id:</label>
-    <span style="display: none;"><?php echo $_SESSION['confirmation']; ?></span>
-    <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
+    <span style="display: none;"><?php echo $_SESSION['realconfirmation']; ?></span>
+    <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['realconfirmation']; ?>" />
     <input type="hidden" id="payment_status_input"  name="txtstatus">
 </div>
 <div class="col-md-12 col-sm-2">
@@ -373,60 +373,7 @@ $_SESSION['GUESTID'] =   $lastguest;
                 Pay with GCash
             </label>
         </div>
-        <!-- <div>
-            <input type="radio" id="card" name="payment_method" value="card" required>
-            <label for="card">
-                <img src="../visa.png"  style="height: 20px; margin-right: 5px;">
-                Card/Debit Card
-            </label>
-        </div> -->
-        <!-- <div>
-            <input type="radio" id="paymaya" name="payment_method" value="paymaya" required>
-            <label for="paymaya">
-                <img src="../paymaya.png" alt="Pay with Maya" style="height: 20px; margin-right: 5px;">
-                Pay with PayMaya
-            </label>
-        </div> -->
-        <!-- <div>
-        <label for="paymentAmount">Select Payment Amount:</label>
-        <select id="paymentAmount" name="payment_amount" required>
-            <option value="full">Pay Full</option>
-            <option value="partial">Pay Half (Partial)</option>
-        </select>
-    </div> -->
-    </div>
-    
-    
-                    <!-- <div class="col-md-12 col-sm-2">
-    <label id="paymentLabel">Payment Method:</label>
-
-    <form method="POST" action="paymongo.php" id="paymentForm">
-    <input type="hidden" name="payment_method" id="payment_method" value="">
-    
-    <button type="submit" class="btn btn-primary" onclick="selectPaymentMethod('Gcash')">
-        <img src="../gcash.png" alt="Pay with GCash" style="height: 20px; margin-right: 5px;">
-        Pay with GCash
-    </button>
-    
-    <button type="submit" class="btn btn-primary" onclick="selectPaymentMethod('Paymaya')">
-        <img src="../paymaya.png" alt="Pay with PayMaya" style="height: 20px; margin-right: 5px;">
-        Pay with PayMaya
-    </button>
-</form>
-
-<script>
-        function selectPaymentMethod(method) {
-            document.getElementById('payment_method').value = method;
-
-            // Automatically submit the form to trigger the payment process
-            document.getElementById('paymentForm').submit();
-        }
-    </script>
-    
-    </div>
-                   -->
-    
-
+        </div>
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
