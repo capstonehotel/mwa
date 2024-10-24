@@ -366,39 +366,49 @@ mysqli_close($conn);
         <div class="menu-content">
             <div class="menu-section">
                 <ul class="notification-list">
-                    <?php
-                    // Fetch notifications with room details
-                    $notifications_query = 
-                       "SELECT `G_AVATAR`,`G_FNAME` ,  `G_LNAME` ,  `TRANSDATE` 
-                FROM  `tblreservation` r,  `tblguest` g,  `tblroom` rm, tblaccomodation a
-                WHERE r.`ROOMID` = rm.`ROOMID` 
-                AND a.`ACCOMID` = rm.`ACCOMID` 
-                AND g.`GUESTID` = r.`GUESTID` "; // Adjust limit as needed
-                    
-                    $notifications_result = mysqli_query($connection, $notifications_query);
-                    if ($notifications_result) {
-                        while ($notification = mysqli_fetch_assoc($notifications_result)) {
-                            $avatar = '../../images/user_avatar/' . $notification['G_AVATAR'];
-                            $fullName = htmlspecialchars($notification['G_FNAME'] . ' ' . $notification['G_LNAME']);
-                            $roomName = htmlspecialchars($notification['ROOM']);
-                            $bookDate = date_format(date_create($notification['TRANSDATE']), 'm/d/Y');
-                           
-                            ?>
-                            <li class="notification-message">
-                                <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
-                                    <div class="notification" style="display: flex; align-items: center;">
-                                        <img alt="" src="<?php echo $avatar; ?>" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width: 50px;" />
-                                        <div class="content" style="font-size: 15px;">
-                                            <p style="margin: 0 0 2px 0;">
-                                                <strong><?php echo $fullName; ?></strong> has made a booking in <strong><?php echo $roomName; ?></strong> (<?php echo $roomDesc; ?>).
-                                            </p>
-                                            <p class="time" style="margin-bottom: 5px;">
-                                                Check-in: <?php echo $arrivalDate; ?>, Check-out: <?php echo $departureDate; ?>
-                                            </p>
-                                        </div>
+                <?php
+                // Fetch notifications with room details
+                $notifications_query = "
+                    SELECT 
+                        g.G_AVATAR, 
+                        g.G_FNAME, 
+                        g.G_LNAME, 
+                        r.TRANSDATE, 
+                        rm.ROOM, 
+                        rm.ROOMDESC 
+                    FROM 
+                        tblreservation r
+                    JOIN 
+                        tblguest g ON r.GUEST_ID = g.G_ID
+                    JOIN 
+                        tblroom rm ON r.ROOM_ID = rm.ROOM_ID
+                    LIMIT 10"; // Adjust limit as needed
+
+                $notifications_result = mysqli_query($connection, $notifications_query);
+                if ($notifications_result) {
+                    while ($notification = mysqli_fetch_assoc($notifications_result)) {
+                        $avatar = '../../images/user_avatar/' . htmlspecialchars($notification['G_AVATAR']);
+                        $fullName = htmlspecialchars($notification['G_FNAME'] . ' ' . $notification['G_LNAME']);
+                        $roomName = htmlspecialchars($notification['ROOM']);
+                        $roomDesc = htmlspecialchars($notification['ROOMDESC']);
+                        $bookDate = date_format(date_create($notification['TRANSDATE']), 'm/d/Y');
+                       
+                        ?>
+                        <li class="notification-message">
+                            <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=bookings">
+                                <div class="notification" style="display: flex; align-items: center;">
+                                    <img alt="" src="<?php echo $avatar; ?>" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width: 50px;" />
+                                    <div class="content" style="font-size: 15px;">
+                                        <p style="margin: 0 0 2px 0;">
+                                            <strong><?php echo $fullName; ?></strong> has made a booking in <strong><?php echo $roomName; ?></strong> (<?php echo $roomDesc; ?>).
+                                        </p>
+                                        <p class="time" style="margin-bottom: 5px;">
+                                             <?php echo $bookDate; ?>
+                                        </p>
                                     </div>
-                                </a>
-                            </li>
+                                </div>
+                            </a>
+                        </li>
                             <?php
                         }
                     } else {
