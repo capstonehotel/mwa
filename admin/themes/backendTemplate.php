@@ -379,9 +379,9 @@ mysqli_close($conn);
                     FROM 
                         tblreservation r
                     JOIN 
-                        tblguest g ON r.GUEST_ID = g.GUEST_ID
+                        tblguest g ON r.GUESTID = g.GUESTID
                     JOIN 
-                        tblroom rm ON r.ROOM_ID = rm.ROOM_ID
+                        tblroom rm ON r.ROOMID = rm.ROOMID
                     LIMIT 10"; // Adjust limit as needed
 
                 $notifications_result = mysqli_query($connection, $notifications_query);
