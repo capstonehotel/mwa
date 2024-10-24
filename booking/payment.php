@@ -378,12 +378,11 @@ $_SESSION['GUESTID'] =   $lastguest;
             </label>
         </div> -->
         <div>
-        <input type="radio" id="partial" name="payment_amount" value="partial" required>
-        <label for="partial">Pay Half (Partial)</label>
-    </div>
-    <div>
-        <input type="radio" id="full" name="payment_amount" value="full" required>
-        <label for="full">Pay Full</label>
+        <label for="paymentAmount">Select Payment Amount:</label>
+        <select id="paymentAmount" name="payment_amount" required>
+            <option value="full">Pay Full</option>
+            <option value="partial">Pay Half (Partial)</option>
+        </select>
     </div>
     </div>
     
