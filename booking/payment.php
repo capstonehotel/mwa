@@ -387,13 +387,13 @@ $_SESSION['GUESTID'] =   $lastguest;
                 Pay with PayMaya
             </label>
         </div> -->
-        <div>
+        <!-- <div>
         <label for="paymentAmount">Select Payment Amount:</label>
         <select id="paymentAmount" name="payment_amount" required>
             <option value="full">Pay Full</option>
             <option value="partial">Pay Half (Partial)</option>
         </select>
-    </div>
+    </div> -->
     </div>
     
     
