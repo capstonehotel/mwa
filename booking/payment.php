@@ -355,6 +355,16 @@ $_SESSION['GUESTID'] =   $lastguest;
     <input type="hidden" id="payment_status_input"  name="txtstatus">
 </div>
 <div class="col-md-12 col-sm-2">
+    <label for="paymentAmount" id="paymentLabel">Select Payment Option:</label>
+    <div>
+        <select id="paymentAmount" name="payment_amount" required>
+            <option value="full">Full Payment</option>
+            <option value="partial">Partial Payment</option>
+        </select>
+    </div>
+</div>
+
+<div class="col-md-12 col-sm-2">
         <label id="paymentLabel">Payment Method:</label>
         <div>
             <input type="radio" id="gcash" name="payment_method" value="gcash" required>
