@@ -564,26 +564,32 @@ for ($i=0; $i < $count_cart  ; $i++) {
     <script>
 document.getElementById('confirmBookingButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
+    const selectedPayment = document.getElementById('paymentAmount').value;
     
     if (selectedMethod) {
-        // Prepare form data with only the payment method
+        // Adjust payment amount based on selected option
+        let paymentAmount = <?php echo $_SESSION['pay']; ?>; // Full amount
+        if (selectedPayment === 'partial') {
+            paymentAmount /= 2; // Half for partial payment
+        }
+
+        // Prepare form data with payment method and adjusted amount
         const formData = new FormData();
         formData.append('payment_method', selectedMethod.value);
-      
-        // Send the form data via fetch to paymongo.php
+        formData.append('payment_amount', paymentAmount);
+
+        // Send the form data via fetch to source.php
         fetch('source.php', {
             method: 'POST',
             body: formData
         })
         .then(response => response.json()) // Expecting a JSON response
         .then(data => {
-           
             if (data.checkoutUrl) {
-             
-                // Redirect to the GCash/PayMaya checkout URL
+                // Redirect to the GCash checkout URL
                 window.location.href = data.checkoutUrl;
             } else {
-                alert('Error: ' + data.message); // Handle the error response
+                alert('Error: ' + data.message); // Handle error response
             }
         })
         .catch(error => {
