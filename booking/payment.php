@@ -177,15 +177,15 @@ $_SESSION['confirmation'] = $confirmation;
 
  $count_cart = count($_SESSION['monbela_cart']);
 
-// if(isset($_POST['btnsubmitbooking'])){
+if(isset($_POST['btnsubmitbooking'])){
 
-    if (isset($_POST['btnsubmitbooking']) || isset($_SESSION['payment_successful'])) {
-        if (isset($_SESSION['payment_successful'])) {
-            echo "<script>
-            document.getElementById('bookingForm').submit();
-            </script>";
-            unset($_SESSION['payment_successful']); // Clear session variable after use
-        }
+    // if (isset($_POST['btnsubmitbooking']) || isset($_SESSION['payment_successful'])) {
+    //     if (isset($_SESSION['payment_successful'])) {
+    //         echo "<script>
+    //         document.getElementById('bookingForm').submit();
+    //         </script>";
+    //         unset($_SESSION['payment_successful']); // Clear session variable after use
+    //     }
 
 
 //    $count_cart = count($_SESSION['monbela_cart']);
@@ -326,7 +326,7 @@ $_SESSION['GUESTID'] =   $lastguest;
     </nav>
     <div class="container">
         <div class="row">
-            <form action="index.php?view=payment" method="post" name="personal" enctype="multipart/form-data" id="bookingForm">
+            <form action="index.php?view=payment" method="post" name="personal" enctype="multipart/form-data" id="bookingForm" >
                 <div class="col-md-8 col-sm-4">
                     <div class="col-md-12">
                         <label>Name:</label>
@@ -349,7 +349,7 @@ $_SESSION['GUESTID'] =   $lastguest;
                     
                     <div class="col-md-12">
     <label style="display: none;">Transaction Id:</label>
-    <span style="display: none;"><?php echo $_SESSION['confirmation']; ?></span>
+    <!-- <span style="display: none;"><?php echo $_SESSION['confirmation']; ?></span> -->
     <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
     <input type="hidden" id="payment_status_input"  name="txtstatus">
 </div>
@@ -362,7 +362,7 @@ $_SESSION['GUESTID'] =   $lastguest;
         </select>
     </div>
 </div>
-<input type="hidden" name="realconfirmation" value="<?php echo $confirmationCode; ?>" />
+
 <div class="col-md-12 col-sm-2">
         <label id="paymentLabel">Payment Method:</label>
         <div>
@@ -455,58 +455,22 @@ for ($i=0; $i < $count_cart  ; $i++) {
         </div>
       </div>
 </div>
-<!-- <script>
-  document.getElementById('confirmBookingButton').addEventListener('click', function() {
-    const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
-    
-    if (selectedMethod) {
-        // Prepare form data with only the payment method
-        const formData = new FormData();
-        formData.append('payment_method', selectedMethod.value);
-    
-        // Send the form data via fetch to the appropriate PHP file based on the selected method
-        let url;
-        if (selectedMethod.value === 'gcash') {
-            url = 'source.php';  // GCash payment handler
-        } else if (selectedMethod.value === 'card') {
-            //  if (selectedMethod.value === 'paymaya') {
-            url = 'source_paymaya.php';  // Card payment handler
-        } else {
-            alert('Invalid payment method selected.');
-            return;
-        }
-        
-        fetch(url, {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.checkoutUrl) {
-                // Redirect to the GCash/PayMaya checkout URL
-                window.location.href = data.checkoutUrl;
-            } else {
-                alert('Error: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    } else {
-        alert('Please select a payment method.');
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Check if the URL has autoclick parameter set to true
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('autoclick') === 'true') {
+        // Trigger the button click for btnsubmitbooking automatically
+        document.querySelector('button[name="btnsubmitbooking"]').click();
     }
 });
+</script>
 
-</script> -->
-<script>
+<!-- <script>
     // Event listener for the "Yes" button in the modal
     document.getElementById('confirmBookingButton').addEventListener('click', function() {
-      
-        
-        // Submit the existing booking form
-        document.getElementById('bookingForm').submit();
     });
-</script>
+</script> -->
     <script>
 document.getElementById('confirmBookingButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
@@ -547,35 +511,3 @@ document.getElementById('confirmBookingButton').addEventListener('click', functi
 });
 </script>
 
-<!-- <script>
-document.getElementById('payNowButton').addEventListener('click', function() {
-    const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
-    
-    if (selectedMethod) {
-        // Prepare form data with only the payment method
-        const formData = new FormData();
-        formData.append('payment_method', selectedMethod.value);
-
-        // Send the form data via fetch to paymongo.php
-        fetch('paymongo.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json()) // Expecting a JSON response
-        .then(data => {
-            if (data.checkout_url) {
-                // Redirect to the GCash checkout URL
-                window.location.href = data.checkout_url;
-            } else {
-                alert('Error: ' + data.message); // Handle the error response
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error); // Handle error
-        });
-    } else {
-        alert('Please select a payment method.'); // Ensure a payment method is selected
-    }
-});
-
-</script> -->
