@@ -14,7 +14,7 @@ $paymentMethod = isset($_POST['payment_method']) ? $_POST['payment_method'] : ''
 
 // Handle different payment methods (GCash and PayMaya)
 if ($paymentMethod === 'gcash' || $paymentMethod === 'paymaya') {
-    // Get order details from the form
+    // Get order details from the forms
   
    $customerName = $_SESSION['name'].' '. $_SESSION['last'] ;
     $customerEmail = $_SESSION['username'];

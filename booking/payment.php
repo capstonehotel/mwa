@@ -370,13 +370,21 @@ $_SESSION['GUESTID'] =   $lastguest;
                 Card/Debit Card
             </label>
         </div> -->
-        <div>
+        <!-- <div>
             <input type="radio" id="paymaya" name="payment_method" value="paymaya" required>
             <label for="paymaya">
                 <img src="../paymaya.png" alt="Pay with Maya" style="height: 20px; margin-right: 5px;">
                 Pay with PayMaya
             </label>
-        </div>
+        </div> -->
+        <div>
+        <input type="radio" id="partial" name="payment_amount" value="partial" required>
+        <label for="partial">Pay Half (Partial)</label>
+    </div>
+    <div>
+        <input type="radio" id="full" name="payment_amount" value="full" required>
+        <label for="full">Pay Full</label>
+    </div>
     </div>
     
     
