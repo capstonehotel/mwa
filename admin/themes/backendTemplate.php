@@ -379,7 +379,7 @@ mysqli_close($conn);
                     FROM 
                         tblreservation r
                     JOIN 
-                        tblguest g ON r.GUEST_ID = g.G_ID
+                        tblguest g ON r.GUEST_ID = g.GUEST_ID
                     JOIN 
                         tblroom rm ON r.ROOM_ID = rm.ROOM_ID
                     LIMIT 10"; // Adjust limit as needed
