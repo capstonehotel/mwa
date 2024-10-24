@@ -431,6 +431,7 @@ function time_elapsed_string($datetime, $full = false) {
                         $roomName = htmlspecialchars($notification['ROOM']);
                         $roomDesc = htmlspecialchars($notification['ROOMDESC']);
                         $bookDate = time_elapsed_string($notification['TRANSDATE']);
+                        $exactDate = date_format(date_create($notification['TRANSDATE']), 'M d, Y h:i A'); // Format the exact date and time
                         $paid = htmlspecialchars($notification['RPRICE']);
                         $readClass = $notification['is_read'] ? 'read' : 'unread'; 
                         ?>
