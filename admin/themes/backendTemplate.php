@@ -413,7 +413,7 @@ function time_elapsed_string($datetime, $full = false) {
                         r.TRANSDATE, 
                         rm.ROOM, 
                         rm.ROOMDESC,
-                        r.RPRICE
+                        r.RPRICE,
                         r.is_read
                     FROM 
                         tblreservation r
@@ -434,7 +434,7 @@ function time_elapsed_string($datetime, $full = false) {
                         $paid = htmlspecialchars($notification['RPRICE']);
                         $readClass = $notification['is_read'] ? 'read' : 'unread'; 
                         ?>
-                        <li class="notification-message<?php echo $readClass; ?>" >
+                        <li class="notification-message <?php echo $readClass; ?>" >
                             <a href="/admin/mod_reservation/index.php?viewed=bookings">
                                 <div class="notification" style="display: flex; align-items: center;">
                                     <img alt="" src="<?php echo $avatar; ?>" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width: 50px;" />
