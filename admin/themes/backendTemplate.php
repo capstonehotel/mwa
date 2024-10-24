@@ -420,7 +420,7 @@ mysqli_close($conn);
         </div>
         <!-- Footer with "View all Notifications" outside of scrollable content -->
         <div class="menu-footer" style="padding: 10px; text-align: center; border-top: 1px solid #eee;">
-            <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php?viewed=all">View all Notifications</a>
+            <a href="/mcchmhotelreservation.com/admin/mod_reservation/index.php">View all Notifications</a>
         </div>
     </div>
     <span style="margin-left: 10px;">|</span>
