@@ -412,7 +412,8 @@ function time_elapsed_string($datetime, $full = false) {
                         g.G_LNAME, 
                         r.TRANSDATE, 
                         rm.ROOM, 
-                        rm.ROOMDESC 
+                        rm.ROOMDESC,
+                        r.RPRICE
                     FROM 
                         tblreservation r
                     JOIN 
@@ -429,6 +430,7 @@ function time_elapsed_string($datetime, $full = false) {
                         $roomName = htmlspecialchars($notification['ROOM']);
                         $roomDesc = htmlspecialchars($notification['ROOMDESC']);
                         $bookDate = time_elapsed_string($notification['TRANSDATE']);
+                        $paid = htmlspecialchars($notification['RPRICE']);
                        
                         ?>
                         <li class="notification-message">
@@ -437,9 +439,9 @@ function time_elapsed_string($datetime, $full = false) {
                                     <img alt="" src="<?php echo $avatar; ?>" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width: 50px;" />
                                     <div class="content" style="font-size: 15px;">
                                         <p style="margin: 0 0 2px 0;">
-                                            <strong><?php echo $fullName; ?></strong> has made a booking in <strong><?php echo $roomName; ?></strong> (<?php echo $roomDesc; ?>).
+                                            <strong><?php echo $fullName; ?></strong> has made a booking in <strong><?php echo $roomName; ?></strong> (<?php echo $roomDesc; ?>)and paid <?php echo $paid; ?>.
                                         </p>
-                                        <p class="time" style="margin-bottom: 5px;">
+                                        <p class="time" style="margin-bottom: 5px;" title="<?php echo $exactDate; ?>">
                                              <?php echo $bookDate; ?>
                                         </p>
                                     </div>
