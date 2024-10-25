@@ -110,6 +110,66 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
             <i class="fas fa-book"></i>
         </div>
         <?php } ?>
+        <?php
+$query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
+                $mydb->setQuery($query);
+                $cur = $mydb->loadResultList();  
+                foreach ($cur as $result) { 
+
+
+ ?>
+    <div class="container">
+        <div class="card">
+            <h2><?php  echo  isset($result->Total) ? $result->Total  : 0;?></h2>
+            <p>ROOMS</p>
+            <i class="fas fa-book"></i>
+        </div>
+        <?php } ?>
+        <?php
+$query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
+                $mydb->setQuery($query);
+                $cur = $mydb->loadResultList();  
+                foreach ($cur as $result) { 
+
+
+ ?>
+    <div class="container">
+        <div class="card">
+            <h2><?php  echo  isset($result->Total) ? $result->Total  : 0;?></h2>
+            <p>ROOMS</p>
+            <i class="fas fa-book"></i>
+        </div>
+        <?php } ?>
+        <?php
+$query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
+                $mydb->setQuery($query);
+                $cur = $mydb->loadResultList();  
+                foreach ($cur as $result) { 
+
+
+ ?>
+    <div class="container">
+        <div class="card">
+            <h2><?php  echo  isset($result->Total) ? $result->Total  : 0;?></h2>
+            <p>ROOMS</p>
+            <i class="fas fa-book"></i>
+        </div>
+        <?php } ?>
+        <?php
+$query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
+                $mydb->setQuery($query);
+                $cur = $mydb->loadResultList();  
+                foreach ($cur as $result) { 
+
+
+ ?>
+    <div class="container">
+        <div class="card">
+            <h2><?php  echo  isset($result->Total) ? $result->Total  : 0;?></h2>
+            <p>ROOMS</p>
+            <i class="fas fa-book"></i>
+        </div>
+        <?php } ?>
 <?php 
     $querys = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS != '' ";
                 $mydb->setQuery($querys);
