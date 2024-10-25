@@ -60,56 +60,8 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
     </div>
 </div>
 <?php } ?>
-<?php 
-    $querys = "SELECT count(*) as 'Total' FROM `tblaccomodation` WHERE STATUS != '' ";
-                $mydb->setQuery($querys);
-                $cury = $mydb->loadResultList();  
-                foreach ($cury as $resulta) { 
-   ?>
-<div class="col-xl-3 col-md-6 mb-4">
-    <div class="card border-left-primary shadow h-100 py-2">
-        <div class="card-body">
-            <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                        Accomodations</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php  echo  isset($resulta->Total) ? $resulta->Total  : 0;?></div>
-                </div>
-                <div class="col-auto">
-                    <i class="fas fa-book fa-2x text-black-300"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<?php } ?>
 
 
-<?php 
-    $querysi = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS= 'Cancelled'  ";
-                $mydb->setQuery($querysi);
-                $curya = $mydb->loadResultList();  
-                foreach ($curya as $resultas) { 
-   ?>
-
-
-<div class="col-xl-3 col-md-6 mb-4">
-    <div class="card border-left-primary shadow h-100 py-2">
-        <div class="card-body">
-            <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                        Cancelled</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php  echo  isset($resultas->Total) ? $resultas->Total  : 0;?></div>
-                </div>
-                <div class="col-auto">
-                    <i class="fa fa-times fa-2x text-black-300"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<?php } ?>
 
 
 <?php 
@@ -186,7 +138,7 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
 </div>
 <?php } ?>
 <?php 
-    $querysi = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS = 'Checked' ";
+    $querysi = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS = 'Checkedin' ";
                 $mydb->setQuery($querysi);
                 $curya = $mydb->loadResultList();  
                 foreach ($curya as $resultas) { 
@@ -208,7 +160,56 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
     </div>
 </div>
 <?php } ?>
+<?php 
+    $querysi = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS= 'Cancelled'  ";
+                $mydb->setQuery($querysi);
+                $curya = $mydb->loadResultList();  
+                foreach ($curya as $resultas) { 
+   ?>
 
+
+<div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        Cancelled</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php  echo  isset($resultas->Total) ? $resultas->Total  : 0;?></div>
+                </div>
+                <div class="col-auto">
+                    <i class="fa fa-times fa-2x text-black-300"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php } ?>
+<?php 
+    $querysi = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS= 'Cancelled'  ";
+                $mydb->setQuery($querysi);
+                $curya = $mydb->loadResultList();  
+                foreach ($curya as $resultas) { 
+   ?>
+
+
+<div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        Total Invoice</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php  echo  isset($resultas->Total) ? $resultas->Total  : 0;?></div>
+                </div>
+                <div class="col-auto">
+                    <i class="fa fa-times fa-2x text-black-300"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php } ?>
 
 
 
