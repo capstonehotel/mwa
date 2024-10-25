@@ -32,7 +32,7 @@
 <script type="text/javascript" language="javascript" src="https://mcchmhotelreservation.com/admin/js/bootstrap-modal.js"></script>
 <script type="text/javascript" src="https://mcchmhotelreservation.com/admin/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 <script type="text/javascript" src="https://mcchmhotelreservation.com/admin/js/locales/bootstrap-datetimepicker.uk.js" charset="UTF-8"></script>
-
+<script src="https://unpkg.com/feather-icons"></script>
 </head>
 <?php
 header("Content-Security-Policy: default-src 'self'; script-src 'self' https://trusted-scripts.com;");
