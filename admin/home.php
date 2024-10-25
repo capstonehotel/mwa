@@ -208,7 +208,7 @@ foreach ($curya as $resultas) {
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 30px;">
-                                ₱<?php echo isset($resultas->Total) ? number_format($resultas->Total, 2) : '0.00'; ?>
+                                ₱<?php echo isset($resultas->Total) ? $resultas->Total : 0; ?>
                             </div>
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Total Invoice
