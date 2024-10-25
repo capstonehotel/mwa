@@ -43,7 +43,7 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
             background-color: white;
             border-radius: 0px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin: 10px;
+            margin: 20px;
             padding: 10px;
             flex: 1;
             min-width: 200px;
@@ -106,7 +106,7 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
     <div class="container">
         <div class="card">
             <h2><?php  echo  isset($result->Total) ? $result->Total  : 0;?></h2>
-            <p>Rooms</p>
+            <p>ROOMS</p>
             <i class="fas fa-book"></i>
         </div>
         <?php } ?>
