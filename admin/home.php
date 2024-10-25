@@ -23,8 +23,7 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
                 <div class="col mr-2">
                 <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 30px;"><?php  echo  isset($result->Total) ? $result->Total  : 0;?></div>
                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                        Rooms</div>
-                    
+                        Rooms</div>  
                 </div>
                 <div class="col-auto">
                     <i class="fas fa-bed fa-2x text-black-300"></i>
@@ -36,28 +35,7 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
     </div>
 </div>
    <?php } ?>
-   <div class="row">
-    <div class="col-xl-3 col-sm-6 col-12">
-        <div class="card board1 fill">
-            <div class="card-body">
-                <div class="dash-widget-header d-flex justify-content-between align-items-center">
-                    <div>
-                        <h3 class="card_widget_header">236</h3>
-                        <h6 class="text-muted">Total Booking</h6>
-                    </div>
-                    <div>
-                        <span class="opacity-7 text-muted">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home">
-                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z"></path>
-                                <path d="M9 22V12h6v10"></path>
-                            </svg>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <?php 
     $querys = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS != '' ";
@@ -92,7 +70,7 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
    ?>
 
 
-<div class="col-xl-4 col-md-6 mb-4">
+<div class="col-xl-3 col-md-6 mb-4">
     <div class="card border-left-primary shadow h-100 py-2">
         <div class="card-body">
             <div class="row no-gutters align-items-center">
