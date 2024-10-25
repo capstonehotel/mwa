@@ -132,6 +132,8 @@ foreach ($cur as $result) {
         </div>
     </div>
 </div>
+
+<?php } ?>
 <?php
     $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
                 $mydb->setQuery($query);
@@ -159,6 +161,7 @@ foreach ($cur as $result) {
         </div>
     </div>
 </div>
+
 <?php } ?>
 <?php
 $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
