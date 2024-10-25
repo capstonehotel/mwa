@@ -44,13 +44,15 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
                 foreach ($cury as $resulta) { 
    ?>
 <div class="col-xl-3 col-md-6 mb-4">
-    <div class="card border-left-primary shadow h-100 py-2">
+<div class="card board1 fill">
+    <div class="card  shadow h-100 py-2">
         <div class="card-body">
+        <div class="dash-widget-header">
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
+                <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 30px;"><?php  echo  isset($resulta->Total) ? $resulta->Total  : 0;?></div>
                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                         Reservations</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php  echo  isset($resulta->Total) ? $resulta->Total  : 0;?></div>
                 </div>
                 <div class="col-auto">
                     <i class="fas fa-book fa-2x text-black-300"></i>
@@ -58,6 +60,8 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 <?php } ?>
 
@@ -71,13 +75,15 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
                 foreach ($curya as $resultas) { 
    ?>
 <div class="col-xl-3 col-md-6 mb-4">
-    <div class="card border-left-primary shadow h-100 py-2">
+<div class="card board1 fill">
+    <div class="card  shadow h-100 py-2">
         <div class="card-body">
+        <div class="dash-widget-header">
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                         Booking Today</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php  echo  isset($resultas->Total) ? $resultas->Total  : 0;?></div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 30px;"><?php  echo  isset($resultas->Total) ? $resultas->Total  : 0;?></div>
                 </div>
                 <div class="col-auto">
                     <i class="fa fa-calendar fa-2x text-black-300"></i>
@@ -85,6 +91,8 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 <?php } ?>
 
@@ -96,13 +104,15 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
                 foreach ($curya as $resultas) { 
    ?>
 <div class="col-xl-3 col-md-6 mb-4">
-    <div class="card border-left-primary shadow h-100 py-2">
+<div class="card board1 fill">
+    <div class="card  shadow h-100 py-2">
         <div class="card-body">
+        <div class="dash-widget-header">
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                         Confirm Booking</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php  echo  isset($resultas->Total) ? $resultas->Total  : 0;?></div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 30px;"><?php  echo  isset($resultas->Total) ? $resultas->Total  : 0;?></div>
                 </div>
                 <div class="col-auto">
                     <i class="fas fa-check fa-2x text-black-300"></i>
@@ -110,6 +120,8 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 <?php } ?>
 
@@ -121,13 +133,15 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
                 foreach ($curya as $resultas) { 
    ?>
 <div class="col-xl-3 col-md-6 mb-4">
-    <div class="card border-left-primary shadow h-100 py-2">
+<div class="card board1 fill">
+    <div class="card  shadow h-100 py-2">
         <div class="card-body">
+        <div class="dash-widget-header">
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                         Check-in Guest</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php  echo  isset($resultas->Total) ? $resultas->Total  : 0;?></div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 30px;"><?php  echo  isset($resultas->Total) ? $resultas->Total  : 0;?></div>
                 </div>
                 <div class="col-auto">
                     <i class="fas fa-user fa-2x text-black-300"></i>
@@ -135,6 +149,8 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 <?php } ?>
 <?php 
@@ -144,13 +160,15 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
                 foreach ($curya as $resultas) { 
    ?>
 <div class="col-xl-3 col-md-6 mb-4">
-    <div class="card border-left-primary shadow h-100 py-2">
+<div class="card board1 fill">
+    <div class="card shadow h-100 py-2">
         <div class="card-body">
+        <div class="dash-widget-header">
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                         Check-out Guest</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php  echo  isset($resultas->Total) ? $resultas->Total  : 0;?></div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 30px;"><?php  echo  isset($resultas->Total) ? $resultas->Total  : 0;?></div>
                 </div>
                 <div class="col-auto">
                     <i class="fas fa-user fa-2x text-black-300"></i>
@@ -159,30 +177,7 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
         </div>
     </div>
 </div>
-<?php } ?>
-<?php 
-    $querysi = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS= 'Cancelled'  ";
-                $mydb->setQuery($querysi);
-                $curya = $mydb->loadResultList();  
-                foreach ($curya as $resultas) { 
-   ?>
-
-
-<div class="col-xl-3 col-md-6 mb-4">
-    <div class="card border-left-primary shadow h-100 py-2">
-        <div class="card-body">
-            <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                        Cancelled</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php  echo  isset($resultas->Total) ? $resultas->Total  : 0;?></div>
-                </div>
-                <div class="col-auto">
-                    <i class="fa fa-times fa-2x text-black-300"></i>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
 </div>
 <?php } ?>
 <?php 
@@ -194,19 +189,52 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
 
 
 <div class="col-xl-3 col-md-6 mb-4">
-    <div class="card border-left-primary shadow h-100 py-2">
+<div class="card board1 fill">
+    <div class="card  shadow h-100 py-2">
         <div class="card-body">
+        <div class="dash-widget-header">
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                        Total Invoice</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php  echo  isset($resultas->Total) ? $resultas->Total  : 0;?></div>
+                        Cancelled</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 30px;"><?php  echo  isset($resultas->Total) ? $resultas->Total  : 0;?></div>
                 </div>
                 <div class="col-auto">
                     <i class="fa fa-times fa-2x text-black-300"></i>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+</div>
+</div>
+<?php } ?>
+<?php 
+    $querysi = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS= 'Cancelled'  ";
+                $mydb->setQuery($querysi);
+                $curya = $mydb->loadResultList();  
+                foreach ($curya as $resultas) { 
+   ?>
+
+
+<div class="col-xl-3 col-md-6 mb-4">
+<div class="card board1 fill">
+    <div class="card  shadow h-100 py-2">
+        <div class="card-body">
+        <div class="dash-widget-header">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        Total Invoice</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 30px;"><?php  echo  isset($resultas->Total) ? $resultas->Total  : 0;?></div>
+                </div>
+                <div class="col-auto">
+                    <i class="fa fa-times fa-2x text-black-300"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
     </div>
 </div>
 <?php } ?>
