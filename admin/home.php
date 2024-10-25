@@ -14,27 +14,94 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
 
 
  ?>
- <div class="col-xl-4 col-md-6 mb-4">
-        <div class="card border-left-primary shadow-lg h-100 py-2">
+ <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card board1 fill">
             <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Rooms</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo isset($result->Total) ? $result->Total : 0; ?></div>
+                <div class="dash-widget-header">
+                    <div>
+                        <h3 class="card_widget_header"><?php echo isset($result->Total) ? $result->Total : 0;?></h3>
+                        <h6 class="text-muted">Rooms</h6>
                     </div>
-                    <div class="col-auto">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bed">
-                            <path d="M3 10h18v9H3z"></path>
-                            <path d="M0 10V9h24v1H0z"></path>
-                        </svg>
+                    <div class="ml-auto mt-md-3 mt-lg-0"> 
+                        <span class="opacity-7 text-muted">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="8.5" cy="7" r="4"></circle>
+                            </svg>
+                        </span> 
                     </div>
                 </div>
             </div>
         </div>
     </div>
-<?php } ?>
-
+   <?php } ?>
+   <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            padding: 20px;
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+        }
+        .card i {
+            font-size: 24px;
+            color: #00bfa5;
+        }
+        .card h2 {
+            margin: 10px 0;
+            font-size: 24px;
+            color: #00bfa5;
+        }
+        .card p {
+            margin: 0;
+            font-size: 14px;
+            color: #888;
+        }
+        .chart-container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        .chart {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            padding: 20px;
+            flex: 1;
+            min-width: 300px;
+        }
+        .chart h3 {
+            margin: 0 0 20px 0;
+            font-size: 18px;
+            color: #333;
+        }
+        .chart img {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <i class="fas fa-book"></i>
+            <h2>236</h2>
+            <p>Total Booking</p>
+        </div>
 
 <?php 
     $querys = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS != '' ";
