@@ -110,8 +110,6 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
             <i class="fas fa-book"></i>
         </div>
         <?php } ?>
-                </div>
-                
 <?php 
     $querys = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS != '' ";
                 $mydb->setQuery($querys);
