@@ -263,3 +263,6 @@ $cnt = mysqli_fetch_array($result);
         }
     });
 </script>
+<script>
+    feather.replace();
+</script>
