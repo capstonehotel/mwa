@@ -160,7 +160,7 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
 </div>
 <?php } ?>
 <?php 
-    $querysi = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS = 'Checkedout' ";
+    $querysi = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS = 'checkedout' ";
                 $mydb->setQuery($querysi);
                 $curya = $mydb->loadResultList();  
                 foreach ($curya as $resultas) { 
