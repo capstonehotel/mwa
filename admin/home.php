@@ -86,8 +86,8 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
             <div class="card-body">
                 <div class="dash-widget-header d-flex justify-content-between align-items-center">
                     <div>
-                        <h3 class="card_widget_header" class="h5 mb-0 font-weight-bold text-gray-800"><?php  echo  isset($result->Total) ? $result->Total  : 0;?></h3>
-                        <h6 class="text-muted" class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Booking</h6>
+                        <h3  class="h5 mb-0 font-weight-bold text-gray-800"><?php  echo  isset($result->Total) ? $result->Total  : 0;?></h3>
+                        <h6  class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Booking</h6>
                     </div>
                     <div>
                         <span class="opacity-7 text-muted">
