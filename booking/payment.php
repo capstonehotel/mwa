@@ -247,23 +247,12 @@ $_SESSION['GUESTID'] =   $lastguest;
             //   $room->update($_SESSION['monbela_cart'][$i]['monbelaroomid']); 
       
             // }
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                if (isset($_POST['payment_amount'])) {
-                    $payment_option = $_POST['payment_amount']; // Capture the selected option
-            
-                    // Set payment status based on the selected option
-                    if ($payment_option === 'full') {
-                        $payment_status = 'Fully Paid';
-                    } else if ($payment_option === 'partial') {
-                        $payment_status = 'Partially Paid';
-                    }
-            
-                    // Proceed with storing this value in the database or further logic
-                } else {
-                    echo "Payment option not selected.";
-                }
-            }
-         
+           
+         // Assuming you have captured the value from the payment option selection
+$paymentOption = $_POST['payment_amount'];
+
+// Calculate payment status based on the selected option
+$paymentStatus = ($paymentOption == 'Fully Paid') ? 'Fully Paid' : 'Partially Paid';
 
 
             $reservation = new Reservation();
@@ -275,7 +264,7 @@ $_SESSION['GUESTID'] =   $lastguest;
             $reservation->RPRICE            = $_SESSION['monbela_cart'][$i]['monbelaroomprice'];  
             $reservation->GUESTID           = $_SESSION['GUESTID']; 
             $reservation->PRORPOSE          = 'Travel';
-            $reservation->PAYMENT_STATUS    = $payment_status;
+            $reservation->PAYMENT_STATUS    = $paymentStatus;
             $reservation->STATUS            = 'Pending';
             $reservation->create(); 
 
@@ -378,8 +367,8 @@ $_SESSION['GUESTID'] =   $lastguest;
     <label for="paymentAmount" id="paymentLabel" style="margin-right: 10px;">Select Payment Option:</label>
     <div>
         <select id="paymentAmount" name="payment_amount" required>
-            <option value="full">Full Payment</option>
-            <option value="partial">Partial Payment</option>
+            <option value="Fully Paid">Full Payment</option>
+            <option value="Partially Paid">Partial Payment</option>
         </select>
     </div>
 </div>
