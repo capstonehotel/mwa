@@ -41,7 +41,6 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
     .row {
         display: flex;
         justify-content: center; /* Center the items in the row */
-        flex-wrap: wrap; /* Allow items to wrap */
     }
     .card {
         background-color: white;
@@ -49,10 +48,11 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         margin: 10px;
         padding: 10px;
-        flex: 1 1 100%; /* Allow the card to grow and shrink */
-        max-width: 300px; /* Optional: Set a max width for larger screens */
+        flex: 1;
+        min-width: 200px;
         position: relative;
-        width: 100%; /* Ensure card occupies full width on mobile */
+        width: 100%; /* Ensures card occupies full width on mobile */
+        max-width: 300px; /* Optional: Set a max width for larger screens */
     }
     .card i {
         font-size: 24px;
