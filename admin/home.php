@@ -34,7 +34,7 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
 
    <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             background-color: #f5f7fa;
             margin: 0;
             padding: 0;
@@ -52,7 +52,6 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
             padding: 20px;
             flex: 1;
             min-width: 200px;
-            text-align: center;
             position: relative;
         }
         .card i {
@@ -67,11 +66,15 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
             margin: 10px 0;
             font-size: 24px;
             color: #00bfa5;
+            text-align: left;
+            font-weight: 500;
         }
         .card p {
             margin: 0;
             font-size: 14px;
             color: #888;
+            text-align: left;
+            font-weight: 400;
         }
         .chart-container {
             display: flex;
@@ -91,19 +94,27 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
             margin: 0 0 20px 0;
             font-size: 18px;
             color: #333;
+            font-weight: 500;
         }
         .chart img {
             width: 100%;
         }
     </style>
-</head>
-<body>
+<?php
+$query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
+                $mydb->setQuery($query);
+                $cur = $mydb->loadResultList();  
+                foreach ($cur as $result) { 
+
+
+ ?>
     <div class="container">
         <div class="card">
-            <h2>236</h2>
-            <p>Total Booking</p>
+            <h2><?php  echo  isset($result->Total) ? $result->Total  : 0;?></h2>
+            <p>Rooms</p>
             <i class="fas fa-book"></i>
         </div>
+        <?php } ?>
 <?php 
     $querys = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS != '' ";
                 $mydb->setQuery($querys);
