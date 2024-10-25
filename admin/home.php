@@ -51,7 +51,7 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
         }
         .card i {
             font-size: 24px;
-            color: #9B601F;
+            color: #00bfa5;
             position: absolute;
             top: 50%;
             right: 20px;
