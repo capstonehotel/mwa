@@ -14,7 +14,7 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
 
 
  ?>
-<div class="col-xl-4 col-md-6 mb-4" >
+<div class="col-xl-3 col-md-6 mb-4" >
 <div class="card board1 fill">
     <div class="card shadow h-100 py-2">  
         <div class="card-body">
