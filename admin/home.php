@@ -33,12 +33,7 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
    <?php } ?>
 
    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f5f7fa;
-            margin: 0;
-            padding: 0;
-        }
+        
         .container {
             display: flex;
             flex-wrap: wrap;
