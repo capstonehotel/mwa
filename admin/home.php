@@ -26,7 +26,7 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
                         Rooms</div>  
                 </div>
                 <div class="col-auto">
-                    <i class="far fa-bed fa-2x text-black-300"></i>
+                    <i class="fa fa-bed fa-2x text-black-300"></i>
                 </div>
             </div>
         </div>
@@ -55,7 +55,7 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
                         Reservations</div>
                 </div>
                 <div class="col-auto">
-                    <i class="far fa-book fa-2x text-black-300"></i>
+                    <i class="fa fa-book fa-2x text-black-300"></i>
                 </div>
             </div>
         </div>
@@ -115,7 +115,7 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
                         Confirm Booking</div>                   
                 </div>
                 <div class="col-auto">
-                    <i class="far fa-check fa-2x text-black-300"></i>
+                    <i class="fa fa-check fa-2x text-black-300"></i>
                 </div>
             </div>
         </div>
@@ -201,7 +201,7 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
                    
                 </div>
                 <div class="col-auto">
-                    <i class="far fa-times fa-2x text-black-300"></i>
+                    <i class="fa fa-times fa-2x text-black-300"></i>
                 </div>
             </div>
         </div>
@@ -231,7 +231,7 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
                     
                 </div>
                 <div class="col-auto">
-                    <i class="far fa-money-bill-wave fa-2x text-black-300"></i>
+                    <i class="fa fa-money-bill-wave fa-2x text-black-300"></i>
                 </div>
             </div>
         </div>
