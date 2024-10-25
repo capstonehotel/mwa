@@ -39,9 +39,8 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
         padding: 20px;
     }
     .row {
-        display: flex; /* Use flexbox for the row */
-        justify-content: center; /* Center align the cards in the row */
-        width: 100%; /* Ensures row takes full width */
+        display: flex;
+        justify-content: center; /* Center the items in the row */
     }
     .card {
         background-color: white;
@@ -51,8 +50,9 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
         padding: 10px;
         flex: 1;
         min-width: 200px;
-        height: 100%; /* Allows the card to take full height of the parent */
         position: relative;
+        width: 100%; /* Ensures card occupies full width on mobile */
+        max-width: 300px; /* Optional: Set a max width for larger screens */
     }
     .card i {
         font-size: 24px;
@@ -85,7 +85,7 @@ $cur = $mydb->loadResultList();
 foreach ($cur as $result) { 
 ?>
     <div class="row">
-        <div class="col-12 col-sm-6 col-md-4 col-xl-3"> <!-- Adjusted column classes for responsiveness -->
+        <div class="col-12 col-sm-6 col-md-4 col-xl-3">
             <div class="card board1 fill">
                 <div class="card-body">
                     <div class="dash-widget-header d-flex justify-content-between align-items-center">
