@@ -179,13 +179,14 @@ $_SESSION['confirmation'] = $confirmation;
 
 // if(isset($_POST['btnsubmitbooking'])){
 
-    if (isset($_POST['btnsubmitbooking']) || isset($_SESSION['payment_successful'])) {
-        if (isset($_SESSION['payment_successful'])) {
-            echo "<script>
+if (isset($_POST['btnsubmitbooking']) || isset($_SESSION['payment_successful'])) { 
+    if (isset($_SESSION['payment_successful'])) {
+        // If payment was successful, submit the form
+        echo "<script>
             document.getElementById('bookingForm').submit();
-            </script>";
-            unset($_SESSION['payment_successful']); // Clear session variable after use
-        }
+        </script>";
+        unset($_SESSION['payment_successful']); // Clear the session variable
+    }
 
 
 //    $count_cart = count($_SESSION['monbela_cart']);
@@ -349,8 +350,8 @@ $_SESSION['GUESTID'] =   $lastguest;
                     </div>
                     
                     <div class="col-md-12">
-    <!-- <label >Transaction Id:</label>
-    <span ><?php echo $_SESSION['confirmation']; ?></span> -->
+    <label style="display: none;" >Transaction Id:</label>
+    <span style="display: none;"><?php echo $_SESSION['confirmation']; ?></span>
     <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
     <input type="hidden" id="payment_status_input"  name="txtstatus">
 </div>
@@ -373,6 +374,7 @@ $_SESSION['GUESTID'] =   $lastguest;
                 Pay with GCash
             </label>
         </div>
+        <input type="hidden" name="realconfirmation" value="<?php echo $confirmationCode; ?>" />
         </div>
                 <div class="table-responsive">
                     <table class="table table-striped">
