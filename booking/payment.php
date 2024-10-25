@@ -177,15 +177,15 @@ $_SESSION['confirmation'] = $confirmation;
 
  $count_cart = count($_SESSION['monbela_cart']);
 
-if(isset($_POST['btnsubmitbooking'])){
+// if(isset($_POST['btnsubmitbooking'])){
 
-    // if (isset($_POST['btnsubmitbooking']) || isset($_SESSION['payment_successful'])) {
-    //     if (isset($_SESSION['payment_successful'])) {
-    //         echo "<script>
-    //         document.getElementById('bookingForm').submit();
-    //         </script>";
-    //         unset($_SESSION['payment_successful']); // Clear session variable after use
-    //     }
+    if (isset($_POST['btnsubmitbooking']) || isset($_SESSION['payment_successful'])) {
+        if (isset($_SESSION['payment_successful'])) {
+            echo "<script>
+            document.getElementById('bookingForm').submit();
+            </script>";
+            unset($_SESSION['payment_successful']); // Clear session variable after use
+        }
 
 
 //    $count_cart = count($_SESSION['monbela_cart']);
@@ -295,6 +295,7 @@ $_SESSION['GUESTID'] =   $lastguest;
 
             
             ?> 
+           
 <script type="text/javascript">
     Swal.fire({
         title: 'Success!',
@@ -326,7 +327,7 @@ $_SESSION['GUESTID'] =   $lastguest;
     </nav>
     <div class="container">
         <div class="row">
-            <form action="index.php?view=payment" method="post" name="personal" enctype="multipart/form-data" id="bookingForm" >
+            <form action="index.php?view=payment" method="post" name="personal" enctype="multipart/form-data" id="bookingForm">
                 <div class="col-md-8 col-sm-4">
                     <div class="col-md-12">
                         <label>Name:</label>
@@ -348,8 +349,8 @@ $_SESSION['GUESTID'] =   $lastguest;
                     </div>
                     
                     <div class="col-md-12">
-    <label style="display: none;">Transaction Id:</label>
-    <!-- <span style="display: none;"><?php echo $_SESSION['confirmation']; ?></span> -->
+    <label >Transaction Id:</label>
+    <span ><?php echo $_SESSION['confirmation']; ?></span>
     <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
     <input type="hidden" id="payment_status_input"  name="txtstatus">
 </div>
@@ -455,16 +456,6 @@ for ($i=0; $i < $count_cart  ; $i++) {
         </div>
       </div>
 </div>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Check if the URL has autoclick parameter set to true
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('autoclick') === 'true') {
-        // Trigger the button click for btnsubmitbooking automatically
-        document.querySelector('button[name="btnsubmitbooking"]').click();
-    }
-});
-</script>
 
 <!-- <script>
     // Event listener for the "Yes" button in the modal
