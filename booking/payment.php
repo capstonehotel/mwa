@@ -179,17 +179,7 @@ $_SESSION['confirmation'] = $confirmation;
 
 // if(isset($_POST['btnsubmitbooking'])){
     if (isset($_POST['btnsubmitbooking']) || isset($_SESSION['payment_successful'])) { 
-        $confirmationCode = isset($_POST['realconfirmation']) ? $_POST['realconfirmation'] : null;
-
-        // Use the confirmation code safely
-        if ($confirmationCode) {
-            $reservation->CONFIRMATIONCODE = $confirmationCode;
-        } else {
-            // Handle the case where confirmation code is not set
-            // You might want to redirect or show an error message
-            echo "Confirmation code is missing!";
-            exit;
-        }
+      
         if (isset($_SESSION['payment_successful'])) {
   // $message = $_POST['message'];
   // If payment was successful, submit the form
