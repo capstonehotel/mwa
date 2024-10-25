@@ -83,12 +83,12 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
         }
         .chart {
             background-color: white;
-            border-radius: 8px;
+            border-radius: 0px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             margin: 10px;
             padding: 20px;
             flex: 1;
-            min-width: 300px;
+            min-width: 200px;
         }
         .chart h3 {
             margin: 0 0 20px 0;
