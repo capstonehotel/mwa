@@ -247,14 +247,23 @@ $_SESSION['GUESTID'] =   $lastguest;
             //   $room->update($_SESSION['monbela_cart'][$i]['monbelaroomid']); 
       
             // }
-            $paymentAmount = $_POST['payment_amount']; // 'full' or 'partial'
-            // Set PAYMENT_STATUS based on the payment_amount
-if ($paymentAmount === 'full') {
-    $reservation->PAYMENT_STATUS = 'Fully Paid';
-} elseif ($paymentAmount === 'partial') {
-    $reservation->PAYMENT_STATUS = 'Partially Paid';
-}
-
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                if (isset($_POST['payment_amount'])) {
+                    $payment_option = $_POST['payment_amount']; // Capture the selected option
+            
+                    // Set payment status based on the selected option
+                    if ($payment_option === 'full') {
+                        $payment_status = 'Fully Paid';
+                    } else if ($payment_option === 'partial') {
+                        $payment_status = 'Partially Paid';
+                    }
+            
+                    // Proceed with storing this value in the database or further logic
+                } else {
+                    echo "Payment option not selected.";
+                }
+            }
+         
 
 
             $reservation = new Reservation();
