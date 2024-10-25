@@ -92,12 +92,34 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
                     <div>
                         <span class="opacity-7 text-muted">
                         <i class="fas fa-bed"></i>
-                            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bed">
-                                <path d="M3 12h18v6H3z"></path>
-                                <path d="M3 12V6h18v6"></path>
-                                <path d="M6 6v6"></path>
-                                <path d="M18 6v6"></path>
-                            </svg> -->
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php } ?>
+<?php
+    $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
+                $mydb->setQuery($query);
+                $cur = $mydb->loadResultList();  
+                foreach ($cur as $result) { 
+
+
+ ?>
+    <div class="row">
+    <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card board1 fill">
+            <div class="card-body">
+                <div class="dash-widget-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <h3  class="h5 mb-0 font-weight-bold text-gray-800"><?php  echo  isset($result->Total) ? $result->Total  : 0;?></h3>
+                        <h6  class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Booking</h6>
+                    </div>
+                    <div>
+                        <span class="opacity-7 text-muted">
+                        <i class="fas fa-bed"></i>
                         </span>
                     </div>
                 </div>
