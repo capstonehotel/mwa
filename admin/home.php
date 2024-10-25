@@ -32,7 +32,51 @@ $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
 </div>
    <?php } ?>
 
-   
+   <style>
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 20px;
+    }
+    .row {
+        display: flex;
+        justify-content: center; /* Center the items in the row */
+    }
+    .card {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin: 10px;
+        padding: 10px;
+        flex: 1;
+        min-width: 200px;
+        position: relative;
+        width: 100%; /* Ensures card occupies full width on mobile */
+        max-width: 300px; /* Optional: Set a max width for larger screens */
+    }
+    .card i {
+        font-size: 24px;
+        color: #00bfa5;
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+    }
+    .card h2 {
+        margin: 10px 10px;
+        font-size: 24px;
+        color: #00bfa5;
+        text-align: left;
+        font-weight: 500;
+    }
+    .card p {
+        margin: 0;
+        font-size: 14px;
+        color: #888;
+        text-align: left;
+        font-weight: 400;
+    }
+</style>
 
 <?php
 $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
