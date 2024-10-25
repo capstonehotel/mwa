@@ -247,7 +247,15 @@ $_SESSION['GUESTID'] =   $lastguest;
             //   $room->update($_SESSION['monbela_cart'][$i]['monbelaroomid']); 
       
             // }
-            
+            $paymentAmount = $_POST['payment_amount']; // 'full' or 'partial'
+            // Set PAYMENT_STATUS based on the payment_amount
+if ($paymentAmount === 'full') {
+    $reservation->PAYMENT_STATUS = 'Fully Paid';
+} elseif ($paymentAmount === 'partial') {
+    $reservation->PAYMENT_STATUS = 'Partially Paid';
+}
+
+
 
             $reservation = new Reservation();
             $reservation->CONFIRMATIONCODE  = $_SESSION['confirmation'];
@@ -258,6 +266,7 @@ $_SESSION['GUESTID'] =   $lastguest;
             $reservation->RPRICE            = $_SESSION['monbela_cart'][$i]['monbelaroomprice'];  
             $reservation->GUESTID           = $_SESSION['GUESTID']; 
             $reservation->PRORPOSE          = 'Travel';
+            $reservation->PAYMENT_STATUS    = $payment_status;
             $reservation->STATUS            = 'Pending';
             $reservation->create(); 
 
@@ -357,6 +366,15 @@ $_SESSION['GUESTID'] =   $lastguest;
     <input type="hidden" id="payment_status_input"  name="txtstatus">
 </div>
 <div class="col-md-12 col-sm-2">
+    <label for="paymentAmount" id="paymentLabel">Select Payment Option:</label>
+    <div>
+        <select id="paymentAmount" name="payment_amount" required>
+            <option value="full">Full Payment</option>
+            <option value="partial">Partial Payment</option>
+        </select>
+    </div>
+</div>
+<div class="col-md-12 col-sm-2">
         <label id="paymentLabel">Payment Method:</label>
         <div>
             <input type="radio" id="gcash" name="payment_method" value="gcash" required>
@@ -365,52 +383,7 @@ $_SESSION['GUESTID'] =   $lastguest;
                 Pay with GCash
             </label>
         </div>
-        <!-- <div>
-            <input type="radio" id="card" name="payment_method" value="card" required>
-            <label for="card">
-                <img src="../visa.png"  style="height: 20px; margin-right: 5px;">
-                Card/Debit Card
-            </label>
-        </div> -->
-        <div>
-            <input type="radio" id="paymaya" name="payment_method" value="paymaya" required>
-            <label for="paymaya">
-                <img src="../paymaya.png" alt="Pay with Maya" style="height: 20px; margin-right: 5px;">
-                Pay with PayMaya
-            </label>
-        </div>
     </div>
-    
-    
-                    <!-- <div class="col-md-12 col-sm-2">
-    <label id="paymentLabel">Payment Method:</label>
-
-    <form method="POST" action="paymongo.php" id="paymentForm">
-    <input type="hidden" name="payment_method" id="payment_method" value="">
-    
-    <button type="submit" class="btn btn-primary" onclick="selectPaymentMethod('Gcash')">
-        <img src="../gcash.png" alt="Pay with GCash" style="height: 20px; margin-right: 5px;">
-        Pay with GCash
-    </button>
-    
-    <button type="submit" class="btn btn-primary" onclick="selectPaymentMethod('Paymaya')">
-        <img src="../paymaya.png" alt="Pay with PayMaya" style="height: 20px; margin-right: 5px;">
-        Pay with PayMaya
-    </button>
-</form>
-
-<script>
-        function selectPaymentMethod(method) {
-            document.getElementById('payment_method').value = method;
-
-            // Automatically submit the form to trigger the payment process
-            document.getElementById('paymentForm').submit();
-        }
-    </script>
-    
-    </div>
-                   -->
-    
 
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -494,49 +467,7 @@ for ($i=0; $i < $count_cart  ; $i++) {
         </div>
       </div>
 </div>
-<!-- <script>
-  document.getElementById('confirmBookingButton').addEventListener('click', function() {
-    const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
-    
-    if (selectedMethod) {
-        // Prepare form data with only the payment method
-        const formData = new FormData();
-        formData.append('payment_method', selectedMethod.value);
-    
-        // Send the form data via fetch to the appropriate PHP file based on the selected method
-        let url;
-        if (selectedMethod.value === 'gcash') {
-            url = 'source.php';  // GCash payment handler
-        } else if (selectedMethod.value === 'card') {
-            //  if (selectedMethod.value === 'paymaya') {
-            url = 'source_paymaya.php';  // Card payment handler
-        } else {
-            alert('Invalid payment method selected.');
-            return;
-        }
-        
-        fetch(url, {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.checkoutUrl) {
-                // Redirect to the GCash/PayMaya checkout URL
-                window.location.href = data.checkoutUrl;
-            } else {
-                alert('Error: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    } else {
-        alert('Please select a payment method.');
-    }
-});
 
-</script> -->
 <script>
     // Event listener for the "Yes" button in the modal
     document.getElementById('confirmBookingButton').addEventListener('click', function() {
@@ -549,26 +480,32 @@ for ($i=0; $i < $count_cart  ; $i++) {
     <script>
 document.getElementById('confirmBookingButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
+    const selectedPayment = document.getElementById('paymentAmount').value;
     
     if (selectedMethod) {
-        // Prepare form data with only the payment method
+        // Adjust payment amount based on selected option
+        let paymentAmount = <?php echo $_SESSION['pay']; ?>; // Full amount
+        if (selectedPayment === 'partial') {
+            paymentAmount /= 2; // Half for partial payment
+        }
+
+        // Prepare form data with payment method and adjusted amount
         const formData = new FormData();
         formData.append('payment_method', selectedMethod.value);
-      
-        // Send the form data via fetch to paymongo.php
+        formData.append('payment_amount', paymentAmount);
+
+        // Send the form data via fetch to source.php
         fetch('source.php', {
             method: 'POST',
             body: formData
         })
         .then(response => response.json()) // Expecting a JSON response
         .then(data => {
-           
             if (data.checkoutUrl) {
-             
-                // Redirect to the GCash/PayMaya checkout URL
+                // Redirect to the GCash checkout URL
                 window.location.href = data.checkoutUrl;
             } else {
-                alert('Error: ' + data.message); // Handle the error response
+                alert('Error: ' + data.message); // Handle error response
             }
         })
         .catch(error => {
@@ -580,35 +517,3 @@ document.getElementById('confirmBookingButton').addEventListener('click', functi
 });
 </script>
 
-<!-- <script>
-document.getElementById('payNowButton').addEventListener('click', function() {
-    const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
-    
-    if (selectedMethod) {
-        // Prepare form data with only the payment method
-        const formData = new FormData();
-        formData.append('payment_method', selectedMethod.value);
-
-        // Send the form data via fetch to paymongo.php
-        fetch('paymongo.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json()) // Expecting a JSON response
-        .then(data => {
-            if (data.checkout_url) {
-                // Redirect to the GCash checkout URL
-                window.location.href = data.checkout_url;
-            } else {
-                alert('Error: ' + data.message); // Handle the error response
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error); // Handle error
-        });
-    } else {
-        alert('Please select a payment method.'); // Ensure a payment method is selected
-    }
-});
-
-</script> -->
