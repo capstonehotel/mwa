@@ -250,7 +250,7 @@ $_SESSION['GUESTID'] =   $lastguest;
             
 
             $reservation = new Reservation();
-            $reservation->CONFIRMATIONCODE  = $_POST['realconfirmation'];
+            $reservation->CONFIRMATIONCODE  = $_SESSION['confirmation'];
             $reservation->TRANSDATE         = date('Y-m-d h:i:s'); 
             $reservation->ROOMID            = $_SESSION['monbela_cart'][$i]['monbelaroomid'];
             $reservation->ARRIVAL           = date_format(date_create( $_SESSION['monbela_cart'][$i]['monbelacheckin']), 'Y-m-d');  
@@ -269,7 +269,7 @@ $_SESSION['GUESTID'] =   $lastguest;
            
 
       $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`  )
-       VALUES ('" .date('Y-m-d h:i:s')."','" . $_POST['realconfirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending' )" ;
+       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending' )" ;
         // mysql_query($sql);
 
 
@@ -352,7 +352,7 @@ $_SESSION['GUESTID'] =   $lastguest;
                     
                     <div class="col-md-12">
     <label >Transaction Id:</label>
-    <!-- <span name="realconfirmation"><?php echo $_SESSION['confirmation']; ?></span> -->
+    <span name="realconfirmation"><?php echo $_SESSION['confirmation']; ?></span>
     <input type="text" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
     <input type="hidden" id="payment_status_input"  name="txtstatus">
 </div>
