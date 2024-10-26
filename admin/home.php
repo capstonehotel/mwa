@@ -17,7 +17,7 @@ $mydb->setQuery($query);
 $cur = $mydb->loadResultList();
 foreach ($cur as $result) {
 ?>
-<div class="col-xl-3 col-sm-6 col-12 mb-2">
+<div class="col-xl-3 col-sm-6 col-12">
     <div class="card board1 fill">
         <div class="card shadow h-100 py-2">
             <div class="card-body">
@@ -43,7 +43,7 @@ $mydb->setQuery($query1);
 $cur1 = $mydb->loadResultList();
 foreach ($cur1 as $result1) {
 ?>
-<div class="col-xl-3 col-sm-6 col-12 mb-2">
+<div class="col-xl-3 col-sm-6 col-12 ">
     <div class="card board1 fill">
         <div class="card shadow h-100 py-2">
             <div class="card-body">
