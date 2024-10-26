@@ -307,6 +307,42 @@ for ($year = $startYear; $year <= $endYear; $year++) {
     $row = mysqli_fetch_assoc($result);
     $lineData[] = ['y' => $year, 'a' => $roomCount, 'b' => $reservationCount];
 }
+
+// Get room count data by month for 2024
+$lineData = array();
+$months = array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
+
+// Query to get room count by month
+$roomQuery = "SELECT 
+    TRANSDATE (CREATED, '%b') as month,
+    COUNT(*) as room_count
+    FROM tblroom 
+    WHERE YEAR(CREATED) = 2024 
+    AND ROOM != 'Rooms'
+    GROUP BY MONTH(CREATED)
+    ORDER BY MONTH(CREATED)";
+
+$roomResult = mysqli_query($connection, $roomQuery);
+$monthlyData = array();
+
+// Initialize all months with 0
+foreach ($months as $month) {
+    $monthlyData[$month] = 0;
+}
+
+// Fill in actual data
+while ($row = mysqli_fetch_assoc($roomResult)) {
+    $monthlyData[$row['month']] = (int)$row['room_count'];
+}
+
+// Create the data array for Morris.js
+foreach ($months as $month) {
+    $lineData[] = array(
+        'y' => $month . ' 2024',
+        'a' => $monthlyData[$month]
+    );
+}
+
 ?>
 
 
@@ -314,7 +350,7 @@ for ($year = $startYear; $year <= $endYear; $year++) {
 <div class="card shadow mb-4">
     <div class="card card-chart">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="card-titlem-0 font-weight-bold text-primary">RESERVATIONS</h6>
+            <h6 class="card-titlem-0 font-weight-bold text-primary">LINE CHART</h6>
         </div>
         <div class="card-body">
             <div id="line-chart" style="height: 300px;"></div>
@@ -326,7 +362,7 @@ for ($year = $startYear; $year <= $endYear; $year++) {
 <div class="card shadow mb-4">
     <div class="card card-chart">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="card-title m-0 font-weight-bold text-primary">RESERVATIONS</h6>
+            <h6 class="card-title m-0 font-weight-bold text-primary">DONUT CHART</h6>
         </div>
         <div class="card-body">
             <div id="donut-chart" style="height: 300px;"></div>
@@ -362,19 +398,40 @@ function donutChart() {
     });
 }
 
+// function lineChart() {
+//     window.lineChart = Morris.Line({
+//         element: 'line-chart',
+//         data: <?php echo json_encode($lineData); ?>, // Pass the PHP data to JavaScript
+//         xkey: 'y',
+//         ykeys: ['a', 'b'],
+//         labels: ['Rooms', 'Reservations'],
+//         lineColors: ['#009688', '#FF6384'],
+//         lineWidth: '3px',
+//         resize: true,
+//         redraw: true
+//     });
+// }
+
 function lineChart() {
     window.lineChart = Morris.Line({
         element: 'line-chart',
-        data: <?php echo json_encode($lineData); ?>, // Pass the PHP data to JavaScript
+        data: <?php echo json_encode($lineData); ?>,
         xkey: 'y',
-        ykeys: ['a', 'b'],
-        labels: ['Rooms', 'Reservations'],
-        lineColors: ['#009688', '#FF6384'],
+        ykeys: ['a'],
+        labels: ['Rooms'],
+        lineColors: ['#009688'],
         lineWidth: '3px',
         resize: true,
-        redraw: true
+        redraw: true,
+        pointSize: 4,
+        gridTextSize: 10,
+        gridTextFamily: 'Arial',
+        hideHover: 'auto',
+        smooth: false
     });
 }
+
+
 </script>
 <!-- <script>
 $(document).ready(function() {
