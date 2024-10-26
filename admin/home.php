@@ -295,13 +295,20 @@ $sql7 = "SELECT count(*) FROM `tblreservation` WHERE STATUS = 'Cancelled' ";
 $result7 = mysqli_query($connection, $sql7);
 $cnt7 = mysqli_fetch_array($result7);
 $lineData = [];
-for ($year = 2006; $year <= 2012; $year++) {
+$startYear = 2024;
+$endYear = 2030; // Set this to however many future years you want
+
+// Get the count of rooms (assuming this is static for each year)
+$roomCount = (int)$cnt[0];
+$reservationCount = (int)$cnt2[0];
+for ($year = $startYear; $year <= $endYear; $year++) {
     $sql = "SELECT COUNT(*) AS count FROM `tblreservation` WHERE YEAR(TRANSDATE) = $year";
     $result = mysqli_query($connection, $sql);
     $row = mysqli_fetch_assoc($result);
-    $lineData[] = ['y' => $year, 'a' => (int)$row['count'], 'b' => 0]; // Set 'b' to 0 or another dataset if needed
+    $lineData[] = ['y' => $year, 'a' => $roomCount, 'b' => $reservationCount];
 }
 ?>
+
 
 <div class="col-md-12 col-lg-6">
 <div class="card shadow mb-4">
@@ -358,11 +365,11 @@ function donutChart() {
 function lineChart() {
     window.lineChart = Morris.Line({
         element: 'line-chart',
-        data: <?php echo json_encode($lineData); ?>, // Using PHP to pass data to JavaScript
+        data: <?php echo json_encode($lineData); ?>, // Pass the PHP data to JavaScript
         xkey: 'y',
         ykeys: ['a', 'b'],
-        labels: ['Series A', 'Series B'],
-        lineColors: ['#009688', '#cdc6c6'],
+        labels: ['Rooms', 'Reservations'],
+        lineColors: ['#009688', '#FF6384'],
         lineWidth: '3px',
         resize: true,
         redraw: true
