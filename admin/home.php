@@ -14,7 +14,7 @@ if (!isset($_SESSION['ADMIN_ID'])) {
     redirect('login.php');
     return true;
 }
-echo '<div class="row"  style="padding: 20px;">';
+echo '<div class="row"  style="padding: 10px;">';
 
 $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
 $mydb->setQuery($query);
@@ -347,4 +347,66 @@ $cnt7 = mysqli_fetch_array($result7);
             }
         }
     });
+</script>
+<div class="col-md-12 col-lg-6">
+    <div class="card card-chart">
+        <div class="card-header">
+            <h4 class="card-title">ROOMS BOOKED</h4>
+        </div>
+        <div class="card-body">
+            <div id="donut-chart" style="height: 300px;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Include jQuery and Morris.js -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+
+<?php
+// Database queries to get the count of different room statuses
+$select = "SELECT count(*) FROM tblroom where ROOM != 'Rooms' ";
+$result = mysqli_query($connection, $select);
+$cnt = mysqli_fetch_array($result);
+
+$select4 = "SELECT count(*) FROM `tblreservation` WHERE STATUS = 'Confirmed' ";
+$result4 = mysqli_query($connection, $select4);
+$cnt4 = mysqli_fetch_array($result4);
+
+$sql7 = "SELECT count(*) FROM `tblreservation` WHERE STATUS = 'Cancelled' ";
+$result7 = mysqli_query($connection, $sql7);
+$cnt7 = mysqli_fetch_array($result7);
+
+$sql5 = "SELECT count(*) FROM `tblreservation` WHERE STATUS = 'Checkedin' ";
+$result5 = mysqli_query($connection, $sql5);
+$cnt5 = mysqli_fetch_array($result5);
+
+$sql6 = "SELECT count(*) FROM `tblreservation` WHERE STATUS = 'Checkedout' ";
+$result6 = mysqli_query($connection, $sql6);
+$cnt6 = mysqli_fetch_array($result6);
+?>
+
+<script>
+$(document).ready(function() {
+    donutChart();
+});
+
+function donutChart() {
+    window.donutChart = Morris.Donut({
+        element: 'donut-chart',
+        data: [
+            { label: "Rooms", value: <?php echo $cnt[0]; ?> },
+            { label: "Confirmed", value: <?php echo $cnt4[0]; ?> },
+            { label: "Cancelled", value: <?php echo $cnt7[0]; ?> },
+            { label: "Checked In", value: <?php echo $cnt5[0]; ?> },
+            { label: "Checked Out", value: <?php echo $cnt6[0]; ?> },
+        ],
+        backgroundColor: '#f2f5fa',
+        labelColor: '#009688',
+        colors: ['#0BA462', '#39B580', '#FF6384', '#FFCE56', '#4BC0C0'],
+        resize: true,
+    });
+}
 </script>
