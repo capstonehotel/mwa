@@ -282,7 +282,7 @@ foreach ($cur7 as $result7) {
 
 <?php
 // Database queries to get the count of different room statuses
-$select = "SELECT count(*) FROM tblroom where ROOM != '' ";
+$select = "SELECT count(*) FROM tblroom where ROOM != 'Rooms' ";
 $result = mysqli_query($connection, $select);
 $cnt = mysqli_fetch_array($result);
 
@@ -316,8 +316,8 @@ $cnt7 = mysqli_fetch_array($result7);
 ?>
 
 <script>
-    var xValues = ["Confirmed", "Cancelled", "Checked in", "Checked out"];
-    var yValues = [<?php echo $cnt4[0]; ?>, <?php echo $cnt7[0]; ?>, <?php echo $cnt5[0]; ?>, <?php echo $cnt6[0]; ?>];
+    var xValues = ["Rooms","Confirmed", "Cancelled", "Checked in", "Checked out"];
+    var yValues = [<?php echo $cnt[0]; ?>,<?php echo $cnt4[0]; ?>, <?php echo $cnt7[0]; ?>, <?php echo $cnt5[0]; ?>, <?php echo $cnt6[0]; ?>];
     var barColors = ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"]; // Colors for the donut sections
 
     new Chart("myChart", {
