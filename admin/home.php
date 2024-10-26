@@ -221,7 +221,7 @@ foreach ($curya as $resultas) {
                             </div>
                         </div>
                         <div class="col-auto">
-                        <span class="material-symbols-outlined">receipt</span>
+                        <span class="material-symbols-outlined">account_balance_wallet</span>
                         </div>
                     </div>
                 </div>
