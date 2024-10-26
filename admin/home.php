@@ -32,11 +32,8 @@ foreach ($cur as $result) {
 <?php } ?>
 <style>
 .material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 200,
-  'GRAD' 0,
-  'opsz' 48
+    weight: 200px;
+    font-size: 48px;
 }
 </style>
 <?php
