@@ -4,7 +4,7 @@
     font-size: 25px;
 }
 .card-body {
-    padding: 10px; /* Adjust padding */
+    padding: 20px; /* Adjust padding */
 }
 
 </style>
