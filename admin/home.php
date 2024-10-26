@@ -6,9 +6,7 @@
 .card-body {
     padding: 10px; /* Adjust padding */
 }
-.no-border-radius {
-        border-radius: 0 !important; /* Use !important to override Bootstrap styles */
-    }
+
 </style>
 <?php
 require_once("../includes/initialize.php");
@@ -23,16 +21,16 @@ $cur = $mydb->loadResultList();
 foreach ($cur as $result) {
 ?>
 <div class="col-xl-3 col-md-6 mb-4">
-    <div class="card board1 fill no-border-radius">
+    <div class="card board1 fill ">
         <div class="card shadow h-100 py-2">
             <div class="card-body">
                 <div class="dash-widget-header">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; padding-left: 10px; "><?php echo isset($result->Total) ? $result->Total : 0; ?></div>
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px;  padding-left: 10px; " >Rooms</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; padding-left: 5px; "><?php echo isset($result->Total) ? $result->Total : 0; ?></div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px;  padding-left: 5px; " >Rooms</div>
                         </div>
-                        <div class="col-auto">
+                        <div class="col-auto" style="padding-left: 5px;">
                         <span class="material-symbols-outlined">hotel</span> 
                         </div>
                     </div>
@@ -55,10 +53,10 @@ foreach ($cur1 as $result1) {
                 <div class="dash-widget-header">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($result1->Total) ? $result1->Total : 0; ?></div>
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; ">Accomodations</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; padding-left: 5px; "><?php echo isset($result1->Total) ? $result1->Total : 0; ?></div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; padding-left: 5px; ">Accomodations</div>
                         </div>
-                        <div class="col-auto">
+                        <div class="col-auto" style="padding-left: 5px;">
                         <span class="material-symbols-outlined">meeting_room</span>
                         </div>
                     </div>
@@ -82,10 +80,10 @@ foreach ($cur2 as $result2) {
                 <div class="dash-widget-header">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($result2->Total) ? $result2->Total : 0; ?></div>
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; ">Reservations</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; padding-left: 5px;"><?php echo isset($result2->Total) ? $result2->Total : 0; ?></div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; padding-left: 5px; ">Reservations</div>
                         </div>
-                        <div class="col-auto">
+                        <div class="col-auto" style="padding-left: 5px;">
                         <span class="material-symbols-outlined">book</span>
                         </div>
                     </div>
@@ -109,10 +107,10 @@ foreach ($cur3 as $result3) {
                 <div class="dash-widget-header">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($result3->Total) ? $result3->Total : 0; ?></div>
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; ">Booking Today</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; padding-left: 5px; "><?php echo isset($result3->Total) ? $result3->Total : 0; ?></div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px;  padding-left: 5px;">Booking Today</div>
                         </div>
-                        <div class="col-auto">
+                        <div class="col-auto" style="padding-left: 5px;">
                         <span class="material-symbols-outlined">calendar_today</span> 
                         </div>
                     </div>
@@ -136,10 +134,10 @@ foreach ($cur4 as $result4) {
                 <div class="dash-widget-header">
                     <div class=" row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($result4->Total) ? $result4->Total : 0; ?></div>
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; ">Confirm Booking</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; padding-left: 5px; "><?php echo isset($result4->Total) ? $result4->Total : 0; ?></div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; padding-left: 5px; ">Confirm Booking</div>
                         </div>
-                        <div class="col-auto">
+                        <div class="col-auto" style="padding-left: 5px;">
                         <span class="material-symbols-outlined">check</span> 
                         </div>
                     </div>
@@ -163,10 +161,10 @@ foreach ($cur5 as $result5) {
                 <div class="dash-widget-header">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($result5->Total) ? $result5->Total : 0; ?></div>
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; ">Check-in Guest</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; padding-left: 5px;"><?php echo isset($result5->Total) ? $result5->Total : 0; ?></div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; padding-left: 5px;">Check-in Guest</div>
                         </div>
-                        <div class="col-auto">
+                        <div class="col-auto" style="padding-left: 5px;">
                         <span class="material-symbols-outlined">person</span>
                         </div>
                     </div>
@@ -190,10 +188,10 @@ foreach ($cur6 as $result6) {
                 <div class="dash-widget-header">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($result6->Total) ? $result6->Total : 0; ?></div>
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; ">Check-out Guest</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; padding-left: 5px; "><?php echo isset($result6->Total) ? $result6->Total : 0; ?></div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px;  padding-left: 5px;">Check-out Guest</div>
                         </div>
-                        <div class="col-auto">
+                        <div class="col-auto" style="padding-left: 5px;">
                         <span class="material-symbols-outlined">person</span>
                         </div>
                     </div>
@@ -217,10 +215,10 @@ foreach ($cur7 as $result7) {
                 <div class="dash-widget-header">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($result7->Total) ? $result7->Total : 0; ?></div>
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; ">Cancelled</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; padding-left: 5px; "><?php echo isset($result7->Total) ? $result7->Total : 0; ?></div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; padding-left: 5px; ">Cancelled</div>
                         </div>
-                        <div class="col-auto">
+                        <div class="col-auto" style="padding-left: 5px;">
                         <span class="material-symbols-outlined">close</span>
                         </div>
                     </div>
@@ -243,14 +241,14 @@ foreach ($cur7 as $result7) {
                 <div class="dash-widget-header">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; ">
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; padding-left: 5px; ">
                                 ₱<?php echo isset($result8->Total) ? $result8->Total : 0; ?>
                             </div>
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; ">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; padding-left: 5px;">
                                 Total Invoice
                             </div>
                         </div>
-                        <div class="col-auto">
+                        <div class="col-auto" style="padding-left: 5px;">
                         <span class="material-symbols-outlined">account_balance_wallet</span>
                         </div>
                     </div>
