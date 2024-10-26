@@ -1,7 +1,7 @@
 <style>
 .material-symbols-outlined {
     weight: 200px;
-    font-size: 35px;
+    font-size: 30px;
 }
 </style>
 <?php
@@ -16,7 +16,7 @@ $mydb->setQuery($query);
 $cur = $mydb->loadResultList();
 foreach ($cur as $result) {
 ?>
-<div class="col-xl-3 col-md-6 mb-4">
+<div class="col-lg-4 col-md-6 mb-4">
     <div class="card board1 fill">
         <div class="card shadow h-100 py-2">
             <div class="card-body">
