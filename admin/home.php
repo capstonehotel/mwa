@@ -262,8 +262,7 @@ foreach ($cur7 as $result7) {
 <div class="col-xl-8 col-lg-7">
     <div class="card shadow mb-4">
         <!-- Card Header - Dropdown -->
-        <div
-            class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">Graph </h6>
         </div>
         <!-- Card Body -->
@@ -275,10 +274,10 @@ foreach ($cur7 as $result7) {
     </div>
 </div>
 
-<script type="text/javascript" src="bar.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <?php
-
+// Database queries to get the count of different room statuses
 $select = "SELECT count(*) FROM tblroom where ROOM != '' ";
 $result = mysqli_query($connection, $select);
 $cnt = mysqli_fetch_array($result);
@@ -291,40 +290,34 @@ $select2 = "SELECT count(*) FROM tblreservation where CONFIRMATIONCODE != '' ";
 $result2 = mysqli_query($connection, $select2);
 $cnt2 = mysqli_fetch_array($result2);
 
-$sql3 = "SELECT count(*) FROM  `tblreservation` WHERE TRANSDATE=DATE(NOW()) != 'Booked' ";
+$sql3 = "SELECT count(*) FROM `tblreservation` WHERE TRANSDATE=DATE(NOW()) AND STATUS != 'Booked' ";
 $result3 = mysqli_query($connection, $sql3);
 $cnt3 = mysqli_fetch_array($result3);
 
-$sql4 = "SELECT count(*) FROM  `tblreservation` WHERE STATUS = 'Confirmed' ";
+$sql4 = "SELECT count(*) FROM `tblreservation` WHERE STATUS = 'Confirmed' ";
 $result4 = mysqli_query($connection, $sql4);
 $cnt4 = mysqli_fetch_array($result4);
 
-$sql5 = "SELECT count(*) FROM  `tblreservation` WHERE STATUS = 'Checkedin' ";
+$sql5 = "SELECT count(*) FROM `tblreservation` WHERE STATUS = 'Checkedin' ";
 $result5 = mysqli_query($connection, $sql5);
-$cnt5= mysqli_fetch_array($result5);
+$cnt5 = mysqli_fetch_array($result5);
 
-$sql6 = "SELECT count(*) FROM  `tblreservation` WHERE STATUS = 'Checkedout' ";
+$sql6 = "SELECT count(*) FROM `tblreservation` WHERE STATUS = 'Checkedout' ";
 $result6 = mysqli_query($connection, $sql6);
 $cnt6 = mysqli_fetch_array($result6);
 
-$sql7 = "SELECT count(*) FROM  `tblreservation` WHERE STATUS = 'Cancelled' ";
+$sql7 = "SELECT count(*) FROM `tblreservation` WHERE STATUS = 'Cancelled' ";
 $result7 = mysqli_query($connection, $sql7);
 $cnt7 = mysqli_fetch_array($result7);
-
-$select = "SELECT count(*) FROM tblroom where ROOM != '' ";
-$result = mysqli_query($connection, $select);
-$cnt8 = mysqli_fetch_array($result);
-
-
-
 ?>
 
 <script>
-    var xValues = ["Confirmed", "Cancelled", "Checked in", "Checkedout"];
-    var yValues = [<?php echo $cnt4[0]; ?>, <?php echo $cnta5[0]; ?>, <?php echo $cnt6[0]; ?>, <?php echo $cnt7[0]; ?>];
-    var barColors = ["red", "green", "blue", "orange", "brown"];
+    var xValues = ["Confirmed", "Cancelled", "Checked in", "Checked out"];
+    var yValues = [<?php echo $cnt4[0]; ?>, <?php echo $cnt7[0]; ?>, <?php echo $cnt5[0]; ?>, <?php echo $cnt6[0]; ?>];
+    var barColors = ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"]; // Colors for the donut sections
+
     new Chart("myChart", {
-        type: "doughnut", // Change to "doughnut" for a donut chart
+        type: "doughnut", // Set the type to doughnut for a donut chart
         data: {
             labels: xValues,
             datasets: [{
@@ -339,7 +332,7 @@ $cnt8 = mysqli_fetch_array($result);
             },
             title: {
                 display: true,
-                text: "ROOM STATUS" // Update title as needed
+                text: "ROOM STATUS" // Title of the chart
             },
             animation: {
                 animateScale: true, // Add scale animation
