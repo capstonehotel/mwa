@@ -5,8 +5,7 @@
 }
 .card {
     padding: 10px; /* Adjust as needed */
-    max-height: 150px; /* Set a maximum height */
-    overflow: hidden; /* Hide overflow if content exceeds max height */
+   
 }
 </style>
 <?php
