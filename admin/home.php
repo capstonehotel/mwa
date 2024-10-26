@@ -21,7 +21,7 @@ foreach ($cur as $result) {
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Rooms</div>
                         </div>
                         <div class="col-auto">
-                            <i data-feather="bed" class="icon"></i>
+                            <i data-feather="home" class="icon"></i>
                         </div>
                     </div>
                 </div>
@@ -102,7 +102,7 @@ foreach ($curya as $resultas) {
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Confirm Booking</div>
                         </div>
                         <div class="col-auto">
-                            <i data-feather="check" class="icon"></i>
+                        <span class="material-icons">hotel</span>
                         </div>
                     </div>
                 </div>
@@ -295,6 +295,6 @@ $cnt = mysqli_fetch_array($result);
         }
     });
 </script>
-<script>
+<!-- <script>
     feather.replace();
-</script>
+</script> -->
