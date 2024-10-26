@@ -294,25 +294,21 @@ $cnt6 = mysqli_fetch_array($result6);
 $sql7 = "SELECT count(*) FROM `tblreservation` WHERE STATUS = 'Cancelled' ";
 $result7 = mysqli_query($connection, $sql7);
 $cnt7 = mysqli_fetch_array($result7);
-// Database queries to get room count and reservation count by month for the current year
+// Prepare data only up to the current year
 $lineData = [];
-$currentYear = date("Y");
-$roomCount = 0; // Start from zero for cumulative count of rooms
+$startYear = 2024;
+$currentYear = date("Y"); // dynamically get the current year
 
-for ($month = 1; $month <= 12; $month++) {
-    $date = sprintf('%04d-%02d', $currentYear, $month); // Format as YYYY-MM
-
-    // Query the count of reservations for each month in the current year
-    $sql = "SELECT COUNT(*) AS count FROM `tblreservation` WHERE DATE_FORMAT(TRANSDATE, '%Y-%m') = '$date'";
-    $result = mysqli_query($connection, $sql);
-    $row = mysqli_fetch_assoc($result);
-    $reservationCount = (int)$row['count'];
-
-    // Increment the cumulative room count
-    $roomCount += $reservationCount;
-
-    // Prepare data with month labels only
-    $lineData[] = ['y' => date("M", mktime(0, 0, 0, $month, 1)), 'a' => $roomCount, 'b' => $reservationCount];
+$roomCount = (int)$cnt[0];
+for ($year = $startYear; $year <= $currentYear; $year++) {
+    for ($month = 1; $month <= 12; $month++) {
+        $date = sprintf('%04d-%02d', $year, $month); // Format as YYYY-MM
+        $sql = "SELECT COUNT(*) AS count FROM `tblreservation` WHERE DATE_FORMAT(TRANSDATE, '%Y-%m') = '$date'";
+        $result = mysqli_query($connection, $sql);
+        $row = mysqli_fetch_assoc($result);
+        $reservationCount = (int)$row['count'];
+        $lineData[] = ['y' => $date, 'a' => $roomCount, 'b' => $reservationCount];
+    }
 }
 ?>
 
@@ -376,15 +372,22 @@ function lineChart() {
         xkey: 'y',
         ykeys: ['a', 'b'],
         labels: ['Rooms', 'Reservations'],
-        xLabels: 'month',
+        xLabels: 'month', // Display only months
         xLabelFormat: function (x) {
-            return x.getMonth() === 11 ? '<?php echo $currentYear; ?>' : x.toLocaleString('en-US', { month: 'short' });
+            // Format months as Jan, Feb, etc.
+            return x.toLocaleString('en-US', { month: 'short' });
         },
         lineColors: ['#009688', '#FF6384'],
         lineWidth: '3px',
         resize: true,
         redraw: true
     });
+
+    // Add the current year below the chart
+    let chartElement = document.getElementById('line-chart');
+    let currentYearLabel = document.createElement('div');
+    currentYearLabel.innerHTML = `<span style="font-size: 14px; color: #666; display: block; text-align: center; margin-top: -10px;">${new Date().getFullYear()}</span>`;
+    chartElement.parentNode.insertBefore(currentYearLabel, chartElement.nextSibling);
 }
 </script>
 <!-- <script>
