@@ -320,9 +320,10 @@ function donutChart() {
         data: [
             { label: "Rooms", value: <?php echo $cnt[0]; ?> },
             { label: "Confirmed", value: <?php echo $cnt4[0]; ?> },
+            {label: "Cancelled", value: <?php echo $cnt7[0]; ?> },
             { label: "Checked In", value: <?php echo $cnt5[0]; ?> },
             { label: "Checked Out", value: <?php echo $cnt6[0]; ?> },
-            {label: "Cancelled", value: <?php echo $cnt7[0]; ?> },
+            
         ],
         backgroundColor: '#f2f5fa',
         labelColor: '#009688',
