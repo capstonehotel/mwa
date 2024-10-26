@@ -294,13 +294,13 @@ $cnt6 = mysqli_fetch_array($result6);
 $sql7 = "SELECT count(*) FROM `tblreservation` WHERE STATUS = 'Cancelled' ";
 $result7 = mysqli_query($connection, $sql7);
 $cnt7 = mysqli_fetch_array($result7);
+// Prepare data only up to the current year
 $lineData = [];
 $startYear = 2024;
-$endYear = 2030; // Future years limit
+$currentYear = date("Y"); // dynamically get the current year
 
-// Count of rooms and reservations (assuming static for each month)
 $roomCount = (int)$cnt[0];
-for ($year = $startYear; $year <= $endYear; $year++) {
+for ($year = $startYear; $year <= $currentYear; $year++) {
     for ($month = 1; $month <= 12; $month++) {
         $date = sprintf('%04d-%02d', $year, $month); // Format as YYYY-MM
         $sql = "SELECT COUNT(*) AS count FROM `tblreservation` WHERE DATE_FORMAT(TRANSDATE, '%Y-%m') = '$date'";
@@ -380,9 +380,6 @@ function lineChart() {
         redraw: true
     });
 }
-
-
-
 </script>
 <!-- <script>
 $(document).ready(function() {
