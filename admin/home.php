@@ -6,7 +6,9 @@
 .card-body {
     padding: 10px; /* Adjust padding */
 }
-
+.no-border-radius {
+        border-radius: 0 !important; /* Use !important to override Bootstrap styles */
+    }
 </style>
 <?php
 require_once("../includes/initialize.php");
@@ -21,7 +23,7 @@ $cur = $mydb->loadResultList();
 foreach ($cur as $result) {
 ?>
 <div class="col-xl-3 col-md-6 mb-4">
-    <div class="card board1 fill">
+    <div class="card board1 fill no-border-radius">
         <div class="card shadow h-100 py-2">
             <div class="card-body">
                 <div class="dash-widget-header">
