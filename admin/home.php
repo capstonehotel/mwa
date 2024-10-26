@@ -261,7 +261,7 @@ foreach ($cur7 as $result7) {
 
 
 <br>
-
+<div class="row">
 <div class="col-xl-8 col-lg-7">
     <div class="card shadow mb-4">
         <!-- Card Header - Dropdown -->
@@ -276,7 +276,7 @@ foreach ($cur7 as $result7) {
         </div>
     </div>
 </div>
-
+</div>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <?php
