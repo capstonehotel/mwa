@@ -294,16 +294,13 @@ $cnt6 = mysqli_fetch_array($result6);
 $sql7 = "SELECT count(*) FROM `tblreservation` WHERE STATUS = 'Cancelled' ";
 $result7 = mysqli_query($connection, $sql7);
 $cnt7 = mysqli_fetch_array($result7);
-
-$lineData = [
-    ['y' => '2006', 'a' => 100, 'b' => 90],
-    ['y' => '2007', 'a' => 75, 'b' => 65],
-    ['y' => '2008', 'a' => 50, 'b' => 40],
-    ['y' => '2009', 'a' => 75, 'b' => 65],
-    ['y' => '2010', 'a' => 50, 'b' => 40],
-    ['y' => '2011', 'a' => 75, 'b' => 65],
-    ['y' => '2012', 'a' => 100, 'b' => 90],
-];
+$lineData = [];
+for ($year = 2006; $year <= 2012; $year++) {
+    $sql = "SELECT COUNT(*) AS count FROM `tblreservation` WHERE YEAR(TRANSDATE) = $year";
+    $result = mysqli_query($connection, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $lineData[] = ['y' => $year, 'a' => (int)$row['count'], 'b' => 0]; // Set 'b' to 0 or another dataset if needed
+}
 ?>
 
 <div class="col-md-12 col-lg-6">
