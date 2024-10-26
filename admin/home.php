@@ -21,7 +21,7 @@ foreach ($cur as $result) {
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Rooms</div>
                         </div>
                         <div class="col-auto">
-                        <span class="material-icons-outlined">hotel</span>
+                        <span class="material-symbols-outlined">hotel</span> 
                         </div>
                     </div>
                 </div>
@@ -295,6 +295,3 @@ $cnt = mysqli_fetch_array($result);
         }
     });
 </script>
-<!-- <script>
-    feather.replace();
-</script> -->

@@ -16,7 +16,8 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
     <!-- Custom styles for this template-->
     <link href="https://mcchmhotelreservation.com/admin/css/sb-admin-2.min.css" rel="stylesheet">
@@ -33,7 +34,7 @@
 <script type="text/javascript" language="javascript" src="https://mcchmhotelreservation.com/admin/js/bootstrap-modal.js"></script>
 <script type="text/javascript" src="https://mcchmhotelreservation.com/admin/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 <script type="text/javascript" src="https://mcchmhotelreservation.com/admin/js/locales/bootstrap-datetimepicker.uk.js" charset="UTF-8"></script>
-<script src="https://unpkg.com/feather-icons"></script>
+
 </head>
 <?php
 header("Content-Security-Policy: default-src 'self'; script-src 'self' https://trusted-scripts.com;");
