@@ -14,7 +14,8 @@ if (!isset($_SESSION['ADMIN_ID'])) {
     redirect('login.php');
     return true;
 }
-echo '<div class="row no-gutters align-items-center">';
+echo '<div class="row"  style="padding: 20px;">';
+
 $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
 $mydb->setQuery($query);
 $cur = $mydb->loadResultList();
