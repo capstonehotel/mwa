@@ -34,7 +34,7 @@ foreach ($cur as $result) {
 .material-symbols-outlined {
     weight: 200px;
     font-size: 30px;
-    color: #FAE37A;
+    color: #C4913A;
 }
 </style>
 <?php
