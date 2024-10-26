@@ -108,7 +108,7 @@ foreach ($curya as $resultas) {
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Confirm Booking</div>
                         </div>
                         <div class="col-auto">
-                        <span class="material-symbols-outlined">check_circle</span> 
+                        <span class="material-symbols-outlined">check</span> 
                         </div>
                     </div>
                 </div>
@@ -189,7 +189,7 @@ foreach ($curya as $resultas) {
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Cancelled</div>
                         </div>
                         <div class="col-auto">
-                        <span class="material-symbols-outlined">cancel</span>
+                        <span class="material-symbols-outlined">close</span>
                         </div>
                     </div>
                 </div>
