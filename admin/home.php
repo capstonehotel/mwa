@@ -1,7 +1,7 @@
 <style>
 .material-symbols-outlined {
     weight: 200px;
-    font-size: 30px;
+    font-size: 25px;
 }
 </style>
 <?php
@@ -50,7 +50,7 @@ foreach ($cury as $resulta) {
                 <div class="dash-widget-header">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 28px; "><?php echo isset($resulta->Total) ? $resulta->Total : 0; ?></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($resulta->Total) ? $resulta->Total : 0; ?></div>
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; ">Reservations</div>
                         </div>
                         <div class="col-auto">
@@ -77,7 +77,7 @@ foreach ($curya as $resultas) {
                 <div class="dash-widget-header">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 28px; "><?php echo isset($resultas->Total) ? $resultas->Total : 0; ?></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($resultas->Total) ? $resultas->Total : 0; ?></div>
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; ">Booking Today</div>
                         </div>
                         <div class="col-auto">
@@ -104,7 +104,7 @@ foreach ($curya as $resultas) {
                 <div class="dash-widget-header">
                     <div class=" row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 28px; "><?php echo isset($resultas->Total) ? $resultas->Total : 0; ?></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($resultas->Total) ? $resultas->Total : 0; ?></div>
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; ">Confirm Booking</div>
                         </div>
                         <div class="col-auto">
@@ -131,7 +131,7 @@ foreach ($curya as $resultas) {
                 <div class="dash-widget-header">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 28px; "><?php echo isset($resultas->Total) ? $resultas->Total : 0; ?></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($resultas->Total) ? $resultas->Total : 0; ?></div>
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; ">Check-in Guest</div>
                         </div>
                         <div class="col-auto">
@@ -158,7 +158,7 @@ foreach ($curya as $resultas) {
                 <div class="dash-widget-header">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 28px; "><?php echo isset($resultas->Total) ? $resultas->Total : 0; ?></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($resultas->Total) ? $resultas->Total : 0; ?></div>
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; ">Check-out Guest</div>
                         </div>
                         <div class="col-auto">
@@ -185,7 +185,7 @@ foreach ($curya as $resultas) {
                 <div class="dash-widget-header">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 28px; "><?php echo isset($resultas->Total) ? $resultas->Total : 0; ?></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($resultas->Total) ? $resultas->Total : 0; ?></div>
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; ">Cancelled</div>
                         </div>
                         <div class="col-auto">
@@ -213,7 +213,7 @@ foreach ($curya as $resultas) {
                 <div class="dash-widget-header">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 28px; ">
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; ">
                                 ₱<?php echo isset($resultas->Total) ? $resultas->Total : 0; ?>
                             </div>
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; ">
