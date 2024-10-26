@@ -21,7 +21,7 @@ foreach ($cur as $result) {
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Rooms</div>
                         </div>
                         <div class="col-auto">
-                            <i data-feather="home" class="icon"></i>
+                        <span class="material-icons-outlined">house</span>
                         </div>
                     </div>
                 </div>
@@ -102,7 +102,7 @@ foreach ($curya as $resultas) {
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Confirm Booking</div>
                         </div>
                         <div class="col-auto">
-                        <span class="material-icons">hotel</span>
+                        <span class="material-icons"></span>
                         </div>
                     </div>
                 </div>
