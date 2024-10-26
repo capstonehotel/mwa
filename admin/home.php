@@ -296,19 +296,20 @@ $result7 = mysqli_query($connection, $sql7);
 $cnt7 = mysqli_fetch_array($result7);
 $lineData = [];
 $startYear = 2024;
-$endYear = 2030; // Set this to however many future years you want
+$endYear = 2030; // Future years limit
 
-// Get the count of rooms (assuming this is static for each year)
+// Count of rooms and reservations (assuming static for each month)
 $roomCount = (int)$cnt[0];
-$reservationCount = (int)$cnt2[0];
 for ($year = $startYear; $year <= $endYear; $year++) {
-    $sql = "SELECT COUNT(*) AS count FROM `tblreservation` WHERE YEAR(TRANSDATE) = $year";
-    $result = mysqli_query($connection, $sql);
-    $row = mysqli_fetch_assoc($result);
-    $lineData[] = ['y' => $year, 'a' => $roomCount, 'b' => $reservationCount];
+    for ($month = 1; $month <= 12; $month++) {
+        $date = sprintf('%04d-%02d', $year, $month); // Format as YYYY-MM
+        $sql = "SELECT COUNT(*) AS count FROM `tblreservation` WHERE DATE_FORMAT(TRANSDATE, '%Y-%m') = '$date'";
+        $result = mysqli_query($connection, $sql);
+        $row = mysqli_fetch_assoc($result);
+        $reservationCount = (int)$row['count'];
+        $lineData[] = ['y' => $date, 'a' => $roomCount, 'b' => $reservationCount];
+    }
 }
-
-
 ?>
 
 
@@ -367,17 +368,18 @@ function donutChart() {
 function lineChart() {
     window.lineChart = Morris.Line({
         element: 'line-chart',
-        data: <?php echo json_encode($lineData); ?>, // Pass the PHP data to JavaScript
+        data: <?php echo json_encode($lineData); ?>,
         xkey: 'y',
         ykeys: ['a', 'b'],
         labels: ['Rooms', 'Reservations'],
+        xLabels: 'month',
+        xLabelFormat: function (x) { return x.toLocaleString('en-US', { month: 'short', year: 'numeric' }); },
         lineColors: ['#009688', '#FF6384'],
         lineWidth: '3px',
         resize: true,
         redraw: true
     });
 }
-
 
 
 
