@@ -38,7 +38,7 @@ foreach ($cur as $result) {
 </div>
 <?php } ?>
 <?php
-$query1 = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS != '' ";
+$query1 = "SELECT count(*) as 'Total' FROM `tblaccomodation` WHERE ACCOMODATION != '' ";
 $mydb->setQuery($query1);
 $cur1 = $mydb->loadResultList();
 foreach ($cur1 as $result1) {
