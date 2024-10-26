@@ -3,6 +3,11 @@
     weight: 200px;
     font-size: 25px;
 }
+.card {
+    padding: 10px; /* Adjust as needed */
+    max-height: 150px; /* Set a maximum height */
+    overflow: hidden; /* Hide overflow if content exceeds max height */
+}
 </style>
 <?php
 require_once("../includes/initialize.php");
