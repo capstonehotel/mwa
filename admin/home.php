@@ -1,3 +1,9 @@
+<style>
+.material-symbols-outlined {
+    weight: 200px;
+    font-size: 38px;
+}
+</style>
 <?php
 require_once("../includes/initialize.php");
 if (!isset($_SESSION['ADMIN_ID'])) {
@@ -30,12 +36,7 @@ foreach ($cur as $result) {
     </div>
 </div>
 <?php } ?>
-<style>
-.material-symbols-outlined {
-    weight: 200px;
-    font-size: 40px;
-}
-</style>
+
 <?php
 $querys = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS != '' ";
 $mydb->setQuery($querys);
@@ -53,7 +54,7 @@ foreach ($cury as $resulta) {
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Reservations</div>
                         </div>
                         <div class="col-auto">
-                            <i data-feather="book" class="icon"></i>
+                        <span class="material-symbols-outlined">book</span>
                         </div>
                     </div>
                 </div>
@@ -80,7 +81,7 @@ foreach ($curya as $resultas) {
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Booking Today</div>
                         </div>
                         <div class="col-auto">
-                            <i data-feather="calendar" class="icon"></i>
+                        <span class="material-symbols-outlined">calendar_today</span> 
                         </div>
                     </div>
                 </div>
@@ -107,7 +108,7 @@ foreach ($curya as $resultas) {
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Confirm Booking</div>
                         </div>
                         <div class="col-auto">
-                        <span class="material-icons"></span>
+                        <span class="material-symbols-outlined">check_circle</span> 
                         </div>
                     </div>
                 </div>
@@ -134,7 +135,7 @@ foreach ($curya as $resultas) {
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Check-in Guest</div>
                         </div>
                         <div class="col-auto">
-                            <i data-feather="user" class="icon"></i>
+                        <span class="material-symbols-outlined">person</span>>
                         </div>
                     </div>
                 </div>
@@ -161,7 +162,7 @@ foreach ($curya as $resultas) {
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Check-out Guest</div>
                         </div>
                         <div class="col-auto">
-                            <i data-feather="user" class="icon"></i>
+                        <span class="material-symbols-outlined">person</span>
                         </div>
                     </div>
                 </div>
@@ -188,7 +189,7 @@ foreach ($curya as $resultas) {
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Cancelled</div>
                         </div>
                         <div class="col-auto">
-                            <i data-feather="x" class="icon"></i>
+                        <span class="material-symbols-outlined">cancel</span>
                         </div>
                     </div>
                 </div>
@@ -220,7 +221,7 @@ foreach ($curya as $resultas) {
                             </div>
                         </div>
                         <div class="col-auto">
-                            <i data-feather="file-text" class="icon"></i> <!-- You can use a file or document icon -->
+                        <span class="material-symbols-outlined">receipt</span>
                         </div>
                     </div>
                 </div>
