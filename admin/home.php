@@ -318,7 +318,7 @@ $cnt7 = mysqli_fetch_array($result7);
 <script>
     var xValues = ["Rooms","Confirmed", "Cancelled", "Checked in", "Checked out"];
     var yValues = [<?php echo $cnt[0]; ?>,<?php echo $cnt4[0]; ?>, <?php echo $cnt7[0]; ?>, <?php echo $cnt5[0]; ?>, <?php echo $cnt6[0]; ?>];
-    var barColors = ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"]; // Colors for the donut sections
+    var barColors = ["#36A2EB","#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"]; // Colors for the donut sections
 
     new Chart("myChart", {
         type: "doughnut", // Set the type to doughnut for a donut chart
