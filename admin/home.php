@@ -4,9 +4,11 @@
     font-size: 25px;
 }
 .card-body {
-    padding: 20px; /* Adjust padding */
+    padding: 10px; /* Adjust padding */
 }
-
+.row{
+    margin: 10px;
+}
 </style>
 <?php
 require_once("../includes/initialize.php");
