@@ -3,10 +3,7 @@
     weight: 200px;
     font-size: 25px;
 }
-.card {
-    padding: 10px; /* Adjust as needed */
-   
-}
+
 </style>
 <?php
 require_once("../includes/initialize.php");
@@ -40,12 +37,11 @@ foreach ($cur as $result) {
     </div>
 </div>
 <?php } ?>
-
 <?php
-$querys = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS != '' ";
-$mydb->setQuery($querys);
-$cury = $mydb->loadResultList();
-foreach ($cury as $resulta) {
+$query1 = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS != '' ";
+$mydb->setQuery($query1);
+$cur1 = $mydb->loadResultList();
+foreach ($cur1 as $result1) {
 ?>
 <div class="col-xl-3 col-md-6 mb-4">
     <div class="card board1 fill">
@@ -54,7 +50,34 @@ foreach ($cury as $resulta) {
                 <div class="dash-widget-header">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($resulta->Total) ? $resulta->Total : 0; ?></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($result1->Total) ? $result1->Total : 0; ?></div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; ">Accomodations</div>
+                        </div>
+                        <div class="col-auto">
+                        <span class="material-symbols-outlined">meeting_room</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php } ?>
+
+<?php
+$query2 = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS != '' ";
+$mydb->setQuery($query2);
+$cur2 = $mydb->loadResultList();
+foreach ($cur2 as $result2) {
+?>
+<div class="col-xl-3 col-md-6 mb-4">
+    <div class="card board1 fill">
+        <div class="card shadow h-100 py-2">
+            <div class="card-body">
+                <div class="dash-widget-header">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($result2->Total) ? $result2->Total : 0; ?></div>
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; ">Reservations</div>
                         </div>
                         <div class="col-auto">
@@ -69,10 +92,10 @@ foreach ($cury as $resulta) {
 <?php } ?>
 
 <?php
-$querysi = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE TRANSDATE=DATE(NOW())!=  '' ";
-$mydb->setQuery($querysi);
-$curya = $mydb->loadResultList();
-foreach ($curya as $resultas) {
+$query3 = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE TRANSDATE=DATE(NOW())!=  '' ";
+$mydb->setQuery($query3);
+$cur3 = $mydb->loadResultList();
+foreach ($cur3 as $result3) {
 ?>
 <div class="col-xl-3 col-md-6 mb-4">
     <div class="card board1 fill">
@@ -81,7 +104,7 @@ foreach ($curya as $resultas) {
                 <div class="dash-widget-header">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($resultas->Total) ? $resultas->Total : 0; ?></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($result3->Total) ? $result3->Total : 0; ?></div>
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; ">Booking Today</div>
                         </div>
                         <div class="col-auto">
@@ -96,10 +119,10 @@ foreach ($curya as $resultas) {
 <?php } ?>
 
 <?php
-$querysi = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS= 'Confirmed'  ";
-$mydb->setQuery($querysi);
-$curya = $mydb->loadResultList();
-foreach ($curya as $resultas) {
+$query4 = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS= 'Confirmed'  ";
+$mydb->setQuery($query4);
+$cur4 = $mydb->loadResultList();
+foreach ($cur4 as $result4) {
 ?>
 <div class="col-xl-3 col-md-6 mb-4">
     <div class="card board1 fill">
@@ -108,7 +131,7 @@ foreach ($curya as $resultas) {
                 <div class="dash-widget-header">
                     <div class=" row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($resultas->Total) ? $resultas->Total : 0; ?></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($result4->Total) ? $result4->Total : 0; ?></div>
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; ">Confirm Booking</div>
                         </div>
                         <div class="col-auto">
@@ -123,10 +146,10 @@ foreach ($curya as $resultas) {
 <?php } ?>
 
 <?php
-$querysi = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS = 'Checkedin' ";
-$mydb->setQuery($querysi);
-$curya = $mydb->loadResultList();
-foreach ($curya as $resultas) {
+$query5 = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS = 'Checkedin' ";
+$mydb->setQuery($query5);
+$cur5 = $mydb->loadResultList();
+foreach ($cur5 as $result5) {
 ?>
 <div class="col-xl-3 col-md-6 mb-4">
     <div class="card board1 fill">
@@ -135,7 +158,7 @@ foreach ($curya as $resultas) {
                 <div class="dash-widget-header">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($resultas->Total) ? $resultas->Total : 0; ?></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($result5->Total) ? $result5->Total : 0; ?></div>
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; ">Check-in Guest</div>
                         </div>
                         <div class="col-auto">
@@ -150,10 +173,10 @@ foreach ($curya as $resultas) {
 <?php } ?>
 
 <?php
-$querysi = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS = 'Checkedout' ";
-$mydb->setQuery($querysi);
-$curya = $mydb->loadResultList();
-foreach ($curya as $resultas) {
+$query6 = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS = 'Checkedout' ";
+$mydb->setQuery($query6);
+$cur6 = $mydb->loadResultList();
+foreach ($cur6 as $result6) {
 ?>
 <div class="col-xl-3 col-md-6 mb-4">
     <div class="card board1 fill">
@@ -162,7 +185,7 @@ foreach ($curya as $resultas) {
                 <div class="dash-widget-header">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($resultas->Total) ? $resultas->Total : 0; ?></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($result6->Total) ? $result6->Total : 0; ?></div>
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; ">Check-out Guest</div>
                         </div>
                         <div class="col-auto">
@@ -177,10 +200,10 @@ foreach ($curya as $resultas) {
 <?php } ?>
 
 <?php
-$querysi = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS= 'Cancelled'  ";
-$mydb->setQuery($querysi);
-$curya = $mydb->loadResultList();
-foreach ($curya as $resultas) {
+$query7 = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS= 'Cancelled'  ";
+$mydb->setQuery($query7);
+$cur7 = $mydb->loadResultList();
+foreach ($cur7 as $result7) {
 ?>
 <div class="col-xl-3 col-md-6 mb-4">
     <div class="card board1 fill">
@@ -189,7 +212,7 @@ foreach ($curya as $resultas) {
                 <div class="dash-widget-header">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($resultas->Total) ? $resultas->Total : 0; ?></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; "><?php echo isset($result7->Total) ? $result7->Total : 0; ?></div>
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; ">Cancelled</div>
                         </div>
                         <div class="col-auto">
@@ -202,14 +225,12 @@ foreach ($curya as $resultas) {
     </div>
 </div>
 <?php } ?>
-<?php 
-    $querysi = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS= 'Cancelled'  ";
-                $mydb->setQuery($querysi);
-                $curya = $mydb->loadResultList();  
-                foreach ($curya as $resultas) { 
-   ?>
-
-
+<?php
+$query7 = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS= 'Cancelled'  ";
+$mydb->setQuery($query7);
+$cur7 = $mydb->loadResultList();
+foreach ($cur7 as $result7) {
+?>
 <div class="col-xl-3 col-md-6 mb-4">
     <div class="card board1 fill">
         <div class="card shadow h-100 py-2">
@@ -218,7 +239,7 @@ foreach ($curya as $resultas) {
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; ">
-                                ₱<?php echo isset($resultas->Total) ? $resultas->Total : 0; ?>
+                                ₱<?php echo isset($result8->Total) ? $result8->Total : 0; ?>
                             </div>
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; ">
                                 Total Invoice
@@ -258,35 +279,52 @@ foreach ($curya as $resultas) {
 
 <?php
 
-$sqli = "SELECT count(*) FROM  `tblreservation` WHERE TRANSDATE=DATE(NOW()) != 'Booked' ";
-$resultas = mysqli_query($connection, $sqli);
-$cnt5 = mysqli_fetch_array($resultas);
-
-$sli = "SELECT count(*) FROM  `tblreservation` WHERE STATUS = 'Cancelled' ";
-$resulta = mysqli_query($connection, $sli);
-$cnt1 = mysqli_fetch_array($resulta);
-
-$sqla = "SELECT count(*) FROM  `tblreservation` WHERE STATUS = 'Confirmed' ";
-$res = mysqli_query($connection, $sqla);
-$cntaS = mysqli_fetch_array($res);
-
-$sqlaS = "SELECT count(*) FROM  `tblreservation` WHERE STATUS = 'Checkedin' ";
-$resT = mysqli_query($connection, $sqlaS);
-$cntS = mysqli_fetch_array($resT);
-
 $select = "SELECT count(*) FROM tblroom where ROOM != '' ";
 $result = mysqli_query($connection, $select);
 $cnt = mysqli_fetch_array($result);
 
+$select1 = "SELECT count(*) FROM tblaccomodation where ACCOMODATION != '' ";
+$result1 = mysqli_query($connection, $select1);
+$cnt1 = mysqli_fetch_array($result1);
+
+$select2 = "SELECT count(*) FROM tblreservation where CONFIRMATIONCODE != '' ";
+$result2 = mysqli_query($connection, $select2);
+$cnt2 = mysqli_fetch_array($result2);
+
+$sql3 = "SELECT count(*) FROM  `tblreservation` WHERE TRANSDATE=DATE(NOW()) != 'Booked' ";
+$result3 = mysqli_query($connection, $sql3);
+$cnt3 = mysqli_fetch_array($result3);
+
+$sql4 = "SELECT count(*) FROM  `tblreservation` WHERE STATUS = 'Confirmed' ";
+$result4 = mysqli_query($connection, $sql4);
+$cnt4 = mysqli_fetch_array($result4);
+
+$sql5 = "SELECT count(*) FROM  `tblreservation` WHERE STATUS = 'Checkedin' ";
+$result5 = mysqli_query($connection, $sql5);
+$cnt5= mysqli_fetch_array($result5);
+
+$sql6 = "SELECT count(*) FROM  `tblreservation` WHERE STATUS = 'Checkedout' ";
+$result6 = mysqli_query($connection, $sql6);
+$cnt6 = mysqli_fetch_array($result6);
+
+$sql7 = "SELECT count(*) FROM  `tblreservation` WHERE STATUS = 'Cancelled' ";
+$result7 = mysqli_query($connection, $sql7);
+$cnt7 = mysqli_fetch_array($result7);
+
+$select = "SELECT count(*) FROM tblroom where ROOM != '' ";
+$result = mysqli_query($connection, $select);
+$cnt8 = mysqli_fetch_array($result);
+
+
+
 ?>
 
 <script>
-    var xValues = ["Booked", "Confirmed", "Cancelled", "Checked in", "Rooms"];
-    var yValues = [<?php echo $cnt5[0]; ?>, <?php echo $cntaS[0]; ?>, <?php echo $cnt1[0]; ?>, <?php echo $cntS[0]; ?>, <?php echo $cnt[0]; ?>];
+    var xValues = ["Confirmed", "Cancelled", "Checked in", "Checkedout"];
+    var yValues = [<?php echo $cnt4[0]; ?>, <?php echo $cnta5[0]; ?>, <?php echo $cnt6[0]; ?>, <?php echo $cnt7[0]; ?>];
     var barColors = ["red", "green", "blue", "orange", "brown"];
-
     new Chart("myChart", {
-        type: "bar",
+        type: "doughnut", // Change to "doughnut" for a donut chart
         data: {
             labels: xValues,
             datasets: [{
@@ -295,12 +333,17 @@ $cnt = mysqli_fetch_array($result);
             }]
         },
         options: {
+            responsive: true,
             legend: {
-                display: false
+                display: true // Show legend
             },
             title: {
                 display: true,
-                text: "ROOM"
+                text: "ROOM STATUS" // Update title as needed
+            },
+            animation: {
+                animateScale: true, // Add scale animation
+                animateRotate: true // Add rotation animation
             }
         }
     });
