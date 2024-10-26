@@ -262,7 +262,7 @@ foreach ($cur7 as $result7) {
 
 
 <!-- Start a new row for the chart -->
-<div class="row">
+
 
 <div class="col-xl-8 col-lg-7 ">
     <div class="card shadow mb-4">
@@ -278,7 +278,7 @@ foreach ($cur7 as $result7) {
         </div>
     </div>
 </div>
-</div>
+
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
