@@ -1,7 +1,7 @@
 <style>
 .material-symbols-outlined {
     weight: 200px;
-    font-size: 38px;
+    font-size: 35px;
 }
 </style>
 <?php
@@ -135,7 +135,7 @@ foreach ($curya as $resultas) {
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Check-in Guest</div>
                         </div>
                         <div class="col-auto">
-                        <span class="material-symbols-outlined">person</span>>
+                        <span class="material-symbols-outlined">person</span>
                         </div>
                     </div>
                 </div>
