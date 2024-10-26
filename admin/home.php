@@ -261,8 +261,8 @@ foreach ($cur7 as $result7) {
 
 
 
-<div class="row mt-4">
-<div class="col-xl-8 col-lg-7">
+
+<div class="col-xl-8 col-lg-7 mb-4">
     <div class="card shadow mb-4">
         <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -276,7 +276,7 @@ foreach ($cur7 as $result7) {
         </div>
     </div>
 </div>
-</div>
+
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
