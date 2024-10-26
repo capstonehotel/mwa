@@ -300,7 +300,7 @@ $cnt7 = mysqli_fetch_array($result7);
 <div class="card shadow mb-4">
     <div class="card card-chart">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h4 class="card-title m-0 font-weight-bold text-primary">ROOMS BOOKED</h4>
+            <h6 class="card-title m-0 font-weight-bold text-primary">ROOMS BOOKED</h6>
         </div>
         <div class="card-body">
             <div id="donut-chart" style="height: 300px;"></div>
