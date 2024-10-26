@@ -30,7 +30,15 @@ foreach ($cur as $result) {
     </div>
 </div>
 <?php } ?>
-
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 200,
+  'GRAD' 0,
+  'opsz' 48
+}
+</style>
 <?php
 $querys = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS != '' ";
 $mydb->setQuery($querys);
