@@ -294,7 +294,18 @@ $cnt6 = mysqli_fetch_array($result6);
 $sql7 = "SELECT count(*) FROM `tblreservation` WHERE STATUS = 'Cancelled' ";
 $result7 = mysqli_query($connection, $sql7);
 $cnt7 = mysqli_fetch_array($result7);
+
+$lineData = [
+    ['y' => '2006', 'a' => 100, 'b' => 90],
+    ['y' => '2007', 'a' => 75, 'b' => 65],
+    ['y' => '2008', 'a' => 50, 'b' => 40],
+    ['y' => '2009', 'a' => 75, 'b' => 65],
+    ['y' => '2010', 'a' => 50, 'b' => 40],
+    ['y' => '2011', 'a' => 75, 'b' => 65],
+    ['y' => '2012', 'a' => 100, 'b' => 90],
+];
 ?>
+
 
 <div class="col-md-12 col-lg-6">
 <div class="card shadow mb-4">
@@ -308,8 +319,60 @@ $cnt7 = mysqli_fetch_array($result7);
     </div>
 </div>
 </div>
-
+<div class="col-md-12 col-lg-6">
+<div class="card shadow mb-4">
+    <div class="card card-chart">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h4 class="card-titlem-0 font-weight-bold text-primary">VISITORS</h4>
+        </div>
+        <div class="card-body">
+            <div id="line-chart" style="height: 300px;"></div>
+        </div>
+    </div>
+</div>
+</div>
 <script>
+$(document).ready(function() {
+    donutChart();
+    lineChart();
+    $(window).resize(function() {
+        window.donutChart.redraw();
+        window.lineChart.redraw();
+    });
+});
+
+function donutChart() {
+    window.donutChart = Morris.Donut({
+        element: 'donut-chart',
+        data: [
+            { label: "Rooms", value: <?php echo $cnt[0]; ?> },
+            { label: "Confirmed", value: <?php echo $cnt4[0]; ?> },
+            { label: "Cancelled", value: <?php echo $cnt7[0]; ?> },
+            { label: "Checked In", value: <?php echo $cnt5[0]; ?> },
+            { label: "Checked Out", value: <?php echo $cnt6[0]; ?> },
+        ],
+        backgroundColor: '#f2f5fa',
+        labelColor: '#009688',
+        colors: ['#0BA462', '#39B580', '#FF6384', '#FFCE56', '#4BC0C0'],
+        resize: true,
+    });
+}
+
+function lineChart() {
+    window.lineChart = Morris.Line({
+        element: 'line-chart',
+        data: <?php echo json_encode($lineData); ?>, // Using PHP to pass data to JavaScript
+        xkey: 'y',
+        ykeys: ['a', 'b'],
+        labels: ['Series A', 'Series B'],
+        lineColors: ['#009688', '#cdc6c6'],
+        lineWidth: '3px',
+        resize: true,
+        redraw: true
+    });
+}
+</script>
+<!-- <script>
 $(document).ready(function() {
     donutChart();
 });
@@ -331,4 +394,4 @@ function donutChart() {
         resize: true,
     });
 }
-</script>
+</script> -->
