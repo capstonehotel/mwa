@@ -294,19 +294,19 @@ $cnt6 = mysqli_fetch_array($result6);
 $sql7 = "SELECT count(*) FROM `tblreservation` WHERE STATUS = 'Cancelled' ";
 $result7 = mysqli_query($connection, $sql7);
 $cnt7 = mysqli_fetch_array($result7);
-$lineData = [];
-$startYear = 2024;
-$endYear = 2030; // Set this to however many future years you want
+// $lineData = [];
+// $startYear = 2024;
+// $endYear = 2030; // Set this to however many future years you want
 
-// Get the count of rooms (assuming this is static for each year)
-$roomCount = (int)$cnt[0];
-$reservationCount = (int)$cnt2[0];
-for ($year = $startYear; $year <= $endYear; $year++) {
-    $sql = "SELECT COUNT(*) AS count FROM `tblreservation` WHERE YEAR(TRANSDATE) = $year";
-    $result = mysqli_query($connection, $sql);
-    $row = mysqli_fetch_assoc($result);
-    $lineData[] = ['y' => $year, 'a' => $roomCount, 'b' => $reservationCount];
-}
+// // Get the count of rooms (assuming this is static for each year)
+// $roomCount = (int)$cnt[0];
+// $reservationCount = (int)$cnt2[0];
+// for ($year = $startYear; $year <= $endYear; $year++) {
+//     $sql = "SELECT COUNT(*) AS count FROM `tblreservation` WHERE YEAR(TRANSDATE) = $year";
+//     $result = mysqli_query($connection, $sql);
+//     $row = mysqli_fetch_assoc($result);
+//     $lineData[] = ['y' => $year, 'a' => $roomCount, 'b' => $reservationCount];
+// }
 
 // Get room count data by month for 2024
 $lineData = array();
@@ -398,19 +398,7 @@ function donutChart() {
     });
 }
 
-// function lineChart() {
-//     window.lineChart = Morris.Line({
-//         element: 'line-chart',
-//         data: <?php echo json_encode($lineData); ?>, // Pass the PHP data to JavaScript
-//         xkey: 'y',
-//         ykeys: ['a', 'b'],
-//         labels: ['Rooms', 'Reservations'],
-//         lineColors: ['#009688', '#FF6384'],
-//         lineWidth: '3px',
-//         resize: true,
-//         redraw: true
-//     });
-// }
+
 
 function lineChart() {
     window.lineChart = Morris.Line({
