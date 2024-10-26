@@ -23,7 +23,7 @@ foreach ($cur as $result) {
 ?>
 <div class="col-xl-3 col-md-6 mb-4">
     <div class="card board1 fill ">
-        <div class="card  h-100 py-2">
+        <div class="card shadow h-100 py-2">
             <div class="card-body">
                 <div class="dash-widget-header">
                     <div class="row no-gutters align-items-center">
@@ -261,39 +261,17 @@ foreach ($cur7 as $result7) {
 <?php } ?>
 </div>
 
-
-<!-- Start a new row for the chart -->
-
-
-<div class="col-md-12 col-lg-6">
-    <div class="card shadow mb-4">
-        <!-- Card Header - Dropdown -->
-        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Graph </h6>
-        </div>
-        <!-- Card Body -->
-        <div class="card-body">
-            <div class="chart-area">
-                <canvas id="myChart" style="width:auto; max-width: 650px;"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <?php
 // Database queries to get the count of different room statuses
 $select = "SELECT count(*) FROM tblroom where ROOM != 'Rooms' ";
 $result = mysqli_query($connection, $select);
 $cnt = mysqli_fetch_array($result);
 
-$select1 = "SELECT count(*) FROM tblaccomodation where ACCOMODATION != '' ";
+$select1 = "SELECT count(*) FROM tblaccomodation where ACCOMODATION != 'Accomodation' ";
 $result1 = mysqli_query($connection, $select1);
 $cnt1 = mysqli_fetch_array($result1);
 
-$select2 = "SELECT count(*) FROM tblreservation where CONFIRMATIONCODE != '' ";
+$select2 = "SELECT count(*) FROM tblreservation where CONFIRMATIONCODE != 'Reservations' ";
 $result2 = mysqli_query($connection, $select2);
 $cnt2 = mysqli_fetch_array($result2);
 
@@ -318,36 +296,6 @@ $result7 = mysqli_query($connection, $sql7);
 $cnt7 = mysqli_fetch_array($result7);
 ?>
 
-<script>
-    var xValues = ["Rooms","Confirmed", "Cancelled", "Checked in", "Checked out"];
-    var yValues = [<?php echo $cnt[0]; ?>,<?php echo $cnt4[0]; ?>, <?php echo $cnt7[0]; ?>, <?php echo $cnt5[0]; ?>, <?php echo $cnt6[0]; ?>];
-    var barColors = ["#36A2EB","#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"]; // Colors for the donut sections
-
-    new Chart("myChart", {
-        type: "doughnut", // Set the type to doughnut for a donut chart
-        data: {
-            labels: xValues,
-            datasets: [{
-                backgroundColor: barColors,
-                data: yValues
-            }]
-        },
-        options: {
-            responsive: true,
-            legend: {
-                display: true // Show legend
-            },
-            title: {
-                display: true,
-                text: "ROOM STATUS" // Title of the chart
-            },
-            animation: {
-                animateScale: true, // Add scale animation
-                animateRotate: true // Add rotation animation
-            }
-        }
-    });
-</script>
 <div class="col-md-12 col-lg-6">
     <div class="card card-chart">
         <div class="card-header">
@@ -359,34 +307,6 @@ $cnt7 = mysqli_fetch_array($result7);
     </div>
 </div>
 
-<!-- Include jQuery and Morris.js -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
-
-<?php
-// Database queries to get the count of different room statuses
-$select = "SELECT count(*) FROM tblroom where ROOM != 'Rooms' ";
-$result = mysqli_query($connection, $select);
-$cnt = mysqli_fetch_array($result);
-
-$select4 = "SELECT count(*) FROM `tblreservation` WHERE STATUS = 'Confirmed' ";
-$result4 = mysqli_query($connection, $select4);
-$cnt4 = mysqli_fetch_array($result4);
-
-$sql7 = "SELECT count(*) FROM `tblreservation` WHERE STATUS = 'Cancelled' ";
-$result7 = mysqli_query($connection, $sql7);
-$cnt7 = mysqli_fetch_array($result7);
-
-$sql5 = "SELECT count(*) FROM `tblreservation` WHERE STATUS = 'Checkedin' ";
-$result5 = mysqli_query($connection, $sql5);
-$cnt5 = mysqli_fetch_array($result5);
-
-$sql6 = "SELECT count(*) FROM `tblreservation` WHERE STATUS = 'Checkedout' ";
-$result6 = mysqli_query($connection, $sql6);
-$cnt6 = mysqli_fetch_array($result6);
-?>
 
 <script>
 $(document).ready(function() {
@@ -399,9 +319,9 @@ function donutChart() {
         data: [
             { label: "Rooms", value: <?php echo $cnt[0]; ?> },
             { label: "Confirmed", value: <?php echo $cnt4[0]; ?> },
-            { label: "Cancelled", value: <?php echo $cnt7[0]; ?> },
             { label: "Checked In", value: <?php echo $cnt5[0]; ?> },
             { label: "Checked Out", value: <?php echo $cnt6[0]; ?> },
+            {label: "Cancelled", value: <?php echo $cnt7[0]; ?> },
         ],
         backgroundColor: '#f2f5fa',
         labelColor: '#009688',
