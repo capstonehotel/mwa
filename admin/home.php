@@ -6,9 +6,7 @@
 .card-body {
     padding: 10px; /* Adjust padding */
 }
-.row{
-    margin: 10px;
-}
+
 </style>
 <?php
 require_once("../includes/initialize.php");
