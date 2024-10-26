@@ -14,7 +14,7 @@ if (!isset($_SESSION['ADMIN_ID'])) {
     redirect('login.php');
     return true;
 }
-echo '<div class="row">';
+echo '<div class="row no-gutters align-items-center">';
 $query = "SELECT count(*) as 'Total' FROM `tblroom` WHERE ROOM != '' ";
 $mydb->setQuery($query);
 $cur = $mydb->loadResultList();
@@ -264,7 +264,7 @@ foreach ($cur7 as $result7) {
 <!-- Start a new row for the chart -->
 
 
-<div class="col-xl-8 col-lg-7 ">
+<div class="col-md-12 col-lg-6">
     <div class="card shadow mb-4">
         <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
