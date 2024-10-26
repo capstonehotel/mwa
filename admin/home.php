@@ -17,7 +17,7 @@ $mydb->setQuery($query);
 $cur = $mydb->loadResultList();
 foreach ($cur as $result) {
 ?>
-<div class="col-xl-3 col-md-2 mb-4">
+<div class="col-xl-3 col-md-6 mb-4">
     <div class="card board1 fill">
         <div class="card shadow h-100 py-2">
             <div class="card-body">
@@ -43,7 +43,7 @@ $mydb->setQuery($query1);
 $cur1 = $mydb->loadResultList();
 foreach ($cur1 as $result1) {
 ?>
-<div class="col-xl-3 col-md-2 mb-4">
+<div class="col-xl-3 col-md-6 mb-4">
     <div class="card board1 fill">
         <div class="card shadow h-100 py-2">
             <div class="card-body">
@@ -70,7 +70,7 @@ $mydb->setQuery($query2);
 $cur2 = $mydb->loadResultList();
 foreach ($cur2 as $result2) {
 ?>
-<div class="col-xl-3 col-md-2 mb-4">
+<div class="col-xl-3 col-md-6 mb-4">
     <div class="card board1 fill">
         <div class="card shadow h-100 py-2">
             <div class="card-body">
@@ -97,7 +97,7 @@ $mydb->setQuery($query3);
 $cur3 = $mydb->loadResultList();
 foreach ($cur3 as $result3) {
 ?>
-<div class="col-xl-3 col-md-2 mb-4">
+<div class="col-xl-3 col-md-6 mb-4">
     <div class="card board1 fill">
         <div class="card shadow h-100 py-2">
             <div class="card-body">
@@ -124,7 +124,7 @@ $mydb->setQuery($query4);
 $cur4 = $mydb->loadResultList();
 foreach ($cur4 as $result4) {
 ?>
-<div class="col-xl-3 col-md-2 mb-4">
+<div class="col-xl-3 col-md-6 mb-4">
     <div class="card board1 fill">
         <div class="card shadow h-100 py-2">
             <div class="card-body">
@@ -151,7 +151,7 @@ $mydb->setQuery($query5);
 $cur5 = $mydb->loadResultList();
 foreach ($cur5 as $result5) {
 ?>
-<div class="col-xl-3 col-md-2 mb-4">
+<div class="col-xl-3 col-md-6 mb-4">
     <div class="card board1 fill">
         <div class="card shadow h-100 py-2">
             <div class="card-body">
@@ -178,7 +178,7 @@ $mydb->setQuery($query6);
 $cur6 = $mydb->loadResultList();
 foreach ($cur6 as $result6) {
 ?>
-<div class="col-xl-3 col-md-2 mb-4">
+<div class="col-xl-3 col-md-6 mb-4">
     <div class="card board1 fill">
         <div class="card shadow h-100 py-2">
             <div class="card-body">
@@ -205,7 +205,7 @@ $mydb->setQuery($query7);
 $cur7 = $mydb->loadResultList();
 foreach ($cur7 as $result7) {
 ?>
-<div class="col-xl-3 col-md-2 mb-4">
+<div class="col-xl-3 col-md-6 mb-4">
     <div class="card board1 fill">
         <div class="card shadow h-100 py-2">
             <div class="card-body">
@@ -231,7 +231,7 @@ $mydb->setQuery($query7);
 $cur7 = $mydb->loadResultList();
 foreach ($cur7 as $result7) {
 ?>
-<div class="col-xl-3 col-md-2 mb-4">
+<div class="col-xl-3 col-md-6 mb-4">
     <div class="card board1 fill">
         <div class="card shadow h-100 py-2">
             <div class="card-body">
