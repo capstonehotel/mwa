@@ -314,13 +314,13 @@ $months = array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 
 // Query to get room count by month
 $roomQuery = "SELECT 
-    TRANSDATE (CREATED, '%b') as month,
+    tblreservation (TRANSDATE, '%b') as month,
     COUNT(*) as room_count
     FROM tblroom 
-    WHERE YEAR(CREATED) = 2024 
+    WHERE YEAR(TRANSDATE) = 2024 
     AND ROOM != 'Rooms'
-    GROUP BY MONTH(CREATED)
-    ORDER BY MONTH(CREATED)";
+    GROUP BY MONTH(TRANSDATE)
+    ORDER BY MONTH(TRANSDATE)";
 
 $roomResult = mysqli_query($connection, $roomQuery);
 $monthlyData = array();
