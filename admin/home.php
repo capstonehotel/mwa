@@ -3,7 +3,14 @@
     weight: 200px;
     font-size: 25px;
 }
-
+.card-body {
+    padding: 10px; /* Adjust padding */
+}
+.dash-widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Center items vertically */
+}
 </style>
 <?php
 require_once("../includes/initialize.php");
