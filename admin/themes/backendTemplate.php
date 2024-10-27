@@ -313,6 +313,129 @@ mysqli_close($conn);
 }
 
 </style>
+<?php 
+
+?>
+<li class="nav-item my-auto" style="position: relative;">
+    <a href="javascript:void(0);" class="text-dark" id="bookingNotification" onclick="toggleNotificationMenu()">
+        <i class="fa fa-bell"></i>
+        <?php if ($total_notifications > 0): ?>
+            <span class="badge badge-pill badge-danger notification-badge"><?php echo $total_notifications; ?></span>
+        <?php endif; ?>
+    </a>
+    
+    <!-- Notification menu -->
+    <div id="notificationMenu" class="notification-menu">
+        <div class="menu-header">
+            <span class="menu-title">Notifications</span>
+            <a href="javascript:void(0)" class="clear-noti">Clear All</a>
+        </div>
+        <div class="menu-content">
+            <div class="menu-section">
+                <ul class="notification-list">
+                <?php
+                // Function to calculate relative time
+function time_elapsed_string($datetime, $full = false) {
+    $now = new DateTime(); // Current time
+    $ago = new DateTime($datetime); // Notification time
+    $diff = $now->diff($ago); // Calculate difference
+
+    // Time units
+    $diff->w = floor($diff->d / 7);
+    $diff->d -= $diff->w * 7;
+
+    // Time strings
+    $string = [
+        'y' => 'year',
+        'm' => 'month',
+        'w' => 'week',
+        'd' => 'day',
+        'h' => 'hour',
+        'i' => 'minute',
+        's' => 'second',
+    ];
+    
+    foreach ($string as $k => &$v) {
+        if ($diff->$k) {
+            $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : ''); // Pluralize if needed
+        } else {
+            unset($string[$k]);
+        }
+    }
+
+    // Return the first non-zero time string, or "just now"
+    if (!$full) {
+        $string = array_slice($string, 0, 1);
+    }
+
+    return $string ? implode(', ', $string) . ' ago' : 'just now';
+}
+
+                // Fetch notifications with room details
+                $notifications_query = "
+                    SELECT 
+                        g.G_AVATAR, 
+                        g.G_FNAME, 
+                        g.G_LNAME, 
+                        r.TRANSDATE, 
+                        rm.ROOM, 
+                        rm.ROOMDESC,
+                        r.RPRICE,
+                        r.RESERVEID,
+                        r.is_read
+                    FROM 
+                        tblreservation r
+                    JOIN 
+                        tblguest g ON r.GUESTID = g.GUESTID
+                    JOIN 
+                        tblroom rm ON r.ROOMID = rm.ROOMID
+                        
+                    ORDER BY r.TRANSDATE DESC"; // Adjust limit as needed
+
+                $notifications_result = mysqli_query($connection, $notifications_query);
+                if ($notifications_result) {
+                    while ($notification = mysqli_fetch_assoc($notifications_result)) {
+                        $avatar = '../../images/user_avatar/' . htmlspecialchars($notification['G_AVATAR']);
+                        $fullName = htmlspecialchars($notification['G_FNAME'] . ' ' . $notification['G_LNAME']);
+                        $roomName = htmlspecialchars($notification['ROOM']);
+                        $roomDesc = htmlspecialchars($notification['ROOMDESC']);
+                        $bookDate = time_elapsed_string($notification['TRANSDATE']);
+                        $exactDate = date_format(date_create($notification['TRANSDATE']), 'M d, Y h:i A'); // Format the exact date and time
+                        $paid = htmlspecialchars($notification['RPRICE']);
+                        $readClass = $notification['is_read'] ? 'read' : 'unread'; 
+                        ?>
+                        <li class="notification-message <?php echo $readClass; ?>" data-id="<?php echo $notification['RESERVEID']; ?>" >
+                        <a href="/admin/mod_reservation/index.php?viewed=bookings" onclick="markAsRead(<?php echo $notification['RESERVEID']; ?>, '/admin/mod_reservation/index.php?viewed=bookings')">
+        <div class="notification" style="display: flex; align-items: center;">
+            <img alt="" src="<?php echo $avatar; ?>" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width: 50px;" />
+            <div class="content" style="font-size: 15px;">
+                <p style="margin: 0 0 2px 0;">
+                    <strong><?php echo $fullName; ?></strong> has made a booking in <strong><?php echo $roomName; ?></strong> (<?php echo $roomDesc; ?>) and paid ₱ <?php echo $paid; ?> pesos.
+                </p>
+                <p class="time" style="margin-bottom: 5px;" title="<?php echo $exactDate; ?>">
+                     <?php echo $bookDate; ?>
+                </p>
+            </div>
+        </div>
+    </a>
+                        </li>
+                            <?php
+                        }
+                    } else {
+                        echo "<li class='notification-message'>No notifications available.</li>";
+                    }
+                    ?>
+                </ul>
+            </div>
+        </div>
+        <!-- Footer with "View all Notifications" outside of scrollable content -->
+        <div class="menu-footer" style="padding: 10px; text-align: center; border-top: 1px solid #eee;">
+            <a href="/admin/mod_reservation/index.php">View all Notifications</a>
+        </div>
+    </div>
+    <span style="margin-left: 10px;">|</span>
+</li>
+
 
 
 <style>
