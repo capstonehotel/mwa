@@ -265,6 +265,7 @@ $paymentStatus = ($paymentOption == 'Fully Paid') ? 'Fully Paid' : 'Partially Pa
             $reservation->GUESTID           = $_SESSION['GUESTID']; 
             $reservation->PRORPOSE          = 'Travel';
             $reservation->PAYMENT_STATUS    = $paymentStatus;
+            $reservation->PAYMENT_METHOD    = 'GCash';
             $reservation->STATUS            = 'Pending';
             $reservation->create(); 
 
@@ -275,8 +276,8 @@ $paymentStatus = ($paymentOption == 'Fully Paid') ? 'Fully Paid' : 'Partially Pa
            $item = count($_SESSION['monbela_cart']);
            
 
-      $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`  )
-       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending' )" ;
+      $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`,`PAYMENT_STATUS`,`PAYMENT_METHOD` )
+       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'" . $paymentStatus . "','GCash','Pending' )" ;
         // mysql_query($sql);
 
 
