@@ -483,7 +483,7 @@ document.getElementById('confirmBookingButton').addEventListener('click', functi
     if (selectedMethod) {
         // Adjust payment amount based on selected option
         let paymentAmount = <?php echo $_SESSION['pay']; ?>; // Full amount
-        if (selectedPayment === 'partial') {
+        if (selectedPayment === 'Partially Paid') {
             paymentAmount /= 2; // Half for partial payment
         }
 
