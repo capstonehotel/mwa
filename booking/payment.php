@@ -466,7 +466,7 @@ for ($i=0; $i < $count_cart  ; $i++) {
       </div>
 </div>
 
-<script>
+<!-- <script>
     // Event listener for the "Yes" button in the modal
     document.getElementById('confirmBookingButton').addEventListener('click', function() {
       
@@ -474,7 +474,7 @@ for ($i=0; $i < $count_cart  ; $i++) {
         // Submit the existing booking form
         document.getElementById('bookingForm').submit();
     });
-</script>
+</script> -->
     <script>
 document.getElementById('confirmBookingButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
