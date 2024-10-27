@@ -71,7 +71,7 @@
                                         <th>Confirmation Code</th>
                                         <th>Total Rooms</th>
                                         <!-- <th>Total Price</th> -->
-                                        <th>Payment</th>
+                                        <!-- <th>Payment</th> -->
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
