@@ -248,11 +248,7 @@ $_SESSION['GUESTID'] =   $lastguest;
       
             // }
            
-         // Assuming you have captured the value from the payment option selection
-$paymentOption = $_POST['payment_amount'];
-
-// Calculate payment status based on the selected option
-$paymentStatus = ($paymentOption == 'Fully Paid') ? 'Fully Paid' : 'Partially Paid';
+            $paymentStatus = isset($_POST['payment_status']) && $_POST['payment_status'] == 'Fully Paid' ? 'Fully Paid' : 'Partially Paid';
 
 
             $reservation = new Reservation();
@@ -277,7 +273,7 @@ $paymentStatus = ($paymentOption == 'Fully Paid') ? 'Fully Paid' : 'Partially Pa
            
 
       $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`,`PAYMENT_STATUS`,`PAYMENT_METHOD` )
-       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'" . $paymentStatus . "','GCash','Pending' )" ;
+       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentStatus . "', 'GCash' )" ;
         // mysql_query($sql);
 
 
