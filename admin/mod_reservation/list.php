@@ -70,7 +70,7 @@
                                         <th>Transaction Date</th>
                                         <th>Confirmation Code</th>
                                         <th>Total Rooms</th>
-                                        <!-- <th>Total Price</th> -->
+                                        <th>Total Price</th>
                                         <!-- <th>Payment</th> -->
                                         <th>Status</th>
                                         <th>Action</th>
@@ -92,7 +92,7 @@
                                                 <td align="center"><?php echo $row['TRANSDATE']; ?></td>
                                                 <td align="center"><?php echo $row['CONFIRMATIONCODE']; ?></td>
                                                 <td align="center"><?php echo $row['PQTY']; ?></td>
-                                                <!-- <td align="center"><?php echo $row['SPRICE']; ?></td> -->
+                                                <td align="center"><?php echo $row['SPRICE']; ?></td>
                                                 <!-- <td align="center" class="payment-column"><?php echo $row['PAYMENT_STATUS']; ?></td> -->
                                                 <td align="center"><?php echo $row['STATUS']; ?></td>
                                                 <td align="center">
