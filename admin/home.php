@@ -392,6 +392,12 @@ function lineChart() {
     chartElement.parentNode.insertBefore(currentYearLabel, chartElement.nextSibling);
 }
 </script>
+    <!-- Include jQuery and Morris.js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+
 <!-- <script>
 $(document).ready(function() {
     donutChart();
