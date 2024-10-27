@@ -1,21 +1,8 @@
 <?php
 session_start();
 
-// Ensure the session variable 'pay' is set and is a valid amount
-if (!isset($_SESSION['pay']) || !is_numeric($_SESSION['pay'])) {
-    echo json_encode(['success' => false, 'message' => 'Invalid total amount']);
-    exit;
-}
-
-// Calculate the amount based on the payment type
-// Use the provided payment amount from POST or default to the session amount
+// Assuming the session variable 'pay' is set
 $amount = isset($_POST['payment_amount']) ? $_POST['payment_amount'] * 100 : $_SESSION['pay'] * 100;
-
-// Check if the amount is valid (not zero or negative)
-if ($amount <= 0) {
-    echo json_encode(['success' => false, 'message' => 'Invalid payment amount']);
-    exit;
-}
 
 // PayMongo Secret Key
 $secret_key = 'sk_test_8FHikGJxuzFP3ix4itFTcQCv'; // Use your secret key here
@@ -38,7 +25,7 @@ if ($paymentMethod === 'gcash') {
         $payload = json_encode([
             'data' => [
                 'attributes' => [
-                    'amount' => $amount, // amount is in cents
+                    'amount' => $amount,
                     'redirect' => [
                         'success' => $successUrl,
                         'failed' => $failedUrl
