@@ -3,35 +3,33 @@
 
 <!-- Additional styling and scripts -->
 <style>
-   .table td, .table th {
-    white-space: nowrap;
-    vertical-align: middle;
-}
+    .table td, .table th {
+        white-space: nowrap;
+        vertical-align: middle;
+    }
 
-.table thead th {
-    text-align: center;
-}
+    .table thead th {
+        text-align: center;
+    }
 
-.table td.payment-column {
-    max-width: 100px; /* Adjust this value based on your preference */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
+    .table td.payment-column {
+        max-width: 100px; /* Adjust this value based on your preference */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 
-.btn-sm {
-    padding: 0.25rem 0.5rem;
-}
+    .btn-sm {
+        padding: 0.25rem 0.5rem;
+    }
 
-.table-responsive {
-    display: none; /* Hide tables initially */
-}
-
-
+    .table-responsive {
+        display: none; /* Hide tables initially */
+    }
 </style>
 
 <div class="container-fluid">
-    <div class="card shadow mb-4" >
+    <div class="card shadow mb-4">
         <div class="card-header py-3" style="display: flex; align-items: center;">
             <h6 class="m-0 font-weight-bold text-primary">List of Reservations</h6>
         </div>
@@ -50,7 +48,7 @@
         <div class="tab-content" id="reservationTabsContent">
             <?php 
             $queries = [
-                "list" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS` , `PAYMENT_STATUS` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` ORDER BY p.`STATUS`='pending' DESC, p.`TRANSDATE` DESC",
+                "list" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS`, `PAYMENT_STATUS` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` ORDER BY p.`STATUS`='pending' DESC, p.`TRANSDATE` DESC",
                 "pending" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS`, `PAYMENT_STATUS` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'pending' ORDER BY p.`TRANSDATE` DESC",
                 "confirmed" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS`, `PAYMENT_STATUS` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'confirmed' ORDER BY p.`TRANSDATE` DESC",
                 "check-in" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS`, `PAYMENT_STATUS` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'checkedin' ORDER BY p.`TRANSDATE` DESC",
@@ -97,8 +95,8 @@
                                                 <td align="center"><?php echo $row['STATUS']; ?></td>
                                                 <td align="center">
                                                     <a href="index.php?view=view&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-sm btn-primary"><i class="icon-edit"></i> View</a>
-                                                    <?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
-                                                    <button type="button" class="btn btn-danger btn-sm delete-btn" data-id="<?php echo $row['CONFIRMATIONCODE']; ?>"><i class="icon-edit"></i> Delete</button>
+                                                    <?php if($_SESSION['ADMIN_UROLE'] == "Administrator"){ ?>
+                                                        <button type="button" class="btn btn-danger btn-sm delete-btn" data-id="<?php echo $row['CONFIRMATIONCODE']; ?>"><i class="icon-delete"></i> Delete</button>
                                                     <?php } ?>
                                                 </td>
                                             </tr>
@@ -165,47 +163,27 @@ $(document).ready(function() {
                 $.ajax({
                     url: 'delete.php',
                     type: 'GET',
-                    data: { id: confirmationCode, confirm: 'true' },
+                    data: { id: confirmationCode },
                     success: function(response) {
-                        Swal.fire(
-                            'Deleted!',
-                            'The reservation has been deleted.',
-                            'success'
-                        ).then(() => {
-                            saveState(); // Save the tab state before reloading
-                            location.reload(); // Reload the page
-                        });
+                        if (response.success) {
+                            Swal.fire('Deleted!', 'Your reservation has been deleted.', 'success');
+                            location.reload(); // Reload the page to reflect changes
+                        } else {
+                            Swal.fire('Error!', 'There was a problem deleting your reservation.', 'error');
+                        }
                     },
                     error: function() {
-                        Swal.fire(
-                            'Error!',
-                            'There was an error deleting the reservation.',
-                            'error'
-                        );
+                        Swal.fire('Error!', 'There was a problem deleting your reservation.', 'error');
                     }
                 });
             }
         });
     });
 
-    // Restore the page state after the table is reloaded
-    $(window).on('load', function() {
-        restoreState(); // Restore tab state
-    });
+    // Call restore state on page load
+    restoreState();
 
-    // Handle tab change events to reset table page to 1
-    $('#reservationTabs a').on('shown.bs.tab', function(e) {
-        var currentTab = $(e.target).attr('href');
-        var table = $(currentTab + ' table').DataTable();
-        
-        // Reset DataTable to the first page
-        table.page('first').draw(false);
-
-        // Save the active tab
-        saveState();
-    });
+    // Save state on tab change
+    $('#reservationTabs a').on('click', saveState);
 });
 </script>
-
-
-
