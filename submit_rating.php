@@ -1,7 +1,7 @@
 <?php
 session_start();
-include 'includes/initialize.php'; // Include your database configuration file
-
+// include 'includes/initialize.php'; // Include your database configuration file
+require_once 'initialize.php';
 if (isset($_SESSION['user_id']) && isset($_POST['rating'])) {
     $userId = $_SESSION['user_id'];
     $rating = intval($_POST['rating']);
