@@ -16,7 +16,7 @@ $yourcomment = $_POST['yourcomment'];
 // $dbname = "hmsystemdb";
 
 // Create connection
-$conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
+$conn = new mysqli(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 // Check connection
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
