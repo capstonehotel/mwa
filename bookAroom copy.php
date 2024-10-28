@@ -735,8 +735,8 @@ $.ajax({
     },
     success: function(data) {
         alert(data);
-        window.location.href = 'index.php';
-        // location.reload();
+        // window.location.href = 'index.php';
+        location.reload();
     }
 });
 
