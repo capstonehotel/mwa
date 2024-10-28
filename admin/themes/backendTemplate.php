@@ -334,6 +334,8 @@ mysqli_close($conn);
             <div class="menu-section">
                 <ul class="notification-list">
                 <?php
+                // Set the default timezone to Manila
+date_default_timezone_set('Asia/Manila');
                 // Function to calculate relative time
 function time_elapsed_string($datetime, $full = false) {
     $now = new DateTime(); // Current time
