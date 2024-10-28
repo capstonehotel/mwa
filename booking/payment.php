@@ -273,10 +273,12 @@ $_SESSION['GUESTID'] =   $lastguest;
            
 
       $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`,`PAYMENT_STATUS`,`PAYMENT_METHOD` )
-       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentStatus . "', 'GCash' )" ;
+       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",'Pending', '" . $paymentStatus . "', 'GCash' )" ;
         // mysql_query($sql);
-
-
+        
+      $sql1 = "INSERT INTO `notifications` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `RPRICE`,`STATUS`,`PAYMENT_STATUS`)
+      VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentStatus . "' )" ;
+       // mysql_query($sql);
 
 
 
@@ -284,6 +286,9 @@ $_SESSION['GUESTID'] =   $lastguest;
      $msg = $mydb->executeQuery();
 
      
+    $mydb->setQuery($sql1);
+    $msg2 = $mydb->executeQuery();
+
 
     //   $lastreserv=mysql_insert_id(); 
     //   $mydb->setQuery("INSERT INTO `comments` (`firstname`, `lastname`, `email`, `comment`) VALUES('$name','$last','$email','$message')");
