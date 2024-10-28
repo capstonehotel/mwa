@@ -423,7 +423,7 @@ function time_elapsed_string($datetime, $full = false) {
                     <strong><?php echo $fullName; ?></strong> has made a booking in <strong><?php echo $roomName; ?></strong> (<?php echo $roomDesc; ?>) and <?php echo $paidstatus; ?> ₱ <?php echo $paid; ?> pesos.
                 </p>
                 <p class="time" style="margin-bottom: 5px;" title="<?php echo $exactDate; ?>">
-                     <?php echo $bookDate; ?>
+                     <?php echo $exactDate; ?>
                 </p>
             </div>
         </div>
