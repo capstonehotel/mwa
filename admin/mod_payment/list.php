@@ -52,7 +52,7 @@
             $queries = [
                 "list" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`,  `PQTY`, `SPRICE`, `STATUS` , `PAYMENT_STATUS`, `PAYMENT_METHOD` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` ORDER BY p.`TRANSDATE` DESC",
                 "partially paid" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `PQTY`, `SPRICE`, `STATUS`, `PAYMENT_STATUS`, `PAYMENT_METHOD` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`PAYMENT_STATUS` = 'Partially Paid' ORDER BY p.`TRANSDATE` DESC",
-                "fully [aid" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `PQTY`, `SPRICE`, `STATUS`, `PAYMENT_STATUS`, `PAYMENT_METHOD` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`PAYMENT_STATUS` = 'Fully Paid' ORDER BY p.`TRANSDATE` DESC",
+                "fully paid" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `PQTY`, `SPRICE`, `STATUS`, `PAYMENT_STATUS`, `PAYMENT_METHOD` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`PAYMENT_STATUS` = 'Fully Paid' ORDER BY p.`TRANSDATE` DESC",
                
             ];
 
