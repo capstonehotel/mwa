@@ -74,11 +74,9 @@ if ($confirmationCode) {
         <div class="tab-content" id="reservationTabsContent">
             <?php 
             $queries = [
-                "list" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `PAYMENT_STATUS`, `PAID_DATE` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` ORDER BY p.`TRANSDATE` DESC",
-                "partial" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `PAYMENT_STATUS`, `PAID_DATE` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`PAYMENT_STATUS` = 'Partial' ORDER BY p.`TRANSDATE` DESC",
-                "full" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `PAYMENT_STATUS`, `PAID_DATE` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`PAYMENT_STATUS` = 'Full' ORDER BY p.`TRANSDATE` DESC",
-                "paid" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `PAYMENT_STATUS`, `PAID_DATE` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`PAYMENT_STATUS` = 'Fully Paid' ORDER BY p.`TRANSDATE` DESC",
-                "unpaid" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `PAYMENT_STATUS`,`PAID_DATE` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`PAYMENT_STATUS` = 'Unpaid' ORDER BY p.`TRANSDATE` DESC",
+                "list" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `PAYMENT_STATUS` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` ORDER BY p.`TRANSDATE` DESC",
+                "patially paid" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `PAYMENT_STATUS` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`PAYMENT_STATUS` = 'Partially Paid' ORDER BY p.`TRANSDATE` DESC",
+                "fully paid" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `PAYMENT_STATUS` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`PAYMENT_STATUS` = 'FullY Paid' ORDER BY p.`TRANSDATE` DESC",
             ];
 
             foreach ($tabs as $tab) { ?>
@@ -94,7 +92,7 @@ if ($confirmationCode) {
                                         <th>Confirmation Code</th>
                                         <th>Total Price</th>
                                         <th>Status</th>
-                                        <th>Paid Date</th>
+                                        <th>Payment Method</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -110,17 +108,17 @@ if ($confirmationCode) {
                                             $number++;
                                             ?>
                                             <tr>
-                                                <td align="center"><?php echo $number; ?></td>
-                                                <td align="center"><?php echo $row['G_FNAME']; ?> <?php echo $row['G_LNAME']; ?></td>
+                                            <td align="center"><?php echo $number; ?></td>
+                                                <td align="center"><?php echo $row['G_FNAME'] . ' ' . $row['G_LNAME']; ?></td>
                                                 <td align="center"><?php echo $row['TRANSDATE']; ?></td>
                                                 <td align="center"><?php echo $row['CONFIRMATIONCODE']; ?></td>
-                                                <td align="center"><?php echo $row['SPRICE']; ?></td>
+                                                <td align="center"><?php echo number_format($row['SPRICE'], 2); ?></td> <!-- Format price -->
                                                 <td align="center" class="payment-column"><?php echo $row['PAYMENT_STATUS']; ?></td>
-                                                <td align="center"><?php echo (isset($row['PAID_DATE']) && $row['PAYMENT_STATUS'] == 'Fully Paid') ? $row['PAID_DATE'] : 'N/A'; ?></td>
+                                                <td align="center"><?php echo $row['PAYMENT_METHOD']; ?></td>
                                                 <td align="center">
                                                     <a href="index.php?view=view&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-sm btn-primary"><i class="icon-edit"></i> View</a>
-                                                    <?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
-                                                    <button type="button" class="btn btn-danger btn-sm delete-btn" data-id="<?php echo $row['CONFIRMATIONCODE']; ?>"><i class="icon-edit"></i> Delete</button>
+                                                    <?php if($_SESSION['ADMIN_UROLE'] == "Administrator") { ?>
+                                                    <button type="button" class="btn btn-danger btn-sm delete-btn" data-id="<?php echo $row['CONFIRMATIONCODE']; ?>"><i class="icon-trash"></i> Delete</button>
                                                     <?php } ?>
                                                 </td>
                                             </tr>
