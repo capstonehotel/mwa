@@ -1,5 +1,5 @@
 <?php
-
+require_once 'initialize.php';
 $roomid = $_POST['roomid'];
 
 
