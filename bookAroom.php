@@ -3,7 +3,7 @@
 // $username = "root";
 // $password = "";
 // $dbname = "hmsystemdb";
-
+require_once 'initialize.php';
 
 // Create connection
 $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
@@ -735,8 +735,8 @@ $.ajax({
     },
     success: function(data) {
         alert(data);
-        // window.location.href = 'index.php';
-        location.reload();
+        window.location.href = 'index.php';
+        // location.reload();
     }
 });
 
