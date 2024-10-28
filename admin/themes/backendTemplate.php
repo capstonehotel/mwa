@@ -404,7 +404,7 @@ function time_elapsed_string($datetime, $full = false) {
                         $roomName = htmlspecialchars($notification['ROOM']);
                         $roomDesc = htmlspecialchars($notification['ROOMDESC']);
                         $bookDate = time_elapsed_string($notification['TRANSDATE']);
-                        $exactDate = date_format(date_create($notification['TRANSDATE']), 'M d, Y h:i A'); // Format the exact date and time
+                        $exactDate = date_format(date_create($notification['TRANSDATE']), 'h:i A'); // Format the exact date and time
                         $paidstatus = htmlspecialchars($notification['PAYMENT_STATUS']);
                         // Determine the paid amount based on payment status
                         $paid = htmlspecialchars($notification['RPRICE']);
