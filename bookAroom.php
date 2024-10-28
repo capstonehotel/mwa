@@ -92,7 +92,10 @@ if ($conn->connect_error) {
     box-sizing: border-box; /* Ensures padding is included in width */
 }
 
-
+.scrollable-reviews:empty {
+    border: none;
+    padding: 0;
+}
 .review-item {
     margin-bottom: 10px;
 }
