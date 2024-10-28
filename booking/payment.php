@@ -275,6 +275,12 @@ $_SESSION['GUESTID'] =   $lastguest;
       $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`,`PAYMENT_STATUS`,`PAYMENT_METHOD` )
        VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentStatus . "', 'GCash' )" ;
         // mysql_query($sql);
+
+        
+      $sql1 = "INSERT INTO `notifications` (`TRANSDATE`,`CONFIRMATIONCODE`, `GUESTID`, `SPRICE`,`STATUS`,`PAYMENT_STATUS`,`PAYMENT_METHOD` )
+      VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."'," . $_SESSION['GUESTID'] . ",".$tot.",'Pending', '" . $paymentStatus . "', 'GCash' )" ;
+       // mysql_query($sql);
+       
         
 
 
@@ -283,6 +289,10 @@ $_SESSION['GUESTID'] =   $lastguest;
 
      $mydb->setQuery($sql);
      $msg = $mydb->executeQuery();
+
+     $mydb1->setQuery($sql1);
+     $msg1 = $mydb1->executeQuery();
+
 
      
 
