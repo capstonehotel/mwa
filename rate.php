@@ -10,13 +10,13 @@ $yourcomment = $_POST['yourcomment'];
 
 
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "hmsystemdb";
+// $servername = "localhost";
+// $username = "root";
+// $password = "";
+// $dbname = "hmsystemdb";
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 // Check connection
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
