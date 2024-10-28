@@ -8,8 +8,6 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Close the connection
-$conn->close();
 
 $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 $sql =  "ALTER TABLE star_ratings MODIFY id INT NOT NULL AUTO_INCREMENT PRIMARY KEY";
