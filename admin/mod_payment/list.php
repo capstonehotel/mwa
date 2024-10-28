@@ -63,7 +63,7 @@ if ($confirmationCode) {
         <!-- Tab Navigation -->
         <ul class="nav nav-tabs" id="reservationTabs" role="tablist">
             <?php 
-            $tabs = ['list', 'partial', 'full', 'paid', 'unpaid'];
+            $tabs = ['list', 'partially paid', 'fully paid'];
             foreach ($tabs as $tab) { ?>
                 <li class="nav-item">
                     <a class="nav-link <?php echo ($tab == 'list') ? 'active' : ''; ?>" id="<?php echo $tab; ?>-tab" data-toggle="tab" href="#<?php echo $tab; ?>" role="tab" aria-controls="<?php echo $tab; ?>" aria-selected="<?php echo ($tab == 'list') ? 'true' : 'false'; ?>"><?php echo ucfirst($tab); ?></a>
