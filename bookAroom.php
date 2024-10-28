@@ -724,7 +724,7 @@ if (yourstarrate == "") {
 $.ajax({
     type: "POST",
     datatype: "html",
-    url: "https://mcchmhotelreservation.com/rate.php",
+    url: "rate.php",
     data: {
         yourid: yourid,
         yourname: yourname,
@@ -755,7 +755,7 @@ var roomid = $(this).attr('data-id');
 $.ajax({
     type: "POST",
     datatype: "html",
-    url: "https://mcchmhotelreservation.com/getratinginfo.php",
+    url: "getratinginfo.php",
     data: {
         roomid: roomid,           
     },
@@ -768,7 +768,7 @@ $.ajax({
  $.ajax({
     type: "POST",
     datatype: "html",
-    url: "https://mcchmhotelreservation.com/getratings.php",
+    url: "getratings.php",
     data: {
         roomid: roomid,           
     },
