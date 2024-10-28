@@ -273,23 +273,18 @@ $_SESSION['GUESTID'] =   $lastguest;
            
 
       $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`,`PAYMENT_STATUS`,`PAYMENT_METHOD` )
-       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",'Pending', '" . $paymentStatus . "', 'GCash' )" ;
+       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentStatus . "', 'GCash' )" ;
         // mysql_query($sql);
         
-    //   $sql1 = "INSERT INTO `notifications` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `RPRICE`,`STATUS`,`PAYMENT_STATUS`)
-    //   VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentStatus . "' )" ;
-    //    // mysql_query($sql);
+
+
 
 
 
      $mydb->setQuery($sql);
-     $msg= $mydb->executeQuery();
+     $msg = $mydb->executeQuery();
 
      
-    // $mydb->setQuery($sql1);
-    // $msg2 = $mydb->executeQuery();
-
-
 
     //   $lastreserv=mysql_insert_id(); 
     //   $mydb->setQuery("INSERT INTO `comments` (`firstname`, `lastname`, `email`, `comment`) VALUES('$name','$last','$email','$message')");
@@ -297,7 +292,7 @@ $_SESSION['GUESTID'] =   $lastguest;
     //   message("New [". $name ."] created successfully!", "success");
 
   //  unsetSessions();
-//   if ($msg && $msg2) {
+
             unset($_SESSION['monbela_cart']);
             // unset($_SESSION['confirmation']);
             unset($_SESSION['pay']);
@@ -305,6 +300,8 @@ $_SESSION['GUESTID'] =   $lastguest;
             unset($_SESSION['to']);
             $_SESSION['activity'] = 1;
 
+
+            
             ?> 
 <script type="text/javascript">
     Swal.fire({
@@ -319,13 +316,7 @@ $_SESSION['GUESTID'] =   $lastguest;
         }
     });
 </script>
-
-<?php 
-//  } else {
-//         // Handle error
-//         echo "An error occurred: Unable to create payment or notification records.";
-//     }
-}?>
+<?php }?>
 
  
 <!-- Add this in your HTML head section -->
