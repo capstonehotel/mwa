@@ -297,7 +297,7 @@ $_SESSION['GUESTID'] =   $lastguest;
     //   message("New [". $name ."] created successfully!", "success");
 
   //  unsetSessions();
-  if ($msg && $msg2) {
+//   if ($msg && $msg2) {
             unset($_SESSION['monbela_cart']);
             // unset($_SESSION['confirmation']);
             unset($_SESSION['pay']);
@@ -320,10 +320,11 @@ $_SESSION['GUESTID'] =   $lastguest;
     });
 </script>
 
-<?php  } else {
-        // Handle error
-        echo "An error occurred: Unable to create payment or notification records.";
-    }
+<?php 
+//  } else {
+//         // Handle error
+//         echo "An error occurred: Unable to create payment or notification records.";
+//     }
 }?>
 
  
