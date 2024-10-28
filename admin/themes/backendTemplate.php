@@ -22,7 +22,7 @@
     <!-- Custom styles for this template-->
     <link href="https://mcchmhotelreservation.com/admin/css/sb-admin-2.min.css" rel="stylesheet">
 
- <link href="https://mcchmhotelreservation.com/admin/assets/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+ <link href="https://mcchmhotelreservation.com/admin/assets/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href=".../assets/bootstrap/css/bootstrap.min.css">
 
 <link href="https://mcchmhotelreservation.com/admin/css/dataTables.bootstrap.css" rel="stylesheet" media="screen">
