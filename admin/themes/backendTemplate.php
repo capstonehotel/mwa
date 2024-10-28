@@ -335,11 +335,11 @@ mysqli_close($conn);
                 <ul class="notification-list">
                 <?php
                 // Set the default timezone to Manila
-date_default_timezone_set('Asia/Manila');
+// date_default_timezone_set('Asia/Manila');
                 // Function to calculate relative time
-function time_elapsed_string($datetime, $full = false) {
-    $now = new DateTime(); // Current time
-    $ago = new DateTime($datetime); // Notification time
+                function time_elapsed_string($datetime, $full = false) {
+                    $now = new DateTime('now', new DateTimeZone('Asia/Manila')); // Current time with timezone
+                    $ago = new DateTime($datetime, new DateTimeZone('Asia/Manila')); // Notification time with timezone
     $diff = $now->diff($ago); // Calculate difference
 
     // Time units
