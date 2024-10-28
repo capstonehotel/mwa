@@ -33,13 +33,13 @@
 <div class="container-fluid">
     <div class="card shadow mb-4" >
         <div class="card-header py-3" style="display: flex; align-items: center;">
-            <h6 class="m-0 font-weight-bold text-primary">List of Reservations</h6>
+            <h6 class="m-0 font-weight-bold text-primary">List of Payments</h6>
         </div>
        
         <!-- Tab Navigation -->
         <ul class="nav nav-tabs" id="reservationTabs" role="tablist">
             <?php 
-            $tabs = ['list', 'pending', 'confirmed', 'check-in', 'check-out', 'cancelled'];
+            $tabs = ['list', 'partially paid', 'fully paid'];
             foreach ($tabs as $tab) { ?>
                 <li class="nav-item">
                     <a class="nav-link <?php echo ($tab == 'list') ? 'active' : ''; ?>" id="<?php echo $tab; ?>-tab" data-toggle="tab" href="#<?php echo $tab; ?>" role="tab" aria-controls="<?php echo $tab; ?>" aria-selected="<?php echo ($tab == 'list') ? 'true' : 'false'; ?>"><?php echo ucfirst($tab); ?></a>
@@ -50,12 +50,10 @@
         <div class="tab-content" id="reservationTabsContent">
             <?php 
             $queries = [
-                "list" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS` , `PAYMENT_STATUS` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` ORDER BY p.`STATUS`='pending' DESC, p.`TRANSDATE` DESC",
-                "pending" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS`, `PAYMENT_STATUS` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'pending' ORDER BY p.`TRANSDATE` DESC",
-                "confirmed" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS`, `PAYMENT_STATUS` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'confirmed' ORDER BY p.`TRANSDATE` DESC",
-                "check-in" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS`, `PAYMENT_STATUS` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'checkedin' ORDER BY p.`TRANSDATE` DESC",
-                "check-out" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS`, `PAYMENT_STATUS` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'checkedout' ORDER BY p.`TRANSDATE` DESC",
-                "cancelled" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS`, `PAYMENT_STATUS` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'cancelled' ORDER BY p.`TRANSDATE` DESC"
+                "list" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS` , `PAYMENT_STATUS`, `PAYMENT_METHOD` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` ORDER BY p.`TRANSDATE` DESC",
+                "partially paid" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS`, `PAYMENT_STATUS`, `PAYMENT_METHOD` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`PAYMENT_STATUS` = 'Partially Paid' ORDER BY p.`TRANSDATE` DESC",
+                "fully [aid" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS`, `PAYMENT_STATUS`, `PAYMENT_METHOD` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`PAYMENT_STATUS` = 'Fully Paid' ORDER BY p.`TRANSDATE` DESC",
+               
             ];
 
             foreach ($tabs as $tab) { ?>
@@ -68,11 +66,12 @@
                                         <th>#</th>
                                         <th>Guest</th>
                                         <th>Transaction Date</th>
-                                        <th>Confirmation Code</th>
+                                        <!-- <th>Confirmation Code</th> -->
                                         <th>Total Rooms</th>
-                                        <!-- <th>Total Price</th> -->
-                                        <th>Payment</th>
+                                        <th>Total Price</th>
                                         <th>Status</th>
+                                        <th>Payment Method</th>
+                                        <!-- <th>Status</th> -->
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -90,11 +89,11 @@
                                                 <td align="center"><?php echo $number; ?></td>
                                                 <td align="center"><?php echo $row['G_FNAME']; ?> <?php echo $row['G_LNAME']; ?></td>
                                                 <td align="center"><?php echo $row['TRANSDATE']; ?></td>
-                                                <td align="center"><?php echo $row['CONFIRMATIONCODE']; ?></td>
+                                                <!-- <td align="center"><?php echo $row['CONFIRMATIONCODE']; ?></td> -->
                                                 <td align="center"><?php echo $row['PQTY']; ?></td>
-                                                <!-- <td align="center"><?php echo $row['SPRICE']; ?></td> -->
+                                                <td align="center"><?php echo $row['SPRICE']; ?></td>
                                                 <td align="center" class="payment-column"><?php echo $row['PAYMENT_STATUS']; ?></td>
-                                                <td align="center"><?php echo $row['STATUS']; ?></td>
+                                                <td align="center"><?php echo $row['PAYMENT_METHOD']; ?></td>
                                                 <td align="center">
                                                     <a href="index.php?view=view&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-sm btn-primary"><i class="icon-edit"></i> View</a>
                                                     <?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
