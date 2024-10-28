@@ -277,7 +277,7 @@ $_SESSION['GUESTID'] =   $lastguest;
         // mysql_query($sql);
 
         
-      $sql1 = "INSERT INTO `notifications` (`TRANSDATE`,`CONFIRMATIONCODE`, `GUESTID`, `SPRICE`,`STATUS`,`PAYMENT_STATUS`,`PAYMENT_METHOD` )
+      $sql1 = "INSERT INTO `notifications` (`TRANSDATE`,`CONFIRMATIONCODE`, `GUESTID`, `RPRICE`,`STATUS`,`PAYMENT_STATUS`,`PAYMENT_METHOD` )
       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."'," . $_SESSION['GUESTID'] . ",".$tot.",'Pending', '" . $paymentStatus . "', 'GCash' )" ;
        // mysql_query($sql);
        
