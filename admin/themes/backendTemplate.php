@@ -377,20 +377,22 @@ function time_elapsed_string($datetime, $full = false) {
                         g.G_AVATAR, 
                         g.G_FNAME, 
                         g.G_LNAME, 
-                        r.TRANSDATE, 
+                        p.TRANSDATE, 
                         rm.ROOM, 
                         rm.ROOMDESC,
                         r.RPRICE,
                         r.RESERVEID,
                         r.is_read
                     FROM 
-                        tblreservation r
+                        tblreservation r 
                     JOIN 
                         tblguest g ON r.GUESTID = g.GUESTID
                     JOIN 
                         tblroom rm ON r.ROOMID = rm.ROOMID
+                    JOIN 
+                        tblpayment p ON r.RESERVEID = p.RESERVEID 
                         
-                    ORDER BY r.TRANSDATE DESC"; // Adjust limit as needed
+                    ORDER BY p.TRANSDATE DESC"; // Adjust limit as needed
 
                 $notifications_result = mysqli_query($connection, $notifications_query);
                 if ($notifications_result) {
