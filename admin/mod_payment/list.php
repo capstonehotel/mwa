@@ -74,9 +74,9 @@ if ($confirmationCode) {
         <div class="tab-content" id="reservationTabsContent">
             <?php 
             $queries = [
-                "list" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `PAYMENT_STATUS` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` ORDER BY p.`TRANSDATE` DESC",
-                "patially paid" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `PAYMENT_STATUS` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`PAYMENT_STATUS` = 'Partially Paid' ORDER BY p.`TRANSDATE` DESC",
-                "fully paid" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `PAYMENT_STATUS` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`PAYMENT_STATUS` = 'FullY Paid' ORDER BY p.`TRANSDATE` DESC",
+                "list"=> "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`PAYMENT_STATUS`, p.`PAYMENT_METHOD` FROM `tblpayment` p JOIN `tblguest` g ON p.`GUESTID` = g.`GUESTID` ORDER BY p.`TRANSDATE` DESC",
+                "patially paid" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`PAYMENT_STATUS`, p.`PAYMENT_METHOD` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`PAYMENT_STATUS` = 'Partially Paid' ORDER BY p.`TRANSDATE` DESC",
+                "fully paid" =>  "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`PAYMENT_STATUS`, p.`PAYMENT_METHOD` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`PAYMENT_STATUS` = 'FullY Paid' ORDER BY p.`TRANSDATE` DESC",
             ];
 
             foreach ($tabs as $tab) { ?>
