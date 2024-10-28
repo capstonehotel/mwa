@@ -1,6 +1,28 @@
 <?php 
  require_once("initialize.php");
+ 
+ // Assuming you already have a connection to the database
+ // $conn = new mysqli("localhost", "username", "password", "database");
+ 
+ // Check connection
+ if ($conn->connect_error) {
+     die("Connection failed: " . $conn->connect_error);
+ }
+ 
+ // SQL query to alter the table and set the column 'id' as AUTO_INCREMENT
+ $sql = "ALTER TABLE star_ratings MODIFY id INT NOT NULL AUTO_INCREMENT PRIMARY KEY";
+ 
+ // Execute the query
+ if ($conn->query($sql) === TRUE) {
+     echo "Column 'id' has been set to AUTO_INCREMENT successfully.";
+ } else {
+     echo "Error updating column: " . $conn->error;
+ }
+ 
+ // Close the connection
+ $conn->close();
 
+ 
 
 
 
