@@ -465,14 +465,13 @@ $_SESSION['departure'] =date_format(date_create($_POST['departure']),"Y-m-d");
 
 <?php 
 
-// $servername = "localhost";
-// $username = "root";
-// $password = "";
-// $dbname = "hmsystemdb";
-
-
-
-$conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
+$servername = "127.0.0.1";
+$username = "u510162695_hmsystemdb";
+$password = "1Hmsystemdb";
+$dbname = "u510162695_hmsystemdb";
+$dbport = "3306";
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname, $dbport);
 // Check connection
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);

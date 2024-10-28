@@ -4,10 +4,10 @@ $roomid = $_POST['roomid'];
 
 
 
-// $servername = "localhost";
-// $username = "root";
-// $password = "";
-// $dbname = "hmsystemdb";
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "hmsystemdb";
 
 
 // Create connection
