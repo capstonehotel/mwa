@@ -276,18 +276,18 @@ $_SESSION['GUESTID'] =   $lastguest;
        VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",'Pending', '" . $paymentStatus . "', 'GCash' )" ;
         // mysql_query($sql);
         
-      $sql1 = "INSERT INTO `notifications` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `RPRICE`,`STATUS`,`PAYMENT_STATUS`)
-      VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentStatus . "' )" ;
-       // mysql_query($sql);
+    //   $sql1 = "INSERT INTO `notifications` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `RPRICE`,`STATUS`,`PAYMENT_STATUS`)
+    //   VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentStatus . "' )" ;
+    //    // mysql_query($sql);
 
 
 
      $mydb->setQuery($sql);
-     $msg1= $mydb->executeQuery();
+     $msg= $mydb->executeQuery();
 
      
-    $mydb->setQuery($sql1);
-    $msg2 = $mydb->executeQuery();
+    // $mydb->setQuery($sql1);
+    // $msg2 = $mydb->executeQuery();
 
 
 
@@ -297,7 +297,7 @@ $_SESSION['GUESTID'] =   $lastguest;
     //   message("New [". $name ."] created successfully!", "success");
 
   //  unsetSessions();
-  if ($msg1 && $msg2) {
+  if ($msg && $msg2) {
             unset($_SESSION['monbela_cart']);
             // unset($_SESSION['confirmation']);
             unset($_SESSION['pay']);

@@ -380,6 +380,8 @@ function time_elapsed_string($datetime, $full = false) {
                         p.TRANSDATE, 
                         rm.ROOM, 
                         rm.ROOMDESC,
+                        r.CONFIRMATIONCODE,
+                        r.PAYMENT_STATUS,
                         r.RPRICE,
                         r.RESERVEID,
                         r.is_read
@@ -390,7 +392,7 @@ function time_elapsed_string($datetime, $full = false) {
                     JOIN 
                         tblroom rm ON r.ROOMID = rm.ROOMID
                     JOIN 
-                        tblpayment p ON r.RESERVEID = p.RESERVEID 
+                        tblpayment p ON r.CONFIRMATIONCODE = p.CONFIRMATIONCODE
                         
                     ORDER BY p.TRANSDATE DESC"; // Adjust limit as needed
 
@@ -403,7 +405,13 @@ function time_elapsed_string($datetime, $full = false) {
                         $roomDesc = htmlspecialchars($notification['ROOMDESC']);
                         $bookDate = time_elapsed_string($notification['TRANSDATE']);
                         $exactDate = date_format(date_create($notification['TRANSDATE']), 'M d, Y h:i A'); // Format the exact date and time
+                        $paidstatus = htmlspecialchars($notification['PAYMENT_STATUS']);
+                        // Determine the paid amount based on payment status
                         $paid = htmlspecialchars($notification['RPRICE']);
+                        if ($notification['PAYMENT_STATUS'] === 'Partially Paid') {
+                            $paid = $paid / 2; // Halve the amount if partially paid
+                        }
+                        $paid = number_format($paid, 2);
                         $readClass = $notification['is_read'] ? 'read' : 'unread'; 
                         ?>
                         <li class="notification-message <?php echo $readClass; ?>" data-id="<?php echo $notification['RESERVEID']; ?>" >
@@ -412,7 +420,7 @@ function time_elapsed_string($datetime, $full = false) {
             <img alt="" src="<?php echo $avatar; ?>" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width: 50px;" />
             <div class="content" style="font-size: 15px;">
                 <p style="margin: 0 0 2px 0;">
-                    <strong><?php echo $fullName; ?></strong> has made a booking in <strong><?php echo $roomName; ?></strong> (<?php echo $roomDesc; ?>) and paid ₱ <?php echo $paid; ?> pesos.
+                    <strong><?php echo $fullName; ?></strong> has made a booking in <strong><?php echo $roomName; ?></strong> (<?php echo $roomDesc; ?>) and <?php echo $paidstatus; ?> ₱ <?php echo $paid; ?> pesos.
                 </p>
                 <p class="time" style="margin-bottom: 5px;" title="<?php echo $exactDate; ?>">
                      <?php echo $bookDate; ?>
