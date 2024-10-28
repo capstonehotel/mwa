@@ -1,19 +1,18 @@
-<?php 
+<?php
 // $servername = "localhost";
 // $username = "root";
 // $password = "";
 // $dbname = "hmsystemdb";
+require_once 'initialize.php';
 
+// Create connection
+$conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
 
-// // Create connection
-// $conn = new mysqli($servername, $username, $password, $dbname);
-// // Check connection
-// if ($conn->connect_error) {
-//   die("Connection failed: " . $conn->connect_error);
-// }
-
- ?>
-
+?>
 <style>
    .img-hover {
     transition: transform 0.3s ease;
@@ -93,7 +92,10 @@
     box-sizing: border-box; /* Ensures padding is included in width */
 }
 
-
+.scrollable-reviews:empty {
+    border: none;
+    padding: 0;
+}
 .review-item {
     margin-bottom: 10px;
 }
@@ -230,7 +232,8 @@
     color: #555; /* Optional: change color for the date */
 }
 </style>
-  <?php
+
+<?php
 $msg = "";
 
 if(isset($_POST['booknow'])){
@@ -248,7 +251,7 @@ if(isset($_POST['booknow'])){
      
       addtocart($_POST['ROOMID'],$days, $totalprice,$_SESSION['arrival'],$_SESSION['departure']);
 
-      redirect('https://mcchmhotelreservation.com/booking/'); 
+      redirect( 'https://mcchmhotelreservation.com/booking/'); 
 
 }
  
@@ -274,7 +277,6 @@ $_SESSION['departure'] =date_format(date_create($_POST['departure']),"Y-m-d");
 
    $accomodation = ' | ' ;
   ?>
-
 <!-- starrating -->
 <?php if (isset($_SESSION['GUESTID'])): ?>
 <input style="display: none;" type="text" id="yourid" name="yourid" value="<?php echo $_SESSION['GUESTID']; ?>">
@@ -288,6 +290,7 @@ $_SESSION['departure'] =date_format(date_create($_POST['departure']),"Y-m-d");
 
 
 
+
 <div class="card rounded" style="padding: 10px;">
     <div  class="pagetitle">   
         <h1  ><?php print $title ; ?> 
@@ -296,7 +299,7 @@ $_SESSION['departure'] =date_format(date_create($_POST['departure']),"Y-m-d");
     </div>
     <nav aria-label="breadcrumb" >
       <ol class="breadcrumb" style="margin-top: 10px;">
-        <li class="breadcrumb-item"><a href="<?php echo WEB_ROOT ;?>index.php">Home</a></li>
+        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item active" aria-current="page"><?php print $title  ; ?></li>
         <li class="breadcrumb-item " style="color: #02aace; float:right"> <?php print  $msg; ?></li>
       </ol>
@@ -417,32 +420,15 @@ $_SESSION['departure'] =date_format(date_create($_POST['departure']),"Y-m-d");
 
               }      
 // ============================================================================================================================
-// load config file first 
-// require_once("includes/config.php");
-// //load basic functions next so that everything after can use them
-// require_once("includes/functions.php");
-// //later here where we are going to put our class session
-// require_once("includes/session.php");
-// require_once("includes/user.php");
-// require_once("includes/pagination.php");
-// require_once("includes/paginsubject.php");
-// require_once("includes/accomodation.php");
-// require_once("includes/guest.php");
-// require_once("includes/reserve.php"); 
-// require_once("includes/setting.php");
-// //Load Core objects
-// require_once("includes/database.php");
+
 ?>
-
-
 
 <div class="col-md-4 col-sm-12 py-2">
 <form method="POST" action="index.php?p=accomodation">
     <input type="hidden" name="ROOMPRICE" value="<?php echo $result->PRICE ;?>">
     <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID ;?>">
     
-    <div data-id="<?php echo $result->ROOMID; ?>" class="card itempost" style="cursor: pointer;" onclick="openModal(<?php echo $result->ROOMID; ?>)">
-
+    <div class="card" style="cursor: pointer;" onclick="openModal(<?php echo $result->ROOMID; ?>)">
         <figure class="gallery-item" style="text-align: center; margin-top: 10px;">
             <!-- <a href="#" data-toggle="modal" data-target="#roomModal<?php echo $result->ROOMID; ?>"> -->
                 <?php if(is_file('https://mcchmhotelreservation.com/admin/mod_room/'.$result->ROOMIMAGE)): ?>
@@ -463,7 +449,7 @@ $_SESSION['departure'] =date_format(date_create($_POST['departure']),"Y-m-d");
                 <li>Remaining Rooms : <?php echo $resNum ;?></li>   
                 
 
-<?php 
+                <?php 
 
 // $servername = "localhost";
 // $username = "root";
@@ -471,7 +457,7 @@ $_SESSION['departure'] =date_format(date_create($_POST['departure']),"Y-m-d");
 // $dbname = "hmsystemdb";
 
 
-
+// Create connection
 $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 // Check connection
 if ($conn->connect_error) {
@@ -512,9 +498,8 @@ if ($countrated == 0) {
                             <div onclick="event.stopPropagation();"><?php echo $btn ;?></div>
                         </div>
                     </li>  
-<?php }} else { ?>
-
-
+                    <?php }} else { ?>
+                        
 <li style="list-style:none; margin: 20px 25px 0 0;">
                         <!-- Flex container to align rating left and button centered -->
                         <div style="display: flex; justify-content: center; align-items: center; position: relative;">
@@ -529,7 +514,6 @@ if ($countrated == 0) {
             </ul>
         </div>
     </div>
-
 </form>
 </div>
 
@@ -573,50 +557,50 @@ if ($countrated == 0) {
                 <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID ;?>">
                 <?php echo $btn ;?>
             </form>
-            <!-- Rating Section -->
-            <div class="rating-section mb-4 rating-section-<?php echo $result->ROOMID ;?>" style="margin-top: 30px;">
+             <!-- Rating Section -->
+             <div class="rating-section mb-4 rating-section-<?php echo $result->ROOMID ;?>" style="margin-top: 30px;">
 
+</div>
+</div>
+<!-- Comment Section -->
+        <div class="comment-section">
+            <!-- Comment Label and Star Rating aligned to left -->
+            <label for="comment">Leave a Comment:</label>
+            <div class="star-rating-top">
+                <input onclick="$('#yourstarrate').val('5');$('#yourroomid').val('<?php echo $result->ROOMID; ?>');" type="radio" id="5-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="5" />
+                <label for="5-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+
+                <input onclick="$('#yourstarrate').val('4');$('#yourroomid').val('<?php echo $result->ROOMID; ?>');" type="radio" id="4-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="4" />
+                <label for="4-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+
+                <input onclick="$('#yourstarrate').val('3');$('#yourroomid').val('<?php echo $result->ROOMID; ?>');" type="radio" id="3-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="3" />
+                <label for="3-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+
+                <input onclick="$('#yourstarrate').val('2');$('#yourroomid').val('<?php echo $result->ROOMID; ?>');" type="radio" id="2-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="2" />
+                <label for="2-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+
+                <input onclick="$('#yourstarrate').val('1');$('#yourroomid').val('<?php echo $result->ROOMID; ?>');" type="radio" id="1-star-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="1" />
+                <label for="1-star-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
+            </div>
+
+
+            <!-- Comment Message Card -->
+            <div class="comment-card">
+                <textarea name="comment" onchange="$('#yourcomment').html($(this).val())" id="comment-<?php echo $result->ROOMID; ?>" placeholder="Write your comment here..."></textarea>
+            </div>
+
+            <!-- Submit and Cancel Buttons -->
+            <div class="comment-buttons">
+                <?php if (isset($_SESSION['GUESTID'])) { ?>
+                    <button class="btn btn-primary submitrate" data-id="<?php echo $result->ROOMID; ?>">Submit</button>
+                <?php } else { ?>
+                    <button disabled class="btn btn-primary submitrate">Submit</button>
+                <?php } ?>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
         </div>
-       <!-- Comment Section -->
-                    <div class="comment-section">
-                        <!-- Comment Label and Star Rating aligned to left -->
-                        <label for="comment">Leave a Comment:</label>
-                        <div class="star-rating-top">
-                            <input onclick="$('#yourstarrate').val('5');$('#yourroomid').val('<?php echo $result->ROOMID; ?>');" type="radio" id="5-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="5" />
-                            <label for="5-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
 
-                            <input onclick="$('#yourstarrate').val('4');$('#yourroomid').val('<?php echo $result->ROOMID; ?>');" type="radio" id="4-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="4" />
-                            <label for="4-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-
-                            <input onclick="$('#yourstarrate').val('3');$('#yourroomid').val('<?php echo $result->ROOMID; ?>');" type="radio" id="3-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="3" />
-                            <label for="3-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-
-                            <input onclick="$('#yourstarrate').val('2');$('#yourroomid').val('<?php echo $result->ROOMID; ?>');" type="radio" id="2-stars-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="2" />
-                            <label for="2-stars-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-
-                            <input onclick="$('#yourstarrate').val('1');$('#yourroomid').val('<?php echo $result->ROOMID; ?>');" type="radio" id="1-star-comment<?php echo $result->ROOMID; ?>" name="rating-comment<?php echo $result->ROOMID; ?>" value="1" />
-                            <label for="1-star-comment<?php echo $result->ROOMID; ?>" class="star">&#9733;</label>
-                        </div>
-
-
-                        <!-- Comment Message Card -->
-                        <div class="comment-card">
-                            <textarea name="comment" onchange="$('#yourcomment').html($(this).val())" id="comment-<?php echo $result->ROOMID; ?>" placeholder="Write your comment here..."></textarea>
-                        </div>
-
-                        <!-- Submit and Cancel Buttons -->
-                        <div class="comment-buttons">
-                            <?php if (isset($_SESSION['GUESTID'])) { ?>
-                                <button class="btn btn-primary submitrate" data-id="<?php echo $result->ROOMID; ?>">Submit</button>
-                            <?php } else { ?>
-                                <button disabled class="btn btn-primary submitrate">Submit</button>
-                            <?php } ?>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        </div>
-                    </div>
-
-                    <!-- Scrollable Reviews Section -->
+        <!-- Scrollable Reviews Section -->
 <div class="scrollable-reviews room-id-<?php echo $result->ROOMID; ?>">
 
 </div>
@@ -624,12 +608,10 @@ if ($countrated == 0) {
 </div>
 
 
-       
-    </div>
+
 </div>
 </div>
-
-
+</div>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
@@ -720,7 +702,6 @@ $('[id^="roomModal"]').on('shown.bs.modal', function () {
 </div>
 
 
-
 <script>
 
 
@@ -755,6 +736,7 @@ $.ajax({
     success: function(data) {
         alert(data);
         window.location.href = 'index.php';
+        // location.reload();
     }
 });
 
@@ -799,3 +781,5 @@ $.ajax({
 });
 
 </script>
+
+                    
