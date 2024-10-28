@@ -287,11 +287,11 @@ $_SESSION['GUESTID'] =   $lastguest;
 
 
 
-     $mydb->setQuery($sql);
+     $mydb->setQuery($sql,$sql1);
      $msg = $mydb->executeQuery();
 
-     $mydb1->setQuery($sql1);
-     $msg1 = $mydb1->executeQuery();
+    //  $mydb1->setQuery($sql1);
+    //  $msg1 = $mydb1->executeQuery();
 
 
      
