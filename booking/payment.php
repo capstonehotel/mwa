@@ -277,17 +277,12 @@ $_SESSION['GUESTID'] =   $lastguest;
         // mysql_query($sql);
 
         
-      $sql1 = "INSERT INTO `notifications` (`TRANSDATE`,`CONFIRMATIONCODE`, `GUESTID`, `RPRICE`,`STATUS`,`PAYMENT_STATUS`,`PAYMENT_METHOD` )
-      VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."'," . $_SESSION['GUESTID'] . ",".$tot.",'Pending', '" . $paymentStatus . "', 'GCash' )" ;
-       // mysql_query($sql);
-       
-        
+     
 
 
 
 
-
-     $mydb->setQuery($sql,$sql1);
+     $mydb->setQuery($sql);
      $msg = $mydb->executeQuery();
 
     //  $mydb1->setQuery($sql1);
@@ -374,7 +369,7 @@ $_SESSION['GUESTID'] =   $lastguest;
 <div class="col-md-12 col-sm-2" style="display: flex; align-items: center;">
     <label for="paymentAmount" id="paymentLabel" style="margin-right: 10px;">Select Payment Option:</label>
     <div>
-        <select id="paymentAmount" name="payment_amount" required>
+        <select id="paymentAmount" name="payment_status" required>
             <option value="Fully Paid">Full Payment</option>
             <option value="Partially Paid">Partial Payment</option>
         </select>

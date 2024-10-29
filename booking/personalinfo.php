@@ -381,7 +381,7 @@ function validatePassword() {
                  <script>
     document.addEventListener('DOMContentLoaded', function() {
         function detectXSS(inputField, fieldName) {
-            const xssPattern =  /[<>:\/\$\;\,\?\!]/;
+            const xssPattern =  /[<>:\/\$\;\,\?\!]/; //!@#$%^&*
             inputField.addEventListener('input', function() {
                 if (xssPattern.test(this.value)) {
                   Swal.fire("XSS Detected", `Please avoid using invalid characters in your ${fieldName}.`, "error");
