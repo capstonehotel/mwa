@@ -248,11 +248,7 @@ $_SESSION['GUESTID'] =   $lastguest;
       
             // }
            
-            if (isset($_POST['payment_status'])) {
-                $paymentStatus = $_POST['payment_status'] == 'Fully Paid' ? 'Fully Paid' : 'Partially Paid';
-            } else {
-                $paymentStatus = 'Partially Paid'; // Default case if not set
-            }
+            $paymentStatus = isset($_POST['payment_status']) && $_POST['payment_status'] == 'Fully Paid' ? 'Fully Paid' : 'Partially Paid';
 
 
             $reservation = new Reservation();
@@ -371,6 +367,7 @@ $_SESSION['GUESTID'] =   $lastguest;
     <input type="hidden" id="payment_status_input"  name="txtstatus">
 </div>
 <div class="col-md-12 col-sm-2" style="display: flex; align-items: center;">
+<input type="text" id="payment_status_input" name="payment_status" value="<?php echo $_POST['payment_status']; ?>">
     <label for="paymentAmount" id="paymentLabel" style="margin-right: 10px;">Select Payment Option:</label>
     <div>
         <select id="paymentAmount" name="payment_status" required>
@@ -482,6 +479,11 @@ for ($i=0; $i < $count_cart  ; $i++) {
         document.getElementById('bookingForm').submit();
     });
 </script> -->
+<script>
+    document.getElementById('paymentAmount').addEventListener('change', function() {
+    document.getElementById('payment_status_input').value = this.value;
+});
+</script>
     <script>
 document.getElementById('confirmBookingButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
