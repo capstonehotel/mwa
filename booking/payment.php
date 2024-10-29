@@ -273,7 +273,7 @@ $_SESSION['GUESTID'] =   $lastguest;
            
 
       $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`,`PAYMENT_STATUS`,`PAYMENT_METHOD` )
-       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentStatus . "', 'GCash' )" ;
+       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentstatus . "', 'GCash' )" ;
         // mysql_query($sql);
 
         
