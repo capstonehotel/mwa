@@ -360,7 +360,7 @@ $_SESSION['GUESTID'] =   $lastguest;
                     <div class="col-md-12">
     <label style="display: none;" >Transaction Id:</label>
     <span  style="display: none;" name="realconfirmation"><?php echo $_SESSION['confirmation']; ?></span>
-    <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
+    <input type="text" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
     <input type="text" id="payment_status_input"  name="txtstatus">
 </div>
 <div class="col-md-12 col-sm-2" style="display: flex; align-items: center;">
