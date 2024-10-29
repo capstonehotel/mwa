@@ -248,7 +248,11 @@ $_SESSION['GUESTID'] =   $lastguest;
       
             // }
            
-            $paymentStatus = isset($_POST['payment_status']) && $_POST['payment_status'] == 'Fully Paid' ? 'Fully Paid' : 'Partially Paid';
+            if (isset($_POST['payment_status'])) {
+                $paymentStatus = $_POST['payment_status'] == 'Fully Paid' ? 'Fully Paid' : 'Partially Paid';
+            } else {
+                $paymentStatus = 'Partially Paid'; // Default case if not set
+            }
 
 
             $reservation = new Reservation();
