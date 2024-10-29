@@ -252,7 +252,7 @@ $_SESSION['GUESTID'] =   $lastguest;
 
 
             $reservation = new Reservation();
-            $reservation->CONFIRMATIONCODE  = $_SESSION['confirmation'];
+            $reservation->CONFIRMATIONCODE  = $_POST['realconfirmation'];
             $reservation->TRANSDATE         = date('Y-m-d h:i:s'); 
             $reservation->ROOMID            = $_SESSION['monbela_cart'][$i]['monbelaroomid'];
             $reservation->ARRIVAL           = date_format(date_create( $_SESSION['monbela_cart'][$i]['monbelacheckin']), 'Y-m-d');  
@@ -278,12 +278,9 @@ $_SESSION['GUESTID'] =   $lastguest;
 
         
      
-
-
-
-
      $mydb->setQuery($sql);
      $msg = $mydb->executeQuery();
+     $paymentstatus = $_POST['txtstatus'];
 
     //  $mydb1->setQuery($sql1);
     //  $msg1 = $mydb1->executeQuery();
@@ -364,7 +361,7 @@ $_SESSION['GUESTID'] =   $lastguest;
     <label style="display: none;" >Transaction Id:</label>
     <span  style="display: none;" name="realconfirmation"><?php echo $_SESSION['confirmation']; ?></span>
     <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
-    <input type="text" id="payment_status_input"  name="payment_status">
+    <input type="text" id="payment_status_input"  name="txtstatus">
 </div>
 <div class="col-md-12 col-sm-2" style="display: flex; align-items: center;">
     <label for="paymentAmount" id="paymentLabel" style="margin-right: 10px;">Select Payment Option:</label>
@@ -478,6 +475,7 @@ for ($i=0; $i < $count_cart  ; $i++) {
         document.getElementById('bookingForm').submit();
     });
 </script> -->
+
 <script>
     document.getElementById('paymentAmount').addEventListener('change', function() {
     document.getElementById('payment_status_input').value = this.value;
