@@ -364,10 +364,9 @@ $_SESSION['GUESTID'] =   $lastguest;
     <label style="display: none;" >Transaction Id:</label>
     <span  style="display: none;" name="realconfirmation"><?php echo $_SESSION['confirmation']; ?></span>
     <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
-    <input type="hidden" id="payment_status_input"  name="txtstatus">
+    <input type="text" id="payment_status_input"  name="payment_status">
 </div>
 <div class="col-md-12 col-sm-2" style="display: flex; align-items: center;">
-<input type="text" id="payment_status_input" name="payment_status" value="<?php echo $_POST['payment_status']; ?>">
     <label for="paymentAmount" id="paymentLabel" style="margin-right: 10px;">Select Payment Option:</label>
     <div>
         <select id="paymentAmount" name="payment_status" required>
