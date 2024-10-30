@@ -486,16 +486,24 @@ for ($i=0; $i < $count_cart  ; $i++) {
     });
 </script> -->
 
-<!-- <script>
+<script>
     document.getElementById('paymentAmount').addEventListener('change', function() {
     document.getElementById('payment_status_input').value = this.value;
 });
-</script> -->
+</script>
     <script>
-document.getElementById('confirmBookingButton').addEventListener('click', function() {
-    const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
-    const selectedPayment = document.getElementById('paymentAmount').value;
-    
+// Event listener for payment amount selection
+document.getElementById('paymentAmount').addEventListener('change', function() {
+        // Update hidden input for payment status based on selected payment amount
+        const selectedPayment = this.value;
+        document.getElementById('payment_status_input').value = selectedPayment;
+    });
+
+    // Event listener for the confirm booking button
+    document.getElementById('confirmBookingButton').addEventListener('click', function() {
+        const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
+        const selectedPayment = document.getElementById('paymentAmount').value;
+
    if (selectedMethod) {
         // Default values for full payment
         let paymentAmount = <?php echo $_SESSION['pay']; ?>;
