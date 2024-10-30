@@ -260,7 +260,7 @@ $_SESSION['GUESTID'] =   $lastguest;
             $reservation->RPRICE            = $_SESSION['monbela_cart'][$i]['monbelaroomprice'];  
             $reservation->GUESTID           = $_SESSION['GUESTID']; 
             $reservation->PRORPOSE          = 'Travel';
-            $reservation->PAYMENT_STATUS    = $paymentStatus;
+            $reservation->PAYMENT_STATUS    = $_POST['txtstatus'];;
             $reservation->PAYMENT_METHOD    = 'GCash';
             $reservation->STATUS            = 'Pending';
             $reservation->create(); 
@@ -270,10 +270,10 @@ $_SESSION['GUESTID'] =   $lastguest;
             }
 
            $item = count($_SESSION['monbela_cart']);
-           $paymentstatus = $_POST['txtstatus'];
+           //$paymentstatus = $_POST['txtstatus'];
 
       $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`,`PAYMENT_STATUS`,`PAYMENT_METHOD` )
-       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentStatus . "', 'GCash' )" ;
+       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $_POST['txtstatus']. "', 'GCash' )" ;
         // mysql_query($sql);
 
 
@@ -473,15 +473,15 @@ for ($i=0; $i < $count_cart  ; $i++) {
         document.getElementById('bookingForm').submit();
     });
 </script> -->
-<script>
+<!-- <script>
     document.getElementById('paymentAmount').addEventListener('change', function() {
     document.getElementById('payment_status_input').value = this.value;
 });
-</script>
+</script> -->
     <script>
 document.getElementById('confirmBookingButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
-    const selectedPayment = document.getElementById('paymentAmount').value;
+    const selectedPayment = document.getElementById('payment_status_input').value;
     
     if (selectedMethod) {
         // Adjust payment amount based on selected option
