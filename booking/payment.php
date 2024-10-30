@@ -248,7 +248,7 @@ $_SESSION['GUESTID'] =   $lastguest;
       
             // }
            
-            $paymentStatus = isset($_POST['payment_status']) && $_POST['payment_status'] == 'Fully Paid' ? 'Fully Paid' : 'Partially Paid';
+            $paymentStatus = $_GET['paymentstatus'];
 
 
             $reservation = new Reservation();
@@ -260,7 +260,7 @@ $_SESSION['GUESTID'] =   $lastguest;
             $reservation->RPRICE            = $_SESSION['monbela_cart'][$i]['monbelaroomprice'];  
             $reservation->GUESTID           = $_SESSION['GUESTID']; 
             $reservation->PRORPOSE          = 'Travel';
-            $reservation->PAYMENT_STATUS    = $paymentStatus;
+            $reservation->PAYMENT_STATUS    = $_GET['paymentstatus'];
             $reservation->PAYMENT_METHOD    = 'GCash';
             $reservation->STATUS            = 'Pending';
             $reservation->create(); 
