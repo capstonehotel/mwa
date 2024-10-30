@@ -479,11 +479,9 @@ for ($i=0; $i < $count_cart  ; $i++) {
     });
 </script> -->
 <script>
-     document.getElementById('confirmBookingButton').addEventListener('click', function() {
+    
     document.getElementById('paymentAmount').addEventListener('change', function() {
     document.getElementById('payment_status_input').value = this.value;
-    document.getElementById('bookingForm').submit();
-});
 });
 </script>
     <script>
