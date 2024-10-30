@@ -368,7 +368,7 @@ $_SESSION['GUESTID'] =   $lastguest;
 <div class="col-md-12 col-sm-2" style="display: flex; align-items: center;">
     <label for="paymentAmount" id="paymentLabel" style="margin-right: 10px;">Select Payment Option:</label>
     <div>
-    <select id="paymentAmount" name="payment_amount" onchange="updatePaymentStatus(this.value)" required>
+    <select id="paymentAmount" name="payment_status" onchange="updatePaymentStatus(this.value)" required>
             <option value="Fully Paid">Full Payment</option>
             <option value="Partially Paid">Partial Payment</option>
         </select>
