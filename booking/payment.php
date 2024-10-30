@@ -248,7 +248,7 @@ $_SESSION['GUESTID'] =   $lastguest;
       
             // }
            
-            $paymentStatus = isset($_POST['payment_status']) && $_POST['payment_status'] == 'Partially Paid' ? 'Partially Paid' : 'Fully Paid';
+           // $paymentStatus = isset($_POST['payment_status']) && $_POST['payment_status'] == 'Fully Paid' ? 'Fully Paid' : 'Partially Paid';
 // Capture the selected payment option
 // $paymentStatus = isset($_POST['payment_status']) ? $_POST['payment_status'] : 'Fully Paid';
 
@@ -278,16 +278,12 @@ $_SESSION['GUESTID'] =   $lastguest;
             
             @$tot += $_SESSION['monbela_cart'][$i]['monbelaroomprice'];
             }
-// If the payment status is "Partially Paid," divide the total by 2
-if ($paymentStatus === 'Partially Paid') {
-    $tot /= 2;
-}
 
            $item = count($_SESSION['monbela_cart']);
            
 
       $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`,`PAYMENT_STATUS`,`PAYMENT_METHOD` )
-       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentStatus . "', 'GCash' )" ;
+       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentstatus . "', 'GCash' )" ;
         // mysql_query($sql);
 
         
@@ -500,7 +496,7 @@ document.getElementById('confirmBookingButton').addEventListener('click', functi
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
     const selectedPayment = document.getElementById('paymentAmount').value;
     
-    if (selectedMethod) {
+   if (selectedMethod) {
         // Default values for full payment
         let paymentAmount = <?php echo $_SESSION['pay']; ?>;
         let paymentStatus = 'Fully Paid';
