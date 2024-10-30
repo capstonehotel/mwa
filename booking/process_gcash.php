@@ -32,7 +32,7 @@ function processGcashPayment() {
                         'type' => 'source'
                     ],
                     'currency' => 'PHP',
-                    'description' => 'Online Payment'
+                    'description' => 'Payment for booking - Status: ' . $_POST['payment_status'] // Include payment status in description
                 ]
             ]
         ]);
