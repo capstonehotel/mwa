@@ -274,19 +274,20 @@ $_SESSION['GUESTID'] =   $lastguest;
             $reservation->PAYMENT_METHOD    = 'GCash';
             $reservation->STATUS            = 'Pending';
             $reservation->create(); 
-// Adjust total amount for partial payment, if selected
-if ($paymentStatus === 'Partially Paid') {
-    $tot /= 2; // Apply 50% discount for partial payment
-}
+
             
             @$tot += $_SESSION['monbela_cart'][$i]['monbelaroomprice'];
             }
+// If the payment status is "Partially Paid," divide the total by 2
+if ($paymentStatus === 'Partially Paid') {
+    $tot /= 2;
+}
 
            $item = count($_SESSION['monbela_cart']);
            
 
       $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`,`PAYMENT_STATUS`,`PAYMENT_METHOD` )
-       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentstatus . "', 'GCash' )" ;
+       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentStatus . "', 'GCash' )" ;
         // mysql_query($sql);
 
         
