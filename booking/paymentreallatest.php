@@ -480,27 +480,22 @@ for ($i=0; $i < $count_cart  ; $i++) {
 document.getElementById('confirmBookingButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
     const selectedPayment = document.getElementById('paymentAmount').value;
-
+    
     if (selectedMethod) {
-        // Prepare form data with payment method
-        const formData = new FormData();
-        formData.append('payment_method', selectedMethod.value);
-
-        // Determine the payment amount based on the selected payment option
+        // Adjust payment amount based on selected option
         let paymentAmount = <?php echo $_SESSION['pay']; ?>; // Full amount
-        let paymentStatus = '';
-
         if (selectedPayment === 'Partially Paid') {
             paymentAmount /= 2; // Half for partial payment
-            paymentStatus = 'Partially Paid';
         } else if (selectedPayment === 'Fully Paid') {
             // No adjustment needed, paymentAmount remains the full amount
-            paymentStatus = 'Fully Paid';
+            paymentAmount = paymentAmount; // This line is optional, as it's already the full amount
         }
 
-        // Append payment amount and status to the form data
+        // Prepare form data with payment method and adjusted amount
+        const formData = new FormData();
+        formData.append('payment_method', selectedMethod.value);
         formData.append('payment_amount', paymentAmount);
-        formData.append('payment_status', paymentStatus); // Ensure payment status is included
+        formData.append('payment_status', selectedPayment);
 
         // Send the form data via fetch to source.php
         fetch('source.php', {
