@@ -476,38 +476,40 @@ for ($i=0; $i < $count_cart  ; $i++) {
         document.getElementById('bookingForm').submit();
     });
 </script> -->
-    <script>
+<script>
 document.getElementById('confirmBookingButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
-    const selectedPayment = document.getElementById('paymentAmount').value;
+    const selectedPaymentOption = document.getElementById('paymentAmount').value;
 
     if (selectedMethod) {
         // Prepare form data with payment method
         const formData = new FormData();
         formData.append('payment_method', selectedMethod.value);
 
-        // Determine the payment amount based on the selected payment option
+        // Get the full payment amount from the server-side session variable
         let paymentAmount = <?php echo $_SESSION['pay']; ?>; // Full amount
-        let paymentStatus = '';
+        let paymentStatus = selectedPaymentOption; // Use the selected payment option directly
 
-        if (selectedPayment === 'Partially Paid') {
-            paymentAmount /= 2; // Half for partial payment
-            paymentStatus = 'Partially Paid';
-        } else if (selectedPayment === 'Fully Paid') {
-            // No adjustment needed, paymentAmount remains the full amount
-            paymentStatus = 'Fully Paid';
+        // Adjust payment amount for partial payment
+        if (selectedPaymentOption === 'Partially Paid') {
+            paymentAmount /= 2; // Halve the payment amount for partial payment
         }
 
         // Append payment amount and status to the form data
         formData.append('payment_amount', paymentAmount);
-        formData.append('payment_status', paymentStatus); // Ensure payment status is included
+        formData.append('payment_status', paymentStatus); // Append payment status
 
         // Send the form data via fetch to source.php
         fetch('source.php', {
             method: 'POST',
             body: formData
         })
-        .then(response => response.json()) // Expecting a JSON response
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json(); // Expecting a JSON response
+        })
         .then(data => {
             if (data.checkoutUrl) {
                 // Redirect to the GCash checkout URL
@@ -517,11 +519,11 @@ document.getElementById('confirmBookingButton').addEventListener('click', functi
             }
         })
         .catch(error => {
-            console.error('Error:', error); // Handle error
+            console.error('Error:', error); // Log any errors
+            alert('There was a problem with your request: ' + error.message); // Notify the user
         });
     } else {
         alert('Please select a payment method.'); // Ensure a payment method is selected
     }
 });
 </script>
-
