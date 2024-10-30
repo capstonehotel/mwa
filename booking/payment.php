@@ -277,6 +277,7 @@ $_SESSION['GUESTID'] =   $lastguest;
         // mysql_query($sql);
 
         
+     
 
 
      $mydb->setQuery($sql);
@@ -485,12 +486,16 @@ document.getElementById('confirmBookingButton').addEventListener('click', functi
         let paymentAmount = <?php echo $_SESSION['pay']; ?>; // Full amount
         if (selectedPayment === 'Partially Paid') {
             paymentAmount /= 2; // Half for partial payment
+        } else if (selectedPayment === 'Fully Paid') {
+            // No adjustment needed, paymentAmount remains the full amount
+            paymentAmount = paymentAmount; // This line is optional, as it's already the full amount
         }
 
         // Prepare form data with payment method and adjusted amount
         const formData = new FormData();
         formData.append('payment_method', selectedMethod.value);
         formData.append('payment_amount', paymentAmount);
+        formData.append('payment_status', selectedPayment);
 
         // Send the form data via fetch to source.php
         fetch('source.php', {
