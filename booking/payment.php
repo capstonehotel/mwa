@@ -363,11 +363,12 @@ $_SESSION['GUESTID'] =   $lastguest;
     <span  style="display: none;" name="realconfirmation"><?php echo $_SESSION['confirmation']; ?></span>
     <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
     <input type="hidden" id="payment_status_input"  name="txtstatus">
+    <input type="hidden" id="payment_status_input" name="payment_status" value="">
 </div>
 <div class="col-md-12 col-sm-2" style="display: flex; align-items: center;">
     <label for="paymentAmount" id="paymentLabel" style="margin-right: 10px;">Select Payment Option:</label>
     <div>
-        <select id="paymentAmount" name="payment_amount" required>
+    <select id="paymentAmount" name="payment_amount" onchange="updatePaymentStatus(this.value)" required>
             <option value="Fully Paid">Full Payment</option>
             <option value="Partially Paid">Partial Payment</option>
         </select>
@@ -466,7 +467,11 @@ for ($i=0; $i < $count_cart  ; $i++) {
         </div>
       </div>
 </div>
-
+<script>
+    function updatePaymentStatus(selectedOption) {
+        document.getElementById('payment_status_input').value = selectedOption;
+    }
+</script>
 <!-- <script>
     // Event listener for the "Yes" button in the modal
     document.getElementById('confirmBookingButton').addEventListener('click', function() {
@@ -498,6 +503,9 @@ document.getElementById('confirmBookingButton').addEventListener('click', functi
         // Append payment amount and status to the form data
         formData.append('payment_amount', paymentAmount);
         formData.append('payment_status', paymentStatus); // Append payment status
+
+        // Set the payment_status_input field value
+        document.getElementById('payment_status_input').value = paymentStatus;
 
         // Send the form data via fetch to source.php
         fetch('source.php', {
