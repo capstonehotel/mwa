@@ -486,11 +486,11 @@ for ($i=0; $i < $count_cart  ; $i++) {
     });
 </script> -->
 
-<script>
+<!-- <script>
     document.getElementById('paymentAmount').addEventListener('change', function() {
     document.getElementById('payment_status_input').value = this.value;
 });
-</script>
+</script> -->
     <script>
 // Event listener for payment amount selection
 document.getElementById('paymentAmount').addEventListener('change', function() {
