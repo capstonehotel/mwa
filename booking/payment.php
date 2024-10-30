@@ -371,13 +371,13 @@ $_SESSION['GUESTID'] =   $lastguest;
     <label style="display: none;" >Transaction Id:</label>
     <span  style="display: none;" name="realconfirmation"><?php echo $_SESSION['confirmation']; ?></span>
     <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
-    <input type="text" id="payment_status_input"  name="txtstatus">
+    <input type="text" id="payment_status_input"  name="txtstatus" value="Fully Paid">
 </div>
 <div class="col-md-12 col-sm-2" style="display: flex; align-items: center;">
     <label for="paymentAmount" id="paymentLabel" style="margin-right: 10px;">Select Payment Option:</label>
     <div>
         <select id="paymentAmount" name="payment_status" required>
-            <option value="Fully Paid" selected>Full Payment</option>
+            <option value="Fully Paid" >Full Payment</option>
             <option value="Partially Paid">Partial Payment</option>
         </select>
     </div>
