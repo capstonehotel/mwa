@@ -478,49 +478,100 @@ for ($i=0; $i < $count_cart  ; $i++) {
         document.getElementById('bookingForm').submit();
     });
 </script> -->
-<script>
-    
+<!-- <script>
     document.getElementById('paymentAmount').addEventListener('change', function() {
     document.getElementById('payment_status_input').value = this.value;
 });
-</script>
+</script> -->
     <script>
-document.getElementById('confirmBookingButton').addEventListener('click', function() {
+// Event listener for payment amount selection
+document.getElementById('paymentAmount').addEventListener('change', function() {
+    document.getElementById('payment_status_input').value = this.value;
+});
 
+// Handle the booking confirmation and payment flow
+document.getElementById('confirmBookingButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
     const selectedPayment = document.getElementById('paymentAmount').value;
     
+    // Store payment status in sessionStorage before redirect
+    sessionStorage.setItem('pendingPaymentStatus', selectedPayment);
+    
     if (selectedMethod) {
         // Adjust payment amount based on selected option
-        let paymentAmount = <?php echo $_SESSION['pay']; ?>; // Full amount
+        let paymentAmount = <?php echo $_SESSION['pay']; ?>; 
         if (selectedPayment === 'Partially Paid') {
-            paymentAmount /= 2; // Half for partial payment
+            paymentAmount /= 2;
         }
 
-        // Prepare form data with payment method and adjusted amount
         const formData = new FormData();
         formData.append('payment_method', selectedMethod.value);
         formData.append('payment_amount', paymentAmount);
+        formData.append('payment_status', selectedPayment); // Include payment status
 
-        // Send the form data via fetch to source.php
+        // Send the form data to source.php
         fetch('source.php', {
             method: 'POST',
             body: formData
         })
-        .then(response => response.json()) // Expecting a JSON response
+        .then(response => response.json())
         .then(data => {
             if (data.checkoutUrl) {
-                // Redirect to the GCash checkout URL
+                // Store form data before redirect
+                const bookingForm = document.getElementById('bookingForm');
+                const formElements = bookingForm.elements;
+                for (let i = 0; i < formElements.length; i++) {
+                    const element = formElements[i];
+                    if (element.type !== 'submit') {
+                        sessionStorage.setItem(element.name, element.value);
+                    }
+                }
+                
+                // Redirect to GCash checkout
                 window.location.href = data.checkoutUrl;
             } else {
-                alert('Error: ' + data.message); // Handle error response
+                alert('Error: ' + data.message);
             }
         })
         .catch(error => {
-            console.error('Error:', error); // Handle error
+            console.error('Error:', error);
+            alert('An error occurred while processing your payment.');
         });
     } else {
-        alert('Please select a payment method.'); // Ensure a payment method is selected
+        alert('Please select a payment method.');
+    }
+});
+
+// Check for returning from payment on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Check URL parameters for payment success
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentSuccess = urlParams.get('payment_success');
+    
+    if (paymentSuccess === 'true') {
+        // Retrieve stored payment status
+        const storedPaymentStatus = sessionStorage.getItem('pendingPaymentStatus');
+        if (storedPaymentStatus) {
+            // Set the payment status input
+            document.getElementById('payment_status_input').value = storedPaymentStatus;
+            
+            // Restore other form data
+            const bookingForm = document.getElementById('bookingForm');
+            const formElements = bookingForm.elements;
+            for (let i = 0; i < formElements.length; i++) {
+                const element = formElements[i];
+                const storedValue = sessionStorage.getItem(element.name);
+                if (storedValue && element.type !== 'submit') {
+                    element.value = storedValue;
+                }
+            }
+            
+            // Clear stored data
+            sessionStorage.clear();
+            
+            // Submit the form
+            bookingForm.submit();
+        }
     }
 });
 </script>
