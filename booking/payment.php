@@ -260,7 +260,7 @@ $_SESSION['GUESTID'] =   $lastguest;
             $reservation->RPRICE            = $_SESSION['monbela_cart'][$i]['monbelaroomprice'];  
             $reservation->GUESTID           = $_SESSION['GUESTID']; 
             $reservation->PRORPOSE          = 'Travel';
-            $reservation->PAYMENT_STATUS    =  $_POST['txtstatus'];;
+            $reservation->PAYMENT_STATUS    =  $_POST['txtstatus'];
             $reservation->PAYMENT_METHOD    = 'GCash';
             $reservation->STATUS            = 'Pending';
             $reservation->create(); 
@@ -478,11 +478,11 @@ for ($i=0; $i < $count_cart  ; $i++) {
         document.getElementById('bookingForm').submit();
     });
 </script> -->
-<!-- <script>
+<script>
     document.getElementById('paymentAmount').addEventListener('change', function() {
     document.getElementById('payment_status_input').value = this.value;
 });
-</script> -->
+</script>
     <script>
 document.getElementById('confirmBookingButton').addEventListener('click', function() {
     document.getElementById('paymentAmount').addEventListener('change', function() {
