@@ -248,7 +248,7 @@ $_SESSION['GUESTID'] =   $lastguest;
       
             // }
            
-            $paymentStatus = isset($_POST['payment_status']) && $_POST['payment_status'] == 'Fully Paid' ? 'Fully Paid' : 'Partially Paid';
+            //$paymentStatus = isset($_POST['payment_status']) && $_POST['payment_status'] == 'Fully Paid' ? 'Fully Paid' : 'Partially Paid';
 
 
             $reservation = new Reservation();
@@ -260,7 +260,7 @@ $_SESSION['GUESTID'] =   $lastguest;
             $reservation->RPRICE            = $_SESSION['monbela_cart'][$i]['monbelaroomprice'];  
             $reservation->GUESTID           = $_SESSION['GUESTID']; 
             $reservation->PRORPOSE          = 'Travel';
-            $reservation->PAYMENT_STATUS    = $paymentStatus;
+            $reservation->PAYMENT_STATUS    =  $_POST['txtstatus'];;
             $reservation->PAYMENT_METHOD    = 'GCash';
             $reservation->STATUS            = 'Pending';
             $reservation->create(); 
@@ -270,17 +270,19 @@ $_SESSION['GUESTID'] =   $lastguest;
             }
 
            $item = count($_SESSION['monbela_cart']);
-           
+           //$paymentstatus = $_POST['txtstatus'];
 
       $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`,`PAYMENT_STATUS`,`PAYMENT_METHOD` )
-       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentStatus . "', 'GCash' )" ;
+       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" .  $_POST['txtstatus'] . "', 'GCash' )" ;
         // mysql_query($sql);
 
         
      
 
 
-     $mydb->setQuery($sql);
+
+
+     $mydb->setQuery($sql,$sql1);
      $msg = $mydb->executeQuery();
 
     //  $mydb1->setQuery($sql1);
@@ -362,13 +364,12 @@ $_SESSION['GUESTID'] =   $lastguest;
     <label style="display: none;" >Transaction Id:</label>
     <span  style="display: none;" name="realconfirmation"><?php echo $_SESSION['confirmation']; ?></span>
     <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
-    <input type="hidden" id="payment_status_input"  name="txtstatus">
-    <input type="text" id="payment_status_input" name="payment_status" value="">
+    <input type="text" id="payment_status_input"  name="txtstatus">
 </div>
 <div class="col-md-12 col-sm-2" style="display: flex; align-items: center;">
     <label for="paymentAmount" id="paymentLabel" style="margin-right: 10px;">Select Payment Option:</label>
     <div>
-    <select id="paymentAmount" name="payment_status" onchange="updatePaymentStatus(this.value)" required>
+        <select id="paymentAmount" name="payment_amount" required>
             <option value="Fully Paid">Full Payment</option>
             <option value="Partially Paid">Partial Payment</option>
         </select>
@@ -467,11 +468,7 @@ for ($i=0; $i < $count_cart  ; $i++) {
         </div>
       </div>
 </div>
-<script>
-    function updatePaymentStatus(selectedOption) {
-        document.getElementById('payment_status_input').value = selectedOption;
-    }
-</script>
+
 <!-- <script>
     // Event listener for the "Yes" button in the modal
     document.getElementById('confirmBookingButton').addEventListener('click', function() {
@@ -481,43 +478,37 @@ for ($i=0; $i < $count_cart  ; $i++) {
         document.getElementById('bookingForm').submit();
     });
 </script> -->
-<script>
+<!-- <script>
+    document.getElementById('paymentAmount').addEventListener('change', function() {
+    document.getElementById('payment_status_input').value = this.value;
+});
+</script> -->
+    <script>
 document.getElementById('confirmBookingButton').addEventListener('click', function() {
+    document.getElementById('paymentAmount').addEventListener('change', function() {
+    document.getElementById('payment_status_input').value = this.value;
+});
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
-    const selectedPaymentOption = document.getElementById('paymentAmount').value;
-
+    const selectedPayment = document.getElementById('paymentAmount').value;
+    
     if (selectedMethod) {
-        // Prepare form data with payment method
-        const formData = new FormData();
-        formData.append('payment_method', selectedMethod.value);
-
-        // Get the full payment amount from the server-side session variable
+        // Adjust payment amount based on selected option
         let paymentAmount = <?php echo $_SESSION['pay']; ?>; // Full amount
-        let paymentStatus = selectedPaymentOption; // Use the selected payment option directly
-
-        // Adjust payment amount for partial payment
-        if (selectedPaymentOption === 'Partially Paid') {
-            paymentAmount /= 2; // Halve the payment amount for partial payment
+        if (selectedPayment === 'Partially Paid') {
+            paymentAmount /= 2; // Half for partial payment
         }
 
-        // Append payment amount and status to the form data
+        // Prepare form data with payment method and adjusted amount
+        const formData = new FormData();
+        formData.append('payment_method', selectedMethod.value);
         formData.append('payment_amount', paymentAmount);
-        formData.append('payment_status', paymentStatus); // Append payment status
-
-        // Set the payment_status_input field value
-        document.getElementById('payment_status_input').value = paymentStatus;
 
         // Send the form data via fetch to source.php
         fetch('source.php', {
             method: 'POST',
             body: formData
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
-            }
-            return response.json(); // Expecting a JSON response
-        })
+        .then(response => response.json()) // Expecting a JSON response
         .then(data => {
             if (data.checkoutUrl) {
                 // Redirect to the GCash checkout URL
@@ -527,11 +518,11 @@ document.getElementById('confirmBookingButton').addEventListener('click', functi
             }
         })
         .catch(error => {
-            console.error('Error:', error); // Log any errors
-            alert('There was a problem with your request: ' + error.message); // Notify the user
+            console.error('Error:', error); // Handle error
         });
     } else {
         alert('Please select a payment method.'); // Ensure a payment method is selected
     }
 });
 </script>
+
