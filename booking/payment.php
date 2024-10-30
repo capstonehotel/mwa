@@ -485,9 +485,12 @@ for ($i=0; $i < $count_cart  ; $i++) {
 </script>
     <script>
 document.getElementById('confirmBookingButton').addEventListener('click', function() {
+
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
     const selectedPayment = document.getElementById('paymentAmount').value;
     
+    const paymentStatus = document.getElementById('payment_status_input').value;
+
     if (selectedMethod) {
         // Adjust payment amount based on selected option
         let paymentAmount = <?php echo $_SESSION['pay']; ?>; // Full amount
@@ -499,6 +502,7 @@ document.getElementById('confirmBookingButton').addEventListener('click', functi
         const formData = new FormData();
         formData.append('payment_method', selectedMethod.value);
         formData.append('payment_amount', paymentAmount);
+        formData.append('payment_status', paymentStatus);
 
         // Send the form data via fetch to source.php
         fetch('source.php', {

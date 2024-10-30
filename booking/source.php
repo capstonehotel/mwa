@@ -28,9 +28,10 @@ if ($paymentMethod === 'gcash') {
     $customerName = $_SESSION['name'] . ' ' . $_SESSION['last'];
     $customerEmail = $_SESSION['username'];
     $customerPhone = $_SESSION['phone'];
+    $paymentstatus = $_POST['payment_status'];
 
     // Construct absolute URLs for success and failed redirects
-    $successUrl = 'https://mcchmhotelreservation.com/booking/process_gcash.php';
+    $successUrl = 'https://mcchmhotelreservation.com/booking/process_gcash.php?paymentstatus='.$paymentstatus;
     $failedUrl = 'https://mcchmhotelreservation.com/booking/payment.php';
 
     try {

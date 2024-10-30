@@ -69,7 +69,8 @@ $error_message = processGcashPayment();
 if ($error_message === true) {
     $_SESSION['payment_successful'] = true;
     // Payment successful, redirect to confirmation page
-    header("Location: https://mcchmhotelreservation.com/booking/index.php?view=payment");
+    $paymenstatus = $_GET['paymentstatus'];
+    header("Location: https://mcchmhotelreservation.com/booking/index.php?view=payment&paymentstatus=".$paymenstatus);
     $_SESSION['status'] = 'success';
     exit();
 } else {
