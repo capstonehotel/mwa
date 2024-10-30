@@ -248,7 +248,7 @@ $_SESSION['GUESTID'] =   $lastguest;
       
             // }
            
-            //$paymentStatus = isset($_POST['payment_status']) && $_POST['payment_status'] == 'Fully Paid' ? 'Fully Paid' : 'Partially Paid';
+            $paymentStatus = isset($_POST['payment_status']) && $_POST['payment_status'] == 'Fully Paid' ? 'Fully Paid' : 'Partially Paid';
 
 
             $reservation = new Reservation();
@@ -260,7 +260,7 @@ $_SESSION['GUESTID'] =   $lastguest;
             $reservation->RPRICE            = $_SESSION['monbela_cart'][$i]['monbelaroomprice'];  
             $reservation->GUESTID           = $_SESSION['GUESTID']; 
             $reservation->PRORPOSE          = 'Travel';
-            $reservation->PAYMENT_STATUS    =  $_SESSION['payment_status'];
+            $reservation->PAYMENT_STATUS    = $paymentStatus;
             $reservation->PAYMENT_METHOD    = 'GCash';
             $reservation->STATUS            = 'Pending';
             $reservation->create(); 
@@ -270,10 +270,10 @@ $_SESSION['GUESTID'] =   $lastguest;
             }
 
            $item = count($_SESSION['monbela_cart']);
-           //$paymentstatus = $_POST['txtstatus'];
+           
 
       $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`,`PAYMENT_STATUS`,`PAYMENT_METHOD` )
-       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" .  $_POST['txtstatus'] . "', 'GCash' )" ;
+       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentStatus . "', 'GCash' )" ;
         // mysql_query($sql);
 
         
@@ -282,7 +282,7 @@ $_SESSION['GUESTID'] =   $lastguest;
 
 
 
-     $mydb->setQuery($sql,$sql1);
+     $mydb->setQuery($sql);
      $msg = $mydb->executeQuery();
 
     //  $mydb1->setQuery($sql1);
@@ -478,19 +478,15 @@ for ($i=0; $i < $count_cart  ; $i++) {
         document.getElementById('bookingForm').submit();
     });
 </script> -->
-<!-- <script>
-    document.getElementById('paymentAmount').addEventListener('change', function() {
-    document.getElementById('payment_status_input').value = this.value;
-});
-</script> -->
-    <script>
+<script>
         document.getElementById('paymentAmount').addEventListener('change', function() {
     document.getElementById('payment_status_input').value = this.value;
 });
+</script>
+    <script>
 document.getElementById('confirmBookingButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
-    const selectedPayment = document.getElementById('payment_status_input').value;
-    
+    const selectedPayment = document.getElementById('paymentAmount').value;
     
     if (selectedMethod) {
         // Adjust payment amount based on selected option
@@ -503,9 +499,6 @@ document.getElementById('confirmBookingButton').addEventListener('click', functi
         const formData = new FormData();
         formData.append('payment_method', selectedMethod.value);
         formData.append('payment_amount', paymentAmount);
-        formData.append('txtstatus', selectedPayment); // Use the value from payment_status_input
-        // Store payment status in sessionStorage
-        sessionStorage.setItem('pendingPaymentStatus', selectedPayment); 
 
         // Send the form data via fetch to source.php
         fetch('source.php', {

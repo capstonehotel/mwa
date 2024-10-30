@@ -22,7 +22,7 @@ $secret_key = 'sk_test_8FHikGJxuzFP3ix4itFTcQCv'; // Use your secret key here
 
 // Retrieve the selected payment method from the form
 $paymentMethod = isset($_POST['payment_method']) ? $_POST['payment_method'] : '';
-$paymentStatus = isset($_POST['txtstatus']) ? $_POST['txtstatus'] : ''; // Get payment status
+
 if ($paymentMethod === 'gcash') {
     // Get order details from the session
     $customerName = $_SESSION['name'] . ' ' . $_SESSION['last'];
@@ -50,9 +50,7 @@ if ($paymentMethod === 'gcash') {
                         'phone' => $customerPhone
                     ],
                     'type'  => 'gcash',
-                    'currency' => 'PHP',
-                    'description' => 'Payment for booking - Status: ' . $paymentStatus // Include payment status in description
-                
+                    'currency' => 'PHP'
                 ]
             ]
         ]);
