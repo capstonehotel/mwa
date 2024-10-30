@@ -494,7 +494,7 @@ for ($i=0; $i < $count_cart  ; $i++) {
     <script>
 document.getElementById('confirmBookingButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
-    const selectedPayment = document.getElementById('paymentAmount').value;
+    const selectedPayment = document.getElementById('paymentAmount').value = this.value;
     
    if (selectedMethod) {
         // Default values for full payment
