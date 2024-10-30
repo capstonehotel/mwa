@@ -249,16 +249,6 @@ $_SESSION['GUESTID'] =   $lastguest;
             // }
            
             $paymentStatus = isset($_POST['payment_status']) && $_POST['payment_status'] == 'Fully Paid' ? 'Fully Paid' : 'Partially Paid';
-// Capture the selected payment option
-// $paymentStatus = isset($_POST['payment_status']) ? $_POST['payment_status'] : 'Fully Paid';
-
-// // Set total amount initially
-// $totalAmount = $tot; // Assuming $tot is your calculated total
-
-// // Check if "Partial Payment" was chosen and adjust total accordingly
-// if ($paymentStatus === 'Partially Paid') {
-//     $totalAmount = $totalAmount / 2; // Adjust total for partial payment
-// }
 
 
             $reservation = new Reservation();
@@ -283,14 +273,17 @@ $_SESSION['GUESTID'] =   $lastguest;
            
 
       $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`,`PAYMENT_STATUS`,`PAYMENT_METHOD` )
-       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentstatus . "', 'GCash' )" ;
+       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentStatus . "', 'GCash' )" ;
         // mysql_query($sql);
 
         
      
+
+
+
+
      $mydb->setQuery($sql);
      $msg = $mydb->executeQuery();
-     $paymentstatus = $_POST['txtstatus'];
 
     //  $mydb1->setQuery($sql1);
     //  $msg1 = $mydb1->executeQuery();
@@ -371,13 +364,13 @@ $_SESSION['GUESTID'] =   $lastguest;
     <label style="display: none;" >Transaction Id:</label>
     <span  style="display: none;" name="realconfirmation"><?php echo $_SESSION['confirmation']; ?></span>
     <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
-    <input type="text" id="payment_status_input"  name="txtstatus">
+    <input type="hidden" id="payment_status_input"  name="txtstatus">
 </div>
 <div class="col-md-12 col-sm-2" style="display: flex; align-items: center;">
     <label for="paymentAmount" id="paymentLabel" style="margin-right: 10px;">Select Payment Option:</label>
     <div>
-        <select id="paymentAmount" name="payment_status" required>
-            <option value="Fully Paid" selected>Full Payment</option>
+        <select id="paymentAmount" name="payment_amount" required>
+            <option value="Fully Paid">Full Payment</option>
             <option value="Partially Paid">Partial Payment</option>
         </select>
     </div>
@@ -485,26 +478,16 @@ for ($i=0; $i < $count_cart  ; $i++) {
         document.getElementById('bookingForm').submit();
     });
 </script> -->
-
-<script>
-    document.getElementById('paymentAmount').addEventListener('change', function() {
-    document.getElementById('payment_status_input').value = this.value;
-});
-</script>
     <script>
 document.getElementById('confirmBookingButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
-    const selectedPayment = document.getElementById('paymentAmount').value = this.value;
+    const selectedPayment = document.getElementById('paymentAmount').value;
     
-   if (selectedMethod) {
-        // Default values for full payment
-        let paymentAmount = <?php echo $_SESSION['pay']; ?>;
-        let paymentStatus = 'Fully Paid';
-
-        // If Partial Payment is selected, adjust values
+    if (selectedMethod) {
+        // Adjust payment amount based on selected option
+        let paymentAmount = <?php echo $_SESSION['pay']; ?>; // Full amount
         if (selectedPayment === 'Partially Paid') {
-            paymentAmount /= 2;
-            paymentStatus = 'Partially Paid';
+            paymentAmount /= 2; // Half for partial payment
         }
 
         // Prepare form data with payment method and adjusted amount
