@@ -270,7 +270,7 @@ $_SESSION['GUESTID'] =   $lastguest;
             $reservation->RPRICE            = $_SESSION['monbela_cart'][$i]['monbelaroomprice'];  
             $reservation->GUESTID           = $_SESSION['GUESTID']; 
             $reservation->PRORPOSE          = 'Travel';
-            $reservation->PAYMENT_STATUS    = $paymentstatus;
+            $reservation->PAYMENT_STATUS    = $_POST['txtstatus'];
             $reservation->PAYMENT_METHOD    = 'GCash';
             $reservation->STATUS            = 'Pending';
             $reservation->create(); 
@@ -283,14 +283,14 @@ $_SESSION['GUESTID'] =   $lastguest;
            
 
       $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`,`PAYMENT_STATUS`,`PAYMENT_METHOD` )
-       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentstatus . "', 'GCash' )" ;
+       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $_POST['txtstatus'] . "', 'GCash' )" ;
         // mysql_query($sql);
 
         
      
      $mydb->setQuery($sql);
      $msg = $mydb->executeQuery();
-     $paymentstatus = $_POST['txtstatus'];
+     //$paymentstatus = $_POST['txtstatus'];
 
     //  $mydb1->setQuery($sql1);
     //  $msg1 = $mydb1->executeQuery();
@@ -486,11 +486,11 @@ for ($i=0; $i < $count_cart  ; $i++) {
     });
 </script> -->
 
-<script>
+<!-- <script>
     document.getElementById('paymentAmount').addEventListener('change', function() {
     document.getElementById('payment_status_input').value = this.value;
 });
-</script>
+</script> -->
     <script>
 document.getElementById('confirmBookingButton').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
@@ -506,11 +506,13 @@ document.getElementById('confirmBookingButton').addEventListener('click', functi
             paymentAmount /= 2;
             paymentStatus = 'Partially Paid';
         }
+        document.getElementById('payment_status_input').value = paymentStatus;
 
         // Prepare form data with payment method and adjusted amount
         const formData = new FormData();
         formData.append('payment_method', selectedMethod.value);
         formData.append('payment_amount', paymentAmount);
+        formData.append('payment_status', paymentStatus);
 
         // Send the form data via fetch to source.php
         fetch('source.php', {
