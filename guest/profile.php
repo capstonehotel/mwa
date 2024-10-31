@@ -6,10 +6,6 @@
   <title>Profile</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
   <style>
-    body {
-      background-color: black; /* Set background color to black */
-      color: white; /* Set text color to white for better contrast */
-    }
     .form-control {
       width: 100%;
     }
@@ -19,7 +15,6 @@
     .card {
       height: 700px; /* Set your desired fixed height */
       overflow: hidden; /* Hide any overflow content */
-      background-color: #333; /* Set card background color for contrast */
     }
     .card-body {
       overflow-y: auto; /* Allow vertical scrolling inside the card-body if needed */
@@ -113,7 +108,64 @@ $res = $guest->single_guest($_SESSION['GUESTID']);
 <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 <script type="text/javascript">
+  $('.date_pickerfrom').datetimepicker({
+  format: 'mm/dd/yyyy',
+   startDate : '01/01/2000', 
+    language:  'en',
+    weekStart: 1,
+    todayBtn:  1,
+    autoclose: 1,
+    todayHighlight: 1, 
+    startView: 2,
+    minView: 2,
+    forceParse: 0 
+
+    });
+
+
+$('.date_pickerto').datetimepicker({
+  format: 'mm/dd/yyyy',
+   startDate : '01/01/2000', 
+    language:  'en',
+    weekStart: 1,
+    todayBtn:  1,
+    autoclose: 1,
+    todayHighlight: 1, 
+    startView: 2,
+    minView: 2,
+    forceParse: 0   
+
+    });
+
+
+
+$(document).ready( function() {
+
+    $('.gallery-item').hover( function() {
+        $(this).find('.img-title').fadeIn(400);
+    }, function() {
+        $(this).find('.img-title').fadeOut(100);
+    });
+  
+});
+
+
+
+$('.dbirth').datetimepicker({
+  format: 'mm/dd/yyyy',
+   startDate : '01/01/1960', 
+    language:  'en',
+    weekStart: 1,
+    todayBtn:  1,
+    autoclose: 1,
+    todayHighlight: 1, 
+    startView: 2,
+    minView: 2,
+    forceParse: 0   
+
+    });
   // Validates Personal Info
   function personalInfo(){
     var a = document.forms["personal"]["name"].value;
@@ -136,7 +188,12 @@ $res = $guest->single_guest($_SESSION['GUESTID']);
   return false;
 }
     if ((a == "Firstname" || a == "") || (b == "lastname" || b == "") || (b1 == "gender" || b1 == "") || (c == "City" || c == "") || (d == "address" || d == "") || (e == "dateofbirth" || e == "") || (f == "Zip" || f == "") || (g == "Phone" || g == "") || (h == "username" || h == "") || (i == "password" || i == "")) {
-      alert("All fields are required!");
+     // alert("All fields are required!");
+     Swal.fire({
+            icon: 'warning',
+            title: 'Missing Information',
+            text: 'All fields are required!',
+        });
       return false;
     }
   }
