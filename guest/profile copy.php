@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Profile</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
   <style>
-    body {
-      background-color: #f8f9fa; /* Light background for contrast */
-    }
     .form-control {
       width: 100%;
     }
@@ -16,23 +13,14 @@
       margin-bottom: 1rem;
     }
     .card {
-      height: auto; /* Allow height to adjust based on content */
-      overflow: hidden;
-      border-radius: 1rem; /* Rounded corners */
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      height: 700px; /* Set your desired fixed height */
+      overflow: hidden; /* Hide any overflow content */
     }
     .card-body {
-      overflow-y: auto;
-      padding: 2rem; /* More padding for better spacing */
+      overflow-y: auto; /* Allow vertical scrolling inside the card-body if needed */
     }
     .form-section {
       margin-bottom: 1.5rem;
-    }
-    h1 {
-      margin-bottom: 1.5rem; /* Space below the title */
-    }
-    .btn-primary {
-      padding: 0.5rem 1.5rem; /* Larger button size */
     }
   </style>
 </head>
@@ -40,8 +28,10 @@
 <?php 
 require_once("../includes/initialize.php");
 
+  
 $guest = New Guest();
 $res = $guest->single_guest($_SESSION['GUESTID']);
+
 ?>
 <div class="container" style="max-width: 1200px; padding: 20px; margin-top: 20px;">
   <form class="form-horizontal" action="https://mcchmhotelreservation.com/guest/update.php" method="post" onsubmit="return personalInfo()" name="personal">
@@ -53,11 +43,11 @@ $res = $guest->single_guest($_SESSION['GUESTID']);
           <div class="col-md-6 form-section">
             <div class="form-group">
               <label for="firstName" class="form-label">First Name:</label>
-              <input name="name" type="text" value="<?php echo $res->G_FNAME; ?>" class="form-control" id="firstName" placeholder="Enter your first name">
+              <input name="name" type="text" value="<?php echo $res->G_FNAME; ?>" class="form-control" id="firstName" placeholder="First Name">
             </div>
             <div class="form-group">
               <label for="lastName" class="form-label">Last Name:</label>
-              <input name="last" type="text" value="<?php echo $res->G_LNAME; ?>" class="form-control" id="lastName" placeholder="Enter your last name">
+              <input name="last" type="text" value="<?php echo $res->G_LNAME; ?>" class="form-control" id="lastName" placeholder="Last Name">
             </div>
             <div class="form-group">
               <label for="genderSelect" class="form-label">Gender:</label>
@@ -70,15 +60,15 @@ $res = $guest->single_guest($_SESSION['GUESTID']);
             </div>
             <div class="form-group">
               <label for="city" class="form-label">City:</label>
-              <input name="city" type="text" value="<?php echo $res->G_CITY; ?>" class="form-control" id="city" placeholder="Enter your city">
+              <input name="city" type="text" value="<?php echo $res->G_CITY; ?>" class="form-control" id="city" placeholder="City">
             </div>
             <div class="form-group">
               <label for="address" class="form-label">Address:</label>
-              <input name="address" type="text" value="<?php echo $res->G_ADDRESS; ?>" class="form-control" id="address" placeholder="Enter your address">
+              <input name="address" type="text" value="<?php echo $res->G_ADDRESS; ?>" class="form-control" id="address" placeholder="Address">
             </div>
             <div class="form-group">
               <label for="dbirth" class="form-label">Date of Birth:</label>
-              <input type="text" name="dbirth" value="<?php echo date($res->DBIRTH); ?>" class="form-control" id="dbirth" placeholder="Enter your date of birth">
+              <input type="text" name="dbirth" value="<?php echo date($res->DBIRTH); ?>" class="form-control" id="dbirth" placeholder="Date of Birth">
             </div>
           </div>
 
@@ -86,23 +76,23 @@ $res = $guest->single_guest($_SESSION['GUESTID']);
           <div class="col-md-6 form-section">
             <div class="form-group">
               <label for="phone" class="form-label">Phone:</label>
-              <input name="phone" type="text" value="<?php echo $res->G_PHONE; ?>" class="form-control" id="phone" placeholder="Enter your phone number">
+              <input name="phone" type="text" value="<?php echo $res->G_PHONE; ?>" class="form-control" id="phone" placeholder="Phone">
             </div>
             <div class="form-group">
               <label for="nationality" class="form-label">Nationality:</label>
-              <input name="nationality" type="text" value="<?php echo $res->G_NATIONALITY; ?>" class="form-control" id="nationality" placeholder="Enter your nationality">
+              <input name="nationality" type="text" value="<?php echo $res->G_NATIONALITY; ?>" class="form-control" id="nationality" placeholder="Nationality">
             </div>
             <div class="form-group">
               <label for="company" class="form-label">Company:</label>
-              <input name="company" type="text" value="<?php echo $res->G_COMPANY; ?>" class="form-control" id="company" placeholder="Enter your company">
+              <input name="company" type="text" value="<?php echo $res->G_COMPANY; ?>" class="form-control" id="company" placeholder="Company">
             </div>
             <div class="form-group">
               <label for="caddress" class="form-label">Company Address:</label>
-              <input name="caddress" type="text" value="<?php echo $res->G_CADDRESS; ?>" class="form-control" id="caddress" placeholder="Enter your company address">
+              <input name="caddress" type="text" value="<?php echo $res->G_CADDRESS; ?>" class="form-control" id="caddress" placeholder="Company Address">
             </div>
             <div class="form-group">
               <label for="zip" class="form-label">Zip Code:</label>
-              <input name="zip" type="text" value="<?php echo $res->ZIP; ?>" class="form-control" id="zip" placeholder="Enter your zip code">
+              <input name="zip" type="text" value="<?php echo $res->ZIP; ?>" class="form-control" id="zip" placeholder="Zip Code">
             </div>
           </div>
         </div>
@@ -148,4 +138,3 @@ $res = $guest->single_guest($_SESSION['GUESTID']);
 </script>
 </body>
 </html>
-

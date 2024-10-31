@@ -417,14 +417,10 @@ s0.parentNode.insertBefore(s1,s0);
                       <h5 style="text-align: center;" class="widget-user-username"><?php echo $_SESSION['name']. ' ' . $_SESSION['last']; ?> </h5>
                     </li>
 
-                    <!-- <li>
+                    <li>
                         <a class="dropdown-item" style="color:#000;text-align:left;border-bottom:1px solid #fff;"
                     href="https://mcchmhotelreservation.com/guest/profile.php" data-toggle="lightbox" >Account</a>
-                    </li> -->
-                    <li>
-    <a class="dropdown-item" style="color:#000;text-align:left;border-bottom:1px solid #fff;"
-       href="#" data-toggle="modal" data-target="#accountModal">Account</a>
-</li>
+                    </li>
                     <li><a class="dropdown-item" style="color:#000;text-align:left;border-bottom:1px solid #fff;" 
                 href="https://mcchmhotelreservation.com/guest/bookinglist.php" data-toggle="lightbox">Bookings</a>
                     </li>
@@ -449,26 +445,6 @@ s0.parentNode.insertBefore(s1,s0);
     </div>
   </nav>
 
-<!-- Modal Structure -->
-<div class="modal fade" id="accountModal" tabindex="-1" role="dialog" aria-labelledby="accountModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="accountModalLabel">Account Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Content from profile.php can be loaded here -->
-                <iframe src="https://mcchmhotelreservation.com/guest/profile.php" style="width:100%; height:400px; border:none;"></iframe>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
    <div class="modal fade" id="myModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
