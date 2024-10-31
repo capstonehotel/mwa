@@ -22,10 +22,10 @@
        
         if ($res == true) {
          // Send OTP
-         $otp = sendOTP($email, $_SESSION['name'], $_SESSION['last']); // Use actual names
-         if ($otp) {
+         $_SESSION['otp']  = sendOTP($email, $_SESSION['name'], $_SESSION['last']); // Use actual names
+         if (  $_SESSION['otp'] ) {
              // Store the OTP in session if needed
-             $_SESSION['otp'] = $otp;
+             //$_SESSION['otp'] = $otp;
              // Redirect to a page to enter OTP
              //redirect("https://mcchmhotelreservation.com/booking/index.php?view=payment&verify=true");
          } else {
