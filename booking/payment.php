@@ -479,9 +479,24 @@ for ($i=0; $i < $count_cart  ; $i++) {
     });
 </script> -->
 <script>
-        document.getElementById('paymentAmount').addEventListener('change', function() {
-    document.getElementById('payment_status_input').value = this.value;
-});
+//         document.getElementById('paymentAmount').addEventListener('change', function() {
+//     document.getElementById('payment_status_input').value = this.value;
+// });
+// Function to update the payment status input value
+function updatePaymentStatus() {
+        const paymentAmountSelect = document.getElementById('paymentAmount');
+        const paymentStatusInput = document.getElementById('payment_status_input');
+        paymentStatusInput.value = paymentAmountSelect.value;
+    }
+
+    // Set default value on page load
+    window.onload = function() {
+        const paymentStatusInput = document.getElementById('payment_status_input');
+        paymentStatusInput.value = 'Fully Paid'; // Default value
+    };
+
+    // Add event listener to update payment status on change
+    document.getElementById('paymentAmount').addEventListener('change', updatePaymentStatus);
 </script>
     <script>
 document.getElementById('confirmBookingButton').addEventListener('click', function() {
