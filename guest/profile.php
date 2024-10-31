@@ -4,42 +4,41 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Profile</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
-      background-color: #f8f9fa; /* Light background for contrast */
-    }
-    .form-control {
-      width: 100%;
-    }
-    .form-group {
-      margin-bottom: 1rem;
+      background-color: #f8f9fa;
     }
     .card {
-      height: auto; /* Allow height to adjust based on content */
-      overflow: hidden;
-      border-radius: 1rem; /* Rounded corners */
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     }
     .card-body {
-      overflow-y: auto;
-      padding: 2rem; /* More padding for better spacing */
+      padding: 2rem;
+    }
+    .form-control {
+      border-radius: 10px;
+      box-shadow: none;
+    }
+    .form-label {
+      font-weight: bold;
+    }
+    .btn-primary {
+      border-radius: 10px;
+      transition: background-color 0.3s;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
     }
     .form-section {
       margin-bottom: 1.5rem;
-    }
-    h1 {
-      margin-bottom: 1.5rem; /* Space below the title */
-    }
-    .btn-primary {
-      padding: 0.5rem 1.5rem; /* Larger button size */
     }
   </style>
 </head>
 <body>
 <?php 
 require_once("../includes/initialize.php");
-
 $guest = New Guest();
 $res = $guest->single_guest($_SESSION['GUESTID']);
 ?>
@@ -47,9 +46,8 @@ $res = $guest->single_guest($_SESSION['GUESTID']);
   <form class="form-horizontal" action="https://mcchmhotelreservation.com/guest/update.php" method="post" onsubmit="return personalInfo()" name="personal">
     <div class="card">
       <div class="card-body">
-        <h1>My Account</h1>
+        <h1 class="text-center mb-4">My Account</h1>
         <div class="row">
-          <!-- Left Side (6 fields) -->
           <div class="col-md-6 form-section">
             <div class="form-group">
               <label for="firstName" class="form-label">First Name:</label>
@@ -82,7 +80,6 @@ $res = $guest->single_guest($_SESSION['GUESTID']);
             </div>
           </div>
 
-          <!-- Right Side (5 fields) -->
           <div class="col-md-6 form-section">
             <div class="form-group">
               <label for="phone" class="form-label">Phone:</label>
@@ -115,9 +112,7 @@ $res = $guest->single_guest($_SESSION['GUESTID']);
     </div>
   </form>
 </div>
-<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+
 <script type="text/javascript">
   // Validates Personal Info
   function personalInfo(){
@@ -134,18 +129,21 @@ $res = $guest->single_guest($_SESSION['GUESTID']);
 
     if (document.personal.condition.checked == false) {
       Swal.fire({
-    icon: 'error',
-    title: 'Terms and Conditions',
-    text: 'Please agree to the terms and conditions of this hotel',
-  });
-  return false;
-}
+        icon: 'error',
+        title: 'Terms and Conditions',
+        text: 'Please agree to the terms and conditions of this hotel',
+      });
+      return false;
+    }
     if ((a == "Firstname" || a == "") || (b == "lastname" || b == "") || (b1 == "gender" || b1 == "") || (c == "City" || c == "") || (d == "address" || d == "") || (e == "dateofbirth" || e == "") || (f == "Zip" || f == "") || (g == "Phone" || g == "") || (h == "username" || h == "") || (i == "password" || i == "")) {
-      alert("All fields are required!");
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Please fill in all required fields',
+      });
       return false;
     }
   }
 </script>
 </body>
 </html>
-
