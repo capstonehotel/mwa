@@ -17,12 +17,12 @@
         $guest = new Guest();
         $res = $guest::guest_login($email,$h_upass);
  // You need to fetch the guest's first and last name
-  $_SESSION['G_FNAME'] = $res['G_FNAME']; // Ensure guest_login returns these values
- $_SESSION['G_LNAME'] = $res['G_LNAME'];
+//  $_SESSION['G_FNAME'] = $res['G_FNAME']; // Ensure guest_login returns these values
+//  $_SESSION['G_LNAME'] = $res['G_LNAME'];
        
         if ($res == true) {
          // Send OTP
-         $otp = sendOTP($email, $res['G_FNAME'], $res['G_LNAME']); // Use actual names
+         $otp = sendOTP($email, $_SESSION['name'], $_SESSION['last']); // Use actual names
          if ($otp) {
              // Store the OTP in session if needed
              $_SESSION['otp'] = $otp;
