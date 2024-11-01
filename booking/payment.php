@@ -208,7 +208,7 @@ if(!isset($_SESSION['GUESTID'])){
   // var_dump($_SESSION);exit;
 
 $guest = New Guest();
-$guest->G_AVATAR          = $_SESSION['image'];
+$guest->G_AVATAR          = validateAndSanitize($_SESSION)['image'];
 $guest->G_FNAME          = $_SESSION['name'];    
 $guest->G_LNAME          = $_SESSION['last'];
 $guest->G_GENDER         = $_SESSION['gender'];    
