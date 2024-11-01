@@ -87,7 +87,9 @@ if (isset($_POST['btnlogin'])) {
             $_SESSION['ADMIN_UNAME']    	=  sanitize($row['UNAME']);
             $_SESSION['ADMIN_USERNAME']		=  sanitize($row['USER_NAME']);
             $_SESSION['ADMIN_UPASS']		=  sanitize($row['UPASS']);
-            $_SESSION['ADMIN_UROLE']    	=  sanitize($row['ROLE']); //change
+            $_SESSION['ADMIN_UROLE']    	=  sanitize($row['ROLE']);
+            
+         unset($row['UPASS']);//change 
       ?>  
       <style> 
       /* Adjust the width of the alert */
