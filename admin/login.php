@@ -84,7 +84,7 @@ if (isset($_POST['btnlogin'])) {
 
     if($row){
             $_SESSION['ADMIN_ID'] 	 		=  intval($row['USERID']);
-            $_SESSION['ADMIN_UNAME']    	=  sanitize($row['UNAME']);
+            $_SESSION['ADMIN_UNAME']    	=  $row['UNAME'];
             $_SESSION['ADMIN_USERNAME']		=  sanitize($row['USER_NAME']);
             $_SESSION['ADMIN_UPASS']		=  sanitize($row['UPASS']);
             $_SESSION['ADMIN_UROLE']    	=  sanitize($row['ROLE']);
