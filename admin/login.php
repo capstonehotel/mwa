@@ -146,8 +146,8 @@ if (isset($_POST['btnlogin'])) {
     }
 } else {
     
-    $email = "";
-    $upass = ""; 
+    // $email = "";
+    // $upass = ""; 
 }
 
 ?>        <div class="title">
