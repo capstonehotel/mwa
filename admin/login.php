@@ -83,13 +83,11 @@ if (isset($_POST['btnlogin'])) {
     $row = mysqli_fetch_assoc($result);
 
     if($row){
-            $_SESSION['ADMIN_ID'] 	 		=  intval($row['USERID']);
-            $_SESSION['ADMIN_UNAME']    	=  $row['UNAME'];
-            $_SESSION['ADMIN_USERNAME']		=  sanitize($row['USER_NAME']);
-            $_SESSION['ADMIN_UPASS']		=  sanitize($row['UPASS']);
-            $_SESSION['ADMIN_UROLE']    	=  sanitize($row['ROLE']);
-            
-         unset($row['UPASS']);//change 
+            $_SESSION['ADMIN_ID'] 	 		=  $row['USERID'] ;
+            $_SESSION['ADMIN_UNAME']    	=  $row['UNAME'] ;
+            $_SESSION['ADMIN_USERNAME']		=  $row['USER_NAME'] ;
+            $_SESSION['ADMIN_UPASS']		=  $row['UPASS'] ;
+            $_SESSION['ADMIN_UROLE']    	=  $row['ROLE'];
       ?>  
       <style> 
       /* Adjust the width of the alert */
@@ -148,8 +146,7 @@ if (isset($_POST['btnlogin'])) {
     }
 } else {
     
-    $email = "";
-    $upass = ""; 
+   
 }
 
 ?>        <div class="title">
