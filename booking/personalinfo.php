@@ -57,7 +57,7 @@ if (isset($_POST['submit'])){
  $_SESSION['phone']   		= $_POST['phone'];
  $_SESSION['username']		= $_POST['username'];
  $_SESSION['pass']  		= $_POST['pass'];
- $_SESSION['pending']  		= 'pending';
+ $_SESSION['pending']  		= 'pending'; ///sanitize this part
 
 
   // $name   = $_SESSION['name']; 
