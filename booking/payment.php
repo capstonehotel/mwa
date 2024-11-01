@@ -208,21 +208,21 @@ if(!isset($_SESSION['GUESTID'])){
   // var_dump($_SESSION);exit;
 
 $guest = New Guest();
-$guest->G_AVATAR          = $_SESSION['image'];
-$guest->G_FNAME          = $_SESSION['name'];    
-$guest->G_LNAME          = $_SESSION['last'];
-$guest->G_GENDER         = $_SESSION['gender'];    
-$guest->G_CITY           = $_SESSION['city'];
-$guest->G_ADDRESS        = $_SESSION['address'] ;        
-$guest->DBIRTH           = date_format(date_create($_SESSION['dbirth']), 'Y-m-d');   
-$guest->G_PHONE          = $_SESSION['phone'];    
-$guest->G_NATIONALITY    = $_SESSION['nationality'];          
-$guest->G_COMPANY        = $_SESSION['company'];      
-$guest->G_CADDRESS       = $_SESSION['caddress'];        
+$guest->G_AVATAR          filter_var($_SESSION)= $_SESSION['image'];
+$guest->G_FNAME          filter_var($_SESSION) $_SESSION['name'];    
+$guest->G_LNAME         filter_var($_SESSION) = $_SESSION['last'];
+$guest->G_GENDER         filter_var($_SESSION)= $_SESSION['gender'];    
+$guest->G_CITY           filter_var($_SESSION)= $_SESSION['city'];
+$guest->G_ADDRESS        filter_var($_SESSION)= $_SESSION['address'] ;        
+$guest->DBIRTH           filter_var($_SESSION)= date_format(date_create($_SESSION['dbirth']), 'Y-m-d');   
+$guest->G_PHONE          filter_var($_SESSION)= $_SESSION['phone'];    
+$guest->G_NATIONALITY   filter_var($_SESSION)= $_SESSION['nationality'];          
+$guest->G_COMPANY       filter_var($_SESSION)= $_SESSION['company'];      
+$guest->G_CADDRESS       filter_var($_SESSION)= $_SESSION['caddress'];        
 $guest->G_TERMS          = 1;    
-$guest->G_UNAME          = $_SESSION['username'];    
-$guest->G_PASS           = sha1($_SESSION['pass']);    
-$guest->ZIP              = $_SESSION['zip'];
+$guest->G_UNAME          filter_var($_SESSION)= $_SESSION['username'];    
+$guest->G_PASS           filter_var($_SESSION)= sha1($_SESSION['pass']);    
+$guest->ZIP              filter_var($_SESSION)= $_SESSION['zip']; 
 
    
 $guest->create(); 
