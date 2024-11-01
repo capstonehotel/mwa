@@ -208,21 +208,21 @@ if(!isset($_SESSION['GUESTID'])){
   // var_dump($_SESSION);exit;
 
 $guest = New Guest();
-$guest->G_AVATAR          = $_SESSION['image'];
-$guest->G_FNAME          = $_SESSION['name'];    
-$guest->G_LNAME          = $_SESSION['last'];
-$guest->G_GENDER         = $_SESSION['gender'];    
-$guest->G_CITY           = $_SESSION['city'];
-$guest->G_ADDRESS        = $_SESSION['address'] ;        
+$guest->G_AVATAR          = validateAndSanitize($_SESSION)['image'];
+$guest->G_FNAME          = validateAndSanitize($_SESSION)['name'];    
+$guest->G_LNAME          = validateAndSanitize($_SESSION)['last'];
+$guest->G_GENDER         = validateAndSanitize($_SESSION)['gender'];    
+$guest->G_CITY           = validateAndSanitize($_SESSION)['city'];
+$guest->G_ADDRESS        =validateAndSanitize($_SESSION)['address'] ;        
 $guest->DBIRTH           = date_format(date_create($_SESSION['dbirth']), 'Y-m-d');   
-$guest->G_PHONE          = $_SESSION['phone'];    
-$guest->G_NATIONALITY    = $_SESSION['nationality'];          
-$guest->G_COMPANY        = $_SESSION['company'];      
-$guest->G_CADDRESS       = $_SESSION['caddress'];        
+$guest->G_PHONE          = validateAndSanitize($_SESSION)['phone'];    
+$guest->G_NATIONALITY    = validateAndSanitize($_SESSION)['nationality'];          
+$guest->G_COMPANY        = validateAndSanitize($_SESSION)['company'];      
+$guest->G_CADDRESS       = validateAndSanitize($_SESSION)['caddress'];        
 $guest->G_TERMS          = 1;    
-$guest->G_UNAME          = $_SESSION['username'];    
+$guest->G_UNAME          = validateAndSanitize($_SESSION)['username'];    
 $guest->G_PASS           = sha1($_SESSION['pass']);    
-$guest->ZIP              = $_SESSION['zip'];
+$guest->ZIP              = validateAndSanitize($_SESSION)['zip'];
 
    
 $guest->create(); 
