@@ -1,5 +1,3 @@
-php_value display_errors On
-php_value mbstring.http_input auto
-php_value date.timezone America/New_York
-
-SetEnv PAYMONGO_SECRET_KEY pm_test_your_secret_key_here
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
