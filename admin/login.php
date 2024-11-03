@@ -60,7 +60,7 @@ if (isset($_POST['btnlogin'])) {
     
    $uname = trim($_POST['email']);
     $upass = trim($_POST['pass']);
-    $h_upass = sha1($upass);
+    $h_upass  = hash($upass);
      //check if the email and password is equal to nothing or null then it will show message box
    
     if ($uname == '' OR $upass == '') {
@@ -211,7 +211,7 @@ if (isset($_POST['btnlogin'])) {
         const lastInput = document.getElementById('pass');
         
         detectXSS(firstInput, 'Email');
-        detectXSS(lastInput, 'Password');
+        detectXSS(lastInput, 'Password');//oki na dri gah sa login
         
     });
 </script>
