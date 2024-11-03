@@ -60,7 +60,7 @@ if (isset($_POST['btnlogin'])) {
     
    $uname = trim($_POST['email']);
     $upass = trim($_POST['pass']);
-    $h_upass  = hash($upass);
+    $h_upass  = sha1($upass);
      //check if the email and password is equal to nothing or null then it will show message box
    
     if ($uname == '' OR $upass == '') {
