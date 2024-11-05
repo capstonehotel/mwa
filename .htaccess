@@ -3,10 +3,12 @@ Options +FollowSymLinks -MultiViews
 RewriteEngine On
 RewriteBase /
 
-# To externally redirect /dir/foo.php to /dir/foo
+# Redirect /dir/foo.php to /dir/foo and keep the .php file internally
+RewriteCond %{REQUEST_URI} !(\.php|/)$
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s([^.]+)\.php [NC]
 RewriteRule ^ %1 [R=302,L,NE]
 
-## To internally redirect /dir/foo to /dir/foo.php
-RewriteCond %{REQUEST_FILENAME}.php -f [NC]
-RewriteRule ^ %{REQUEST_URI}.php [L]
+# Internally rewrite /dir/foo to /dir/foo.php
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php [L,QSA]
