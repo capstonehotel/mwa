@@ -362,8 +362,8 @@ function donutChart() {
         ],
         backgroundColor: '#f2f5fa',
         labelColor: '#009688',
+        colors: ['#6dc8a1', '#23ad72', '#3cb681', '#54bf91', '#0BA462'],
         
-        colors: ['#6dc8a1', '#0BA462', '#23ad72', '#3cb681', '#54bf91',],
         resize: true,
     });
 }
