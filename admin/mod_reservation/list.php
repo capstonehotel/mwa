@@ -29,14 +29,7 @@
 
 
 </style>
-<?php 
-function dateDiff($startDate, $endDate) {
-    $start = new DateTime($startDate);
-    $end = new DateTime($endDate);
-    $interval = $start->diff($end);
-    return $interval->days; // Return the number of days
-}
-?>
+
 <div class="container-fluid">
     <div class="card shadow mb-4" >
         <div class="card-header py-3" style="display: flex; align-items: center;">
