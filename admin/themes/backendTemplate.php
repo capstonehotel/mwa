@@ -157,24 +157,24 @@ try {
 
 
 
-            <li class="nav-item active">
+            <!-- <li class="nav-item active">
                 <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_contact_us/index.php">
                     <i class="fas fa-fw fa-sms"></i>
                     <span>Messages</span></a>
-            </li>
+            </li> -->
 
             <li class="nav-item active">
                 <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_reports/index.php">
                     <i class="fas fa-fw fa-receipt"></i>
                     <span>Report</span></a>
             </li>
- <?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
+ <!-- <?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
             <li class="nav-item active">
                 <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_users/index.php">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Users</span></a>
             </li>
-   <?php } ?>
+   <?php } ?> -->
         </ul>
         <!-- End of Sidebar -->
 
