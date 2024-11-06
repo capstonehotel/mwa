@@ -50,16 +50,12 @@
         <div class="tab-content" id="reservationTabsContent">
             <?php 
             $queries = [
-                "list" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE` 
-                FROM `tblpayment` p
-                JOIN `tblguest` g ON p.`GUESTID` = g.`GUESTID`
-                JOIN `tblreservation` r ON r.`CONFIRMATIONCODE` = p.`CONFIRMATIONCODE`
-                ORDER BY p.`STATUS`='pending' DESC, p.`TRANSDATE` DESC",
-                "pending" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`  FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'pending' ORDER BY p.`TRANSDATE` DESC",
-                "confirmed" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`  FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'confirmed' ORDER BY p.`TRANSDATE` DESC",
-                "check-in" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`  FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'checkedin' ORDER BY p.`TRANSDATE` DESC",
-                "check-out" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`  FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'checkedout' ORDER BY p.`TRANSDATE` DESC",
-                "cancelled" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`  FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'cancelled' ORDER BY p.`TRANSDATE` DESC"
+                "list" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`,  `PQTY`, `SPRICE`, `STATUS` , `PAYMENT_STATUS` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` ORDER BY p.`STATUS`='pending' DESC, p.`TRANSDATE` DESC",
+                "pending" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS`, `PAYMENT_STATUS` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'pending' ORDER BY p.`TRANSDATE` DESC",
+                "confirmed" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS`, `PAYMENT_STATUS` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'confirmed' ORDER BY p.`TRANSDATE` DESC",
+                "check-in" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS`, `PAYMENT_STATUS` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'checkedin' ORDER BY p.`TRANSDATE` DESC",
+                "check-out" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS`, `PAYMENT_STATUS` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'checkedout' ORDER BY p.`TRANSDATE` DESC",
+                "cancelled" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS`, `PAYMENT_STATUS` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'cancelled' ORDER BY p.`TRANSDATE` DESC"
             ];
 
             foreach ($tabs as $tab) { ?>
@@ -71,9 +67,6 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Guest</th>
-                                        <th>Arrival</th>
-                                        <th>Departure</th>
-                                        <th>Nights</th>
                                         <!-- <th>Transaction Date</th>
                                         <th>Confirmation Code</th> -->
                                         <th>Total Rooms</th>
@@ -92,14 +85,10 @@
                                         $number = 0;
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             $number++;
-                                            $nights = dateDiff(date($row['ARRIVAL']), date($row['DEPARTURE']));
                                             ?>
                                             <tr>
                                                 <td align="center"><?php echo $number; ?></td>
                                                 <td align="center"><?php echo $row['G_FNAME']; ?> <?php echo $row['G_LNAME']; ?></td>
-                                                <td align="center"><?php echo date_format(date_create($row['ARRIVAL']), 'm/d/Y'); ?></td>
-                                                <td align="center"><?php echo date_format(date_create($row['DEPARTURE']), 'm/d/Y'); ?></td>
-                                                <td align="center"><?php echo ($day==0) ? '1' : $day; ?></td>
                                                 <!-- <td align="center"><?php echo $row['TRANSDATE']; ?></td>
                                                 <td align="center"><?php echo $row['CONFIRMATIONCODE']; ?></td> -->
                                                 <td align="center"><?php echo $row['PQTY']; ?></td>
