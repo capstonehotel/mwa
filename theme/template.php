@@ -340,9 +340,9 @@ s0.parentNode.insertBefore(s1,s0);
                 <?php } ?>
               </ul>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link <?php if(isset($_GET['p']) && $_GET['p'] == "contact"){echo "active";} ?>" href="https://mcchmhotelreservation.com/index.php?p=contact">Contact Us</a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a class="nav-link <?php if(isset($_GET['p']) && $_GET['p'] == "about-us"){echo "active";} ?>" href="https://mcchmhotelreservation.com/index.php?p=about-us">About us</a>
             </li>
