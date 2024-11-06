@@ -29,7 +29,14 @@
 
 
 </style>
-
+<?php 
+function dateDiff($startDate, $endDate) {
+    $start = new DateTime($startDate);
+    $end = new DateTime($endDate);
+    $interval = $start->diff($end);
+    return $interval->days; // Return the number of days
+}
+?>
 <div class="container-fluid">
     <div class="card shadow mb-4" >
         <div class="card-header py-3" style="display: flex; align-items: center;">
@@ -50,12 +57,12 @@
         <div class="tab-content" id="reservationTabsContent">
             <?php 
             $queries = [
-                "list" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` ORDER BY p.`STATUS`='pending' DESC, p.`TRANSDATE` DESC",
-                "pending" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`  FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'pending' ORDER BY p.`TRANSDATE` DESC",
-                "confirmed" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`  FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'confirmed' ORDER BY p.`TRANSDATE` DESC",
-                "check-in" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`  FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'checkedin' ORDER BY p.`TRANSDATE` DESC",
-                "check-out" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`  FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'checkedout' ORDER BY p.`TRANSDATE` DESC",
-                "cancelled" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`  FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'cancelled' ORDER BY p.`TRANSDATE` DESC"
+                "list" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE` FROM `tblpayment` p JOIN `tblguest` g ON p.`GUESTID` = g.`GUESTID` JOIN `tblreservation` r ON r.`CONFIRMATIONCODE` = p.`CONFIRMATIONCODE`  ORDER BY p.`STATUS`='pending' DESC, p.`TRANSDATE` DESC", 
+                "pending" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`  FROM `tblpayment` p JOIN `tblguest` g ON p.`GUESTID` = g.`GUESTID` JOIN `tblreservation` r ON r.`CONFIRMATIONCODE` = p.`CONFIRMATIONCODE`  AND p.`STATUS` = 'pending' ORDER BY p.`TRANSDATE` DESC",
+                "confirmed" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`  FROM `tblpayment` p JOIN `tblguest` g ON p.`GUESTID` = g.`GUESTID` JOIN `tblreservation` r ON r.`CONFIRMATIONCODE` = p.`CONFIRMATIONCODE`  AND p.`STATUS` = 'confirmed' ORDER BY p.`TRANSDATE` DESC",
+                "check-in" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`  FROM `tblpayment` p JOIN `tblguest` g ON p.`GUESTID` = g.`GUESTID` JOIN `tblreservation` r ON r.`CONFIRMATIONCODE` = p.`CONFIRMATIONCODE`  AND p.`STATUS` = 'checkedin' ORDER BY p.`TRANSDATE` DESC",
+                "check-out" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`  FROM `tblpayment` p JOIN `tblguest` g ON p.`GUESTID` = g.`GUESTID` JOIN `tblreservation` r ON r.`CONFIRMATIONCODE` = p.`CONFIRMATIONCODE`  AND p.`STATUS` = 'checkedout' ORDER BY p.`TRANSDATE` DESC",
+                "cancelled" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`  FROM `tblpayment` p JOIN `tblguest` g ON p.`GUESTID` = g.`GUESTID` JOIN `tblreservation` r ON r.`CONFIRMATIONCODE` = p.`CONFIRMATIONCODE`  AND p.`STATUS` = 'cancelled' ORDER BY p.`TRANSDATE` DESC"
             ];
 
             foreach ($tabs as $tab) { ?>
