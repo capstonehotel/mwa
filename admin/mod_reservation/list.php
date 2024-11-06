@@ -50,11 +50,7 @@
         <div class="tab-content" id="reservationTabsContent">
             <?php 
             $queries = [
-                "list" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE` 
-                FROM `tblpayment` p
-                JOIN `tblguest` g ON p.`GUESTID` = g.`GUESTID`
-                JOIN `tblreservation` r ON r.`CONFIRMATIONCODE` = p.`CONFIRMATIONCODE`
-                ORDER BY p.`STATUS`='pending' DESC, p.`TRANSDATE` DESC",
+                "list" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` ORDER BY p.`STATUS`='pending' DESC, p.`TRANSDATE` DESC",
                 "pending" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`  FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'pending' ORDER BY p.`TRANSDATE` DESC",
                 "confirmed" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`  FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'confirmed' ORDER BY p.`TRANSDATE` DESC",
                 "check-in" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`  FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`STATUS` = 'checkedin' ORDER BY p.`TRANSDATE` DESC",
