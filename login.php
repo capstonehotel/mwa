@@ -1,6 +1,6 @@
 <?php
 // Include required initialization and classes
-require_once("includes/initialize.php");
+require_once("initialize.php");
 
 if (isset($_POST['gsubmit'])) {
     // Get the hCaptcha response from the form
