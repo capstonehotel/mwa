@@ -88,14 +88,16 @@
                                         $number = 0;
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             $number++;
-                                            $nights = dateDiff(date($row['ARRIVAL']), date($row['DEPARTURE']));
+                                            $nights = dateDiff($row['ARRIVAL'], $row['DEPARTURE']);
+
+
                                             ?>
                                             <tr>
                                                 <td align="center"><?php echo $number; ?></td>
                                                 <td align="center"><?php echo $row['G_FNAME']; ?> <?php echo $row['G_LNAME']; ?></td>
                                                 <td align="center"><?php echo date_format(date_create($row['ARRIVAL']), 'm/d/Y'); ?></td>
                                                 <td align="center"><?php echo date_format(date_create($row['DEPARTURE']), 'm/d/Y'); ?></td>
-                                                <td align="center"><?php echo ($day==0) ? '1' : $day; ?></td>
+                                                <td align="center"><?php echo ($nights == 0) ? '1' : $nights; ?></td>
                                                 <!-- <td align="center"><?php echo $row['TRANSDATE']; ?></td>
                                                 <td align="center"><?php echo $row['CONFIRMATIONCODE']; ?></td> -->
                                                 <td align="center"><?php echo $row['PQTY']; ?></td>
@@ -120,7 +122,15 @@
         </div>
     </div>
 </div>
+<?php
+function dateDiff($start_date, $end_date) {
+    $start = new DateTime($start_date);
+    $end = new DateTime($end_date);
+    $interval = $start->diff($end);
+    return $interval->days; // This returns the difference in days
+}
 
+?>
 <!-- Initialize DataTables -->
 <script>
 $(document).ready(function() {

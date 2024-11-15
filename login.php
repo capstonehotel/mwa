@@ -1,38 +1,41 @@
 <?php
- require_once ("initialize.php"); 
- require_once ("sendOTP.php");
+// Include required initialization and classes
+require_once("includes/initialize.php");
 
+if (isset($_POST['gsubmit'])) {
+    // Get the hCaptcha response from the form
+    $hcaptchaResponse = $_POST['h-captcha-response'];
+    $secretKey = 'ES_84f7194c2cd04982851c0b2c910b33f3';  // Replace with your actual hCaptcha secret key
+    $remoteIp = $_SERVER['REMOTE_ADDR'];
+    
+    // Verify the hCaptcha response
+    $verifyResponse = file_get_contents("https://hcaptcha.com/siteverify?secret=$secretKey&response=$hcaptchaResponse&remoteip=$remoteIp");
+    $responseData = json_decode($verifyResponse);
 
- if(isset($_POST['gsubmit'])){
+    if ($responseData->success) {
+        // hCaptcha was successful, proceed with login
+        $email = trim($_POST['username']);
+        $upass = trim($_POST['pass']); // plain password
 
-  $email = trim($_POST['username']);
-  $upass  = trim($_POST['pass']);
-  $h_upass = sha1($upass);
-  }
-   if ($email == '' OR $upass == '') { 
-      message("Invalid Username and Password!", "error");
-       redirect("https://mcchmhotelreservation.com/index.php?page=6");
-         
-    } else {   
-        $guest = new Guest();
-        $res = $guest::guest_login($email,$h_upass);
- // You need to fetch the guest's first and last name
-//  $_SESSION['G_FNAME'] = $res['G_FNAME']; // Ensure guest_login returns these values
-//  $_SESSION['G_LNAME'] = $res['G_LNAME'];
-       
-        if ($res == true) {
-         // Send OTP
-         $_SESSION['otp']  = sendOTP($email, $_SESSION['name'], $_SESSION['last']); // Use actual names
-         if (  $_SESSION['otp'] ) {
-             // Store the OTP in session if needed
-             //$_SESSION['otp'] = $otp;
-             // Redirect to a page to enter OTP
-             redirect("https://mcchmhotelreservation.com/booking/index.php?view=payment&verify=true");
-         } else {
-             message("Failed to send OTP. Please try again.", "error");
-             redirect("https://mcchmhotelreservation.com/booking/index.php?view=logininfo");
-         }
-     }
- }
- 
+        if ($email == '' || $upass == '') { 
+            message("Invalid Username and Password!", "error");
+            redirect(web_root . "index.php?page=6");
+        } else {   
+            $guest = new Guest();
+            // Pass plain password for login
+            $res = $guest::guest_login($email, $upass);
+
+            if ($res == true) {
+                redirect(WEB_ROOT . "booking/index.php?view=payment");
+            } else {
+                message("Invalid Username and Password! Please contact administrator", "error");
+                redirect(WEB_ROOT . "booking/index.php?view=logininfo");
+            }
+        }
+    } else {
+        // hCaptcha verification failed
+        message("hCaptcha verification failed. Please try again.", "error");
+        redirect(web_root . "index.php?page=6");
+    }
+}
 ?>
