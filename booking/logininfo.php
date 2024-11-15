@@ -63,9 +63,9 @@ if (!isset($_SESSION['monbela_cart'])) {
         <input type="password" class="form-control" name="pass" placeholder="Password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
-       <!-- hCaptcha Integration -->
-       <div class="form-group" style="margin-top: 10px;">
-        <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div>
+        <!-- hCaptcha Integration -->
+      <div class="form-group" style="margin-top: 10px;">
+        <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126" data-callback="onCaptchaSuccess"></div>
       </div>
       <!-- <div class="row">
         <div class="col-xs-8">
@@ -77,7 +77,8 @@ if (!isset($_SESSION['monbela_cart'])) {
         </div> -->
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="submit" name="gsubmit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+          <!-- Sign In button initially disabled -->
+          <button type="submit" name="gsubmit" id="signInButton" class="btn btn-primary btn-block btn-flat" disabled>Sign In</button>
         </div>
         <!-- /.col -->
       </div>
@@ -87,6 +88,13 @@ if (!isset($_SESSION['monbela_cart'])) {
   <!-- Load hCaptcha script -->
   <script src="https://hcaptcha.com/1/api.js" async defer></script>
 
+  <!-- JavaScript to enable button upon hCaptcha success -->
+  <script>
+    function onCaptchaSuccess() {
+      // Enable the sign-in button after hCaptcha is completed
+      document.getElementById("signInButton").disabled = false;
+    }
+  </script>
 <?php
   }
 
