@@ -63,14 +63,18 @@ if (!isset($_SESSION['monbela_cart'])) {
         <input type="password" class="form-control" name="pass" placeholder="Password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
-      <div class="row">
+       <!-- hCaptcha Integration -->
+       <div class="form-group" style="margin-top: 10px;">
+        <div class="h-captcha" data-sitekey="YOUR_HCAPTCHA_SITE_KEY"></div>
+      </div>
+      <!-- <div class="row">
         <div class="col-xs-8">
           <div class="checkbox icheck">
             <label>
               <input type="checkbox"> Remember Me
             </label>
           </div>
-        </div>
+        </div> -->
         <!-- /.col -->
         <div class="col-xs-4">
           <button type="submit" name="gsubmit" class="btn btn-primary btn-block btn-flat">Sign In</button>
@@ -80,7 +84,8 @@ if (!isset($_SESSION['monbela_cart'])) {
     </form> 
 </div>
  
- 
+  <!-- Load hCaptcha script -->
+  <script src="https://hcaptcha.com/1/api.js" async defer></script>
 
 <?php
   }
