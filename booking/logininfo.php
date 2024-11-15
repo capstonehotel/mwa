@@ -65,7 +65,7 @@ if (!isset($_SESSION['monbela_cart'])) {
       </div>
        <!-- hCaptcha Integration -->
        <div class="form-group" style="margin-top: 10px;">
-        <div class="h-captcha" data-sitekey="YOUR_HCAPTCHA_SITE_KEY"></div>
+        <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div>
       </div>
       <!-- <div class="row">
         <div class="col-xs-8">
