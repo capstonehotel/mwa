@@ -19,23 +19,23 @@ if (isset($_POST['gsubmit'])) {
 
         if ($email == '' || $upass == '') { 
             message("Invalid Username and Password!", "error");
-            redirect(web_root . "index.php?page=6");
+            redirect("https://mcchmhotelreservation.com/index.php?page=6");
         } else {   
             $guest = new Guest();
             // Pass plain password for login
             $res = $guest::guest_login($email, $upass);
 
             if ($res == true) {
-                redirect(WEB_ROOT . "booking/index.php?view=payment");
+                redirect("https://mcchmhotelreservation.com/booking/index.php?view=payment");
             } else {
                 message("Invalid Username and Password! Please contact administrator", "error");
-                redirect(WEB_ROOT . "booking/index.php?view=logininfo");
+                redirect("https://mcchmhotelreservation.com/booking/index.php?view=logininfo");
             }
         }
     } else {
         // hCaptcha verification failed
         message("hCaptcha verification failed. Please try again.", "error");
-        redirect(web_root . "index.php?page=6");
+        redirect("https://mcchmhotelreservation.com/index.php?page=6");
     }
 }
 ?>
