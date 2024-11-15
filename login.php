@@ -4,7 +4,7 @@ require_once("initialize.php");
 
 if (isset($_POST['gsubmit'])) {
     // Get the hCaptcha response from the form
-    $hcaptchaResponse = $_POST['h-captcha-response'];
+    $hcaptchaResponse = isset($_POST['h-captcha-response']) ? $_POST['h-captcha-response'] : '';
     $secretKey = 'ES_84f7194c2cd04982851c0b2c910b33f3';  // Replace with your actual hCaptcha secret key
     $remoteIp = $_SERVER['REMOTE_ADDR'];
     
@@ -12,12 +12,12 @@ if (isset($_POST['gsubmit'])) {
     $verifyResponse = file_get_contents("https://hcaptcha.com/siteverify?secret=$secretKey&response=$hcaptchaResponse&remoteip=$remoteIp");
     $responseData = json_decode($verifyResponse);
 
-    if ($responseData->success) {
+    if ($responseData && $responseData->success) {
         // hCaptcha was successful, proceed with login
         $email = trim($_POST['username']);
         $upass = trim($_POST['pass']); // plain password
 
-        if ($email == '' || $upass == '') { 
+        if (empty($email) || empty($upass)) { 
             message("Invalid Username and Password!", "error");
             redirect("https://mcchmhotelreservation.com/index.php?page=6");
         } else {   
@@ -25,9 +25,11 @@ if (isset($_POST['gsubmit'])) {
             // Pass plain password for login
             $res = $guest::guest_login($email, $upass);
 
-            if ($res == true) {
+            if ($res === true) {
+                // Successful login
                 redirect("https://mcchmhotelreservation.com/booking/index.php?view=payment");
             } else {
+                // Login failed
                 message("Invalid Username and Password! Please contact administrator", "error");
                 redirect("https://mcchmhotelreservation.com/booking/index.php?view=logininfo");
             }
@@ -37,5 +39,9 @@ if (isset($_POST['gsubmit'])) {
         message("hCaptcha verification failed. Please try again.", "error");
         redirect("https://mcchmhotelreservation.com/index.php?page=6");
     }
+} else {
+    // Display error if form was not submitted correctly
+    message("Form not submitted correctly.", "error");
+    redirect("https://mcchmhotelreservation.com/index.php?page=6");
 }
 ?>
