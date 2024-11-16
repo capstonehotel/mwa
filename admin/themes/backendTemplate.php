@@ -737,11 +737,11 @@ function markAsRead(reserveId, redirectUrl) {
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="https://mcchmhotelreservation.com/admin/vendor/jquery/jquery.min.js"></script>
-    <script src="https://mcchmhotelreservation.com/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="https://mcchmhotelreservation.com/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="https://mcchmhotelreservation.com/admin/js/sb-admin-2.min.js"></script>
