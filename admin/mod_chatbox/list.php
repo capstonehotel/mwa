@@ -110,7 +110,7 @@ if (isset($_GET['id'])) {
 ?>
         <div class="main">
         <div class="header" style="position: relative;">
-        <img src="https://mcchmhotelreservation.com/images/user_avatar/<?php echo $userAvatar; ?>" alt="<?php echo $userName; ?>'s avatar" style="width: 50px; height: 50px; border-radius: 50%;">
+        <img src="https://mcchmhotelreservation.com/images/user_avatar/<?php echo $userAvatar; ?>" alt="" style="width: 50px; height: 50px; border-radius: 50%;">
         <div class="name"><?php echo $userName; ?></div>
          <!-- Three Dots Menu -->
          <div class="three-dots" onclick="toggleMenu(event)">
