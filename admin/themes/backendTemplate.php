@@ -423,19 +423,26 @@ mysqli_close($conn);
     }
 }
 
-   .notification-menu {
-    display: none;
-    position: absolute;
-    top: 50px;
-    right: -140px;
-    width: 400px;
-    max-height: 900px; /* Increased height */
-    overflow-y: auto; /* Keep scrolling */
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+ .notification-menu {
+    position: absolute; /* Position it relative to the parent */
+    right: 0; /* Align to the right */
+    top: 100%; /* Position below the button */
+    width: 400px; /* Set a default width for larger screens */
+    max-width: 90vw; /* Maximum width of 90% of the viewport width */
+    max-height: 400px; /* Set a maximum height */
+    overflow-y: auto; /* Enable vertical scrolling if content exceeds max height */
+    background-color: white; /* Background color */
+    border: 1px solid #ddd; /* Border for better visibility */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    z-index: 1000; /* Ensure it appears above other elements */
+}
+
+@media (max-width: 768px) {
+    .notification-menu {
+        width: 80vw; /* Adjust width for smaller screens */
+        max-height: 70vh; /* Adjust max height for smaller screens */
+    }
 }
 
 .menu-content {
@@ -452,19 +459,6 @@ mysqli_close($conn);
     padding-top: 8px;
     border-bottom: 1px solid #eee;
     padding-bottom: 8px; /* Added padding for better spacing */
-}
-.notification-message.unread {
-    background-color: #f9f9f9; /* Light background for unread notifications */
-    font-weight: bold; /* Make unread notifications bold */
-}
-
-.notification-message.read {
-    background-color: #ffffff; /* White background for read notifications */
-    color: #666; /* Lighter color for read notifications */
-}
-
-.notification-message:hover {
-    background-color: #f1f1f1; /* Highlight on hover */
 }
 
 .menu-header {
@@ -545,6 +539,133 @@ $(document).ready(function() {
             menu.style.display = "none"; // Hide the menu if it was previously closed
         }
     });
+</script>
+<script>
+    document.getElementById('chat-button').addEventListener('click', function() {
+        document.getElementById('chatbox').classList.add('open');
+        loadMessages();
+    });
+
+    function closeChatbox() {
+        document.getElementById('chatbox').classList.remove('open');
+    }
+
+    function loadMessages() {
+        fetch('chatbox.php?action=load')
+            .then(response => response.json())
+            .then(data => {
+                const chatMessages = document.getElementById('chat-messages');
+                chatMessages.innerHTML = '';
+                data.forEach(message => {
+                    const messageElement = document.createElement('div');
+                    messageElement.textContent = message.message;
+                    messageElement.classList.add('message', message.user_type === 'guest' ? 'received' : 'sent');
+                    chatMessages.appendChild(messageElement);
+                });
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            });
+    }
+
+    function sendMessage() {
+        const messageInput = document.getElementById('message-input');
+        const message = messageInput.value.trim();
+
+        if (message !== '') {
+            fetch('chatbox.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `message=${message}&user_type=admin`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const chatMessages = document.getElementById('chat-messages');
+                    const messageElement = document.createElement('div');
+                    messageElement.textContent = message;
+                    messageElement.classList.add('message', 'sent');
+                    chatMessages.appendChild(messageElement);
+                    messageInput.value = '';
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            });
+        }
+    }
+
+    setInterval(() => {
+        fetch('chatbox.php?action=get_unread')
+            .then(response => response.json())
+            .then(data => {
+                if (data.unread_count > 0) {
+                    document.getElementById('chat-button').classList.add('has-unread');
+                } else {
+                    document.getElementById('chat-button').classList.remove('has-unread');
+                }
+            });
+    }, 5000);
+</script>
+<!-- JavaScript to handle chat interactions -->
+<script>
+    document.getElementById('chat-button').addEventListener('click', function() {
+        document.getElementById('chatbox').classList.add('open');
+        loadMessages();
+    });
+
+    function closeChatbox() {
+        document.getElementById('chatbox').classList.remove('open');
+    }
+
+    function loadMessages() {
+        fetch('chatbox.php?action=load')
+            .then(response => response.json())
+            .then(data => {
+                const chatMessages = document.getElementById('chat-messages');
+                chatMessages.innerHTML = '';
+                data.forEach(message => {
+                    const messageElement = document.createElement('div');
+                    messageElement.textContent = message.message;
+                    messageElement.classList.add('message', message.user_type === 'guest' ? 'received' : 'sent');
+                    chatMessages.appendChild(messageElement);
+                });
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            });
+    }
+
+    function sendMessage() {
+        const messageInput = document.getElementById('message-input');
+        const message = messageInput.value.trim();
+
+        if (message !== '') {
+            fetch('chatbox.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `message=${message}&user_type=admin`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const chatMessages = document.getElementById('chat-messages');
+                    const messageElement = document.createElement('div');
+                    messageElement.textContent = message;
+                    messageElement.classList.add('message', 'sent');
+                    chatMessages.appendChild(messageElement);
+                    messageInput.value = '';
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            });
+        }
+    }
+
+    setInterval(() => {
+        fetch('chatbox.php?action=get_unread')
+            .then(response => response.json())
+            .then(data => {
+                if (data.unread_count > 0) {
+                    document.getElementById('chat-button').classList.add('has-unread');
+                } else {
+                    document.getElementById('chat-button').classList.remove('has-unread');
+                }
+            });
+    }, 5000);
 </script>
 <!-- <script>
     function toggleNotificationMenu() {
