@@ -71,7 +71,7 @@
 
                     ?>
                       <a href="<?php echo '?id='.$row['sender_id']; ?>" class="list-group-item list-group-item-action" style="border-left:0px; border-right:0px;">
-            <img src="../../images/user_avatar/<?php echo $row['G_AVATAR']; ?>" alt="<?php echo $row['name']; ?>'s avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+            <img src="https://mcchmhotelreservation.com/images/user_avatar/<?php echo $row['G_AVATAR']; ?>" alt="<?php echo $row['name']; ?>'s avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
             <?php echo $row['name']; ?> 
             <?php if ($badge > 0) { ?>
             <span class="badge badge-pill badge-danger"><?php echo $badge; ?></span>
