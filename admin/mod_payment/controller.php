@@ -1,5 +1,8 @@
-<?php 
+<?php
+$connection = new mysqli('localhost', 'root', '', 'hmsystemdb');
 require_once("../../includes/initialize.php");
+require_once("../../includes/config.php");
+echo '<script src="../sweetalert2.all.min.js"></script>';
 $action = (isset($_GET['action']) && $_GET['action'] != '') ? $_GET['action'] : '';
 $code = $_GET['code'];
 
@@ -17,17 +20,50 @@ switch ($action) {
             exit;
         }
         break;
-	case 'confirm':
-		$paidDate = date('Y-m-d H:i:s'); // Get the current date and time
-			$sql = "UPDATE tblpayment SET STATUS = 'Confirmed', PAYMENT_STATUS = 'Fully Paid', PAID_DATE = '$paidDate' WHERE CONFIRMATIONCODE ='$code'";
-			if ($connection->query($sql) === TRUE) {
-				header('Location: index.php');
-				exit;
-			} else {
-				header('Location: index.php?error=confirm');
-				exit;
-			}
-			break;
+        case 'confirm':
+            // Retrieve the current amount paid and the previous balance
+            $query = "SELECT AMOUNT_PAID FROM tblpayment WHERE CONFIRMATIONCODE = '$code'";
+            $result = $connection->query($query);
+        
+            if ($result && $result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $currentAmountPaid = $row['AMOUNT_PAID'];
+                $currentBalance =  $row['AMOUNT_PAID'];
+        
+                // Add the current payment amount to the existing amount paid
+                $newAmountPaid = $currentAmountPaid + $currentBalance;
+        
+                // Update the AMOUNT_PAID and set PAYMENT_STATUS to 'Fully Paid' in tblpayment
+                $paidDate = date('Y-m-d H:i:s'); // Get the current date and time
+                $updatePaymentSql = "UPDATE tblpayment 
+                                     SET AMOUNT_PAID = '$newAmountPaid', 
+                                         PAYMENT_STATUS = 'Fully Paid', 
+                                         PAID_DATE = '$paidDate' 
+                                     WHERE CONFIRMATIONCODE = '$code'";
+        
+                if ($connection->query($updatePaymentSql) === TRUE) {
+                    // Update the PAYMENT_STATUS in tblreservation
+                    $updateReservationSql = "UPDATE tblreservation 
+                                             SET PAYMENT_STATUS = 'Fully Paid' 
+                                             WHERE CONFIRMATIONCODE = '$code'";
+        
+                    if ($connection->query($updateReservationSql) === TRUE) {
+                        header('Location: index.php');
+                        exit;
+                    } else {
+                        header('Location: index.php?error=updateReservation');
+                        exit;
+                    }
+                } else {
+                    header('Location: index.php?error=confirm');
+                    exit;
+                }
+            } else {
+                // Handle the case where no record is found
+                echo "Error: Payment record not found.";
+            }
+            break;
+        
     case 'pay_balance':
         if (isset($_POST['payment_amount'])) {
             $paymentAmount = $_POST['payment_amount'];

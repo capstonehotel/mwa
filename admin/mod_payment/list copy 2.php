@@ -1,8 +1,6 @@
 <!-- Include SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- Include jQuery and Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
 <!-- Additional styling and scripts -->
 <style>
    .table td, .table th {
@@ -52,9 +50,9 @@
         <div class="tab-content" id="reservationTabsContent">
             <?php 
             $queries = [
-                "list" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS` , `PAYMENT_STATUS`, `PAYMENT_METHOD`,`AMOUNT_PAID`,`BALANCE` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` ORDER BY p.`TRANSDATE` DESC",
-                "partially paid" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS`, `PAYMENT_STATUS`, `PAYMENT_METHOD`,`AMOUNT_PAID`,`BALANCE` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`PAYMENT_STATUS` = 'Partially Paid' ORDER BY p.`TRANSDATE` DESC",
-                "fully paid" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS`, `PAYMENT_STATUS`, `PAYMENT_METHOD`,`AMOUNT_PAID`,`BALANCE` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`PAYMENT_STATUS` = 'Fully Paid' ORDER BY p.`TRANSDATE` DESC",
+                "list" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS` , `PAYMENT_STATUS`, `PAYMENT_METHOD` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` ORDER BY p.`TRANSDATE` DESC",
+                "partially paid" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS`, `PAYMENT_STATUS`, `PAYMENT_METHOD` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`PAYMENT_STATUS` = 'partially paid' ORDER BY p.`TRANSDATE` DESC",
+                "fully paid" => "SELECT `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `SPRICE`, `STATUS`, `PAYMENT_STATUS`, `PAYMENT_METHOD` FROM `tblpayment` p, `tblguest` g WHERE p.`GUESTID` = g.`GUESTID` AND p.`PAYMENT_STATUS` = 'fully paid' ORDER BY p.`TRANSDATE` DESC",
                
             ];
 
@@ -69,9 +67,8 @@
                                         <th>Guest</th>
                                         <th>Transaction Date</th>
                                         <!-- <th>Confirmation Code</th> -->
-                                        <!-- <th>Total Rooms</th> -->
+                                        <th>Total Rooms</th>
                                         <th>Total Price</th>
-                                        <th>Amount Paid</th>
                                         <th>Status</th>
                                         <th>Payment Method</th>
                                         <!-- <th>Status</th> -->
@@ -93,16 +90,15 @@
                                                 <td align="center"><?php echo $row['G_FNAME']; ?> <?php echo $row['G_LNAME']; ?></td>
                                                 <td align="center"><?php echo $row['TRANSDATE']; ?></td>
                                                 <!-- <td align="center"><?php echo $row['CONFIRMATIONCODE']; ?></td> -->
-                                                <!-- <td align="center"><?php echo $row['PQTY']; ?></td> -->
+                                                <td align="center"><?php echo $row['PQTY']; ?></td>
                                                 <td align="center"><?php echo $row['SPRICE']; ?></td>
-                                                <td align="center"><?php echo $row['AMOUNT_PAID']; ?></td>
                                                 <td align="center" class="payment-column"><?php echo $row['PAYMENT_STATUS']; ?></td>
                                                 <td align="center"><?php echo $row['PAYMENT_METHOD']; ?></td>
                                                 <td align="center">
                                                     <a href="index.php?view=view&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-sm btn-primary"><i class="icon-edit"></i> View</a>
-                                                    <!-- <?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
+                                                    <?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
                                                     <button type="button" class="btn btn-danger btn-sm delete-btn" data-id="<?php echo $row['CONFIRMATIONCODE']; ?>"><i class="icon-edit"></i> Delete</button>
-                                                    <?php } ?> -->
+                                                    <?php } ?>
                                                 </td>
                                             </tr>
                                         <?php } 
