@@ -96,19 +96,19 @@
 
            <!-- Nav Item - Dashboard -->
            <li class="nav-item active">
-                <a class="nav-link"  id="dashboard-link"  href="<?php echo WEB_ROOT; ?>/admin/index.php">
+                <a class="nav-link"  id="dashboard-link"  href="https://mcchmhotelreservation.com/admin/index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="<?php echo WEB_ROOT; ?>/admin/mod_room/index.php">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_room/index.php">
                     <i class="fas fa-fw fa-school"></i>
                     <span>Rooms</span></a>
             </li>
             
             <li class="nav-item active">
-                <a class="nav-link" href="<?php echo WEB_ROOT; ?>/admin/mod_accomodation/index.php">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_accomodation/index.php">
                     <i class="fas fa-fw fa-home"></i>
                     <span>Accomodation </a>
             </li>
@@ -121,7 +121,7 @@
                 foreach ($cur as $result) { 
                 ?>
             <li class="nav-item active">
-                <a class="nav-link" href="<?php echo WEB_ROOT; ?>admin/mod_reservation/index.php">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_reservation/index.php">
                     <i class="fas fa-fw fa-arrow-alt-circle-down"></i>
                     <span>Reservations</span></a>
             </li>
@@ -129,12 +129,12 @@
                     }
                 ?>
                 <li class="nav-item active">
-                <a class="nav-link" href="<?php echo WEB_ROOT; ?>/admin/mod_payment/index.php">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_payment/index.php">
                     <i class="fas fa-fw fa-money-bill"></i>
                     <span>Payment </a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="<?php echo WEB_ROOT; ?>/admin/mod_chatbox/index.php">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_chatbox/index.php">
                     <i class="fas fa-fw fa-comments"></i>
                     <span>Chatbox</a>
             </li>
@@ -149,14 +149,14 @@
 
              
             <li class="nav-item active">
-                <a class="nav-link" href="<?php echo WEB_ROOT; ?>admin/mod_reports/index.php">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_reports/index.php">
                     <i class="fas fa-fw fa-receipt"></i>
                     <span>Report</span></a>
             </li>
         
                <?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
             <li class="nav-item active">
-                <a class="nav-link" href="<?php echo WEB_ROOT; ?>admin/mod_users/index.php">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_users/index.php">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Users</span></a>
             </li>
@@ -855,14 +855,14 @@ $(document).ready(function() {
                         echo $row['ROLE'];
                        ?></span>
                                 <img class="img-profile rounded-circle"
-                                    src="<?php echo WEB_ROOT; ?>/admin/img/undraw_profile.svg">
+                                    src="https://mcchmhotelreservation.com/admin/img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
 
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
-                                <a class="dropdown-item" href="<?php echo WEB_ROOT; ?>admin/mod_users/index.php?view=edit&id=<?php echo $row['USERID']; ?>">
+                                <a class="dropdown-item" href="https://mcchmhotelreservation.com/admin/mod_users/index.php?view=edit&id=<?php echo $row['USERID']; ?>">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -930,7 +930,7 @@ $(document).ready(function() {
                 <div class="modal-body">Are you sure you want to logout?</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="<?php echo WEB_ROOT; ?>/admin/logout.php">Logout</a>
+                    <a class="btn btn-primary" href="https://mcchmhotelreservation.com/admin/logout.php">Logout</a>
                 </div>
             </div>
         </div>
@@ -938,27 +938,27 @@ $(document).ready(function() {
 
     
     <!-- Bootstrap core JavaScript-->
-    <script src="<?php echo WEB_ROOT; ?>/admin/vendor/jquery/jquery.min.js"></script>
-    <script src="<?php echo WEB_ROOT; ?>/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://mcchmhotelreservation.com/admin/vendor/jquery/jquery.min.js"></script>
+    <script src="https://mcchmhotelreservation.com/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="<?php echo WEB_ROOT; ?>/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="https://mcchmhotelreservation.com/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="<?php echo WEB_ROOT; ?>/admin/js/sb-admin-2.min.js"></script>
+    <script src="https://mcchmhotelreservation.com/admin/js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="<?php echo WEB_ROOT; ?>/admin/vendor/chart.js/Chart.min.js"></script>
+    <script src="https://mcchmhotelreservation.com/admin/vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="<?php echo WEB_ROOT; ?>/admin/js/demo/chart-area-demo.js"></script>
-    <script src="<?php echo WEB_ROOT; ?>/admin/js/demo/chart-pie-demo.js"></script>
-    <script src="<?php echo WEB_ROOT; ?>/admin/js/demo/datatables-demo.js"></script>
+    <script src="https://mcchmhotelreservation.com/admin/js/demo/chart-area-demo.js"></script>
+    <script src="https://mcchmhotelreservation.com/admin/js/demo/chart-pie-demo.js"></script>
+    <script src="https://mcchmhotelreservation.com/admin/js/demo/datatables-demo.js"></script>
 
 
     <!-- Page level plugins -->
-    <script src="<?php echo WEB_ROOT; ?>/admin/vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="<?php echo WEB_ROOT; ?>/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="https://mcchmhotelreservation.com/admin/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="https://mcchmhotelreservation.com/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
     
