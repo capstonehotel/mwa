@@ -36,32 +36,39 @@ class Guest{
 			$row_count = $mydb->num_rows($cur);//get the number of count
 			return $row_count;
 	}
-	static function guest_login($email="", $pass=""){
-			global $mydb;
-			$mydb->setQuery("SELECT *  FROM  ".self::$tbl_name."  WHERE  `G_UNAME` ='". $email ."' AND G_PASS='". $pass ."'"); 
-			$cur = $mydb->executeQuery();
-				if($cur==false){
-					die(mysql_error());
-				}
-			$row_count = $mydb->num_rows($cur);//get the number of count
-			 if ($row_count == 1){
-			 $found_user = $mydb->loadSingleResult(); 
-			    $_SESSION['GUESTID']	= $found_user->GUESTID;  
-				$_SESSION['name']	 	=  $found_user->G_FNAME ;        			
-				$_SESSION['last']    	=  $found_user->G_LNAME ; 
-				$_SESSION['gender']    	=  $found_user->G_GENDER ;     			
-				$_SESSION['address']    =  $found_user->G_ADDRESS ;              
-				$_SESSION['phone']	  	=  $found_user->G_PHONE;           			
-				$_SESSION['username']  	=  $found_user->G_UNAME ;              	
-				$_SESSION['pass']   	=  $found_user->G_PASS ;  	
-
-	        	return true;
-				}else{
-					return false;
-				}	
+	static function guest_login($email = "", $pass = "") {
+		global $mydb;
+		$mydb->setQuery("SELECT * FROM " . self::$tbl_name . " WHERE `G_UNAME` ='" . $email . "'");
+		$cur = $mydb->executeQuery();
+		
+		if ($cur == false) {
+			die(mysql_error());
+		}
+		
+		$row_count = $mydb->num_rows($cur); // get the number of count
+		if ($row_count == 1) {
+			$found_user = $mydb->loadSingleResult();
+			
+			// Check if password matches using password_verify
+			if (password_verify($pass, $found_user->G_PASS)) {
+				$_SESSION['GUESTID'] = $found_user->GUESTID;
+				$_SESSION['name'] = $found_user->G_FNAME;
+				$_SESSION['last'] = $found_user->G_LNAME;
+				$_SESSION['gender'] = $found_user->G_GENDER;
+				$_SESSION['address'] = $found_user->G_ADDRESS;
+				$_SESSION['phone'] = $found_user->G_PHONE;
+				$_SESSION['username'] = $found_user->G_UNAME;
+	
+				return true; // Successful login
+			} else {
+				return false; // Invalid password
+			}
+		} else {
+			return false; // Invalid email
+		}
 	}
 	
-
+	
 	/*---Instantiation of Object dynamically---*/
 	static function instantiate($record) {
 		$object = new self;
