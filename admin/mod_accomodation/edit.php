@@ -1,36 +1,86 @@
 <?php
 echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
 $id = $_GET['id'];
-$sql = "SELECT * FROM tblaccomodation WHERE ACCOMID = $id";
-$result = $connection->query($sql);
+
+// Validate and sanitize the ID
+if (!filter_var($id, FILTER_VALIDATE_INT)) {
+    // Invalid ID, handle the error accordingly
+    echo "<script>
+    Swal.fire({
+        title: 'Error!',
+        text: 'Invalid accommodation ID!',
+        icon: 'error'
+    }).then(() => {
+        window.location = 'index.php';
+    });
+    </script>";
+    exit;
+}
+
+// Use prepared statements to fetch the accommodation details
+$stmt = $connection->prepare("SELECT * FROM tblaccomodation WHERE ACCOMID = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
 $row = $result->fetch_assoc();
+$stmt->close();
 
 if (isset($_POST['save_accomodation'])) {
+    // Sanitize and validate the input
+    $ACCOMODATION = trim($_POST['ACCOMODATION']);
+    $ACCOMDESC = trim($_POST['ACCOMDESC']);
 
-  $ACCOMODATION = $_POST['ACCOMODATION'];
-  $ACCOMDESC = $_POST['ACCOMDESC'];
-
-    $sql = "UPDATE tblaccomodation SET ACCOMODATION = '$ACCOMODATION', ACCOMDESC = '$ACCOMDESC' WHERE ACCOMID = '$id' ";
-    if ($conn->query($sql) === TRUE) {
-        echo "<script>
-        Swal.fire({
-            title: 'Updated!',
-            text: 'Accomodation updated successfully!',
-            icon: 'success'
-        }).then(() => {
-            window.location = 'index.php';
-        });
-        </script>";
-    } else {
+    if (empty($ACCOMODATION) || empty($ACCOMDESC)) {
         echo "<script>
         Swal.fire({
             title: 'Error!',
-            text: 'Error updating Accomodation',
+            text: 'Accommodation name and description cannot be empty!',
             icon: 'error'
         });
         </script>";
-    }
+    } else {
+        // Check for duplicate accommodation names using prepared statements
+        $checkStmt = $connection->prepare("SELECT * FROM tblaccomodation WHERE ACCOMODATION = ? AND ACCOMID != ?");
+        $checkStmt->bind_param("si", $ACCOMODATION, $id);
+        $checkStmt->execute();
+        $checkResult = $checkStmt->get_result();
 
+        if ($checkResult->num_rows > 0) {
+            // Duplicate found
+            echo "<script>
+            Swal.fire({
+                title: 'Error!',
+                text: 'Accommodation name already exists!',
+                icon: 'error'
+            });
+            </script>";
+        } else {
+            // No duplicate found, proceed with update using prepared statements
+            $updateStmt = $connection->prepare("UPDATE tblaccomodation SET ACCOMODATION = ?, ACCOMDESC = ? WHERE ACCOMID = ?");
+            $updateStmt->bind_param("ssi", $ACCOMODATION, $ACCOMDESC, $id);
+            if ($updateStmt->execute()) {
+                echo "<script>
+                Swal.fire({
+                    title: 'Updated!',
+                    text: 'Accommodation updated successfully!',
+                    icon: 'success'
+                }).then(() => {
+                    window.location = 'index.php';
+                });
+                </script>";
+            } else {
+                echo "<script>
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Error updating Accommodation',
+                    icon: 'error'
+                });
+                </script>";
+            }
+            $updateStmt->close();
+        }
+        $checkStmt->close();
+    }
 }
 ?>
 
@@ -40,10 +90,10 @@ if (isset($_POST['save_accomodation'])) {
       <div class="col-md-12">
         <div class="card mb-4">
           <div class="card-header py-3" style="display: flex;align-items: center;">
-            <h6 class="m-0 font-weight-bold text-primary">Update Accomodation</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Update Accommodation</h6>
 
             <div class="text-right" style="display: flex; justify-content: right; align-items: right; width: 100%;">
-              <button type="submit" name="save_accomodation" class="btn btn-success btn-sm mr-2">Update Accomodation</button>
+              <button type="submit" name="save_accomodation" class="btn btn-success btn-sm mr-2">Update Accommodation</button>
             </div>
           </div>
           <div class="card-body">
@@ -51,7 +101,7 @@ if (isset($_POST['save_accomodation'])) {
               <div class="col-md-12 col-sm-12">
                 <label class="col-md-4 control-label" for="ROOM">Name:</label>
                 <div class="col-md-12">
-                  <input required class="form-control input-sm" id="ACCOMODATION" name="ACCOMODATION" placeholder="Accomodation" type="text" value="<?php echo $row["ACCOMODATION"]; ?>">
+                  <input required class="form-control input-sm" id="ACCOMODATION" name="ACCOMODATION" placeholder="Accommodation" type="text" value="<?php echo htmlspecialchars($row["ACCOMODATION"], ENT_QUOTES, 'UTF-8'); ?>">
                 </div>
               </div>
             </div>
@@ -59,7 +109,7 @@ if (isset($_POST['save_accomodation'])) {
               <div class="col-md-12 col-sm-12">
                 <label class="col-md-4 control-label" for="ROOM">Description:</label>
                 <div class="col-md-12">
-                  <input required class="form-control input-sm" id="ACCOMDESC" name="ACCOMDESC" placeholder="Description" type="text" value="<?php echo $row["ACCOMDESC"]; ?>">
+                  <input required class="form-control input-sm" id="ACCOMDESC" name="ACCOMDESC" placeholder="Description" type="text" value="<?php echo htmlspecialchars($row["ACCOMDESC"], ENT_QUOTES, 'UTF-8'); ?>">
                 </div>
               </div>
             </div>
