@@ -16,13 +16,11 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-        
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-
     <!-- Custom styles for this template-->
     <link href="https://mcchmhotelreservation.com/admin/css/sb-admin-2.min.css" rel="stylesheet">
 
- <link href="https://mcchmhotelreservation.com/admin/assets/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+ <link href="https://mcchmhotelreservation.com/admin/assets/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGC" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href=".../assets/bootstrap/css/bootstrap.min.css">
 
 <link href="https://mcchmhotelreservation.com/admin/css/dataTables.bootstrap.css" rel="stylesheet" media="screen">
@@ -34,74 +32,61 @@
 <script type="text/javascript" language="javascript" src="https://mcchmhotelreservation.com/admin/js/bootstrap-modal.js"></script>
 <script type="text/javascript" src="https://mcchmhotelreservation.com/admin/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 <script type="text/javascript" src="https://mcchmhotelreservation.com/admin/js/locales/bootstrap-datetimepicker.uk.js" charset="UTF-8"></script>
+<style>
+ /* Ensure the dropdown menu displays correctly */
+.dropdown-menu {
+    display: none;
+}
+
+/* Show dropdown menu on hover */
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Keep dropdown open when the dropdown item is clicked */
+.nav-item.dropdown.show .dropdown-menu {
+    display: block;
+}
+
+/* Dropdown styling */
+.nav-item.dropdown .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 0.25rem;
+}
+
+
+</style>
 
 </head>
-<?php
-header("Content-Security-Policy: default-src 'self'; script-src 'self' https://trusted-scripts.com;");
-header("X-Frame-Options: DENY");
-header("Content-Security-Policy: frame-ancestors 'none';");
-header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload");
-
-/*
-// Redirect all HTTP requests to HTTPS if not already using HTTPS
-if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
-  header("Location: https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-  exit();
-}
-
-*/
-
-// // Secure session cookie settings
-// ini_set('session.cookie_secure', '1');    // Enforces HTTPS-only session cookies
-// ini_set('session.cookie_httponly', '1');  // Prevents JavaScript from accessing session cookies
-// ini_set('session.cookie_samesite', 'Strict'); // Prevents CSRF by limiting cross-site cookie usage
-
-
-// Additional security headers
-header("X-Content-Type-Options: nosniff");
-header("X-Frame-Options: DENY");
-header("X-XSS-Protection: 1; mode=block");
-
-
-// Anti-XXE: Secure XML parsing
-libxml_disable_entity_loader(true); // Disable loading of external entities
-libxml_use_internal_errors(true);   // Suppress libxml errors for better handling
-
-function parseXMLSecurely($xmlString) {
-    $dom = new DOMDocument();
-    
-    // Load the XML string securely
-    if (!$dom->loadXML($xmlString, LIBXML_NOENT | LIBXML_DTDLOAD | LIBXML_DTDATTR | LIBXML_NOCDATA)) {
-        throw new Exception('Error loading XML');
-    }
-    
-    // Process the XML content safely
-    return $dom;
-}
-
-// Example usage
-try {
-    $xmlString = '<root><element>Sample</element></root>'; // Replace with actual XML input
-    $dom = parseXMLSecurely($xmlString);
-    // Continue processing $dom...
-} catch (Exception $e) {
-    // Handle errors securely
-    echo 'Error processing XML: ' . $e->getMessage();
-}
-?>
 
 <body id="page-top">
  
     <!-- Page Wrapper -->
-    <div id="wrapper">
+    <div id="wrapper" style="background-color: maroon;">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav sidebar sidebar-dark accordion toggled" id="accordionSidebar" style="background: maroon">
+         
+        <ul class="navbar-nav bg-maroon sidebar sidebar-dark accordion toggled" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" >
                 <div class="sidebar-brand-icon ">         
-                 <img src="https://mcchmhotelreservation.com/images/logo2.jpg" style="height:55px; width:55px; border-radius: 15px; margin-left: 2px;">
+                 <img src="https://mcchmhotelreservation.com/logo.jpg" style="height:55px; width:55px; border-radius: 15px; margin-left: 2px;">
                 </div>
                 <div class="sidebar-brand-text mx-3"> HM Hotel Reservation</div>
             </a>
@@ -109,9 +94,9 @@ try {
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/index.php">
+           <!-- Nav Item - Dashboard -->
+           <li class="nav-item active">
+                <a class="nav-link"  id="dashboard-link"  href="https://mcchmhotelreservation.com/admin/index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -129,8 +114,7 @@ try {
             </li>
 
            
-
-                <?php
+            <?php
                 $query = "SELECT count(*) as 'Total' FROM `tblpayment` WHERE `STATUS`='Pending'";
                 $mydb->setQuery($query);
                 $cur = $mydb->loadResultList();  
@@ -144,37 +128,40 @@ try {
              <?php 
                     }
                 ?>
-                 <li class="nav-item active">
+                <li class="nav-item active">
                 <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_payment/index.php">
-                <i class="fas fa-fw fa-money-bill"></i>
-                    <span>Payment</a>
+                    <i class="fas fa-fw fa-money-bill"></i>
+                    <span>Payment </a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_chatbox/index.php">
-                <i class="fas fa-fw fa-comments"></i>
+                    <i class="fas fa-fw fa-comments"></i>
                     <span>Chatbox</a>
             </li>
 
 
-
-            <!-- <li class="nav-item active">
-                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_contact_us/index.php">
+<!-- 
+            <li class="nav-item active">
+                <a class="nav-link" href="<?php echo WEB_ROOT; ?>admin/mod_contact_us/index.php">
                     <i class="fas fa-fw fa-sms"></i>
                     <span>Messages</span></a>
             </li> -->
 
+             
             <li class="nav-item active">
                 <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_reports/index.php">
                     <i class="fas fa-fw fa-receipt"></i>
                     <span>Report</span></a>
             </li>
- <!-- <?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
+        
+               <?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
             <li class="nav-item active">
                 <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_users/index.php">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Users</span></a>
             </li>
-   <?php } ?> -->
+                <?php } ?>
+
         </ul>
         <!-- End of Sidebar -->
 
@@ -191,41 +178,32 @@ try {
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-                    <script>
-        $(document).ready(function() {
-            $('#sidebarToggleTop').on('click', function() {
-                $('#accordionSidebar').toggleClass('toggled');
-            });
-        });
-    </script>
+
                     <!-- Topbar Navbar -->
-                  <ul class="navbar-nav ml-auto">
-
-
-                  
-            <?php
-              $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
+                    <ul class="navbar-nav ml-auto">
+            <!-- <?php
+              $conn = mysqli_connect('localhost', 'root', '', 'hmsystemdb');
               $id = $_SESSION['ADMIN_ID'];
               $sql = "SELECT * FROM `tbluseraccount` WHERE `USERID` = '$id'";
               $result = mysqli_query($conn, $sql);
 
               $count_mess = $conn->query("SELECT COUNT(*) FROM tblcontact");
               $cnt_message = $count_mess->fetch_array();
-            ?>
+            ?> -->
             <!-- <li class="nav-item my-auto">
                 <a href="/HM_HotelReservation/admin/mod_contact_us/index.php" class="text-dark"><i class="fa fa-envelope"></i> <?php echo $cnt_message[0] ?></a> <span style="margin-left: 10px;">|</span>
             </li> -->
-            <?php 
+            <!-- <?php 
     $querysi = "SELECT count(*) as 'Total' FROM tblreservation WHERE DATE(TRANSDATE) = CURDATE()";
     $mydb->setQuery($querysi);
     $curya = $mydb->loadResultList();  
     $todayBookings = isset($curya[0]->Total) ? $curya[0]->Total : 0;
-?>
+?> -->
 <!-- <?php
 // Start the session if not already started
-// if (session_status() == PHP_SESSION_NONE) {
-//     session_start();
-// }
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Check if the message notification has been viewed
 if (isset($_SESSION['message_notification_viewed'])) {
@@ -242,12 +220,13 @@ if (isset($_SESSION['booking_notification_viewed'])) {
 
 ?> -->
 <?php
-//Start the session if not already started
+// Start the session if not already started
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-
+// Connect to the database
+$conn = mysqli_connect('localhost', 'root', '', 'hmsystemdb');
 
 // Check for connection errors
 if (!$conn) {
@@ -281,10 +260,139 @@ $today_bookings = $count_bookings_query->fetch_array();
 $total_notifications = $cnt_message[0] + $today_bookings[0];
 
 // Close the database connection
-mysqli_close($conn);
+//mysqli_close($conn);
 ?>
 
 
+
+<!-- HTML Code -->
+<!-- <li class="nav-item my-auto">
+    <a href="#" class="text-dark" id="chat-button">
+        <i class="fa fa-comments"></i>
+    </a>
+    <span style="margin-left: 10px;"></span>
+</li>
+ <li class="nav-item my-auto">
+    <a href="/HM_HotelReservation/admin/mod_contact_us/index.php?viewed=messages" class="text-dark" id="messageNotification">
+        <i class="fa fa-envelope"></i>
+        <?php if ($cnt_message[0] > 0): ?>
+            <span class="notification-dot"><?php echo $cnt_message[0]; ?></span>
+        <?php endif; ?>
+    </a>
+    <span style="margin-left: 10px;"></span>
+</li> -->
+<!-- <li class="nav-item my-auto">
+    <a href="/HM_HotelReservation/admin/mod_reservation/index.php?viewed=bookings" class="text-dark" id="bookingNotification">
+        <i class="fa fa-bell"></i>
+        <?php if ($todayBookings > 0): ?>
+            <span class="notification-dot"><?php echo $todayBookings; ?></span>
+        <?php endif; ?>
+    </a>
+    <span style="margin-left: 10px;">|</span>
+</li> -->
+
+
+<!-- <style>
+.notification-dot {
+    position: relative;
+    display: inline-block;
+    background-color: red;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-size: 12px;
+    top: -8px; /* Adjust as needed */
+    left: 8px; /* Adjust as needed */
+}
+
+
+.chatbox {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.chatbox.open {
+    display: block;
+}
+
+.chatbox-header {
+    padding: 10px;
+    background: #007bff;
+    color: #fff;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chatbox-title {
+    margin: 0;
+}
+
+.close-button {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.chat-messages {
+    padding: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.message {
+    margin-bottom: 10px;
+}
+
+.message.sent {
+    text-align: right;
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+.message.received {
+    text-align: left;
+    background-color: #f1f1f1;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+.chat-input {
+    display: flex;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+}
+
+.chat-input textarea {
+    flex: 1;
+    border: none;
+    resize: none;
+    padding: 5px;
+}
+
+.chat-input button {
+    border: none;
+    background: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+</style>  -->
 <style>
 .notification-badge {
     position: absolute;
@@ -313,22 +421,85 @@ mysqli_close($conn);
 }
 
 </style>
+<script>
+    document.getElementById('chat-button').addEventListener('click', function() {
+        document.getElementById('chatbox').classList.add('open');
+        loadMessages();
+    });
+
+    function closeChatbox() {
+        document.getElementById('chatbox').classList.remove('open');
+    }
+
+    function loadMessages() {
+        fetch('chatbox.php?action=load')
+            .then(response => response.json())
+            .then(data => {
+                const chatMessages = document.getElementById('chat-messages');
+                chatMessages.innerHTML = '';
+                data.forEach(message => {
+                    const messageElement = document.createElement('div');
+                    messageElement.textContent = message.message;
+                    messageElement.classList.add('message', message.user_type === 'guest' ? 'received' : 'sent');
+                    chatMessages.appendChild(messageElement);
+                });
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            });
+    }
+
+    function sendMessage() {
+        const messageInput = document.getElementById('message-input');
+        const message = messageInput.value.trim();
+
+        if (message !== '') {
+            fetch('chatbox.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `message=${message}&user_type=admin`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const chatMessages = document.getElementById('chat-messages');
+                    const messageElement = document.createElement('div');
+                    messageElement.textContent = message;
+                    messageElement.classList.add('message', 'sent');
+                    chatMessages.appendChild(messageElement);
+                    messageInput.value = '';
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            });
+        }
+    }
+
+    setInterval(() => {
+        fetch('chatbox.php?action=get_unread')
+            .then(response => response.json())
+            .then(data => {
+                if (data.unread_count > 0) {
+                    document.getElementById('chat-button').classList.add('has-unread');
+                } else {
+                    document.getElementById('chat-button').classList.remove('has-unread');
+                }
+            });
+    }, 5000);
+</script>
 <?php 
 
 ?>
 <li class="nav-item my-auto" style="position: relative;">
-    <a href="javascript:void(0);" class="text-dark" id="bookingNotification" onclick="toggleNotificationMenu()">
+    <a href="javascript:void(0);" class="text-dark" id="bookingNotification" onclick="toggleNotificationMenu(event)">
         <i class="fa fa-bell"></i>
         <?php if ($total_notifications > 0): ?>
             <span class="badge badge-pill badge-danger notification-badge"><?php echo $total_notifications; ?></span>
         <?php endif; ?>
     </a>
     
-    <!-- Notification menu -->
-    <div id="notificationMenu" class="notification-menu">
+     <!-- Notification menu -->
+     <div id="notificationMenu" class="notification-menu" style="display: none;">
         <div class="menu-header">
             <span class="menu-title">Notifications</span>
-            <a href="javascript:void(0)" class="clear-noti">Clear All</a>
+            <a href="themes/clearallnotif.php" class="clear-noti">Clear All</a>
         </div>
         <div class="menu-content">
             <div class="menu-section">
@@ -372,54 +543,54 @@ mysqli_close($conn);
 
     return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
-
+// $notifications_query = "
+// SELECT 
+//     g.G_AVATAR, 
+//     g.G_FNAME, 
+//     g.G_LNAME, 
+//     n.TRANSDATE, 
+//     rm.ROOM, 
+//     rm.ROOMDESC,
+//     n.CONFIRMATIONCODE,
+//     n.PAYMENT_STATUS,
+//     n.SPRICE,
+//     n.IS_READ,
+//     r.RESERVEID 
+// FROM 
+//     notifications n
+// JOIN 
+//     tblguest g ON n.GUESTID = g.GUESTID
+//  JOIN 
+//     tblreservation r ON n.CONFIRMATIONCODE = r.CONFIRMATIONCODE  -- Ensure this join is valid
+// JOIN 
+//     tblroom rm ON r.ROOMID = rm.ROOMID   
+// ORDER BY 
+//     n.TRANSDATE DESC"; 
+    // Adjust limit as needed
                 // Fetch notifications with room details
-                $notifications_query = "
-                    SELECT 
-                        g.G_AVATAR, 
-                        g.G_FNAME, 
-                        g.G_LNAME, 
-                        p.TRANSDATE, 
-                        rm.ROOM, 
-                        rm.ROOMDESC,
-                        r.CONFIRMATIONCODE,
-                        r.PAYMENT_STATUS,
-                        r.RPRICE,
-                        r.RESERVEID,
-                        r.is_read
-                    FROM 
-                        tblreservation r 
-                    JOIN 
-                        tblguest g ON r.GUESTID = g.GUESTID
-                    JOIN 
-                        tblroom rm ON r.ROOMID = rm.ROOMID
-                    JOIN 
-                        tblpayment p ON r.CONFIRMATIONCODE = p.CONFIRMATIONCODE
-                        
-                    ORDER BY p.TRANSDATE DESC"; // Adjust limit as needed
+                $notifications_query = "SELECT  `G_AVATAR`, `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `n`.`ROOMID`, `AMOUNT_PAID`, `PAYMENT_STATUS`, `IS_READ`, `rm`.`ROOM` AS room_name, `rm`.`ROOMDESC` AS room_desc
+                FROM `notifications` n 
+                JOIN `tblguest` g ON n.`GUESTID` = g.`GUESTID` 
+                JOIN `tblroom` rm ON n.`ROOMID` = rm.`ROOMID` 
+                ORDER BY n.`TRANSDATE` DESC"; // Adjust limit as needed
 
                 $notifications_result = mysqli_query($connection, $notifications_query);
                 if ($notifications_result) {
                     while ($notification = mysqli_fetch_assoc($notifications_result)) {
-                        $avatar = '../../images/user_avatar/' . htmlspecialchars($notification['G_AVATAR']);
+                        $avatar = htmlspecialchars($notification['G_AVATAR']);
                         $fullName = htmlspecialchars($notification['G_FNAME'] . ' ' . $notification['G_LNAME']);
-                        $roomName = htmlspecialchars($notification['ROOM']);
-                        $roomDesc = htmlspecialchars($notification['ROOMDESC']);
+                        $roomName = htmlspecialchars($notification['room_name']);
+                        $roomDesc = htmlspecialchars($notification['room_desc']);
                         $bookDate = time_elapsed_string($notification['TRANSDATE']);
                         $exactDate = date_format(date_create($notification['TRANSDATE']), 'h:i A'); // Format the exact date and time
                         $paidstatus = htmlspecialchars($notification['PAYMENT_STATUS']);
-                        // Determine the paid amount based on payment status
-                        $paid = htmlspecialchars($notification['RPRICE']);
-                        if ($notification['PAYMENT_STATUS'] === 'Partially Paid') {
-                            $paid = $paid / 2; // Halve the amount if partially paid
-                        }
-                        $paid = number_format($paid, 2);
-                        $readClass = $notification['is_read'] ? 'read' : 'unread'; 
+                        $paid = (float) $notification['AMOUNT_PAID'];
+                        $readClass = $notification['IS_READ'] ? 'read' : 'unread'; 
                         ?>
-                        <li class="notification-message <?php echo $readClass; ?>" data-id="<?php echo $notification['RESERVEID']; ?>" >
-                        <a href="/admin/mod_reservation/index.php?viewed=bookings" onclick="markAsRead(<?php echo $notification['RESERVEID']; ?>, '/admin/mod_reservation/index.php?viewed=bookings')">
+                        <li class="notification-message <?php echo $readClass; ?>" >
+                        <a href="../mod_reservation/index.php?view=view&code=<?php echo $row['CONFIRMATIONCODE']; ?>" onclick="markAsRead()">
         <div class="notification" style="display: flex; align-items: center;">
-            <img alt="" src="<?php echo $avatar; ?>" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width: 50px;" />
+            <img alt="" src="../../images/user_avatar/<?php echo $avatar; ?>" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width: 50px;" />
             <div class="content" style="font-size: 15px;">
                 <p style="margin: 0 0 2px 0;">
                     <strong><?php echo $fullName; ?></strong> has made a booking in <strong><?php echo $roomName; ?></strong> (<?php echo $roomDesc; ?>) and <?php echo $paidstatus; ?> ₱ <?php echo $paid; ?> pesos.
@@ -442,13 +613,14 @@ mysqli_close($conn);
         </div>
         <!-- Footer with "View all Notifications" outside of scrollable content -->
         <div class="menu-footer" style="padding: 10px; text-align: center; border-top: 1px solid #eee;">
-            <a href="/admin/mod_reservation/index.php">View all Notifications</a>
+            <a href="mod_reservation/index.php">View all Notifications</a>
         </div>
     </div>
     <span style="margin-left: 10px;">|</span>
 </li>
 
 
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 
 
 <style>
@@ -473,19 +645,26 @@ mysqli_close($conn);
     }
 }
 
-   .notification-menu {
-    display: none;
-    position: absolute;
-    top: 50px;
-    right: -140px;
-    width: 400px;
-    max-height: 900px; /* Increased height */
-    overflow-y: auto; /* Keep scrolling */
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+ .notification-menu {
+    position: absolute; /* Position it relative to the parent */
+    right: 0; /* Align to the right */
+    top: 100%; /* Position below the button */
+    width: 400px; /* Set a default width for larger screens */
+    max-width: 90vw; /* Maximum width of 90% of the viewport width */
+    max-height: 400px; /* Set a maximum height */
+    overflow-y: auto; /* Enable vertical scrolling if content exceeds max height */
+    background-color: white; /* Background color */
+    border: 1px solid #ddd; /* Border for better visibility */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    z-index: 1000; /* Ensure it appears above other elements */
+}
+
+@media (max-width: 768px) {
+    .notification-menu {
+        width: 80vw; /* Adjust width for smaller screens */
+        max-height: 70vh; /* Adjust max height for smaller screens */
+    }
 }
 
 .menu-content {
@@ -502,19 +681,6 @@ mysqli_close($conn);
     padding-top: 8px;
     border-bottom: 1px solid #eee;
     padding-bottom: 8px; /* Added padding for better spacing */
-}
-.notification-message.unread {
-    background-color: #f9f9f9; /* Light background for unread notifications */
-    font-weight: bold; /* Make unread notifications bold */
-}
-
-.notification-message.read {
-    background-color: #ffffff; /* White background for read notifications */
-    color: #666; /* Lighter color for read notifications */
-}
-
-.notification-message:hover {
-    background-color: #f1f1f1; /* Highlight on hover */
 }
 
 .menu-header {
@@ -576,88 +742,123 @@ mysqli_close($conn);
     var menu = document.getElementById("notificationMenu");
     if (menu.style.display === "block") {
         menu.style.display = "none";
+        localStorage.setItem('notificationMenuOpen', 'false'); // Save state as closed
     } else {
         menu.style.display = "block";
+        localStorage.setItem('notificationMenuOpen', 'true'); // Save state as open
     }
 }
 
-// Close the menu when clicking outside
-document.addEventListener('click', function(event) {
-    var menu = document.getElementById("notificationMenu");
-    var bellIcon = document.getElementById("bookingNotification");
-    
-    if (!menu.contains(event.target) && !bellIcon.contains(event.target)) {
-        menu.style.display = "none";
-    }
-});
-function markAsRead(reserveId, redirectUrl) {
-    // Make an AJAX request to update the read status
-    fetch('update_notification.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id: reserveId }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Change the CSS class to 'read'
-            const notificationElement = document.querySelector(`.notification-message[data-id="${reserveId}"]`);
-            if (notificationElement) {
-                notificationElement.classList.remove('unread');
-                notificationElement.classList.add('read');
-            }
-            // Redirect to the specified URL
-            window.location.href = redirectUrl;
+
+$(document).ready(function() {
+        // Check the stored state of the notification menu
+        var menuState = localStorage.getItem('notificationMenuOpen');
+        var menu = document.getElementById("notificationMenu");
+        
+        if (menuState === 'true') {
+            menu.style.display = "block"; // Show the menu if it was previously open
         } else {
-            console.error('Error updating notification status:', data.message);
+            menu.style.display = "none"; // Hide the menu if it was previously closed
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
     });
-}
-
 </script>
-<?php
-/// Update session variables based on the URL parameters
-// if (isset($_GET['viewed'])) {
-//     if ($_GET['viewed'] == 'messages') {
-//         $_SESSION['message_notification_viewed'] = true;
-//     }
-
-//     if ($_GET['viewed'] == 'bookings') {
-//         $_SESSION['booking_notification_viewed'] = true;
-//     }
-// }
-?>
-<?php
-// $conn = new mysqli(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
-
-// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-//     // Mark the booking notification as new
-//     $_SESSION['booking_notification_viewed'] = false;
-//     $response = array('success' => true);
-//     echo json_encode($response);
-// }
-?>
 
 
+<!-- Chatbox container -->
+<!-- <div id="chatbox" class="chatbox">
+    <div class="chatbox-header">
+        <span class="chatbox-title">Chat with Admin</span>
+        <button class="close-button" onclick="closeChatbox()">×</button>
+    </div>
+    <div id="chat-messages" class="chat-messages"> -->
+        <!-- Messages will be dynamically loaded here -->
+    <!-- </div>
+    <div class="chat-input">
+        <textarea id="message-input" placeholder="Type your message..."></textarea>
+        <button id="send-button" onclick="sendMessage()">Send</button>
+    </div>
+</div> -->
+<!-- <?php $adminID = $_SESSION['USERID'];
+?> -->
 
-                 
+<!-- JavaScript to handle chat interactions -->
+<script>
+    document.getElementById('chat-button').addEventListener('click', function() {
+        document.getElementById('chatbox').classList.add('open');
+        loadMessages();
+    });
+
+    function closeChatbox() {
+        document.getElementById('chatbox').classList.remove('open');
+    }
+
+    function loadMessages() {
+        fetch('chatbox.php?action=load')
+            .then(response => response.json())
+            .then(data => {
+                const chatMessages = document.getElementById('chat-messages');
+                chatMessages.innerHTML = '';
+                data.forEach(message => {
+                    const messageElement = document.createElement('div');
+                    messageElement.textContent = message.message;
+                    messageElement.classList.add('message', message.user_type === 'guest' ? 'received' : 'sent');
+                    chatMessages.appendChild(messageElement);
+                });
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            });
+    }
+
+    function sendMessage() {
+        const messageInput = document.getElementById('message-input');
+        const message = messageInput.value.trim();
+
+        if (message !== '') {
+            fetch('chatbox.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `message=${message}&user_type=admin`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const chatMessages = document.getElementById('chat-messages');
+                    const messageElement = document.createElement('div');
+                    messageElement.textContent = message;
+                    messageElement.classList.add('message', 'sent');
+                    chatMessages.appendChild(messageElement);
+                    messageInput.value = '';
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            });
+        }
+    }
+
+    setInterval(() => {
+        fetch('chatbox.php?action=get_unread')
+            .then(response => response.json())
+            .then(data => {
+                if (data.unread_count > 0) {
+                    document.getElementById('chat-button').classList.add('has-unread');
+                } else {
+                    document.getElementById('chat-button').classList.remove('has-unread');
+                }
+            });
+    }, 5000);
+</script>
+
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php
                       while($row = mysqli_fetch_assoc($result)){
-                      echo $row['ROLE'];
+                        echo $row['ROLE'];
                        ?></span>
                                 <img class="img-profile rounded-circle"
                                     src="https://mcchmhotelreservation.com/admin/img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
+
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
@@ -665,7 +866,7 @@ function markAsRead(reserveId, redirectUrl) {
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                    <?php } ?>
+                                <?php } ?>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -677,8 +878,6 @@ function markAsRead(reserveId, redirectUrl) {
                     </ul>
 
                 </nav>
-
-
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -696,13 +895,13 @@ function markAsRead(reserveId, redirectUrl) {
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <!-- <footer class="sticky-footer bg-white">
+            <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Hotel Reservation 2023</span>
+                        <span>Copyright &copy; Hotel Reservation 2024</span>
                     </div>
                 </div>
-            </footer> -->
+            </footer>
             <!-- End of Footer -->
 
         </div>
@@ -715,9 +914,10 @@ function markAsRead(reserveId, redirectUrl) {
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+    
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+ <!-- Logout Modal-->
+ <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -727,7 +927,7 @@ function markAsRead(reserveId, redirectUrl) {
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Are you sure you want to logout?</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-primary" href="https://mcchmhotelreservation.com/admin/logout.php">Logout</a>
@@ -736,6 +936,7 @@ function markAsRead(reserveId, redirectUrl) {
         </div>
     </div>
 
+    
     <!-- Bootstrap core JavaScript-->
     <script src="https://mcchmhotelreservation.com/admin/vendor/jquery/jquery.min.js"></script>
     <script src="https://mcchmhotelreservation.com/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -754,10 +955,10 @@ function markAsRead(reserveId, redirectUrl) {
     <script src="https://mcchmhotelreservation.com/admin/js/demo/chart-pie-demo.js"></script>
     <script src="https://mcchmhotelreservation.com/admin/js/demo/datatables-demo.js"></script>
 
+
     <!-- Page level plugins -->
     <script src="https://mcchmhotelreservation.com/admin/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="https://mcchmhotelreservation.com/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
 
     <!-- Page level custom scripts -->
     
@@ -811,6 +1012,7 @@ $(document).on("click", ".get-id", function () {
 });
 </script>
 
+
 <script type="text/javascript">
 $(document).ready(function(){
     $('.toggle-modal').click(function(){
@@ -825,7 +1027,9 @@ $(document).ready(function(){
     }); 
 });
 
+
  
+
 
 
 </script>
@@ -869,6 +1073,7 @@ $(document).ready(function() {
     } ).draw();
 } );
 
+
 $(document).ready(function() {
     var t = $('#table').DataTable( {
         "columnDefs": [ {
@@ -893,6 +1098,7 @@ $(document).ready(function() {
 ?>
 
 <script>
+
 
           function checkall(selector)
           {
@@ -955,4 +1161,3 @@ $(document).ready(function() {
     });
 </script>
 </html>
-
