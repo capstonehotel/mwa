@@ -84,7 +84,7 @@
         <ul class="navbar-nav bg-maroon sidebar sidebar-dark accordion toggled" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" >
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div class="sidebar-brand-icon ">         
                  <img src="https://mcchmhotelreservation.com/logo.jpg" style="height:55px; width:55px; border-radius: 15px; margin-left: 2px;">
                 </div>
