@@ -50,12 +50,12 @@
         <div class="tab-content" id="reservationTabsContent">
             <?php 
             $queries = [
-                "list" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE` FROM `tblpayment` p JOIN `tblguest` g ON p.`GUESTID` = g.`GUESTID` JOIN `tblreservation` r ON r.`CONFIRMATIONCODE` = p.`CONFIRMATIONCODE`  ORDER BY p.`STATUS`='pending' DESC, p.`TRANSDATE` DESC", 
-                "pending" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`  FROM `tblpayment` p JOIN `tblguest` g ON p.`GUESTID` = g.`GUESTID` JOIN `tblreservation` r ON r.`CONFIRMATIONCODE` = p.`CONFIRMATIONCODE`  AND p.`STATUS` = 'pending' ORDER BY p.`TRANSDATE` DESC",
-                "confirmed" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`  FROM `tblpayment` p JOIN `tblguest` g ON p.`GUESTID` = g.`GUESTID` JOIN `tblreservation` r ON r.`CONFIRMATIONCODE` = p.`CONFIRMATIONCODE`  AND p.`STATUS` = 'confirmed' ORDER BY p.`TRANSDATE` DESC",
-                "check-in" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`  FROM `tblpayment` p JOIN `tblguest` g ON p.`GUESTID` = g.`GUESTID` JOIN `tblreservation` r ON r.`CONFIRMATIONCODE` = p.`CONFIRMATIONCODE`  AND p.`STATUS` = 'checkedin' ORDER BY p.`TRANSDATE` DESC",
-                "check-out" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`  FROM `tblpayment` p JOIN `tblguest` g ON p.`GUESTID` = g.`GUESTID` JOIN `tblreservation` r ON r.`CONFIRMATIONCODE` = p.`CONFIRMATIONCODE`  AND p.`STATUS` = 'checkedout' ORDER BY p.`TRANSDATE` DESC",
-                "cancelled" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`  FROM `tblpayment` p JOIN `tblguest` g ON p.`GUESTID` = g.`GUESTID` JOIN `tblreservation` r ON r.`CONFIRMATIONCODE` = p.`CONFIRMATIONCODE`  AND p.`STATUS` = 'cancelled' ORDER BY p.`TRANSDATE` DESC"
+                "list" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`, r.`NIGHTS` FROM `tblpayment` p JOIN `tblguest` g ON p.`GUESTID` = g.`GUESTID` JOIN `tblreservation` r ON r.`CONFIRMATIONCODE` = p.`CONFIRMATIONCODE`  ORDER BY p.`STATUS`='pending' DESC, p.`TRANSDATE` DESC", 
+                "pending" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`,  r.`NIGHTS`  FROM `tblpayment` p JOIN `tblguest` g ON p.`GUESTID` = g.`GUESTID` JOIN `tblreservation` r ON r.`CONFIRMATIONCODE` = p.`CONFIRMATIONCODE`  AND p.`STATUS` = 'pending' ORDER BY p.`TRANSDATE` DESC",
+                "confirmed" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`,  r.`NIGHTS`  FROM `tblpayment` p JOIN `tblguest` g ON p.`GUESTID` = g.`GUESTID` JOIN `tblreservation` r ON r.`CONFIRMATIONCODE` = p.`CONFIRMATIONCODE`  AND p.`STATUS` = 'confirmed' ORDER BY p.`TRANSDATE` DESC",
+                "check-in" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE` ,  r.`NIGHTS` FROM `tblpayment` p JOIN `tblguest` g ON p.`GUESTID` = g.`GUESTID` JOIN `tblreservation` r ON r.`CONFIRMATIONCODE` = p.`CONFIRMATIONCODE`  AND p.`STATUS` = 'checkedin' ORDER BY p.`TRANSDATE` DESC",
+                "check-out" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`,  r.`NIGHTS`  FROM `tblpayment` p JOIN `tblguest` g ON p.`GUESTID` = g.`GUESTID` JOIN `tblreservation` r ON r.`CONFIRMATIONCODE` = p.`CONFIRMATIONCODE`  AND p.`STATUS` = 'checkedout' ORDER BY p.`TRANSDATE` DESC",
+                "cancelled" => "SELECT g.`G_FNAME`, g.`G_LNAME`, p.`TRANSDATE`, p.`CONFIRMATIONCODE`, p.`PQTY`, p.`SPRICE`, p.`STATUS`, p.`PAYMENT_STATUS`, r.`ARRIVAL`, r.`DEPARTURE`, r.`NIGHTS`  FROM `tblpayment` p JOIN `tblguest` g ON p.`GUESTID` = g.`GUESTID` JOIN `tblreservation` r ON r.`CONFIRMATIONCODE` = p.`CONFIRMATIONCODE`  AND p.`STATUS` = 'cancelled' ORDER BY p.`TRANSDATE` DESC"
             ];
 
             foreach ($tabs as $tab) { ?>
@@ -67,11 +67,12 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Guest</th>
+                                        <th>Confirmation Code</th> 
                                         <th>Arrival</th>
                                         <th>Departure</th>
                                         <th>Nights</th>
-                                        <!-- <th>Transaction Date</th>
-                                        <th>Confirmation Code</th> -->
+                                        <!-- <th>Transaction Date</th>-->
+                                        
                                         <th>Total Rooms</th>
                                         <!-- <th>Total Price</th> -->
                                         <th>Payment</th>
@@ -88,18 +89,17 @@
                                         $number = 0;
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             $number++;
-                                            $nights = dateDiff($row['ARRIVAL'], $row['DEPARTURE']);
-
-
+                                         
                                             ?>
                                             <tr>
                                                 <td align="center"><?php echo $number; ?></td>
                                                 <td align="center"><?php echo $row['G_FNAME']; ?> <?php echo $row['G_LNAME']; ?></td>
+                                                <td align="center"><?php echo $row['CONFIRMATIONCODE']; ?></td> 
                                                 <td align="center"><?php echo date_format(date_create($row['ARRIVAL']), 'm/d/Y'); ?></td>
                                                 <td align="center"><?php echo date_format(date_create($row['DEPARTURE']), 'm/d/Y'); ?></td>
-                                                <td align="center"><?php echo ($nights == 0) ? '1' : $nights; ?></td>
-                                                <!-- <td align="center"><?php echo $row['TRANSDATE']; ?></td>
-                                                <td align="center"><?php echo $row['CONFIRMATIONCODE']; ?></td> -->
+                                                <td align="center"><?php echo $row['NIGHTS']; ?></td>
+                                                <!-- <td align="center"><?php echo $row['TRANSDATE']; ?></td>-->
+                                                
                                                 <td align="center"><?php echo $row['PQTY']; ?></td>
                                                 <!-- <td align="center"><?php echo $row['SPRICE']; ?></td> -->
                                                 <td align="center" class="payment-column"><?php echo $row['PAYMENT_STATUS']; ?></td>
@@ -122,15 +122,7 @@
         </div>
     </div>
 </div>
-<?php
-function dateDiff($start_date, $end_date) {
-    $start = new DateTime($start_date);
-    $end = new DateTime($end_date);
-    $interval = $start->diff($end);
-    return $interval->days; // This returns the difference in days
-}
 
-?>
 <!-- Initialize DataTables -->
 <script>
 $(document).ready(function() {
@@ -205,7 +197,7 @@ $(document).ready(function() {
         });
     });
 
-    // Restore the page state after the table is reloaded
+    // Restore the page state after the table is reloaded 
     $(window).on('load', function() {
         restoreState(); // Restore tab state
     });
