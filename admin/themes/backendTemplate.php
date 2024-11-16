@@ -191,13 +191,6 @@ try {
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-                    <!-- <script>
-        $(document).ready(function() {
-            $('#sidebarToggleTop').on('click', function() {
-                $('#accordionSidebar').toggleClass('toggled');
-            });
-        });
-    </script> -->
                     <!-- Topbar Navbar -->
                   <ul class="navbar-nav ml-auto">
 
@@ -221,26 +214,7 @@ try {
     $curya = $mydb->loadResultList();  
     $todayBookings = isset($curya[0]->Total) ? $curya[0]->Total : 0;
 ?>
-<!-- <?php
-// Start the session if not already started
-// if (session_status() == PHP_SESSION_NONE) {
-//     session_start();
-// }
 
-// Check if the message notification has been viewed
-if (isset($_SESSION['message_notification_viewed'])) {
-    $cnt_message[0] = 0; // Reset the message count or use appropriate logic
-}
-
-// Check if the booking notification has been viewed
-if (isset($_SESSION['booking_notification_viewed'])) {
-    $todayBookings = 0; // Reset the booking count or use appropriate logic
-}
-
-
-
-
-?> -->
 <?php
 //Start the session if not already started
 if (session_status() == PHP_SESSION_NONE) {
@@ -317,18 +291,18 @@ mysqli_close($conn);
 
 ?>
 <li class="nav-item my-auto" style="position: relative;">
-    <a href="javascript:void(0);" class="text-dark" id="bookingNotification" onclick="toggleNotificationMenu()">
+    <a href="javascript:void(0);" class="text-dark" id="bookingNotification" onclick="toggleNotificationMenu(event)">
         <i class="fa fa-bell"></i>
         <?php if ($total_notifications > 0): ?>
             <span class="badge badge-pill badge-danger notification-badge"><?php echo $total_notifications; ?></span>
         <?php endif; ?>
     </a>
     
-    <!-- Notification menu -->
-    <div id="notificationMenu" class="notification-menu">
+     <!-- Notification menu -->
+     <div id="notificationMenu" class="notification-menu" style="display: none;">
         <div class="menu-header">
             <span class="menu-title">Notifications</span>
-            <a href="javascript:void(0)" class="clear-noti">Clear All</a>
+            <a href="themes/clearallnotif.php" class="clear-noti">Clear All</a>
         </div>
         <div class="menu-content">
             <div class="menu-section">
@@ -372,54 +346,30 @@ mysqli_close($conn);
 
     return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
-
                 // Fetch notifications with room details
-                $notifications_query = "
-                    SELECT 
-                        g.G_AVATAR, 
-                        g.G_FNAME, 
-                        g.G_LNAME, 
-                        p.TRANSDATE, 
-                        rm.ROOM, 
-                        rm.ROOMDESC,
-                        r.CONFIRMATIONCODE,
-                        r.PAYMENT_STATUS,
-                        r.RPRICE,
-                        r.RESERVEID,
-                        r.is_read
-                    FROM 
-                        tblreservation r 
-                    JOIN 
-                        tblguest g ON r.GUESTID = g.GUESTID
-                    JOIN 
-                        tblroom rm ON r.ROOMID = rm.ROOMID
-                    JOIN 
-                        tblpayment p ON r.CONFIRMATIONCODE = p.CONFIRMATIONCODE
-                        
-                    ORDER BY p.TRANSDATE DESC"; // Adjust limit as needed
+                $notifications_query = "SELECT  `G_AVATAR`, `G_FNAME`, `G_LNAME`, `TRANSDATE`, `CONFIRMATIONCODE`, `n`.`ROOMID`, `AMOUNT_PAID`, `PAYMENT_STATUS`, `IS_READ`, `rm`.`ROOM` AS room_name, `rm`.`ROOMDESC` AS room_desc
+                FROM `notifications` n 
+                JOIN `tblguest` g ON n.`GUESTID` = g.`GUESTID` 
+                JOIN `tblroom` rm ON n.`ROOMID` = rm.`ROOMID` 
+                ORDER BY n.`TRANSDATE` DESC"; // Adjust limit as needed
 
                 $notifications_result = mysqli_query($connection, $notifications_query);
                 if ($notifications_result) {
                     while ($notification = mysqli_fetch_assoc($notifications_result)) {
-                        $avatar = '../../images/user_avatar/' . htmlspecialchars($notification['G_AVATAR']);
+                        $avatar = htmlspecialchars($notification['G_AVATAR']);
                         $fullName = htmlspecialchars($notification['G_FNAME'] . ' ' . $notification['G_LNAME']);
-                        $roomName = htmlspecialchars($notification['ROOM']);
-                        $roomDesc = htmlspecialchars($notification['ROOMDESC']);
+                        $roomName = htmlspecialchars($notification['room_name']);
+                        $roomDesc = htmlspecialchars($notification['room_desc']);
                         $bookDate = time_elapsed_string($notification['TRANSDATE']);
                         $exactDate = date_format(date_create($notification['TRANSDATE']), 'h:i A'); // Format the exact date and time
                         $paidstatus = htmlspecialchars($notification['PAYMENT_STATUS']);
-                        // Determine the paid amount based on payment status
-                        $paid = htmlspecialchars($notification['RPRICE']);
-                        if ($notification['PAYMENT_STATUS'] === 'Partially Paid') {
-                            $paid = $paid / 2; // Halve the amount if partially paid
-                        }
-                        $paid = number_format($paid, 2);
-                        $readClass = $notification['is_read'] ? 'read' : 'unread'; 
+                        $paid = (float) $notification['AMOUNT_PAID'];
+                        $readClass = $notification['IS_READ'] ? 'read' : 'unread'; 
                         ?>
-                        <li class="notification-message <?php echo $readClass; ?>" data-id="<?php echo $notification['RESERVEID']; ?>" >
-                        <a href="/admin/mod_reservation/index.php?viewed=bookings" onclick="markAsRead(<?php echo $notification['RESERVEID']; ?>, '/admin/mod_reservation/index.php?viewed=bookings')">
+                        <li class="notification-message <?php echo $readClass; ?>" >
+                        <a href="../mod_reservation/index.php?view=view&code=<?php echo $row['CONFIRMATIONCODE']; ?>" onclick="markAsRead()">
         <div class="notification" style="display: flex; align-items: center;">
-            <img alt="" src="<?php echo $avatar; ?>" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width: 50px;" />
+            <img alt="" src="../../images/user_avatar/<?php echo $avatar; ?>" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width: 50px;" />
             <div class="content" style="font-size: 15px;">
                 <p style="margin: 0 0 2px 0;">
                     <strong><?php echo $fullName; ?></strong> has made a booking in <strong><?php echo $roomName; ?></strong> (<?php echo $roomDesc; ?>) and <?php echo $paidstatus; ?> ₱ <?php echo $paid; ?> pesos.
@@ -442,7 +392,7 @@ mysqli_close($conn);
         </div>
         <!-- Footer with "View all Notifications" outside of scrollable content -->
         <div class="menu-footer" style="padding: 10px; text-align: center; border-top: 1px solid #eee;">
-            <a href="/admin/mod_reservation/index.php">View all Notifications</a>
+            <a href="mod_reservation/index.php">View all Notifications</a>
         </div>
     </div>
     <span style="margin-left: 10px;">|</span>
@@ -576,6 +526,31 @@ mysqli_close($conn);
     var menu = document.getElementById("notificationMenu");
     if (menu.style.display === "block") {
         menu.style.display = "none";
+        localStorage.setItem('notificationMenuOpen', 'false'); // Save state as closed
+    } else {
+        menu.style.display = "block";
+        localStorage.setItem('notificationMenuOpen', 'true'); // Save state as open
+    }
+}
+
+
+$(document).ready(function() {
+        // Check the stored state of the notification menu
+        var menuState = localStorage.getItem('notificationMenuOpen');
+        var menu = document.getElementById("notificationMenu");
+        
+        if (menuState === 'true') {
+            menu.style.display = "block"; // Show the menu if it was previously open
+        } else {
+            menu.style.display = "none"; // Hide the menu if it was previously closed
+        }
+    });
+</script>
+<!-- <script>
+    function toggleNotificationMenu() {
+    var menu = document.getElementById("notificationMenu");
+    if (menu.style.display === "block") {
+        menu.style.display = "none";
     } else {
         menu.style.display = "block";
     }
@@ -619,7 +594,7 @@ function markAsRead(reserveId, redirectUrl) {
     });
 }
 
-</script>
+</script> -->
 <?php
 /// Update session variables based on the URL parameters
 // if (isset($_GET['viewed'])) {
