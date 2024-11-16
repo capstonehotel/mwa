@@ -86,7 +86,7 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" >
                 <div class="sidebar-brand-icon ">         
-                 <img src="<?php echo WEB_ROOT; ?>/images/logo2.jpg" style="height:55px; width:55px; border-radius: 15px; margin-left: 2px;">
+                 <img src="https://mcchmhotelreservation.com/logo.jpg" style="height:55px; width:55px; border-radius: 15px; margin-left: 2px;">
                 </div>
                 <div class="sidebar-brand-text mx-3"> HM Hotel Reservation</div>
             </a>
