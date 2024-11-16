@@ -36,25 +36,50 @@ class User{
 			$row_count = $mydb->num_rows($cur);//get the number of count
 			return $row_count;
 	}
-
-	 static function AuthenticateUser($email="", $h_upass=""){
+	static function AuthenticateUser ($email = "", $upass = "") {
 		global $mydb;
-		$mydb->setQuery("SELECT * FROM `tbluseraccount` WHERE `USER_NAME`='" . $email . "' and `UPASS`='" . $h_upass ."' LIMIT 1");
-		$cur = $mydb->executeQuery();
-		$row_count = $mydb->num_rows($cur);//get the number of count
-		 if ($row_count == 1){
-		 $found_user = $mydb->loadSingleResult();
-		    $_SESSION['ADMIN_ID'] 	 		= $found_user->USERID;
-            $_SESSION['ADMIN_UNAME']    	= $found_user->UNAME;
-            $_SESSION['ADMIN_USERNAME']		= $found_user->USER_NAME;
-            $_SESSION['ADMIN_UPASS']		= $found_user->UPASS;
-            $_SESSION['ADMIN_UROLE']    	= $found_user->ROLE;
-        	return true;
-			}else{
-				return false;
-			}	
-				
-	} 	
+	
+		// Prepare the SQL statement to prevent SQL injection
+		$mydb->setQuery("SELECT * FROM `tbluseraccount` WHERE `USER_NAME` = ? LIMIT 1");
+		$stmt = $mydb->prepare($mydb->getQuery());
+		$stmt->bind_param("s", $email); // Bind the email parameter
+		$stmt->execute();
+		$cur = $stmt->get_result();
+	
+		if ($cur && $mydb->num_rows($cur) == 1) {
+			$found_user = $cur->fetch_object(); // Use fetch_object() to get the user data
+	
+			// First, check against the SHA1 hash
+			if (sha1($upass) === $found_user->UPASS) {
+				// If the SHA1 matches, re-hash with bcrypt
+				$new_hashed_password = password_hash($upass, PASSWORD_BCRYPT);
+				// Update the database with the new hashed password
+				$mydb->setQuery("UPDATE `tbluseraccount` SET `UPASS` = ? WHERE `USER_NAME` = ?");
+				$update_stmt = $mydb->prepare($mydb->getQuery());
+				$update_stmt->bind_param("ss", $new_hashed_password, $email);
+				$update_stmt->execute();
+	
+				// Set session variables
+				$_SESSION['ADMIN_ID'] = $found_user->USERID;
+				$_SESSION['ADMIN_UNAME'] = $found_user->UNAME;
+				$_SESSION['ADMIN_USERNAME'] = $found_user->USER_NAME;
+				$_SESSION['ADMIN_UROLE'] = $found_user->ROLE;
+				return true; // Authentication successful
+			}
+	
+			// If the password does not match SHA1, check bcrypt
+			if (password_verify($upass, $found_user->UPASS)) {
+				// Set session variables
+				$_SESSION['ADMIN_ID'] = $found_user->USERID;
+				$_SESSION['ADMIN_UNAME'] = $found_user->UNAME;
+				$_SESSION['ADMIN_USERNAME'] = $found_user->USER_NAME;
+				$_SESSION['ADMIN_UROLE'] = $found_user->ROLE;
+				return true; // Authentication successful
+			}
+		}
+	
+		return false; // Return false if authentication fails
+	}
 /* 	static function AuthenticateMember($email="", $h_upass=""){
 		global $mydb;
 		$res=$mydb->setQuery("SELECT * FROM `user_info` WHERE `email`='" . $email . "' and `pword`='" . $h_upass ."' LIMIT 1");

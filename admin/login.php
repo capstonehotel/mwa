@@ -1,224 +1,240 @@
 <?php
-
- require_once("../includes/initialize.php");
-
+require_once("../includes/initialize.php");
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <link href="wave.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            color: white;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        .title {
+            text-align: center;
+            color: #7fb6dc;
+            padding: 15px 0;
+            font-size: 20px;
+            font-weight: bold;
+            width: 100%;
+            position: absolute;
+            top: 50px; /* Adjusts position at the top of the page */
+            z-index: 2;
+        }
+        .container {
+            display: flex;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            height: 40%;
+            width: 400px; /* Reduced width */
+            max-width: 100%;
+            position: relative;
+            z-index: 1;
+            padding: 40px; /* Added padding for spacing */
+        }
+        .right {
+            padding: 0; /* Reset padding */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%; /* Full width */
+        }
+        .right h2 {
+            text-align: center;
+            color: black;
+            font-size: 24px;
+            margin-bottom: 50px;
+        }
+        .right form {
+            display: flex;
+            flex-direction: column;
+        }
+        .right form .input-group {
+            position: relative;
+            margin-bottom: 20px;
+            width: 100%; /* Ensures the input group takes full width */
+        }
+        .right form .input-group input {
+            width: 100%;
+            padding: 10px 40px 10px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box; /* Ensures padding is included in total width */
+        }
+        .right form .input-group i {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ccc;
+        }
+        .right form button[type="submit"] {
+            padding: 10px;
+            background-color: #337AB7;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .right form .links {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .right form .links a {
+            color: #337AB7;
+            font-size: 16px;
+            text-decoration: none;
+        }
 
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column; /* Stack elements vertically on mobile */
+                height: auto; /* Allow height to adjust */
+                width: 90%;
+                margin: 0 auto;
+            }
+            .title {
+                max-width: 90%; /* Set a max width to allow wrapping */
+                white-space: normal; /* Allow text to wrap onto the next line */
+                padding: 10px 0; /* Adjust padding for mobile */
+            }
+            .right {
+                padding: 20px; /* Add padding for mobile */
+            }
+            .right form {
+                max-width: 90%;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
 
-    <title>HM Hotel Reservation</title>
+  <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+    <defs>
+      <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+    </defs>
+    <g class="parallax">
+    <use xlink:href="#gentle-wave" x="48" y="0" fill="#cfe8f9" opacity="0.7" />
+    <use xlink:href="#gentle-wave" x="48" y="3" fill="#cfe8f9" opacity="0.5" />
+    <use xlink:href="#gentle-wave" x="48" y="5" fill="#cfe8f9" opacity="0.3" />
+    <use xlink:href="#gentle-wave" x="48" y="7" fill="#cfe8f9" />
+    </g>
+  </svg>
 
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="css/signin.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="../../assets/js/html5shiv.js"></script>
-      <script src="../../assets/js/respond.min.js"></script>
-    <![endif]-->
-  </head>
-<style>
-   body {
-    background-image: url("../images/room.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
-}
-.title{
-    text-align: center;
-    font-size: 66px;
-    font-family: serif;
-    color:ghostwhite;
-    text-shadow: 2px 2px 2px black;
-
-}
-
-
-</style>
-  <body>
-<?php
- if (admin_logged_in()) {
-?>
-   <script type="text/javascript">
-            redirect('index.php');
+  <?php
+if (admin_logged_in()) { ?>
+    <script>
+        window.location = "index.php";
     </script>
-    <?php
+<?php
 }
+
 if (isset($_POST['btnlogin'])) {
-    //form has been submitted1
-    
-   $uname = trim($_POST['email']);
+    $uname = trim($_POST['email']);
     $upass = trim($_POST['pass']);
-    $h_upass  = sha1($upass);
-     //check if the email and password is equal to nothing or null then it will show message box
-   
-    if ($uname == '' OR $upass == '') {
-?>    <script type="text/javascript">
-                alert("Invalid Username and Password!");
-                </script>
-            <?php
-        
-    } else {
-    
-    $sql = "SELECT * FROM tbluseraccount WHERE USER_NAME = '$uname' AND UPASS = '$h_upass'";
-    $result = $connection->query($sql);
 
-    if (!$connection) {
-        die("Database connection failed: " . mysqli_connect_error());
-    }
-    if (!$result) {
-        die("Database query failed: " . mysqli_error($connection));
-    }
-    $row = mysqli_fetch_assoc($result);
-
-    if($row){
-            $_SESSION['ADMIN_ID'] 	 		=  $row['USERID'] ;
-            $_SESSION['ADMIN_UNAME']    	=  $row['UNAME'] ;
-            $_SESSION['ADMIN_USERNAME']		=  $row['USER_NAME'] ;
-            $_SESSION['ADMIN_UPASS']		=  $row['UPASS'] ;
-            $_SESSION['ADMIN_UROLE']    	=  $row['ROLE'];
-      ?>  
-      <style> 
-      /* Adjust the width of the alert */
-.swal2-popup {
-    width: 400px !important; /* Ensure the width is applied */
-}
-
-/* Adjust the font size */
-.swal2-title {
-    font-size: 2.5rem !important; /* Ensure the font size is applied */
-}
-
-/* Adjust the button size */
-.swal2-confirm {
-    padding: 10px 20px !important; /* Ensure the padding is applied */
-}
-</style>
-       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script> 
-<script >
-    Swal.fire({
-        title: `Hello, <?php echo $row['UNAME']; ?>! Welcome back!`,
-        confirmButtonText: 'OK'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location = "index.php";
-        }
-    });
-</script>
-
-
-      <?php
-    
-    
-    } else {
-?>  
-<!-- <script src="sweetalert.js"></script>   -->
-<script >
-     Swal.fire({
-        title: `Username or Password Not Registered!\nContact Your administrator.`,
-        confirmButtonText: 'OK'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location = "login.php";
-        }
-    });
-</script>
-                <!-- swal({
-                    text: "Username or Password Not Registered!\nContact Your administrator."
-                }).then((value) => {
-               window.location = "login.php";
+    if ($uname == '' || $upass == '') {
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Invalid Username and Password!'
             });
-                </script> -->
-        <?php
+        </script>";
+    } else {
+        $sql = "SELECT * FROM tbluseraccount WHERE USER_NAME = '$uname'";
+        $result = $connection->query($sql);
+
+        if (!$result) {
+            die("Database query failed: " . mysqli_error($connection));
         }
-        
+
+        $row = mysqli_fetch_assoc($result);
+
+        if ($row && password_verify($upass, $row['UPASS'])) {
+            $_SESSION['ADMIN_ID'] = $row['USERID'];
+            $_SESSION['ADMIN_UNAME'] = $row['UNAME'];
+            $_SESSION['ADMIN_USERNAME'] = $row['USER_NAME'];
+            $_SESSION['ADMIN_UPASS'] = $row['UPASS'];
+            $_SESSION['ADMIN_UROLE'] = $row['ROLE'];
+
+            echo "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Welcome back!',
+                    text: 'Hello, {$row['UNAME']}.',
+                    timer: 2000,
+                    showConfirmButton: false
+                }).then(() => {
+                    window.location = 'index.php';
+                });
+            </script>";
+        } else {
+            echo "<script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Login Failed',
+                    text: 'Username or Password Not Registered! Contact Your administrator.',
+                }).then(() => {
+                    window.location = 'login.php';
+                });
+            </script>";
+        }
     }
-} else {
-    
-    // $email = "";
-    // $upass = ""; 
 }
-
-?>        <div class="title">
-    
-        <p><b><span style="color:#ffd6bb;">HM Hotel </span> <span style="color:whitesmoke;">Reservation </span><span style="color:WG;">System   </span></b></p>
-     </div>
-       </br>
-       
-
-        <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4" >
-                <div class="login-panel panel panel-default"style="  border-radius:8px; box-shadow: 0 2px 2px 0 rgba(2,2,2,2.1);">
-                    <div class="panel-heading" style="border-top-right-radius:8px; border-top-left-radius: 8px;">
-                        <h2 class="panel-title" style="font-size: 30px; font-family: Georgia;"><center>Login Credential</h2>
-                    </div>
-                    <div class="panel-body">
-                        <form role="form" method="POST" action="#">
-                            <fieldset>
-                                <div class="form-group">
-                                    <h5>Email</h5>
-                                    <input  id="email" class="form-control" required placeholder="ex.gmail.com" name="email" type="email" required  >
-                                </div>
-                                <div class="form-group">
-                                    <h5>Password</h5>
-                                    <input  id="pass"  class="form-control" placeholder="* * * * * * * * *" name="pass" type="password" value="" minlength="6" maxlength="8">
-                                    <a href="javascript:void(0)" class="text-reset text-decoration-none pass_view"> <i class="fa fa-eye-slash"></i></a>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">Remember Me
-                                    </label>
-                                </div>
-                                <!-- Change this to a button or input when using this as a form -->
-                                <button type="submit"  name="btnlogin" class="btn btn-lg btn-success btn-block">Login</button><br>
-                                <div class="text-center mt-3">
+?>
+    <div class="container">
+        <div class="right">
+            <h2>LOGIN CREDENTIALS</h2>
+            <form method="POST" action="login.php">
+                <div class="input-group">
+                    <input placeholder="Username" type="text" name="email" required>
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="input-group">
+                    <input id="password" placeholder="Password" type="password" name="pass" minlength="8" maxlength="12" required>
+                    <i class="far fa-eye" id="eyeIcon"></i>
+                </div>
+                <button type="submit" name="btnlogin">Login</button>
+                <div class="links">
                     <a href="../index.php" class="text-primary">Back to the website</a>
                 </div>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            </form>
         </div>
-    </div> 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/themes@5.0.18/default/default.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-                 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        function detectXSS(inputField, fieldName) {
-            const xssPattern =  /[<>:\/\$\;\,\?\!]/;
-            inputField.addEventListener('input', function() {
-                if (xssPattern.test(this.value)) {
-                  Swal.fire("XSS Detected", `Please avoid using invalid characters in your ${fieldName}.`, "error");
-                    this.value = "";
-                }
-            });
-        }
-        
-        const firstInput = document.getElementById('email');
-        const lastInput = document.getElementById('pass');
-        
-        detectXSS(firstInput, 'Email');
-        detectXSS(lastInput, 'Password');//oki na dri gah sa login
-        
+    </div>
+    <script>
+    const eyeIcon = document.getElementById('eyeIcon');
+    const passwordInput = document.getElementById('password');
+
+    eyeIcon.addEventListener('click', function () {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        eyeIcon.classList.toggle('fa-eye');
+        eyeIcon.classList.toggle('fa-eye-slash');
     });
-</script>
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-  </body>
+    </script>
+</body>
 </html>
