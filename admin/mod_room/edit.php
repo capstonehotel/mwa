@@ -1,114 +1,129 @@
 <?php
-echo '<script src="../sweetalert.js"></script>';
+echo '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">';
+echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>';
 
-$id = $_GET['id'];
+// CSRF Token Generation
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 
-// Fetch room details from the database
+$id = intval($_GET['id']); // Sanitize ID
+
+// Fetch room data
 $sql = "SELECT * FROM tblroom INNER JOIN tblaccomodation ON tblroom.ACCOMID = tblaccomodation.ACCOMID WHERE ROOMID = ?";
 $stmt = $connection->prepare($sql);
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $result = $stmt->get_result();
 $row = $result->fetch_assoc();
+$stmt->close();
 
 if (isset($_POST['save_room'])) {
-    $ROOM = $_POST['ROOM'];
+    // Validate CSRF Token
+    if ($_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die('CSRF token validation failed.');
+    }
 
-    // Check for duplicate room names
-    $checkDuplicateSql = "SELECT ROOMID FROM tblroom WHERE ROOM = ? AND ROOMID != ?";
-    $stmt = $connection->prepare($checkDuplicateSql);
-    $stmt->bind_param("si", $ROOM, $id);
-    $stmt->execute();
-    $duplicateResult = $stmt->get_result();
+    $errors = []; // Initialize error array
+    $uploadDir = 'rooms/';
+    $maxFileSize = 5 * 1024 * 1024;
+    $ROOMIMAGE = $row["ROOMIMAGE"]; // Default to existing image path
 
-    if ($duplicateResult->num_rows > 0) {
-        // Duplicate room name found
-        echo "<script>
-            swal({
-                title: 'Error!',
-                text: 'A room with this name already exists.',
-                icon: 'error'
-            });
-          </script>";
-    } else {
-        $uploadDir = 'rooms/'; // Set the directory where you want to save uploaded files
+    // Validate inputs
+    $ROOM = htmlspecialchars(trim($_POST['ROOM']), ENT_QUOTES, 'UTF-8');
+    $ACCOMID = intval($_POST['ACCOMID']);
+    $ROOMDESC = htmlspecialchars(trim($_POST['ROOMDESC']), ENT_QUOTES, 'UTF-8');
+    $NUMPERSON = filter_var($_POST['NUMPERSON'], FILTER_VALIDATE_INT);
+    $PRICE = filter_var($_POST['PRICE'], FILTER_VALIDATE_FLOAT);
+    $ROOMNUM = filter_var($_POST['ROOMNUM'], FILTER_VALIDATE_INT);
 
-        // Handle file upload
-        if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
-            $file = $_FILES['image'];
-            $filename = basename($file['name']);
-            $uploadPath = $uploadDir . $filename;
+    if ($NUMPERSON === false || $NUMPERSON < 2) $errors[] = 'Number of persons must be at least 2.';
+    if ($PRICE === false || $PRICE < 1000) $errors[] = 'Price must be at least 1000.';
+    if ($ROOMNUM === false) $errors[] = 'Room number is required.';
+    if (empty($ROOM) || empty($ROOMDESC)) $errors[] = 'Room name and description are required.';
 
-            // Move the uploaded file to the desired directory
-            if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
-                $ROOMIMAGE = $uploadDir . $filename;
+    // Check if the room name already exists
+    $checkSql = "SELECT * FROM tblroom WHERE ROOM = ? AND ROOMID != ?";
+    $checkStmt = $connection->prepare($checkSql);
+    $checkStmt->bind_param("si", $ROOM, $id);
+    $checkStmt->execute();
+    if ($checkStmt->get_result()->num_rows > 0) {
+        $errors[] = 'Room name already exists. Please choose a different name.';
+    }
+    $checkStmt->close();
+
+    // Handle file upload if a new file is uploaded
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
+        if ($_FILES['image']['size'] <= $maxFileSize) {
+            $fileInfo = getimagesize($_FILES['image']['tmp_name']);
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+            if ($fileInfo && in_array($fileInfo['mime'], $allowedTypes)) {
+                $filename = uniqid('room_', true) . '.' . pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+                $uploadPath = $uploadDir . $filename;
+                if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadPath)) {
+                    $ROOMIMAGE = "rooms/$filename";
+                } else {
+                    $errors[] = 'Error uploading file.';
+                }
             } else {
-                // Handle file upload error
-                $ROOMIMAGE = $row["ROOMIMAGE"];
-                echo "<script>
-                    swal({
-                        title: 'Error!',
-                        text: 'Error uploading file',
-                        icon: 'error'
-                    });
-                  </script>";
-                exit(); // Stop further execution
+                $errors[] = 'Only valid image files (JPG, JPEG, PNG, WEBP) are allowed.';
             }
         } else {
-            // No new file uploaded
-            $ROOMIMAGE = $row["ROOMIMAGE"];
+            $errors[] = 'File size exceeds the 5MB limit.';
         }
+    }
 
-        $ACCOMID = $_POST['ACCOMID'];
-        $ROOMDESC = $_POST['ROOMDESC'];
-        $NUMPERSON = $_POST['NUMPERSON'];
-        $PRICE = $_POST['PRICE'];
-        $ROOMNUM = $_POST['ROOMNUM'];
-
+    // If no errors, update the database
+    if (empty($errors)) {
         $sql = "UPDATE tblroom SET 
-            ROOMIMAGE = ?,
-            ROOM = ?,
-            ACCOMID = ?,
-            ROOMDESC = ?,
-            NUMPERSON = ?,
-            PRICE = ?,
-            ROOMNUM = ?
-            WHERE ROOMID = ?";
+                    ROOMIMAGE = ?, 
+                    ROOM = ?, 
+                    ACCOMID = ?, 
+                    ROOMDESC = ?, 
+                    NUMPERSON = ?, 
+                    PRICE = ?, 
+                    ROOMNUM = ? 
+                WHERE ROOMID = ?";
         $stmt = $connection->prepare($sql);
-        $stmt->bind_param("ssisidii", $ROOMIMAGE, $ROOM, $ACCOMID, $ROOMDESC, $NUMPERSON, $PRICE, $ROOMNUM, $id);
-
+        $stmt->bind_param("ssissdii", $ROOMIMAGE, $ROOM, $ACCOMID, $ROOMDESC, $NUMPERSON, $PRICE, $ROOMNUM, $id);
         if ($stmt->execute()) {
             echo "<script>
-                swal({
-                    title: 'Saved!',
-                    text: 'Room updated successfully!',
-                    icon: 'success'
-                }).then(() => {
-                    window.location = 'index.php';
-                });
-              </script>";
+                    Swal.fire({
+                        title: 'Saved!',
+                        text: 'Room updated successfully!',
+                        icon: 'success'
+                    }).then(() => {
+                        window.location = 'index.php';
+                    });
+                  </script>";
         } else {
-            echo "<script>
-                swal({
+            $errors[] = 'Error updating room: ' . $stmt->error;
+        }
+        $stmt->close();
+    }
+
+    // Display errors if any
+    if (!empty($errors)) {
+        echo "<script>
+                Swal.fire({
                     title: 'Error!',
-                    text: 'Error updating room: ". $stmt->error . "',
+                    html: '" . implode('<br>', $errors) . "',
                     icon: 'error'
                 });
               </script>";
-        }
-
-        $stmt->close();
-        $connection->close();
     }
 }
 ?>
 
+
+
 <div class="container-fluid">
   <form action="#" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
     <div class="row">
       <div class="col-md-12">
         <div class="card mb-4">
-          <div class="card-header py-3" style="display: flex; align-items: center;">
+          <div class="card-header py-3" style="display: flex;align-items: center;">
               <a class="btn btn-primary btn-sm mr-2" href="index.php">Back</a>
               <h6 class="m-0 font-weight-bold text-primary">Update Room</h6>
               <div class="text-right" style="display: flex; justify-content: right; align-items: right; width: 100%;">
@@ -117,68 +132,108 @@ if (isset($_POST['save_room'])) {
           </div>
           <div class="card-body">
             <div class="form-group">
-              <label class="col-md-4 control-label" for="ROOM">Name:</label>
-              <input required class="form-control input-sm" id="ROOM" name="ROOM" placeholder="Room Name" type="text" value="<?php echo htmlspecialchars($row["ROOM"], ENT_QUOTES); ?>">
+              <div class="col-md-12 col-sm-12">
+                <label class="col-md-4 control-label" for="ROOM">Name:</label>
+                <div class="col-md-12">
+                  <input required class="form-control input-sm" id="ROOM" name="ROOM" placeholder="Room Name" type="text" value="<?php echo htmlspecialchars($row["ROOM"], ENT_QUOTES, 'UTF-8'); ?>">
+                </div>
+              </div>
             </div>
             <div class="form-group">
-              <label class="col-md-4 control-label" for="ACCOMID">Accommodation:</label>
-              <select class="form-control input-sm" name="ACCOMID" id="ACCOMID"> 
-                <option value="<?php echo htmlspecialchars($row["ACCOMID"], ENT_QUOTES); ?>"><?php echo htmlspecialchars($row["ACCOMODATION"], ENT_QUOTES); ?> (<?php echo htmlspecialchars($row["ACCOMDESC"], ENT_QUOTES); ?>)</option>
-                <?php
-                $query = "SELECT * FROM tblaccomodation";
-                $result = mysqli_query($connection, $query);
-                while ($rows = mysqli_fetch_assoc($result)) {
-                  echo '<option value="'.htmlspecialchars($rows['ACCOMID'], ENT_QUOTES).'">'.htmlspecialchars($rows['ACCOMODATION'], ENT_QUOTES).' (' .htmlspecialchars($rows['ACCOMDESC'], ENT_QUOTES).')</option>';
-                }
-                ?>
-              </select> 
+              <div class="col-md-12 col-sm-12">
+                <label class="col-md-4 control-label" for="ACCOMID">Accommodation:</label>
+                <div class="col-md-12">
+                  <select class="form-control input-sm" name="ACCOMID" id="ACCOMID">
+                    <option value="<?php echo $row["ACCOMID"]; ?>"><?php echo htmlspecialchars($row["ACCOMODATION"], ENT_QUOTES, 'UTF-8'); ?> (<?php echo htmlspecialchars($row["ACCOMDESC"], ENT_QUOTES, 'UTF-8'); ?>)</option>
+                    <?php
+                    $query = "SELECT * FROM tblaccomodation";
+                    $result = mysqli_query($connection, $query);
+                    while ($rows = mysqli_fetch_assoc($result)) {
+                      echo '<option value='.$rows['ACCOMID'].'>'.htmlspecialchars($rows['ACCOMODATION'], ENT_QUOTES, 'UTF-8').' (' .htmlspecialchars($rows['ACCOMDESC'], ENT_QUOTES, 'UTF-8').')</OPTION>';
+                    }
+                    ?>
+                  </select>
+                </div>
+              </div>
             </div>
             <div class="form-group">
-              <label class="col-md-4 control-label" for="ROOMDESC">Description:</label>
-              <input required class="form-control input-sm" id="ROOMDESC" name="ROOMDESC" placeholder="Description" type="text" value="<?php echo htmlspecialchars($row["ROOMDESC"], ENT_QUOTES); ?>">
+              <div class="col-md-12 col-sm-12">
+                <label class="col-md-4 control-label" for="ROOMDESC">Description:</label>
+                <div class ="col-md-12">
+                  <input required class="form-control input-sm" id="ROOMDESC" name="ROOMDESC" placeholder="Description" type="text" value="<?php echo htmlspecialchars($row["ROOMDESC"], ENT_QUOTES, 'UTF-8'); ?>">
+                </div>
+              </div>
             </div>
             <div class="form-group">
-              <label class="col-md-4 control-label" for="NUMPERSON">Number of Persons:</label>
-              <input required class="form-control input-sm" id="NUMPERSON" name="NUMPERSON" placeholder="Number of Persons" type="text" value="<?php echo htmlspecialchars($row["NUMPERSON"], ENT_QUOTES); ?>" onkeyup="javascript:checkNumber(this);">
+              <div class="col-md-12 col-sm-12">
+                <label class="col-md-4 control-label" for="NUMPERSON">Number of Person:</label>
+                <div class="col-md-12">
+                  <input required class="form-control input-sm" id="NUMPERSON" name="NUMPERSON" placeholder="Number of Person" type="text" value="<?php echo htmlspecialchars($row["NUMPERSON"], ENT_QUOTES, 'UTF-8'); ?>" onkeyup="javascript:checkNumber(this);">
+                </div>
+              </div>
             </div>
             <div class="form-group">
-              <label class="col-md-4 control-label" for="PRICE">Price:</label>
-              <input required class="form-control input-sm" id="PRICE" name="PRICE" placeholder="Price" type="text" value="<?php echo htmlspecialchars($row["PRICE"], ENT_QUOTES); ?>" onkeyup="javascript:checkNumber(this);">
+              <div class="col-md-12 col-sm-12">
+                <label class="col-md-4 control-label" for="PRICE">Price:</label>
+                <div class="col-md-12">
+                  <input required class="form-control input-sm" id="PRICE" name="PRICE" placeholder="Price" type="text" value="<?php echo htmlspecialchars($row["PRICE"], ENT_QUOTES, 'UTF-8'); ?>" onkeyup="javascript:checkNumber(this);">
+                </div>
+              </div>
             </div>
             <div class="form-group">
-              <label class="col-md-4 control-label" for="ROOMNUM">No. of Rooms:</label>
-              <input required class="form-control input-sm" id="ROOMNUM" name="ROOMNUM" placeholder="Room #" type="text" value="<?php echo htmlspecialchars($row["ROOMNUM"], ENT_QUOTES); ?>">
+              <div class="col-md-12 col-sm-12">
+                <label class="col-md-4 control-label" for="ROOMNUM">No. of Rooms:</label>
+                <div class="col-md-12">
+                  <input required class="form-control input-sm" id="ROOMNUM" name="ROOMNUM" placeholder="Room #" type="text" value="<?php echo htmlspecialchars($row["ROOMNUM"], ENT_QUOTES, 'UTF-8'); ?>">
+                </div>
+              </div>
             </div>
             <div class="form-group">
-              <label class="col-md-4 control-label" for="image">Upload Image:</label>
-              <input type="file" name="image" id="image" accept="image/*">
-              <?php if ($row["ROOMIMAGE"]) { ?>
-                <img src="<?php echo htmlspecialchars($row["ROOMIMAGE"], ENT_QUOTES); ?>" alt="Image Preview" id="image-preview" style="display: flex; max-width: 100%; max-height: 200px;">
-              <?php } else { ?>
+    <div class="col-md-12 col-sm-12">
+        <label class="col-md-4 control-label" for="image">Upload Image:</label>
+        <div class="col-md-12">
+            <input type="file" name="image" id="image" accept="image/*">
+            <?php if ($row["ROOMIMAGE"]) { ?>
+                <img src="<?php echo htmlspecialchars($row["ROOMIMAGE"], ENT_QUOTES, 'UTF-8'); ?>" alt="Image Preview" id="image-preview" style="display: flex; max-width: 100%; max-height: 200px;">
+            <?php } else { ?>
                 <img src="#" alt="Image Preview" id="image-preview" style="display: none; max-width: 100%; max-height: 200px;">
-              <?php } ?>
-              <script>
-                const fileInput = document.getElementById('image');
-                const imagePreview = document.getElementById('image-preview');
+            <?php } ?>
+            <script>
+                document.getElementById('image').addEventListener('change', function() {
+                    const file = this.files[0];
+                    const imagePreview = document.getElementById('image-preview');
 
-                fileInput.addEventListener('change', function () {
-                  const file = fileInput.files[0];
+                    if (file) {
+                        const fileType = file.type;
+                        const validImageTypes = ['image/jpeg', 'image/png', 'image/webp'];
 
-                  if (file) {
-                    const reader = new FileReader();
+                        // Check if the selected file is a valid image type
+                        if (!validImageTypes.includes(fileType)) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Please select a valid image file (JPEG, PNG, WEBP).',
+                                icon: 'error'
+                            });
+                            this.value = ''; // Clear the input
+                        } else {
+                            // Create a URL for the selected file and set it as the src for the image preview
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                imagePreview.src = e.target.result; // Update the image source
+                                imagePreview.style.display = 'flex'; // Show the image preview
+                            };
+                            reader.readAsDataURL(file); // Read the file as a data URL
 
-                    reader.onload = function (e) {
-                      imagePreview.src = e.target.result;
-                      imagePreview.style.display = 'block';
-                    };
-
-                    reader.readAsDataURL(file);
-                  } else {
-                    imagePreview.src = '#';
-                    imagePreview.style.display = 'none';
-                  }
+                            // If there's an existing image, hide it
+                            if (imagePreview.src !== "#") {
+                                imagePreview.src = "#"; // Clear previous image
+                            }
+                        }
+                    }
                 });
-              </script>
+            </script>
+                </div>
+              </div>
             </div>
           </div>
         </div>

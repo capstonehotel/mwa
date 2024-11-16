@@ -1,102 +1,115 @@
 <?php
-echo '<script src="../sweetalert2.all.min.js"></script>';
+echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
 
 if (isset($_POST['save_room'])) {
-    $uploadDir = 'rooms/'; // Set the directory where you want to save uploaded files
-    $ROOM = $_POST['ROOM'];
-    $ACCOMID = $_POST['ACCOMID'];
-    $ROOMDESC = $_POST['ROOMDESC'];
-    $NUMPERSON = $_POST['NUMPERSON'];
-    $PRICE = $_POST['PRICE'];
-    $ROOMNUM = $_POST['ROOMNUM'];
+    $uploadDir = 'rooms/';
+    $maxFileSize = 5 * 1024 * 1024; // 5MB limit
+    $errors = [];
+    $roomExists = false;
 
-    // Check for duplicate room name
-    $query = "SELECT * FROM tblroom WHERE ROOM = ?";
-    $stmt = $connection->prepare($query);
-    $stmt->bind_param("s", $ROOM);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // Sanitize and validate inputs
+    $ROOM = htmlspecialchars(trim($_POST['ROOM']), ENT_QUOTES, 'UTF-8');
+    $ACCOMID = intval($_POST['ACCOMID']);
+    $ROOMDESC = htmlspecialchars(trim($_POST['ROOMDESC']), ENT_QUOTES, 'UTF-8');
+    $NUMPERSON = filter_var($_POST['NUMPERSON'], FILTER_VALIDATE_INT);
+    $PRICE = filter_var($_POST['PRICE'], FILTER_VALIDATE_FLOAT);
+    $ROOMNUM = filter_var($_POST['ROOMNUM'], FILTER_VALIDATE_INT);
 
-    if ($result->num_rows > 0) {
-        echo "<script>
-                swal({
-                    title: 'Error!',
-                    text: 'Room name already exists. Please choose a different name.',
-                    icon: 'error'
-                }).then(() => {
-                    document.getElementById('ROOM').value = '';
-                });
-              </script>";
-    } else {
-        // Check if a file was uploaded
+    // Validate numeric inputs
+    if ($NUMPERSON === false || $NUMPERSON < 2) {
+        $errors[] = 'Number of persons must be at least 2.';
+    }
+    if ($PRICE === false || $PRICE < 1000) {
+        $errors[] = 'Price must be at least 1000.';
+    }
+    if ($ROOMNUM === false) {
+        $errors[] = 'Room number is required.';
+    }
+
+    if (empty($ROOM) || empty($ROOMDESC)) {
+        $errors[] = 'Room name and description are required.';
+    }
+
+    // Check if the room name already exists
+    $checkSql = "SELECT * FROM tblroom WHERE ROOM = ?";
+    $checkStmt = $connection->prepare($checkSql);
+    $checkStmt->bind_param("s", $ROOM);
+    $checkStmt->execute();
+    $checkResult = $checkStmt->get_result();
+
+    if ($checkResult->num_rows > 0) {
+        $errors[] = 'Room name already exists. Please choose a different name.';
+        $roomExists = true;
+    }
+
+    $checkStmt->close();
+
+    // Only proceed if there are no errors
+    if (empty($errors)) {
+        // Check for image file upload
         if (isset($_FILES['image'])) {
             $file = $_FILES['image'];
 
-            // Check for errors during file upload
-            if ($file['error'] === 0) {
-                $filename = basename($file['name']);
-                $uploadPath = $uploadDir . $filename;
+            if ($file['error'] === UPLOAD_ERR_OK) {
+                if ($file['size'] <= $maxFileSize) {
+                    $fileInfo = getimagesize($file['tmp_name']);
+                    if ($fileInfo && in_array($fileInfo['mime'], ['image/jpeg', 'image/png', 'image/webp'])) {
+                        $filename = uniqid('room_', true) . '.' . pathinfo($file['name'], PATHINFO_EXTENSION);
+                        $uploadPath = $uploadDir . $filename;
+                        $ROOMIMAGE = "rooms/$filename";
 
-                $ROOMIMAGE = "rooms/$filename";
+                        if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
+                            $sql = "INSERT INTO tblroom (ROOMIMAGE, ROOM, ACCOMID, ROOMDESC, NUMPERSON, PRICE, ROOMNUM)
+                                    VALUES (?, ?, ?, ?, ?, ?, ?)";
+                            $stmt = $connection->prepare($sql);
+                            $stmt->bind_param("ssisidi", $ROOMIMAGE, $ROOM, $ACCOMID, $ROOMDESC, $NUMPERSON, $PRICE, $ROOMNUM);
 
-                // Move the uploaded file to the desired directory
-                if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
-                    $sql = "INSERT INTO tblroom (ROOMIMAGE, ROOM, ACCOMID, ROOMDESC, NUMPERSON, PRICE, ROOMNUM)
-                    VALUES (?, ?, ?, ?, ?, ?, ?)";
-                    $stmt = $connection->prepare($sql);
-                    $stmt->bind_param("ssisidi", $ROOMIMAGE, $ROOM, $ACCOMID, $ROOMDESC, $NUMPERSON, $PRICE, $ROOMNUM);
+                            if ($stmt->execute()) {
+                                echo "<script>
+                                        Swal.fire({
+                                            title: 'Saved!',
+                                            text: 'New room saved successfully!',
+                                            icon: 'success'
+                                        }).then(() => {
+                                            window.location = 'index.php';
+                                        });
+                                      </script>";
+                            } else {
+                                $errors[] = 'Error adding new room: ' . htmlspecialchars($stmt->error);
+                            }
 
-                    // Execute the statement
-                    if ($stmt->execute()) {
-                        echo "<script>
-                                swal({
-                                    title: 'Saved!',
-                                    text: 'New room saved successfully!',
-                                    icon: 'success'
-                                }).then(() => {
-                                    window.location = 'index.php';
-                                });
-                              </script>";
+                            $stmt->close();
+                        } else {
+                            $errors[] = 'Error uploading file.';
+                        }
                     } else {
-                        echo "<script>
-                                swal({
-                                    title: 'Error!',
-                                    text: 'Error adding new room: " . $stmt->error . "',
-                                    icon: 'error'
-                                });
-                              </script>";
+                        $errors[] = 'Only valid image files (JPG, JPEG, PNG, WEBP) are allowed.';
                     }
-
-                    // Close the statement and the database connection
-                    $stmt->close();
-                    $connection->close();
                 } else {
-                    echo "<script>
-                            swal({
-                                title: 'Error!',
-                                text: 'Error uploading file',
-                                icon: 'error'
-                            });
-                          </script>";
+                    $errors[] = 'File size exceeds the 5MB limit.';
                 }
             } else {
-                echo "<script>
-                        swal({
-                            title: 'Error!',
-                            text: 'File upload error. Error code: " . $file['error'] . "',
-                            icon: 'error'
-                        });
-                      </script>";
+                $errors[] = 'Error with file upload.';
             }
         } else {
-            echo "<script>
-                    swal({
-                        title: 'Warning!',
-                        text: 'No file was uploaded.',
-                        icon: 'warning'
-                    });
-                  </script>";
+            $errors[] = 'No file was uploaded.';
         }
+    }
+
+    // Handle errors
+    if (!empty($errors)) {
+        echo "<script>
+                Swal.fire({
+                    title: 'Error!',
+                    html: '" . implode('<br>', $errors) . "',
+                    icon: 'error'
+                }).then(() => {
+                    // If room name exists, clear it in the input field
+                    if ($roomExists) {
+                        document.getElementById('ROOM').value = '';
+                    }
+                });
+              </script>";
     }
 }
 ?>
@@ -106,127 +119,98 @@ if (isset($_POST['save_room'])) {
     <div class="row">
       <div class="col-md-12">
         <div class="card mb-4">
-          <div class="card-header py-3"  style="display: flex;align-items: center;">
+          <div class="card-header py-3" style="display: flex; align-items: center;">
               <h6 class="m-0 font-weight-bold text-primary">Add New Room</h6>
-              <div class="text-right" style="display: flex; justify-content: right; align-items: right; width: 100%;">
+              <div class="text-right" style="width: 100%; display: flex; justify-content: flex-end;">
                 <button type="submit" name="save_room" class="btn btn-success btn-sm mr-2">Save Room</button>
               </div>
           </div>
           <div class="card-body">
-            <div class="form-group">
-              <div class="col-md-12 col-sm-12">
-                <label class="col-md-4 control-label" for="ROOM">Name:</label>
-                <div class="col-md-12">
-                   <input required class="form-control input-sm" id="ROOM" name="ROOM" placeholder="Room Name" type="text" value="<?php echo isset($_POST['ROOM']) ? htmlspecialchars($_POST['ROOM']) : ''; ?>">
-                </div>
+              <!-- Room Name Input -->
+              <div class="form-group">
+                <label for="ROOM">Name:</label>
+                <input required class="form-control" id="ROOM" name="ROOM" placeholder="Room Name" type="text" value="<?= isset($ROOM) ? htmlspecialchars($ROOM) : ''; ?>">
               </div>
-            </div>
-            <div class="form-group">
-              <div class="col-md-12 col-sm-12">
-                <label class="col-md-4 control-label" for="ACCOMID">Accommodation:</label>
-                <div class="col-md-12">
-                   <select class="form-control input-sm" name="ACCOMID" id="ACCOMID">
-                      <?php
-                      $query = "SELECT * FROM tblaccomodation";
-                      $result = mysqli_query($connection, $query);
-                      while ($row = mysqli_fetch_assoc($result)) {
-                        $selected = isset($_POST['ACCOMID']) && $_POST['ACCOMID'] == $row['ACCOMID'] ? 'selected' : '';
-                        echo '<option value='.$row['ACCOMID'].' '.$selected.'>'.$row['ACCOMODATION'].' (' .$row['ACCOMDESC'].')</option>';
-                      }
-                      ?>
-                    </select>
-                </div>
+              <!-- Accommodation Selection -->
+              <div class="form-group">
+                <label for="ACCOMID">Accommodation:</label>
+                <select class="form-control" name="ACCOMID" id="ACCOMID"> 
+                  <?php
+                  $query = "SELECT * FROM tblaccomodation";
+                  $result = mysqli_query($connection, $query);
+                  while ($row = mysqli_fetch_assoc($result)) {
+                    $selected = ($row['ACCOMID'] == $ACCOMID) ? 'selected' : '';
+                    echo '<option value="'.$row['ACCOMID'].'" '.$selected.'>'.htmlspecialchars($row['ACCOMODATION']).' ('.htmlspecialchars($row['ACCOMDESC']).')</option>';
+                  }
+                  ?>
+                </select>
               </div>
-            </div>
-            <div class="form-group">
-              <div class="col-md-12 col-sm-12">
-                <label class="col-md-4 control-label" for="ROOMDESC">Description:</label>
-                <div class="col-md-12">
-                   <input required class="form-control input-sm" id="ROOMDESC" name="ROOMDESC" placeholder="Description" type="text" value="<?php echo isset($_POST['ROOMDESC']) ? htmlspecialchars($_POST['ROOMDESC']) : ''; ?>">
-                </div>
+              <!-- Room Description -->
+              <div class="form-group">
+                <label for="ROOMDESC">Description:</label>
+                <input required class="form-control" id="ROOMDESC" name="ROOMDESC" placeholder="Description" type="text" value="<?= isset($ROOMDESC) ? htmlspecialchars($ROOMDESC) : ''; ?>">
               </div>
-            </div>
-            <div class="form-group">
-              <div class="col-md-12 col-sm-12">
-                <label class="col-md-4 control-label" for="NUMPERSON">Number of Person:</label>
-                <div class="col-md-12">
-                   <input required class="form-control input-sm" id="NUMPERSON" name="NUMPERSON" placeholder="Number of Person" type="text" value="<?php echo isset($_POST['NUMPERSON']) ? htmlspecialchars($_POST['NUMPERSON']) : ''; ?>" onkeyup="javascript:checkNumber(this);">
-                </div>
+              <!-- Number of Persons -->
+              <div class="form-group">
+                <label for="NUMPERSON">Number of Persons:</label>
+                <input required class="form-control" id="NUMPERSON" name="NUMPERSON" placeholder="Number of Persons" type="number" min="2" value="<?= isset($NUMPERSON) ? $NUMPERSON : ''; ?>">
               </div>
-            </div>
-            <div class="form-group">
-              <div class="col-md-12 col-sm-12">
-                <label class="col-md-4 control-label" for="PRICE">Price:</label>
-                <div class="col-md-12">
-                   <input required class="form-control input-sm" id="PRICE" name="PRICE" placeholder="Price" type="text" value="<?php echo isset($_POST['PRICE']) ? htmlspecialchars($_POST['PRICE']) : ''; ?>" onkeyup="javascript:checkNumber(this);">
-                </div>
+              <!-- Room Price -->
+              <div class="form-group">
+                <label for="PRICE">Price:</label>
+                <input required class="form-control" id="PRICE" name="PRICE" placeholder="Price (minimum 1000)" type="number" min="1000" value="<?= isset($PRICE) ? $PRICE : ''; ?>">
               </div>
-            </div>
-            <div class="form-group">
-              <div class="col-md-12 col-sm-12">
-                <label class="col-md-4 control-label" for="ROOMNUM">No. of Rooms:</label>
-                <div class="col-md-12">
-                   <input required class="form-control input-sm" id="ROOMNUM" name="ROOMNUM" placeholder="Room #" type="text" value="<?php echo isset($_POST['ROOMNUM']) ? htmlspecialchars($_POST['ROOMNUM']) : ''; ?>">
-                </div>
+              <!-- Room Number -->
+              <div class="form-group">
+                <label for="ROOMNUM">Room Number:</label>
+                <input required class="form-control" id="ROOMNUM" name="ROOMNUM" placeholder="Room #" type="number" value="<?= isset($ROOMNUM) ? $ROOMNUM : ''; ?>">
               </div>
-            </div>
-            <div class="form-group">
-              <div class="col-md-12 col-sm-12">
-                <label class="col-md-4 control-label" for="image">Upload Image:</label>
-                <div class="col-md-12">
-                  <input required type="file" name="image" id="image" accept="image/*">
-                  <img src="#" alt="Image Preview" id="image-preview" style="display: none; max-width: 100%; max-height: 200px;">
-                  <script>
-                    const fileInput = document.getElementById('image');
+              <!-- Image Upload -->
+              <div class="form-group">
+                <label for="image">Upload Image:</label>
+                <input required type="file" name="image" id="image" accept=".jpg, .jpeg, .png, .webp">
+                <img src="#" alt="Image Preview" id="image-preview" style="display: none; max-width: 100%; max-height: 200px;">
+
+                <script>
+                document.getElementById('image').addEventListener('change', function() {
+                    const file = this.files[0];
                     const imagePreview = document.getElementById('image-preview');
-                    fileInput.addEventListener('change', function () {
-                      const file = fileInput.files[0];
-                      if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function (e) {
-                          imagePreview.src = e.target.result;
-                          imagePreview.style.display = 'block';
-                        };
-                        reader.readAsDataURL(file);
-                      } else {
-                        imagePreview.src = '#';
-                        imagePreview.style.display = 'none';
-                      }
-                    });
-                  </script>
-                </div>
+
+                    if (file) {
+                        const fileType = file .type;
+                        const validImageTypes = ['image/jpeg', 'image/png', 'image/webp'];
+
+                        // Check if the selected file is a valid image type
+                        if (!validImageTypes.includes(fileType)) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Please select a valid image file (JPEG, PNG, WEBP).',
+                                icon: 'error'
+                            });
+                            this.value = ''; // Clear the input
+                            imagePreview.style.display = 'none'; // Hide image preview
+                        } else {
+                            // Create a URL for the selected file and set it as the src for the image preview
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                imagePreview.src = e.target.result; // Update the image source
+                                imagePreview.style.display = 'flex'; // Show the image preview
+                            };
+                            reader.readAsDataURL(file); // Read the file as a data URL
+
+                            // If there's an existing image, hide it
+                            if (imagePreview.src !== "#") {
+                                imagePreview.src = "#"; // Clear previous image
+                            }
+                        }
+                    }
+                });
+                </script>
+
               </div>
-            </div>
           </div>
         </div>
       </div>
     </div>
   </form>
 </div>
-<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script> -->
-                 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        function detectXSS(inputField, fieldName) {
-            const xssPattern =  /[<>:\/\$\;\,\?\!]/;
-            inputField.addEventListener('input', function() {
-                if (xssPattern.test(this.value)) {
-                  Swal.fire("XSS Detected", `Please avoid using invalid characters in your ${fieldName}.`, "error");
-                    this.value = "";
-                }
-            });
-        }
-        
-        const ROOMInput = document.getElementById('ROOM');
-        const ROOMDESCInput = document.getElementById('ROOMDESC');
-        const NUMPERSONInput = document.getElementById('NUMPERSON');
-        const PRICEInput = document.getElementById('PRICE');
-        const ROOMNUMInput = document.getElementById('ROOMNUM');
-        
-        detectXSS(ROOMInput, 'Name');
-        detectXSS(ROOMDESCInput, 'Description');
-        detectXSS(NUMPERSONInput, 'Number of Person');
-        detectXSS(PRICEInput, 'Price');
-        detectXSS(ROOMNUMInput, 'No. of Rooms');
-        
-    });
-</script>
