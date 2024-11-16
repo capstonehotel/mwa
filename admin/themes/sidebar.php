@@ -32,7 +32,7 @@ font-style: underline;
 
                 <br>
                  <a class="<?php echo (currentpage() == 'index.php') ? "active" : false;?>list-group-item list-group-item-action bg-transparent fw-bold text-light"
-                style="background-color: border-top:2px solid white; #6d4330; background-color: #6d4330; border-bottom: 2px solid white; border-top:2px solid white; border- border-bottom: 2px solid white; " href="<?php echo WEB_ROOT; ?>admin/index.php" ><h3 id="h3"><b>Home</b></h3></a>
+                style="background-color: border-top:2px solid white; #6d4330; background-color: #6d4330; border-bottom: 2px solid white; border-top:2px solid white; border- border-bottom: 2px solid white; " href="https://mcchmhotelreservation.com/admin/index.php" ><h3 id="h3"><b>Home</b></h3></a>
                 
               
                   <a class="<?php echo (currentpage() == 'mod_room') ? "active" : false;?>list-group-item list-group-item-action bg-transparent fw-bold text-light"
