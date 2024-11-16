@@ -230,10 +230,10 @@ foreach ($cur7 as $result7) {
 </div>
 <?php } ?>
 <?php
-$query7 = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE STATUS= 'Cancelled'  ";
-$mydb->setQuery($query7);
-$cur7 = $mydb->loadResultList();
-foreach ($cur7 as $result7) {
+$query8 = "SELECT SUM(COALESCE(AMOUNT_PAID, 0)) as Total FROM `tblpayment` WHERE AMOUNT_PAID != '' ";
+$mydb->setQuery($query8);
+$cur8 = $mydb->loadResultList();
+foreach ($cur8 as $result8) {
 ?>
 <div class="col-xl-3 col-md-6 mb-4">
     <div class="card board1 fill">
@@ -243,10 +243,10 @@ foreach ($cur7 as $result7) {
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; padding-left: 5px; ">
-                                ₱<?php echo isset($result8->Total) ? $result8->Total : 0; ?>
+                                ₱<?php echo isset($result8->Total) ? number_format($result8->Total, 2, '.', ',') : '0.00'; ?>
                             </div>
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; padding-left: 5px;">
-                                Total Invoice
+                                Overall Total Payment
                             </div>
                         </div>
                         <div class="col-auto" style="padding-left: 5px;">
@@ -259,6 +259,72 @@ foreach ($cur7 as $result7) {
     </div>
 </div>
 <?php } ?>
+<?php
+$query9 = "SELECT SUM(COALESCE(AMOUNT_PAID, 0)) as Total 
+            FROM `tblpayment` 
+            WHERE PAYMENT_STATUS = 'Partially Paid' AND AMOUNT_PAID != ''";
+$mydb->setQuery($query9);
+$cur9 = $mydb->loadResultList();
+foreach ($cur9 as $result9) {
+?>
+<div class="col-xl-3 col-md-6 mb-4">
+    <div class="card board1 fill">
+        <div class="card shadow h-100 py-2" style="border-radius: 0;">
+            <div class="card-body">
+                <div class="dash-widget-header">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; padding-left: 5px;">
+                                ₱<?php echo isset($result9->Total) ? number_format($result9->Total, 2, '.', ',') : '0.00'; ?>
+                            </div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="font-size: 10px; padding-left: 5px;">
+                               Overall Total of Partial Payment 
+                            </div>
+                        </div>
+                        <div class="col-auto" style="padding-left: 5px;">
+                            <span class="material-symbols-outlined">account_balance_wallet</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php } ?>
+
+<?php
+$query10 = "SELECT SUM(COALESCE(AMOUNT_PAID, 0)) as Total 
+            FROM `tblpayment` 
+            WHERE PAYMENT_STATUS = 'Fully Paid' AND AMOUNT_PAID != ''";
+$mydb->setQuery($query10);
+$cur10 = $mydb->loadResultList();
+foreach ($cur10 as $result10) {
+?>
+<div class="col-xl-3 col-md-6 mb-4">
+    <div class="card board1 fill">
+        <div class="card shadow h-100 py-2" style="border-radius: 0;">
+            <div class="card-body">
+                <div class="dash-widget-header">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; padding-left: 5px;">
+                                ₱<?php echo isset($result10->Total) ? number_format($result10->Total, 2, '.', ',') : '0.00'; ?>
+                            </div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="font-size: 10px; padding-left: 5px;">
+                                Overall Total of Full Payment
+                            </div>
+                        </div>
+                        <div class="col-auto" style="padding-left: 5px;">
+                            <span class="material-symbols-outlined">account_balance_wallet</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php } ?>
+
 </div>
 
 <?php
@@ -294,20 +360,50 @@ $cnt6 = mysqli_fetch_array($result6);
 $sql7 = "SELECT count(*) FROM `tblreservation` WHERE STATUS = 'Cancelled' ";
 $result7 = mysqli_query($connection, $sql7);
 $cnt7 = mysqli_fetch_array($result7);
+
+$sql8 = "SELECT SUM(COALESCE(AMOUNT_PAID, 0)) as Total FROM `tblpayment` 
+WHERE (AMOUNT_PAID != '' AND (TRANSDATE <= NOW() OR PAID_DATE <= NOW()))";
+$result8 = mysqli_query($connection, $sql8);
+$cnt8 = mysqli_fetch_array($result8);
+
+$sql9 = "SELECT SUM(COALESCE(AMOUNT_PAID, 0)) as Total FROM `tblpayment` 
+WHERE PAYMENT_STATUS = 'Partially Paid' AND AMOUNT_PAID != '' AND (TRANSDATE <= NOW() OR PAID_DATE <= NOW())";
+$result9 = mysqli_query($connection, $sql9);
+$cnt9 = mysqli_fetch_array($result9);
+
+$sql10 = "SELECT SUM(COALESCE(AMOUNT_PAID, 0)) as Total FROM `tblpayment` 
+ WHERE PAYMENT_STATUS = 'Fully Paid' AND AMOUNT_PAID != '' AND (TRANSDATE <= NOW() OR PAID_DATE <= NOW())";
+$result10 = mysqli_query($connection, $sql10);
+$cnt10 = mysqli_fetch_array($result10);
+
 // Prepare data only up to the current year
 $lineData = [];
 $startYear = 2024;
 $currentYear = date("Y"); // dynamically get the current year
+// Get the first TRANSDATE or PAID_DATE to determine the starting point for the chart
+$sqlDate = "SELECT MIN(TRANSDATE) as firstTransDate, MIN(PAID_DATE) as firstPaidDate FROM `tblpayment`";
+$dateResult = mysqli_query($connection, $sqlDate);
+$dateRow = mysqli_fetch_assoc($dateResult);
+$firstDate = min(strtotime($dateRow['firstTransDate']), strtotime($dateRow['firstPaidDate'])); // Find earliest date
 
 $roomCount = (int)$cnt[0];
 for ($year = $startYear; $year <= $currentYear; $year++) {
     for ($month = 1; $month <= 12; $month++) {
         $date = sprintf('%04d-%02d', $year, $month); // Format as YYYY-MM
-        $sql = "SELECT COUNT(*) AS count FROM `tblreservation` WHERE DATE_FORMAT(TRANSDATE, '%Y-%m') = '$date'";
+        // Check if the current month and year have transactions (TRANSDATE or PAID_DATE)
+        $sql = "SELECT COUNT(*) AS count FROM tblpayment 
+                WHERE (DATE_FORMAT(TRANSDATE, '%Y-%m') = '$date' OR DATE_FORMAT(PAID_DATE, '%Y-%m') = '$date')";
         $result = mysqli_query($connection, $sql);
         $row = mysqli_fetch_assoc($result);
-        $reservationCount = (int)$row['count'];
-        $lineData[] = ['y' => $date, 'a' => $roomCount, 'b' => $reservationCount];
+        $paymentCount = (int)$row['count'];
+        
+        // Add zero for months prior to the first payment date
+        $lineData[] = [
+            'y' => $date,
+            'a' => ($paymentCount > 0 ? (int)$cnt8['Total'] : 0),  // Total Invoice (sum of AMOUNT_PAID)
+            'b' => ($paymentCount > 0 ? (int)$cnt9[0] : 0),  // Partial Payments
+            'c' => ($paymentCount > 0 ? (int)$cnt10[0] : 0), // Full Payments
+        ];
     }
 }
 ?>
@@ -359,10 +455,11 @@ function donutChart() {
             { label: "Cancelled", value: <?php echo $cnt7[0]; ?> },
             { label: "Checked In", value: <?php echo $cnt5[0]; ?> },
             { label: "Checked Out", value: <?php echo $cnt6[0]; ?> },
+            { label: "Reservations", value: <?php echo $cnt2[0]; ?> },
         ],
         backgroundColor: '#f2f5fa',
         labelColor: '#009688',
-        colors: ['#0a9458','#0BA462', '#6dc8a1', '#54bf91', '#23ad72'],
+        colors:['#0a9458','#0BA462', '#6dc8a1', '#54bf91', '#23ad72', '#087646'],
         resize: true,
     });
 }
@@ -372,14 +469,14 @@ function lineChart() {
         element: 'line-chart',
         data: <?php echo json_encode($lineData); ?>,
         xkey: 'y',
-        ykeys: ['a', 'b'],
-        labels: ['Rooms', 'Reservations'],
+        ykeys: ['a', 'b', 'c'],
+        labels: ['Total Invoice','Total of Partial Payment','Total of Full Payment'],
         xLabels: 'month', // Display only months
         xLabelFormat: function (x) {
             // Format months as Jan, Feb, etc.
             return x.toLocaleString('en-US', { month: 'short' });
         },
-        lineColors: ['#009688', '#FF6384'],
+        lineColors:  ['#009688', '#FF6384', '#36A2EB', '#FFCE56'],
         lineWidth: '3px',
         resize: true,
         redraw: true
@@ -391,6 +488,7 @@ function lineChart() {
     currentYearLabel.innerHTML = `<span style="font-size: 14px; color: #666; display: block; text-align: center; margin-top: -10px;">${new Date().getFullYear()}</span>`;
     chartElement.parentNode.insertBefore(currentYearLabel, chartElement.nextSibling);
 }
+
 </script>
     <!-- Include jQuery and Morris.js -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
