@@ -85,7 +85,7 @@ if (isset($_POST['save_accomodation'])) {
 ?>
 
 <div class="container-fluid">
-  <form action="#" method="POST" enctype="multipart/form-data">
+  <form action="" method="POST" enctype="multipart/form-data">
     <div class="row">
       <div class="col-md-12">
         <div class="card mb-4">
