@@ -93,14 +93,13 @@ try {
 <body id="page-top">
  
     <!-- Page Wrapper -->
-    <div id="wrapper" style="background-color: maroon;">
+    <div id="wrapper">
 
         <!-- Sidebar -->
-         
-        <ul class="navbar-nav bg-maroon sidebar sidebar-dark accordion toggled" id="accordionSidebar">
+        <ul class="navbar-nav sidebar sidebar-dark accordion toggled" id="accordionSidebar" style="background: maroon">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" >
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div class="sidebar-brand-icon ">         
                  <img src="https://mcchmhotelreservation.com/images/logo2.jpg" style="height:55px; width:55px; border-radius: 15px; margin-left: 2px;">
                 </div>
