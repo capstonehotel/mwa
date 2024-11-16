@@ -1,0 +1,260 @@
+please help me i cannot login  my email and password is correct i already success in the hcaptcha then i sign in then this should go in this  redirect("https://mcchmhotelreservation.com/booking/index.php?view=payment");
+login.php
+<?php
+// Include required initialization and classes
+require_once("initialize.php");
+
+if (isset($_POST['gsubmit'])) {
+    // Get the hCaptcha response from the form
+    $hcaptchaResponse = isset($_POST['h-captcha-response']) ? $_POST['h-captcha-response'] : '';
+    $secretKey = 'ES_84f7194c2cd04982851c0b2c910b33f3';  // Replace with your actual hCaptcha secret key
+    $remoteIp = $_SERVER['REMOTE_ADDR'];
+    
+    // Verify the hCaptcha response
+    $verifyResponse = file_get_contents("https://hcaptcha.com/siteverify?secret=$secretKey&response=$hcaptchaResponse&remoteip=$remoteIp");
+    $responseData = json_decode($verifyResponse);
+
+    if ($responseData && $responseData->success) {
+        // hCaptcha was successful, proceed with login
+        $email = trim($_POST['username']);
+        $upass = trim($_POST['pass']); // plain password
+
+        if (empty($email) || empty($upass)) { 
+            message("Invalid Username and Password!", "error");
+            redirect("https://mcchmhotelreservation.com/index.php?page=6");
+        } else {   
+            $guest = new Guest();
+            // Pass plain password for login
+            $res = $guest::guest_login($email, $upass);
+
+            if ($res === true) {
+                // Successful login
+                redirect("https://mcchmhotelreservation.com/booking/index.php?view=payment");
+            } else {
+                // Login failed
+                message("Invalid Username and Password! Please contact administrator", "error");
+                redirect("https://mcchmhotelreservation.com/booking/index.php?view=logininfo");
+            }
+        }
+    } else {
+        // hCaptcha verification failed
+        message("hCaptcha verification failed. Please try again.", "error");
+        redirect("https://mcchmhotelreservation.com/index.php?page=6");
+    }
+} else {
+    // Display error if form was not submitted correctly
+    message("Form not submitted correctly.", "error");
+    redirect("https://mcchmhotelreservation.com/index.php?page=6");
+}
+?>
+
+
+
+logininfo.php
+<?php 
+
+if (!isset($_SESSION['monbela_cart'])) {
+  # code...
+  redirect('https://mcchmhotelreservation.com/index.php');
+}
+
+
+
+ ?>
+<div class="card rounded" style="padding: 10px;">
+  <div  class="pagetitle">   
+        <h1  >Your Booking Cart 
+        </h1> 
+    </div>
+    <nav aria-label="breadcrumb" >
+      <ol class="breadcrumb" style="margin-top: 10px;">
+        <li class="breadcrumb-item"><a href="https://mcchmhotelreservation.com/index.php">Home</a></li>
+        <li class="breadcrumb-item "><a href="https://mcchmhotelreservation.com/booking/">Booking Cart</a></li>
+        <li class="breadcrumb-item active">Verify Accounts</li>
+      </ol>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Login</button>
+              <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Register</button>
+            </div>
+          </nav>
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+              <div class="col-md-12">
+                <h4>Service Two</h4> 
+                    <?php echo logintab(); ?>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+              <?php  require_once 'personalinfo.php'; ?>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</div>
+
+
+
+<?php
+
+  function logintab(){
+
+    ?>  
+  <div class="col-md-12">
+    <form action="<?php echo "https://mcchmhotelreservation.com/login.php" ?>" method="post">
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" name="username" placeholder="Username">
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback" style="margin-top: 10px;">
+        <input type="password" class="form-control" name="pass" placeholder="Password">
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+        <!-- hCaptcha Integration -->
+      <div class="form-group" style="margin-top: 10px;">
+        <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126" data-callback="onCaptchaSuccess"></div>
+      </div>
+      <!-- <div class="row">
+        <div class="col-xs-8">
+          <div class="checkbox icheck">
+            <label>
+              <input type="checkbox"> Remember Me
+            </label>
+          </div>
+        </div> -->
+        <!-- /.col -->
+        <div class="col-xs-4">
+          <!-- Sign In button initially disabled -->
+          <button type="submit" name="gsubmit" id="signInButton" class="btn btn-primary btn-block btn-flat" disabled>Sign In</button>
+        </div>
+        <!-- /.col -->
+      </div>
+    </form> 
+</div>
+ 
+  <!-- Load hCaptcha script -->
+  <script src="https://hcaptcha.com/1/api.js" async defer></script>
+
+  <!-- JavaScript to enable button upon hCaptcha success -->
+  <script>
+    function onCaptchaSuccess() {
+      // Enable the sign-in button after hCaptcha is completed
+      document.getElementById("signInButton").disabled = false;
+    }
+  </script>
+<?php
+  }
+
+function listofbooking(){
+
+
+
+$payable = 0;
+if (isset( $_SESSION['monbela_cart'])){ 
+$count_cart = count($_SESSION['monbela_cart']);
+
+?>
+      <!-- list -->
+<div class="row">
+<div class="col-md-4">
+
+     <div style="overflow:scroll;  height:300px;">
+
+
+<?php
+for ($i=0; $i < $count_cart  ; $i++) {  
+
+  $query = "SELECT * FROM `tblroom` r ,`tblaccomodation` a WHERE r.`ACCOMID`=a.`ACCOMID` AND ROOMID=" . $_SESSION['monbela_cart'][$i]['monbelaroomid'];
+   $mydb->setQuery($query);
+   $cur = $mydb->loadResultList(); 
+    foreach ($cur as $result) { 
+
+
+?>             
+      
+        <div class="row"> 
+          <div class="col-md-12">
+             <div class="panel panel-default">
+                <div class="panel-heading">
+                <!-- <h4>Payment</h4> -->
+                </div>
+                <div class="panel-body">
+
+                    <div class="col-md-12">
+                      <label>Room:</label><br/>
+                      <?php echo  $result->ROOM.' '. $result->ROOMDESC; ?>
+                    </div>
+                   
+                    <div class="col-md-6">
+                      <label>Checkedin:</label>
+                      <?php echo  date_format(date_create( $_SESSION['monbela_cart'][$i]['monbelacheckin']),"m/d/Y"); ?>
+                    </div> 
+
+                    <div class="col-md-6">
+                       <label>Checkedout:</label>
+                      <?php echo  date_format(date_create( $_SESSION['monbela_cart'][$i]['monbelacheckout']),"m/d/Y"); ?>
+                    </div>   
+                  
+ 
+                      <div class="col-md-12" style="float:left;border-top:1px solid #000;">
+                          <label>Summary</label> 
+                      </div>
+                
+                      <div style="float:right">  
+
+                          <div class="col-md-12"  >
+                              <label>Price:</label>
+                            <?php echo  ' &#8369 '. $result->PRICE; ?>
+                         </div> 
+
+                         <div class="col-md-12"  >
+                              <label>Days:</label>
+                            <?php echo   $_SESSION['monbela_cart'][$i]['monbeladay']; ?>
+                         </div> 
+
+                         <div class="col-md-12" >
+                              <label>Total:</label>
+                            <?php echo ' &#8369 '.   $_SESSION['monbela_cart'][$i]['monbelaroomprice']; ?>
+                         </div> 
+
+                      </div>    
+                      
+                 </div>
+
+                 <div class="panel-footer">
+                   
+                 </div>
+              </div>   
+
+          </div>
+        </div> 
+  <?php 
+    }
+
+                      $payable += $_SESSION['monbela_cart'][$i]['monbelaroomprice'] ;
+  }
+                      $_SESSION['pay'] = $payable;
+}
+?>
+      <div class="col-md-12" >
+      <div class="row">
+          <label style="float:left">Overall Price</label> <h2 style="float:right"> &#8369 <?php echo   $_SESSION['pay'] ;?></h2> 
+      </div>
+        </div>
+
+
+  </div>  
+    
+  </div>  
+</div>
+      <!-- end list -->
+    
+<!-- end content -->
+<!-- =========================================================================== -->
+<?php } ?>
