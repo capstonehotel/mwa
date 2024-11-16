@@ -36,12 +36,12 @@ font-style: underline;
                 
               
                   <a class="<?php echo (currentpage() == 'mod_room') ? "active" : false;?>list-group-item list-group-item-action bg-transparent fw-bold text-light"
-                style=" background-color: #6d4330; border-top:2px solid white; border-bottom: 2px solid white !important; border-top:1px solid white; border-radius: 0px" href="<?php echo WEB_ROOT; ?>admin/mod_room/index.php" ><h3 id="h3"><b>Rooms<b></h3></a>
+                style=" background-color: #6d4330; border-top:2px solid white; border-bottom: 2px solid white !important; border-top:1px solid white; border-radius: 0px" href="https://mcchmhotelreservation.com/admin/mod_room/index.php" ><h3 id="h3"><b>Rooms<b></h3></a>
               
 
            
                  <a class="<?php echo (currentpage() == 'mod_accomodation') ? "active" : false;?>list-group-item list-group-item-action bg-transparent fw-bold text-light"
-         black  style=" background-color: #6d4330; border-bottom: 2px solid white; border-top:2px solid white;border-radius: 0px"  href="<?php echo WEB_ROOT; ?>admin/mod_accomodation/index.php" ><h3 id="h3"><b>Accomodation<b></h3></a>
+         black  style=" background-color: #6d4330; border-bottom: 2px solid white; border-top:2px solid white;border-radius: 0px"  href="https://mcchmhotelreservation.com/admin/mod_accomodation/index.php" ><h3 id="h3"><b>Accomodation<b></h3></a>
 
                  <?php
                 $query = "SELECT count(*) as 'Total' FROM `tblpayment` WHERE `STATUS`='Pending'";
@@ -53,7 +53,7 @@ font-style: underline;
 
           
                  <a class="<?php echo (currentpage() == 'mod_reservation') ? "active" : false;?>list-group-item list-group-item-action bg-transparent fw-bold text-light"
-                style=" background-color: #6d4330; border-top:2px solid white;  border-bottom: 2px solid white; border-radius: 2px" href="<?php echo WEB_ROOT; ?>admin/mod_reservation/index.php" ><h3 id="h3"><b>Reservation <b></h3><?php  echo  isset($result->Total) ? '<span style="color:red">(' .$result->Total . ')</span>' : '';?></a>
+                style=" background-color: #6d4330; border-top:2px solid white;  border-bottom: 2px solid white; border-radius: 2px" href="https://mcchmhotelreservation.com/admin/mod_reservation/index.php" ><h3 id="h3"><b>Reservation <b></h3><?php  echo  isset($result->Total) ? '<span style="color:red">(' .$result->Total . ')</span>' : '';?></a>
 
 
                  <?php 
@@ -61,7 +61,7 @@ font-style: underline;
                 ?>
 
                 <a class="<?php echo (currentpage() == 'mod_contact_us') ? "active" : false;?>list-group-item list-group-item-action bg-transparent fw-bold text-light"
-                style=" background-color: #6d4330; border-top:2px solid white;  border-bottom: 2px solid white; border-radius: 2px" href="<?php echo WEB_ROOT; ?>admin/mod_contact_us/index.php" ><h3 id="h3"><b>Messages <b></h3></a>
+                style=" background-color: #6d4330; border-top:2px solid white;  border-bottom: 2px solid white; border-radius: 2px" href="https://mcchmhotelreservation.com/admin/mod_contact_us/index.php" ><h3 id="h3"><b>Messages <b></h3></a>
 
 
                  
@@ -69,14 +69,14 @@ font-style: underline;
          
 
                  <a class="<?php echo (currentpage() == 'mod_reports') ? "active" : false;?>list-group-item list-group-item-action bg-transparent fw-bold text-light"
-                style=" background-color: #6d4330; border-bottom: 2px solid white; border-top: 2px solid white; border-radius: 0px;" href="<?php echo WEB_ROOT; ?>admin/mod_reports/index.php"><h3 id="h3"><b>Reports<b></h3></a></a>
+                style=" background-color: #6d4330; border-bottom: 2px solid white; border-top: 2px solid white; border-radius: 0px;" href="https://mcchmhotelreservation.com/admin/mod_reports/index.php"><h3 id="h3"><b>Reports<b></h3></a></a>
            
 
        
                 <?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
 
                 <a class="<?php echo (currentpage() == 'mod_users') ? "active" : false;?>list-group-item list-group-item-action bg-transparent fw-bold text-light"
-                style="background-color: #6d4330; border-top:2px solid white;  border-bottom: 2px solid white !important; border-radius: 0px" href="<?php echo WEB_ROOT; ?>admin/mod_users/index.php" ><h3 id="h3"><b>Users<b></h3></a>
+                style="background-color: #6d4330; border-top:2px solid white;  border-bottom: 2px solid white !important; border-radius: 0px" href="https://mcchmhotelreservation.com/admin/mod_users/index.php" ><h3 id="h3"><b>Users<b></h3></a>
 
                 <?php } ?>
            

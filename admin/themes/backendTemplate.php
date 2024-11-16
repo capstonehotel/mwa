@@ -191,13 +191,13 @@ try {
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-                    <script>
+                    <!-- <script>
         $(document).ready(function() {
             $('#sidebarToggleTop').on('click', function() {
                 $('#accordionSidebar').toggleClass('toggled');
             });
         });
-    </script>
+    </script> -->
                     <!-- Topbar Navbar -->
                   <ul class="navbar-nav ml-auto">
 
