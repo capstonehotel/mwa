@@ -34,45 +34,6 @@
 <script type="text/javascript" language="javascript" src="https://mcchmhotelreservation.com/admin/js/bootstrap-modal.js"></script>
 <script type="text/javascript" src="https://mcchmhotelreservation.com/admin/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 <script type="text/javascript" src="https://mcchmhotelreservation.com/admin/js/locales/bootstrap-datetimepicker.uk.js" charset="UTF-8"></script>
-<style>
- /* Ensure the dropdown menu displays correctly */
-.dropdown-menu {
-    display: none;
-}
-
-/* Show dropdown menu on hover */
-.nav-item.dropdown:hover .dropdown-menu {
-    display: block;
-}
-
-/* Keep dropdown open when the dropdown item is clicked */
-.nav-item.dropdown.show .dropdown-menu {
-    display: block;
-}
-
-/* Dropdown styling */
-.nav-item.dropdown .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1000;
-    display: none;
-    float: left;
-    min-width: 10rem;
-    padding: 0.5rem 0;
-    margin: 0.125rem 0 0;
-    font-size: 1rem;
-    color: #212529;
-    text-align: left;
-    list-style: none;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid rgba(0,0,0,.15);
-    border-radius: 0.25rem;
-}
-
-
-</style>
 
 </head>
 <?php
@@ -135,10 +96,10 @@ try {
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-maroon sidebar sidebar-dark accordion toggled" id="accordionSidebar" style="background: maroon">
+        <ul class="navbar-nav sidebar sidebar-dark accordion toggled" id="accordionSidebar" style="background: maroon">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" >
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div class="sidebar-brand-icon ">         
                  <img src="https://mcchmhotelreservation.com/images/logo2.jpg" style="height:55px; width:55px; border-radius: 15px; margin-left: 2px;">
                 </div>
@@ -776,11 +737,11 @@ function markAsRead(reserveId, redirectUrl) {
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="../vendor/jquery/jquery.min.js"></script>
-    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://mcchmhotelreservation.com/admin/vendor/jquery/jquery.min.js"></script>
+    <script src="https://mcchmhotelreservation.com/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="https://mcchmhotelreservation.com/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="https://mcchmhotelreservation.com/admin/js/sb-admin-2.min.js"></script>
