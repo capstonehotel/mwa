@@ -32,7 +32,7 @@ if (isset($_POST['save_room'])) {
 
     // Check if the room name already exists
     $checkSql = "SELECT * FROM tblroom WHERE ROOM = ?";
-    $checkStmt = $conn->prepare($checkSql);
+    $checkStmt = $connection->prepare($checkSql);
     $checkStmt->bind_param("s", $ROOM);
     $checkStmt->execute();
     $checkResult = $checkStmt->get_result();
@@ -61,7 +61,7 @@ if (isset($_POST['save_room'])) {
                         if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
                             $sql = "INSERT INTO tblroom (ROOMIMAGE, ROOM, ACCOMID, ROOMDESC, NUMPERSON, PRICE, ROOMNUM)
                                     VALUES (?, ?, ?, ?, ?, ?, ?)";
-                            $stmt = $conn->prepare($sql);
+                            $stmt = $connection->prepare($sql);
                             $stmt->bind_param("ssisidi", $ROOMIMAGE, $ROOM, $ACCOMID, $ROOMDESC, $NUMPERSON, $PRICE, $ROOMNUM);
 
                             if ($stmt->execute()) {
@@ -137,7 +137,7 @@ if (isset($_POST['save_room'])) {
                 <select class="form-control" name="ACCOMID" id="ACCOMID"> 
                   <?php
                   $query = "SELECT * FROM tblaccomodation";
-                  $result = mysqli_query($conn, $query);
+                  $result = mysqli_query($connection, $query);
                   while ($row = mysqli_fetch_assoc($result)) {
                     $selected = ($row['ACCOMID'] == $ACCOMID) ? 'selected' : '';
                     echo '<option value="'.$row['ACCOMID'].'" '.$selected.'>'.htmlspecialchars($row['ACCOMODATION']).' ('.htmlspecialchars($row['ACCOMDESC']).')</option>';
