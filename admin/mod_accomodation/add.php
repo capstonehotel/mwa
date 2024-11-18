@@ -1,35 +1,40 @@
 <?php
-// Load SweetAlert2 from the official CDN
+// Load SweetAlert2
 echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
 
+// Database connection
+$conn = new mysqli('127.0.0.1', 'u510162695_hmsystemdb', '1Hmsystemdb', 'u510162695_hmsystemdb');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 if (isset($_POST['save_accomodation'])) {
+    $ACCOMODATION = $conn->real_escape_string($_POST['ACCOMODATION']);
+    $ACCOMDESC = $conn->real_escape_string($_POST['ACCOMDESC']);
 
-  $ACCOMODATION = $_POST['ACCOMODATION'];
-  $ACCOMDESC = $_POST['ACCOMDESC'];
+    $stmt = $conn->prepare("INSERT INTO tblaccomodation (ACCOMODATION, ACCOMDESC) VALUES (?, ?)");
+    $stmt->bind_param("ss", $ACCOMODATION, $ACCOMDESC);
 
-  // Insert into database
-  $sql = "INSERT INTO tblaccomodation (ACCOMODATION, ACCOMDESC) VALUES ('$ACCOMODATION', '$ACCOMDESC')";
-  if ($conn->query($sql) === TRUE) {
-      // Success message using SweetAlert2
-      echo "<script>
-              Swal.fire({
-                title: 'Saved!',
-                text: 'New Accomodation saved successfully!',
-                icon: 'success'
-              }).then(() => {
-                window.location = 'index.php';
-              });
-            </script>";
-  } else {
-      // Error message if the query fails
-      echo "<script>
-              Swal.fire({
-                title: 'Error!',
-                text: 'Error adding new Accomodation: " . $conn->error . "',
-                icon: 'error'
-              });
-            </script>";
-  }
+    if ($stmt->execute()) {
+        echo "<script>
+                Swal.fire({
+                  title: 'Saved!',
+                  text: 'New Accommodation saved successfully!',
+                  icon: 'success'
+                }).then(() => {
+                  window.location = 'index.php';
+                });
+              </script>";
+    } else {
+        echo "<script>
+                Swal.fire({
+                  title: 'Error!',
+                  text: 'Error adding new Accommodation: " . $stmt->error . "',
+                  icon: 'error'
+                });
+              </script>";
+    }
+    $stmt->close();
 }
 ?>
 
