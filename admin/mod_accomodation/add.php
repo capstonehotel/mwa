@@ -1,14 +1,14 @@
+<!-- Include SweetAlert2's CSS and JavaScript in the HTML -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-<?php
-// Load SweetAlert2 from the official CDN
-echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<?php
 if (isset($_POST['save_accomodation'])) {
     // Sanitize and validate inputs
     $ACCOMODATION = trim($_POST['ACCOMODATION']);
     $ACCOMDESC = trim($_POST['ACCOMDESC']);
 
-    // Basic validation (you can expand this based on your requirements)
+    // Basic validation
     if (empty($ACCOMODATION) || empty($ACCOMDESC)) {
         echo "<script>
                 Swal.fire({
@@ -34,10 +34,9 @@ if (isset($_POST['save_accomodation'])) {
                   title: 'Error!',
                   text: 'Accommodation with this name already exists!',
                   icon: 'error'
-                 }).then(() => {
+                }).then(() => {
                     // Clear only the accommodation name input
                     document.getElementById('ACCOMODATION').value = '';
-                    // Keep the accommodation description intact
                     document.getElementById('ACCOMDESC').value = '" . htmlspecialchars($ACCOMDESC, ENT_QUOTES) . "';
                 });
               </script>";
@@ -47,7 +46,6 @@ if (isset($_POST['save_accomodation'])) {
         $insert_stmt->bind_param("ss", $ACCOMODATION, $ACCOMDESC);
         
         if ($insert_stmt->execute()) {
-            // Success message using SweetAlert2
             echo "<script>
                     Swal.fire({
                       title: 'Saved!',
@@ -58,7 +56,6 @@ if (isset($_POST['save_accomodation'])) {
                     });
                   </script>";
         } else {
-            // Error message if the query fails
             echo "<script>
                     Swal.fire({
                       title: 'Error!',
@@ -107,4 +104,3 @@ if (isset($_POST['save_accomodation'])) {
     </div>
   </form>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js
