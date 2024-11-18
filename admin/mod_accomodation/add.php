@@ -1,75 +1,37 @@
 <?php
+// Load SweetAlert2 from the official CDN
 echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
 
 if (isset($_POST['save_accomodation'])) {
-    $errors = [];
-    $accommodationExists = false;
 
-    // Sanitize inputs
-    $ACCOMODATION = htmlspecialchars(trim($_POST['ACCOMODATION']), ENT_QUOTES, 'UTF-8');
-    $ACCOMDESC = htmlspecialchars(trim($_POST['ACCOMDESC']), ENT_QUOTES, 'UTF-8');
+  $ACCOMODATION = $_POST['ACCOMODATION'];
+  $ACCOMDESC = $_POST['ACCOMDESC'];
 
-    // Validate inputs
-    if (empty($ACCOMODATION) || empty($ACCOMDESC)) {
-        $errors[] = 'Accommodation name and description cannot be empty.';
-    }
-
-    // Check for existing accommodation
-    $checkSql = "SELECT * FROM tblaccomodation WHERE ACCOMODATION = ?";
-    $checkStmt = $conn->prepare($checkSql);
-    $checkStmt->bind_param("s", $ACCOMODATION);
-    $checkStmt->execute();
-    $checkResult = $checkStmt->get_result();
-
-    if ($checkResult->num_rows > 0) {
-        $errors[] = 'Accommodation already exists.';
-        $accommodationExists = true;
-    }
-    $checkStmt->close();
-
-    // If no errors, proceed
-    if (empty($errors)) {
-        $insertSql = "INSERT INTO tblaccomodation (ACCOMODATION, ACCOMDESC) VALUES (?, ?)";
-        $insertStmt = $conn->prepare($insertSql);
-        $insertStmt->bind_param("ss", $ACCOMODATION, $ACCOMDESC);
-
-        if ($insertStmt->execute()) {
-            echo "<script>
-                    Swal.fire({
-                        title: 'Saved!',
-                        text: 'Accommodation saved successfully!',
-                        icon: 'success'
-                    }).then(() => {
-                        window.location = 'index.php';
-                    });
-                  </script>";
-        } else {
-            echo "<script>
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'Error saving accommodation: " . htmlspecialchars($insertStmt->error) . "',
-                        icon: 'error'
-                    });
-                  </script>";
-        }
-        $insertStmt->close();
-    } else {
-        echo "<script>
-                Swal.fire({
-                    title: 'Error!',
-                    html: '" . implode('<br>', $errors) . "',
-                    icon: 'error'
-                }).then(() => {
-                    if ($accommodationExists) {
-                        document.getElementById('ACCOMODATION').value = '';
-                    }
-                });
-              </script>";
-    }
+  // Insert into database
+  $sql = "INSERT INTO tblaccomodation (ACCOMODATION, ACCOMDESC) VALUES ('$ACCOMODATION', '$ACCOMDESC')";
+  if ($conn->query($sql) === TRUE) {
+      // Success message using SweetAlert2
+      echo "<script>
+              Swal.fire({
+                title: 'Saved!',
+                text: 'New Accomodation saved successfully!',
+                icon: 'success'
+              }).then(() => {
+                window.location = 'index.php';
+              });
+            </script>";
+  } else {
+      // Error message if the query fails
+      echo "<script>
+              Swal.fire({
+                title: 'Error!',
+                text: 'Error adding new Accomodation: " . $conn->error . "',
+                icon: 'error'
+              });
+            </script>";
+  }
 }
 ?>
-
-
 
 <div class="container-fluid">
   <form action="#" method="POST" enctype="multipart/form-data">
@@ -77,9 +39,9 @@ if (isset($_POST['save_accomodation'])) {
       <div class="col-md-12">
         <div class="card mb-4">
           <div class="card-header py-3" style="display: flex; align-items: center;">
-            <h6 class="m-0 font-weight-bold text-primary">Add New Accommodation</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Add New Accomodation</h6>
             <div class="text-right" style="display: flex; justify-content: right; align-items: right; width: 100%;">
-              <button type="submit" name="save_accomodation" class="btn btn-success btn-sm mr-2">Save Accommodation</button>
+              <button type="submit" name="save_accomodation" class="btn btn-success btn-sm mr-2">Save Accomodation</button>
             </div>
           </div>
           <div class="card-body">
@@ -87,7 +49,7 @@ if (isset($_POST['save_accomodation'])) {
               <div class="col-md-12 col-sm-12">
                 <label class="col-md-4 control-label" for="ACCOMODATION">Name:</label>
                 <div class="col-md-12">
-                  <input required class="form-control input-sm" id="ACCOMODATION" name="ACCOMODATION" placeholder="Accommodation" type="text" value="">
+                  <input required class="form-control input-sm" id="ACCOMODATION" name="ACCOMODATION" placeholder="Accomodation" type="text" value="">
                 </div>
               </div>
             </div>
@@ -105,4 +67,24 @@ if (isset($_POST['save_accomodation'])) {
     </div>
   </form>
 </div>
-<!--<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+                 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function detectXSS(inputField, fieldName) {
+            const xssPattern =  /[<>:\/\$\;\,\?\!]/;
+            inputField.addEventListener('input', function() {
+                if (xssPattern.test(this.value)) {
+                  Swal.fire("XSS Detected", `Please avoid using invalid characters in your ${fieldName}.`, "error");
+                    this.value = "";
+                }
+            });
+        }
+        
+        const ACCOMODATIONInput = document.getElementById('ACCOMODATION');
+        const ACCOMDESCInput = document.getElementById('ACCOMDESC');
+        
+        detectXSS(ACCOMODATIONInput, 'ACCOMODATION');
+        detectXSS(ACCOMDESCInput, 'ACCOMDESC');
+        
+    });
+</script>
