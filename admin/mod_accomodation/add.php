@@ -95,7 +95,7 @@ if (isset($_POST['save_accomodation'])) {
 </script> -->
 
 <?php
-require_once ("../../includes/initialize.php");
+require_once ("../../includes/config.php");
 // Load SweetAlert2 from the official CDN
 echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
 
