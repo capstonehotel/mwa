@@ -1,79 +1,74 @@
 <?php
-// Load SweetAlert2 from the official CDN
 echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
 
-// Start processing if the form is submitted
 if (isset($_POST['save_accomodation'])) {
+    $errors = [];
+    $accommodationExists = false;
+
     // Sanitize inputs
-    $ACCOMODATION = trim($_POST['ACCOMODATION']);
-    $ACCOMDESC = trim($_POST['ACCOMDESC']);
+    $ACCOMODATION = htmlspecialchars(trim($_POST['ACCOMODATION']), ENT_QUOTES, 'UTF-8');
+    $ACCOMDESC = htmlspecialchars(trim($_POST['ACCOMDESC']), ENT_QUOTES, 'UTF-8');
 
+    // Validate inputs
     if (empty($ACCOMODATION) || empty($ACCOMDESC)) {
-        echo "<script>
-                Swal.fire({
-                  title: 'Error!',
-                  text: 'Accommodation name and description cannot be empty!',
-                  icon: 'error'
-                });
-              </script>";
-        exit;
+        $errors[] = 'Accommodation name and description cannot be empty.';
     }
 
-    // Validate database connection
-    if (!$conn) {
-        echo "<script>
-                Swal.fire({
-                  title: 'Error!',
-                  text: 'Database connection failed!',
-                  icon: 'error'
-                });
-              </script>";
-        exit;
+    // Check for existing accommodation
+    $checkSql = "SELECT * FROM tblaccomodation WHERE ACCOMODATION = ?";
+    $checkStmt = $conn->prepare($checkSql);
+    $checkStmt->bind_param("s", $ACCOMODATION);
+    $checkStmt->execute();
+    $checkResult = $checkStmt->get_result();
+
+    if ($checkResult->num_rows > 0) {
+        $errors[] = 'Accommodation already exists.';
+        $accommodationExists = true;
     }
+    $checkStmt->close();
 
-    // Use prepared statements
-    $stmt = $conn->prepare("SELECT COUNT(*) as count FROM tblaccomodation WHERE ACCOMODATION = ?");
-    $stmt->bind_param("s", $ACCOMODATION);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
+    // If no errors, proceed
+    if (empty($errors)) {
+        $insertSql = "INSERT INTO tblaccomodation (ACCOMODATION, ACCOMDESC) VALUES (?, ?)";
+        $insertStmt = $conn->prepare($insertSql);
+        $insertStmt->bind_param("ss", $ACCOMODATION, $ACCOMDESC);
 
-    if ($row['count'] > 0) {
-        echo "<script>
-                Swal.fire({
-                  title: 'Error!',
-                  text: 'Accommodation already exists!',
-                  icon: 'error'
-                });
-              </script>";
-    } else {
-        $insert_stmt = $conn->prepare("INSERT INTO tblaccomodation (ACCOMODATION, ACCOMDESC) VALUES (?, ?)");
-        $insert_stmt->bind_param("ss", $ACCOMODATION, $ACCOMDESC);
-        
-        if ($insert_stmt->execute()) {
+        if ($insertStmt->execute()) {
             echo "<script>
                     Swal.fire({
-                      title: 'Success!',
-                      text: 'Accommodation saved successfully!',
-                      icon: 'success'
+                        title: 'Saved!',
+                        text: 'Accommodation saved successfully!',
+                        icon: 'success'
                     }).then(() => {
-                      window.location = 'index.php';
+                        window.location = 'index.php';
                     });
                   </script>";
         } else {
             echo "<script>
                     Swal.fire({
-                      title: 'Error!',
-                      text: 'Error saving accommodation: " . $conn->error . "',
-                      icon: 'error'
+                        title: 'Error!',
+                        text: 'Error saving accommodation: " . htmlspecialchars($insertStmt->error) . "',
+                        icon: 'error'
                     });
                   </script>";
         }
-        $insert_stmt->close();
+        $insertStmt->close();
+    } else {
+        echo "<script>
+                Swal.fire({
+                    title: 'Error!',
+                    html: '" . implode('<br>', $errors) . "',
+                    icon: 'error'
+                }).then(() => {
+                    if ($accommodationExists) {
+                        document.getElementById('ACCOMODATION').value = '';
+                    }
+                });
+              </script>";
     }
-    $stmt->close();
 }
 ?>
+
 
 
 <div class="container-fluid">
