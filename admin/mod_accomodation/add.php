@@ -1,6 +1,7 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 <?php
 // Load SweetAlert2 from the official CDN
-//echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
+echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
 
 if (isset($_POST['save_accomodation'])) {
     // Sanitize and validate inputs
@@ -9,7 +10,7 @@ if (isset($_POST['save_accomodation'])) {
 
     // Basic validation (you can expand this based on your requirements)
     if (empty($ACCOMODATION) || empty($ACCOMDESC)) {
-        echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'>
+        echo "<script>
                 Swal.fire({
                   title: 'Error!',
                   text: 'Accommodation name and description cannot be empty!',
