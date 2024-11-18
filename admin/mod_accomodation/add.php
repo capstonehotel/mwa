@@ -1,7 +1,13 @@
-<!-- Include SweetAlert2's CSS and JavaScript in the HTML -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Add Accommodation</title>
+</head>
+<body>
 <?php
 if (isset($_POST['save_accomodation'])) {
     // Sanitize and validate inputs
@@ -20,6 +26,13 @@ if (isset($_POST['save_accomodation'])) {
         exit;
     }
 
+    // Example database connection, replace with your own
+    $conn = new mysqli("localhost", "root", "", "your_database_name");
+
+    if ($conn->connect_error) {
+        die("Database connection failed: " . $conn->connect_error);
+    }
+
     // Use prepared statements to prevent SQL injection
     $stmt = $conn->prepare("SELECT COUNT(*) as count FROM tblaccomodation WHERE ACCOMODATION = ?");
     $stmt->bind_param("s", $ACCOMODATION);
@@ -28,20 +41,16 @@ if (isset($_POST['save_accomodation'])) {
     $row = $result->fetch_assoc();
 
     if ($row['count'] > 0) {
-        // Accommodation already exists
         echo "<script>
                 Swal.fire({
                   title: 'Error!',
                   text: 'Accommodation with this name already exists!',
                   icon: 'error'
                 }).then(() => {
-                    // Clear only the accommodation name input
                     document.getElementById('ACCOMODATION').value = '';
-                    document.getElementById('ACCOMDESC').value = '" . htmlspecialchars($ACCOMDESC, ENT_QUOTES) . "';
                 });
               </script>";
     } else {
-        // Insert into database using prepared statements
         $insert_stmt = $conn->prepare("INSERT INTO tblaccomodation (ACCOMODATION, ACCOMDESC) VALUES (?, ?)");
         $insert_stmt->bind_param("ss", $ACCOMODATION, $ACCOMDESC);
         
@@ -67,36 +76,26 @@ if (isset($_POST['save_accomodation'])) {
         $insert_stmt->close();
     }
     $stmt->close();
+    $conn->close();
 }
 ?>
-
 <div class="container-fluid">
-  <form action="#" method="POST" enctype="multipart/form-data">
+  <form action="" method="POST" enctype="multipart/form-data">
     <div class="row">
       <div class="col-md-12">
         <div class="card mb-4">
-          <div class="card-header py-3" style="display: flex; align-items: center;">
+          <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Add New Accommodation</h6>
-            <div class="text-right" style="display: flex; justify-content: right; align-items: right; width: 100%;">
-              <button type="submit" name="save_accomodation" class="btn btn-success btn-sm mr-2">Save Accommodation</button>
-            </div>
+            <button type="submit" name="save_accomodation" class="btn btn-success btn-sm">Save Accommodation</button>
           </div>
           <div class="card-body">
             <div class="form-group">
-              <div class="col-md-12 col-sm-12">
-                <label class="col-md-4 control-label" for="ACCOMODATION">Name:</label>
-                <div class="col-md-12">
-                  <input required class="form-control input-sm" id="ACCOMODATION" name="ACCOMODATION" placeholder="Accommodation" type="text" value="">
-                </div>
-              </div>
+              <label for="ACCOMODATION">Name:</label>
+              <input required class="form-control" id="ACCOMODATION" name="ACCOMODATION" placeholder="Accommodation" type="text">
             </div>
             <div class="form-group">
-              <div class="col-md-12 col-sm-12">
-                <label class="col-md-4 control-label" for="ACCOMDESC">Description:</label>
-                <div class="col-md-12">
-                  <input required class="form-control input-sm" id="ACCOMDESC" name="ACCOMDESC" placeholder="Description" type="text" value="">
-                </div>
-              </div>
+              <label for="ACCOMDESC">Description:</label>
+              <input required class="form-control" id="ACCOMDESC" name="ACCOMDESC" placeholder="Description" type="text">
             </div>
           </div>
         </div>
@@ -104,3 +103,5 @@ if (isset($_POST['save_accomodation'])) {
     </div>
   </form>
 </div>
+</body>
+</html>
