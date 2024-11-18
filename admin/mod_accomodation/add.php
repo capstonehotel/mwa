@@ -2,12 +2,12 @@
 // Load SweetAlert2 from the official CDN
 echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
 
+// Start processing if the form is submitted
 if (isset($_POST['save_accomodation'])) {
-    // Sanitize and validate inputs
+    // Sanitize inputs
     $ACCOMODATION = trim($_POST['ACCOMODATION']);
     $ACCOMDESC = trim($_POST['ACCOMDESC']);
 
-    // Basic validation (you can expand this based on your requirements)
     if (empty($ACCOMODATION) || empty($ACCOMDESC)) {
         echo "<script>
                 Swal.fire({
@@ -19,7 +19,19 @@ if (isset($_POST['save_accomodation'])) {
         exit;
     }
 
-    // Use prepared statements to prevent SQL injection
+    // Validate database connection
+    if (!$conn) {
+        echo "<script>
+                Swal.fire({
+                  title: 'Error!',
+                  text: 'Database connection failed!',
+                  icon: 'error'
+                });
+              </script>";
+        exit;
+    }
+
+    // Use prepared statements
     $stmt = $conn->prepare("SELECT COUNT(*) as count FROM tblaccomodation WHERE ACCOMODATION = ?");
     $stmt->bind_param("s", $ACCOMODATION);
     $stmt->execute();
@@ -27,41 +39,32 @@ if (isset($_POST['save_accomodation'])) {
     $row = $result->fetch_assoc();
 
     if ($row['count'] > 0) {
-        // Accommodation already exists
         echo "<script>
                 Swal.fire({
                   title: 'Error!',
-                  text: 'Accommodation with this name already exists!',
+                  text: 'Accommodation already exists!',
                   icon: 'error'
-                 }).then(() => {
-                    // Clear only the accommodation name input
-                    document.getElementById('ACCOMODATION').value = '';
-                    // Keep the accommodation description intact
-                    document.getElementById('ACCOMDESC').value = '" . htmlspecialchars($ACCOMDESC, ENT_QUOTES) . "';
                 });
               </script>";
     } else {
-        // Insert into database using prepared statements
         $insert_stmt = $conn->prepare("INSERT INTO tblaccomodation (ACCOMODATION, ACCOMDESC) VALUES (?, ?)");
         $insert_stmt->bind_param("ss", $ACCOMODATION, $ACCOMDESC);
         
         if ($insert_stmt->execute()) {
-            // Success message using SweetAlert2
             echo "<script>
                     Swal.fire({
-                      title: 'Saved!',
-                      text: 'New Accommodation saved successfully!',
+                      title: 'Success!',
+                      text: 'Accommodation saved successfully!',
                       icon: 'success'
                     }).then(() => {
                       window.location = 'index.php';
                     });
                   </script>";
         } else {
-            // Error message if the query fails
             echo "<script>
                     Swal.fire({
                       title: 'Error!',
-                      text: 'Error adding new Accommodation: " . $conn->error . "',
+                      text: 'Error saving accommodation: " . $conn->error . "',
                       icon: 'error'
                     });
                   </script>";
@@ -72,8 +75,9 @@ if (isset($_POST['save_accomodation'])) {
 }
 ?>
 
+
 <div class="container-fluid">
-  <form action="" method="POST" enctype="multipart/form-data">
+  <form action="#" method="POST" enctype="multipart/form-data">
     <div class="row">
       <div class="col-md-12">
         <div class="card mb-4">
