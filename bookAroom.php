@@ -1,19 +1,11 @@
 <?php 
-// $servername = "localhost";
-// $username = "root";
-// $password = "";
-// $dbname = "hmsystemdb";
-
-
-// // Create connection
-// $conn = new mysqli($servername, $username, $password, $dbname);
-// // Check connection
-// if ($conn->connect_error) {
-//   die("Connection failed: " . $conn->connect_error);
-// }
+$conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
 
  ?>
-
 <style>
    .img-hover {
     transition: transform 0.3s ease;
@@ -230,6 +222,7 @@
     color: #555; /* Optional: change color for the date */
 }
 </style>
+
   <?php
 $msg = "";
 
@@ -284,7 +277,6 @@ $_SESSION['departure'] =date_format(date_create($_POST['departure']),"Y-m-d");
 <input style="display: none;" type="text" id="yourroomid" name="yourroomid" value="">
 <input style="display: none;" type="text" id="yourstarrate" name="yourstarrate" value="">
 <textarea style="display: none;" id="yourcomment" name="yourcomment"></textarea>
-
 
 
 
@@ -417,24 +409,8 @@ $_SESSION['departure'] =date_format(date_create($_POST['departure']),"Y-m-d");
 
               }      
 // ============================================================================================================================
-// load config file first 
-// require_once("includes/config.php");
-// //load basic functions next so that everything after can use them
-// require_once("includes/functions.php");
-// //later here where we are going to put our class session
-// require_once("includes/session.php");
-// require_once("includes/user.php");
-// require_once("includes/pagination.php");
-// require_once("includes/paginsubject.php");
-// require_once("includes/accomodation.php");
-// require_once("includes/guest.php");
-// require_once("includes/reserve.php"); 
-// require_once("includes/setting.php");
-// //Load Core objects
-// require_once("includes/database.php");
+
 ?>
-
-
 
 <div class="col-md-4 col-sm-12 py-2">
 <form method="POST" action="index.php?p=accomodation">
@@ -445,10 +421,10 @@ $_SESSION['departure'] =date_format(date_create($_POST['departure']),"Y-m-d");
 
         <figure class="gallery-item" style="text-align: center; margin-top: 10px;">
             <!-- <a href="#" data-toggle="modal" data-target="#roomModal<?php echo $result->ROOMID; ?>"> -->
-                <?php if(is_file('https://mcchmhotelreservation.com/admin/mod_room/'.$result->ROOMIMAGE)): ?>
+                <?php if(is_file('http://localhost/HM_HotelReservation/admin/mod_room/'.$result->ROOMIMAGE)): ?>
                     <img class="img-responsive img-hover" src="room.jpg" style="height: 250px; width: 90%;"> 
                 <?php else: ?>
-                    <img class="img-responsive img-hover" src="../admin/mod_room/<?php echo $result->ROOMIMAGE; ?>" style="height: 250px; width: 90%;"> 
+                    <img class="img-responsive img-hover" src="admin/mod_room/<?php echo $result->ROOMIMAGE; ?>" style="height: 250px; width: 90%;"> 
                 <?php endif; ?>
             <!-- </a> -->
             <figcaption class="img-title-active"><br>
@@ -460,22 +436,22 @@ $_SESSION['departure'] =date_format(date_create($_POST['departure']),"Y-m-d");
                 <h4><p><?php echo $result->ROOM ;?></p></h4>
                 <li><?php echo $result->ROOMDESC ;?></li>
                 <li>Number Person : <?php echo $result->NUMPERSON ;?></li>
-                <li>Remaining Rooms : <?php echo $resNum ;?></li>   
-                
+                <li>Remaining Rooms : <?php echo $resNum ;?></li>
+                <?php 
 
-<?php 
+// $servername = "localhost";
+// $username = "root";
+// $password = "";
+// $dbname = "hmsystemdb";
 
-$servername = "127.0.0.1";
-$username = "u510162695_hmsystemdb";
-$password = "1Hmsystemdb";
-$dbname = "u510162695_hmsystemdb";
-$dbport = "3306";
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname, $dbport);
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
+
+// // Create connection
+// $conn = new mysqli($servername, $username, $password, $dbname);
+// // Check connection
+// if ($conn->connect_error) {
+//   die("Connection failed: " . $conn->connect_error);
+// }
+$conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 
 $sql = "SELECT SUM(rating) AS sumrating, COUNT(id) AS countrated FROM star_ratings WHERE room_id = $result->ROOMID";
 
@@ -501,7 +477,9 @@ if ($countrated == 0) {
 
 
 
-                ?>
+                ?>   
+                
+
                 <li style="list-style:none; margin: 20px 25px 0 0;">
                         <!-- Flex container to align rating left and button centered -->
                         <div style="display: flex; justify-content: center; align-items: center; position: relative;">
@@ -551,7 +529,7 @@ if ($countrated == 0) {
                 <?php if(is_file('https://mcchmhotelreservation.com/admin/mod_room/'.$result->ROOMIMAGE)): ?>
                     <img id="roomImage<?php echo $result->ROOMID; ?>" class="img-responsive img-hover" src="room.jpg"> 
                 <?php else: ?>
-                    <img id="roomImage<?php echo $result->ROOMID; ?>" class="img-responsive img-hover" src="../admin/mod_room/<?php echo $result->ROOMIMAGE; ?>"> 
+                    <img id="roomImage<?php echo $result->ROOMID; ?>" class="img-responsive img-hover" src="admin/mod_room/<?php echo $result->ROOMIMAGE; ?>"> 
                 <?php endif; ?>
                 <div class="zoom-buttons">
                     <button id="zoomInBtn<?php echo $result->ROOMID; ?>" class="btn btn-secondary btn-sm" data-zoom="1.3"><i class="fas fa-search-plus"></i></button>
@@ -721,80 +699,116 @@ $('[id^="roomModal"]').on('shown.bs.modal', function () {
 
 
 <script>
+$(document).ready(function () {
+    // Handle rate submission
+    $(".submitrate").click(function() {
+        var yourid = $("#yourid").val();
+        var yourname = $("#yourname").val();
+        var yourimage = $("#yourimage").val();
+        var yourroomid = $("#yourroomid").val();
+        var yourstarrate = $("#yourstarrate").val();
+        var yourcomment = $("#yourcomment").val();
 
+        // Ensure star rating is selected
+        if (yourstarrate == "") {
+            alert('Please Rate a Star');
+        } else {
+            $.ajax({
+                type: "POST",
+                datatype: "html",
+                url: "https://mcchmhotelreservation.com/rate.php",
+                data: {
+                    yourid: yourid,
+                    yourname: yourname,
+                    yourimage: yourimage,
+                    yourroomid: yourroomid,
+                    yourstarrate: yourstarrate,
+                    yourcomment: yourcomment
+                },
+                success: function(data) {
+                    alert(data);  // Show a success message
 
-$(".submitrate").click(function(){
+                    // After submission, dynamically reload the rating and review sections
+                    updateRatingSection(yourroomid);
+                    updateReviewSection(yourroomid);
 
+                    // Clear the inputs (rating and comment) after submission
+                    $("#yourcomment").val(""); // Clear the comment field
+                    $("#yourstarrate").val(""); // Clear the star rating
+                    $("#comment-<?php echo $result->ROOMID; ?>").val(''); // Clear the specific comment textarea
+                   // Deselect all radio buttons for stars
+                   $("input[name='rating-comment" + yourroomid + "']").prop("checked", false);
+                }
+            });
+        }
+    });
 
-
-var yourid = $("#yourid").val();
-var yourname = $("#yourname").val();
-var yourimage = $("#yourimage").val();
-var yourroomid = $("#yourroomid").val();
-var yourstarrate = $("#yourstarrate").val();
-var yourcomment = $("#yourcomment").val();
-
-
-if (yourstarrate == "") {
-    alert('Please Rate a Star');
-} else {
-
-$.ajax({
-    type: "POST",
-    datatype: "html",
-    url: "rate.php",
-    data: {
-        yourid: yourid,
-        yourname: yourname,
-        yourimage: yourimage,
-        yourroomid: yourroomid,
-        yourstarrate: yourstarrate,
-        yourcomment: yourcomment              
-    },
-    success: function(data) {
-        alert(data);
-        window.location.href = 'index.php';
+    // Function to update the rating section dynamically
+    function updateRatingSection(roomId) {
+        $.ajax({
+            type: "POST",
+            datatype: "html",
+            url: "https://mcchmhotelreservation.com/getratings.php",
+            data: { roomid: roomId },
+            success: function(data) {
+                $(".rating-section-" + roomId).html(data);
+            }
+        });
     }
-});
 
-}
-
-
-
-
-});
-
-
-$(".itempost").click(function(){
-
-var roomid = $(this).attr('data-id');
-
-//get reviews
-$.ajax({
-    type: "POST",
-    datatype: "html",
-    url: "getratinginfo.php",
-    data: {
-        roomid: roomid,           
-    },
-    success: function(data) {
-        $(".room-id-"+roomid).html(data);
+    // Function to update the review section dynamically
+    function updateReviewSection(roomId) {
+        $.ajax({
+            type: "POST",
+            datatype: "html",
+            url: "https://mcchmhotelreservation.com/getratinginfo.php",
+            data: { roomid: roomId },
+            success: function(data) {
+                $(".room-id-" + roomId).html(data);
+            }
+        });
     }
-});
 
-//get ratings progress
- $.ajax({
-    type: "POST",
-    datatype: "html",
-    url: "getratings.php",
-    data: {
-        roomid: roomid,           
-    },
-    success: function(data) {
-        $(".rating-section-"+roomid).html(data);
+    // When an item (room) is clicked, load its reviews and ratings
+    $(".itempost").click(function() {
+        var roomid = $(this).attr('data-id');
+
+        // Get updated reviews for the room
+        $.ajax({
+            type: "POST",
+            datatype: "html",
+            url: "https://mcchmhotelreservation.com/getratinginfo.php",
+            data: { roomid: roomid },
+            success: function(data) {
+                $(".room-id-" + roomid).html(data);
+            }
+        });
+
+        // Get updated ratings for the room
+        $.ajax({
+            type: "POST",
+            datatype: "html",
+            url: "https://mcchmhotelreservation.com/getratings.php",
+            data: { roomid: roomid },
+            success: function(data) {
+                $(".rating-section-" + roomid).html(data);
+            }
+        });
+    });
+
+    // XSS detection function
+    function detectXSS(inputField, fieldName) {
+        const xssPattern = /[<>:\/\$\;\,\?\!]/;
+        inputField.addEventListener('input', function() {
+            if (xssPattern.test(this.value)) {
+                Swal.fire("XSS Detected", `Please avoid using invalid characters in your ${fieldName}.`, "error");
+                this.value = "";
+            }
+        });
     }
-});
 
+    // Call XSS detection for the comment field
+    const commentInput = document.getElementById('comment<?php echo $result->ROOMID; ?>'); // Comment field
+    detectXSS(commentInput, 'Comment'); // XSS detection for the comment card
 });
-
 </script>

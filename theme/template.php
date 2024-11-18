@@ -28,7 +28,7 @@ $_SESSION['to']  = $_POST['to'];
      <link href="cccss/galery.css" rel="stylesheet" media="screen" />
     <link href="https://mcchmhotelreservation.com/css/ekko-lightbox.css" rel="stylesheet" />
 
-    <link href="https://mcchmhotelreservation.com/theme/translate.css" rel="stylesheet">
+    <!--<link href="https://mcchmhotelreservation.com/theme/translate.css" rel="stylesheet">-->
     <link href="https://mcchmhotelreservation.com/theme/assets/dist/css/bootstrap.min.css" rel="stylesheet">
    
 
@@ -165,7 +165,178 @@ try {
   .bd-mode-toggle {
     z-index: 1500;
   }
-  
+  /* Chatbox button */
+  #chat-button {
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    z-index: 2100; /* Ensure it's above the chatbox */
+    width: 48px; /* Adjust width to match toggle theme button */
+    height: 48px; /* Adjust height to match toggle theme button */
+    font-size: 24px; /* Adjust icon size */
+    line-height: 1; /* Ensure proper vertical alignment */
+}
+
+.chatbox {
+    position: fixed;
+    bottom: 90px; 
+    right: 70px; /* Adjusted for better positioning */
+    width: 350px; /* Increased width */
+    background-color: #f9f9f9; /* Soft background color */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    height: 0; /* Start with height 0 */
+    opacity: 0; /* Start with opacity 0 */
+    overflow: hidden; /* Hide overflow */
+    transform: scale(0) translate(0, 100%); /* Start with scale 0 and translate down */
+    transform-origin: bottom right; /* Set the origin for scaling to the bottom right */
+    transition: height 0.3s ease, opacity 0.3s ease, transform 0.3s ease; /* Transition for height, opacity, and transform */
+    z-index: 2200;
+}
+
+.chatbox-header {
+    background-color: #007bff; /* Header color */
+    color: #fff; /* Text color */
+    padding: 15px; /* Increased padding */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 10px; /* Match border radius */
+    border-top-right-radius: 10px; /* Match border radius */
+}
+
+.chatbox-title {
+    font-weight: bold;
+    font-size: 20px; /* Increased font size */
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 24px; /* Increased close button size */
+}
+
+.chat-messages {
+    height: 250px; /* Fixed height */
+    overflow-y: auto; /* Scrollable */
+    padding: 10px;
+    display: flex;
+    flex-direction: column-reverse; /* Reverse order for newer messages at the bottom */
+}
+
+.message {
+    padding: 10px; /* Increased padding */
+    margin: 5px 0;
+    border-radius: 8px; /* Rounded corners for messages */
+    max-width: 80%;
+    font-size: 14px; /* Font size */
+}
+
+/* User message (sent) */
+.message.received {
+    background-color: #007bff; /* User message background */
+    color: white; /* User message text color */
+    align-self: flex-end; /* Align to the right */
+}
+
+/* Admin message (received) */
+.message.sent {
+    background-color: #e0e0e0; /* Admin message background */
+    color: #333; /* Admin message text color */
+    align-self: flex-start; /* Align to the left */
+}
+
+.chat-input {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-top: 1px solid #ddd; /* Light border on top */
+}
+
+#message-input {
+    flex: 1;
+    padding: 10px; /* Increased padding */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 4px; /* Rounded corners */
+    margin-right: 10px;
+}
+
+#send-button {
+    padding: 10px 20px; /* Increased padding */
+    background-color: #007bff; /* Button color */
+    color: #fff; /* Button text color */
+    border: none;
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer;
+}
+
+#send-button:hover {
+    background-color: #0056b3; /* Darker on hover */
+}
+
+
+
+#google_translate_element {
+  position: absolute;
+  z-index: 1000;
+}
+
+/* Translate button */
+#translate-button {
+  position: fixed;
+  bottom: 130px;
+  right: 20px;
+  z-index: 2300; /* Ensure it's above the translate container */
+  width: 48px; /* Adjust width to match toggle theme button */
+  height: 48px; /* Adjust height to match toggle theme button */
+  font-size: 24px; /* Adjust icon size */
+  line-height: 1; /* Ensure proper vertical alignment */
+}
+
+/* Translate container */
+#translate-container {
+  position: fixed;
+  bottom: 120px; /* Adjusted to prevent overlap with button */
+  right: 80px;
+  width: 300px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: none;
+  z-index: 1000;
+  max-height: calc(100vh - 100px); /* Ensure it fits within viewport */
+  overflow-y: auto; /* Enable scrolling within the translate container */
+}
+
+#translate-container.open {
+  display: block;
+}
+ /* Hide Google Translate widget */
+ #google_translate_element {
+      z-index: -1; /* Position the widget behind other elements */
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      opacity: 0;
+    }
+    iframe.goog-te-banner-frame {
+      display: none !important;
+    }
+    .goog-logo-link {
+      display: none !important;
+    }
+    .goog-te-gadget {
+      color: transparent !important;
+    }
+    .skiptranslate {
+      display: none !important;
+    }
 </style>
   
 
@@ -238,22 +409,13 @@ try {
     <i class="fa fa-language"></i>
   </button>
 
-  <!-- Translate container -->
-  <div id="translate-container">
+   <!-- Translate container -->
+   <div id="translate-container">
     <select id="select-language" class="form-control">
       <option value="">Select Language</option>
-      <option value="ar">Arabic</option>
-      <option value="zh-CN">Chinese (Simplified)</option>
-      <option value="zh-TW">Chinese (Traditional)</option>
       <option value="en">English</option>
-      <option value="fr">French</option>
-      <option value="de">German</option>
-      <option value="it">Italian</option>
-      <option value="ja">Japanese</option>
-      <option value="ko">Korean</option>
-      <option value="pt">Portuguese</option>
-      <option value="ru">Russian</option>
-      <option value="es">Spanish</option>
+      <option value="ceb">Cebuano</option>
+      <option value="tl">Tagalog</option>
     </select>
   </div>
 
@@ -263,11 +425,10 @@ try {
     function googleTranslateElementInit() {
       new google.translate.TranslateElement({
         pageLanguage: 'en',
-        includedLanguages: 'ar,zh-CN,zh-TW,en,fr,de,it,ja,ko,pt,ru,es',
+        includedLanguages: 'en,ceb,tl',
         layout: google.translate.TranslateElement.InlineLayout.SIMPLE
       }, 'google_translate_element');
     }
-
     document.getElementById('translate-button').addEventListener('click', function() {
       document.getElementById('translate-container').classList.toggle('open');
     });
@@ -302,6 +463,122 @@ s0.parentNode.insertBefore(s1,s0);
 })();
 </script> -->
 <!--End of Tawk.to Script-->
+
+<!-- Chatbox button -->
+<button id="chat-button" class="btn btn-primary">
+    <i class="fa fa-comments"></i> <!-- Replace 'fa-comments' with the specific icon you want -->
+</button>
+
+<!-- Chatbox container -->
+<?php
+
+?>
+
+<div id="chatbox" class="chatbox">
+    <div class="chatbox-header">
+        <span class="chatbox-title">Chat with Admin</span>
+        <button class="close-button" onclick="closeChatbox()">×</button>
+    </div>
+    <div id="chat-messages" class="chat-messages">
+        <!-- Initial admin greeting message -->
+        <!-- <div class="message received">
+            Hello, how can I help you?
+        </div> -->
+        
+
+    </div>
+    <div class="chat-input">
+        <textarea id="message-input" placeholder="Type your message..." oninput="checkInput()"></textarea>
+        <button id="send-button" onclick="sendMessage()" disabled><i class="fa fa-paper-plane" aria-hidden="true"></i> </button>
+    </div>
+</div>
+<script>
+    function checkInput() {
+        const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-button');
+        sendButton.disabled = messageInput.value.trim() === '';
+    }
+
+    function sendMessage() {
+        const messageInput = document.getElementById('message-input');
+        const message = messageInput.value.trim();
+        const name = '<?php echo $_SESSION['name'] . " " . $_SESSION['last']; ?>';
+        const userId = <?php echo json_encode($_SESSION['GUESTID']); ?>;
+
+        if (message) {
+            let userMessageElement = document.createElement('div');
+            userMessageElement.textContent = message;
+            userMessageElement.classList.add('message', 'received');
+
+            if (message.length < 20) {
+                userMessageElement.style.backgroundColor = '#007bff';
+            } else {
+                userMessageElement.style.backgroundColor = '#5bc0de';
+            }
+
+            document.getElementById('chat-messages').appendChild(userMessageElement);
+            messageInput.value = '';
+            checkInput();
+
+            fetch('https://mcchmhotelreservation.com/admin/themes/chatbox.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `message=${encodeURIComponent(message)}&name=${encodeURIComponent(name)}&user_id=${userId}`
+            })
+            .then(response => response.text()) // Using text() to debug response
+            .then(data => {
+                console.log('Response from server:', data);
+                if (data === 'Sent') {
+                    console.log('Message sent successfully');
+                } else {
+                    console.log('Server error:', data);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        } else {
+            alert('Please enter a message');
+        }
+    }
+
+    document.getElementById('chat-button').addEventListener('click', function() {
+        const chatbox = document.getElementById('chatbox');
+        if (chatbox.classList.contains('open')) {
+            closeChatbox();
+        } else {
+            chatbox.classList.add('open');
+            chatbox.style.height = chatbox.scrollHeight + "px";
+            chatbox.style.opacity = "1";
+            chatbox.style.transform = "scale(1) translate(0, 0)";
+        }
+    });
+
+    function closeChatbox() {
+        const chatbox = document.getElementById('chatbox');
+        chatbox.style.height = "0";
+        chatbox.style.opacity = "0";
+        chatbox.style.transform = "scale(0) translate(0, 100%)";
+        setTimeout(() => {
+            chatbox.classList.remove('open');
+        }, 300);
+    }
+
+    setInterval(function() {
+        const mid = "<?php echo $_SESSION['GUESTID']; ?>";
+
+        fetch("https://mcchmhotelreservation.com/admin/mod_chatbox/autoloadchat.php", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `mid=${mid}`
+        })
+        .then(response => response.text())
+        .then(data => {
+            document.querySelector('.chat-messages').innerHTML = data;
+        });
+    }, 1000);
+</script>
+
+
+
 
 
 
@@ -434,8 +711,8 @@ s0.parentNode.insertBefore(s1,s0);
           </li>
 
           <?php } ?>
-           <a class="text-light my-auto text-decoration-none ms-lg-2" href="https://mcchmhotelreservation.com/admin/login.php" style="color: whitesmoke;">
-             <span class="d-lg-inline d-none">|</span> <span class="ms-lg-2"><i class="fa fa-sign-in"></i> Login-Admin</span></a> 
+           <!--<a class="text-light my-auto text-decoration-none ms-lg-2" href="https://mcchmhotelreservation.com/admin/login.php" style="color: whitesmoke;">
+             <span class="d-lg-inline d-none">|</span> <span class="ms-lg-2"><i class="fa fa-sign-in"></i> Login-Admin</span></a> -->
           </ul>
           <?php  
  // }
