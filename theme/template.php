@@ -290,7 +290,7 @@ try {
   </script>
 
 <!--Start of Tawk.to Script-->
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){
 var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
@@ -300,8 +300,124 @@ s1.charset='UTF-8';
 s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();
-</script>
+</script> -->
 <!--End of Tawk.to Script-->
+
+<!-- Chatbox button -->
+<button id="chat-button" class="btn btn-primary">
+    <i class="fa fa-comments"></i> <!-- Replace 'fa-comments' with the specific icon you want -->
+</button>
+
+<!-- Chatbox container -->
+<?php
+
+?>
+
+<div id="chatbox" class="chatbox">
+    <div class="chatbox-header">
+        <span class="chatbox-title">Chat with Admin</span>
+        <button class="close-button" onclick="closeChatbox()">×</button>
+    </div>
+    <div id="chat-messages" class="chat-messages">
+        <!-- Initial admin greeting message -->
+        <!-- <div class="message received">
+            Hello, how can I help you?
+        </div> -->
+        
+
+    </div>
+    <div class="chat-input">
+        <textarea id="message-input" placeholder="Type your message..." oninput="checkInput()"></textarea>
+        <button id="send-button" onclick="sendMessage()" disabled><i class="fa fa-paper-plane" aria-hidden="true"></i> </button>
+    </div>
+</div>
+<script>
+    function checkInput() {
+        const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-button');
+        sendButton.disabled = messageInput.value.trim() === '';
+    }
+
+    function sendMessage() {
+        const messageInput = document.getElementById('message-input');
+        const message = messageInput.value.trim();
+        const name = '<?php echo $_SESSION['name'] . " " . $_SESSION['last']; ?>';
+        const userId = <?php echo json_encode($_SESSION['GUESTID']); ?>;
+
+        if (message) {
+            let userMessageElement = document.createElement('div');
+            userMessageElement.textContent = message;
+            userMessageElement.classList.add('message', 'received');
+
+            if (message.length < 20) {
+                userMessageElement.style.backgroundColor = '#007bff';
+            } else {
+                userMessageElement.style.backgroundColor = '#5bc0de';
+            }
+
+            document.getElementById('chat-messages').appendChild(userMessageElement);
+            messageInput.value = '';
+            checkInput();
+
+            fetch('admin/themes/chatbox.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `message=${encodeURIComponent(message)}&name=${encodeURIComponent(name)}&user_id=${userId}`
+            })
+            .then(response => response.text()) // Using text() to debug response
+            .then(data => {
+                console.log('Response from server:', data);
+                if (data === 'Sent') {
+                    console.log('Message sent successfully');
+                } else {
+                    console.log('Server error:', data);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        } else {
+            alert('Please enter a message');
+        }
+    }
+
+    document.getElementById('chat-button').addEventListener('click', function() {
+        const chatbox = document.getElementById('chatbox');
+        if (chatbox.classList.contains('open')) {
+            closeChatbox();
+        } else {
+            chatbox.classList.add('open');
+            chatbox.style.height = chatbox.scrollHeight + "px";
+            chatbox.style.opacity = "1";
+            chatbox.style.transform = "scale(1) translate(0, 0)";
+        }
+    });
+
+    function closeChatbox() {
+        const chatbox = document.getElementById('chatbox');
+        chatbox.style.height = "0";
+        chatbox.style.opacity = "0";
+        chatbox.style.transform = "scale(0) translate(0, 100%)";
+        setTimeout(() => {
+            chatbox.classList.remove('open');
+        }, 300);
+    }
+
+    setInterval(function() {
+        const mid = "<?php echo $_SESSION['GUESTID']; ?>";
+
+        fetch("https://mcchmhotelreservation.com/admin/mod_chatbox/autoloadchat.php", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `mid=${mid}`
+        })
+        .then(response => response.text())
+        .then(data => {
+            document.querySelector('.chat-messages').innerHTML = data;
+        });
+    }, 1000);
+</script>
+
+
+
 
 
 
@@ -434,8 +550,8 @@ s0.parentNode.insertBefore(s1,s0);
           </li>
 
           <?php } ?>
-           <a class="text-light my-auto text-decoration-none ms-lg-2" href="https://mcchmhotelreservation.com/admin/login.php" style="color: whitesmoke;">
-             <span class="d-lg-inline d-none">|</span> <span class="ms-lg-2"><i class="fa fa-sign-in"></i> Login-Admin</span></a> 
+           <!--<a class="text-light my-auto text-decoration-none ms-lg-2" href="https://mcchmhotelreservation.com/admin/login.php" style="color: whitesmoke;">
+             <span class="d-lg-inline d-none">|</span> <span class="ms-lg-2"><i class="fa fa-sign-in"></i> Login-Admin</span></a> -->
           </ul>
           <?php  
  // }
