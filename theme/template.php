@@ -28,7 +28,7 @@ $_SESSION['to']  = $_POST['to'];
      <link href="cccss/galery.css" rel="stylesheet" media="screen" />
     <link href="https://mcchmhotelreservation.com/css/ekko-lightbox.css" rel="stylesheet" />
 
-    <link href="https://mcchmhotelreservation.com/theme/translate.css" rel="stylesheet">
+    <!--<link href="https://mcchmhotelreservation.com/theme/translate.css" rel="stylesheet">-->
     <link href="https://mcchmhotelreservation.com/theme/assets/dist/css/bootstrap.min.css" rel="stylesheet">
    
 
@@ -165,7 +165,178 @@ try {
   .bd-mode-toggle {
     z-index: 1500;
   }
-  
+  /* Chatbox button */
+  #chat-button {
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    z-index: 2100; /* Ensure it's above the chatbox */
+    width: 48px; /* Adjust width to match toggle theme button */
+    height: 48px; /* Adjust height to match toggle theme button */
+    font-size: 24px; /* Adjust icon size */
+    line-height: 1; /* Ensure proper vertical alignment */
+}
+
+.chatbox {
+    position: fixed;
+    bottom: 90px; 
+    right: 70px; /* Adjusted for better positioning */
+    width: 350px; /* Increased width */
+    background-color: #f9f9f9; /* Soft background color */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    height: 0; /* Start with height 0 */
+    opacity: 0; /* Start with opacity 0 */
+    overflow: hidden; /* Hide overflow */
+    transform: scale(0) translate(0, 100%); /* Start with scale 0 and translate down */
+    transform-origin: bottom right; /* Set the origin for scaling to the bottom right */
+    transition: height 0.3s ease, opacity 0.3s ease, transform 0.3s ease; /* Transition for height, opacity, and transform */
+    z-index: 2200;
+}
+
+.chatbox-header {
+    background-color: #007bff; /* Header color */
+    color: #fff; /* Text color */
+    padding: 15px; /* Increased padding */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 10px; /* Match border radius */
+    border-top-right-radius: 10px; /* Match border radius */
+}
+
+.chatbox-title {
+    font-weight: bold;
+    font-size: 20px; /* Increased font size */
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 24px; /* Increased close button size */
+}
+
+.chat-messages {
+    height: 250px; /* Fixed height */
+    overflow-y: auto; /* Scrollable */
+    padding: 10px;
+    display: flex;
+    flex-direction: column-reverse; /* Reverse order for newer messages at the bottom */
+}
+
+.message {
+    padding: 10px; /* Increased padding */
+    margin: 5px 0;
+    border-radius: 8px; /* Rounded corners for messages */
+    max-width: 80%;
+    font-size: 14px; /* Font size */
+}
+
+/* User message (sent) */
+.message.received {
+    background-color: #007bff; /* User message background */
+    color: white; /* User message text color */
+    align-self: flex-end; /* Align to the right */
+}
+
+/* Admin message (received) */
+.message.sent {
+    background-color: #e0e0e0; /* Admin message background */
+    color: #333; /* Admin message text color */
+    align-self: flex-start; /* Align to the left */
+}
+
+.chat-input {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-top: 1px solid #ddd; /* Light border on top */
+}
+
+#message-input {
+    flex: 1;
+    padding: 10px; /* Increased padding */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 4px; /* Rounded corners */
+    margin-right: 10px;
+}
+
+#send-button {
+    padding: 10px 20px; /* Increased padding */
+    background-color: #007bff; /* Button color */
+    color: #fff; /* Button text color */
+    border: none;
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer;
+}
+
+#send-button:hover {
+    background-color: #0056b3; /* Darker on hover */
+}
+
+
+
+#google_translate_element {
+  position: absolute;
+  z-index: 1000;
+}
+
+/* Translate button */
+#translate-button {
+  position: fixed;
+  bottom: 130px;
+  right: 20px;
+  z-index: 2300; /* Ensure it's above the translate container */
+  width: 48px; /* Adjust width to match toggle theme button */
+  height: 48px; /* Adjust height to match toggle theme button */
+  font-size: 24px; /* Adjust icon size */
+  line-height: 1; /* Ensure proper vertical alignment */
+}
+
+/* Translate container */
+#translate-container {
+  position: fixed;
+  bottom: 120px; /* Adjusted to prevent overlap with button */
+  right: 80px;
+  width: 300px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: none;
+  z-index: 1000;
+  max-height: calc(100vh - 100px); /* Ensure it fits within viewport */
+  overflow-y: auto; /* Enable scrolling within the translate container */
+}
+
+#translate-container.open {
+  display: block;
+}
+ /* Hide Google Translate widget */
+ #google_translate_element {
+      z-index: -1; /* Position the widget behind other elements */
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      opacity: 0;
+    }
+    iframe.goog-te-banner-frame {
+      display: none !important;
+    }
+    .goog-logo-link {
+      display: none !important;
+    }
+    .goog-te-gadget {
+      color: transparent !important;
+    }
+    .skiptranslate {
+      display: none !important;
+    }
 </style>
   
 
