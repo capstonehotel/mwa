@@ -409,22 +409,13 @@ try {
     <i class="fa fa-language"></i>
   </button>
 
-  <!-- Translate container -->
-  <div id="translate-container">
+   <!-- Translate container -->
+   <div id="translate-container">
     <select id="select-language" class="form-control">
       <option value="">Select Language</option>
-      <option value="ar">Arabic</option>
-      <option value="zh-CN">Chinese (Simplified)</option>
-      <option value="zh-TW">Chinese (Traditional)</option>
       <option value="en">English</option>
-      <option value="fr">French</option>
-      <option value="de">German</option>
-      <option value="it">Italian</option>
-      <option value="ja">Japanese</option>
-      <option value="ko">Korean</option>
-      <option value="pt">Portuguese</option>
-      <option value="ru">Russian</option>
-      <option value="es">Spanish</option>
+      <option value="ceb">Cebuano</option>
+      <option value="tl">Tagalog</option>
     </select>
   </div>
 
@@ -434,11 +425,10 @@ try {
     function googleTranslateElementInit() {
       new google.translate.TranslateElement({
         pageLanguage: 'en',
-        includedLanguages: 'ar,zh-CN,zh-TW,en,fr,de,it,ja,ko,pt,ru,es',
+        includedLanguages: 'en,ceb,tl',
         layout: google.translate.TranslateElement.InlineLayout.SIMPLE
       }, 'google_translate_element');
     }
-
     document.getElementById('translate-button').addEventListener('click', function() {
       document.getElementById('translate-container').classList.toggle('open');
     });
