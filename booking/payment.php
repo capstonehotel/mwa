@@ -23,26 +23,26 @@ function validateAndSanitizeInput($data) {
     return $data;
 }
 // Validate and sanitize session inputs
-$_SESSION['name'] = validateAndSanitizeInput($_SESSION['name']);
-$_SESSION['last'] = validateAndSanitizeInput($_SESSION['last']);
-$_SESSION['city'] = validateAndSanitizeInput($_SESSION['city']);
-$_SESSION['address'] = validateAndSanitizeInput($_SESSION['address']);
-$_SESSION['phone'] = validateAndSanitizeInput($_SESSION['phone']);
-$_SESSION['nationality'] = validateAndSanitizeInput($_SESSION['nationality']);
-$_SESSION['company'] = validateAndSanitizeInput($_SESSION['company']);
-$_SESSION['caddress'] = validateAndSanitizeInput($_SESSION['caddress']);
-$_SESSION['zip'] = validateAndSanitizeInput($_SESSION['zip']);
-$_SESSION['dbirth'] = validateAndSanitizeInput($_SESSION['dbirth']);
+// $_SESSION['name'] = validateAndSanitizeInput($_SESSION['name']);
+// $_SESSION['last'] = validateAndSanitizeInput($_SESSION['last']);
+// $_SESSION['city'] = validateAndSanitizeInput($_SESSION['city']);
+// $_SESSION['address'] = validateAndSanitizeInput($_SESSION['address']);
+// $_SESSION['phone'] = validateAndSanitizeInput($_SESSION['phone']);
+// $_SESSION['nationality'] = validateAndSanitizeInput($_SESSION['nationality']);
+// $_SESSION['company'] = validateAndSanitizeInput($_SESSION['company']);
+// $_SESSION['caddress'] = validateAndSanitizeInput($_SESSION['caddress']);
+// $_SESSION['zip'] = validateAndSanitizeInput($_SESSION['zip']);
+// $_SESSION['dbirth'] = validateAndSanitizeInput($_SESSION['dbirth']);
 
-// Validate email format (assuming username is an email)
-if (!filter_var($_SESSION['username'], FILTER_VALIDATE_EMAIL)) {
-    die("Invalid email format.");
-}
+// // Validate email format (assuming username is an email)
+// if (!filter_var($_SESSION['username'], FILTER_VALIDATE_EMAIL)) {
+//     die("Invalid email format.");
+// }
 
-// Validate phone number (example: only digits and length check)
-if (!preg_match('/^[0-9]{10,15}$/', $_SESSION['phone'])) {
-    die("Invalid phone number.");
-}
+// // Validate phone number (example: only digits and length check)
+// if (!preg_match('/^[0-9]{10,15}$/', $_SESSION['phone'])) {
+//     die("Invalid phone number.");
+// }
 
 
 
@@ -242,20 +242,20 @@ if(!isset($_SESSION['GUESTID'])){
 
 $guest = New Guest();
 $guest->G_AVATAR = $_SESSION['image'];
-        $guest->G_FNAME = $_SESSION['name'];
-        $guest->G_LNAME = $_SESSION['last'];
-        $guest->G_GENDER = $_SESSION['gender'];
-        $guest->G_CITY = $_SESSION['city'];
-        $guest->G_ADDRESS = $_SESSION['address'];
+        $guest->G_FNAME = validateAndSanitizeInput($_SESSION['name']);
+        $guest->G_LNAME = validateAndSanitizeInput($_SESSION['last']);
+        $guest->G_GENDER = validateAndSanitizeInput($_SESSION['gender']);
+        $guest->G_CITY = validateAndSanitizeInput($_SESSION['city']);
+        $guest->G_ADDRESS = validateAndSanitizeInput($_SESSION['address']);
         $guest->DBIRTH = date_format(date_create($_SESSION['dbirth']), 'Y-m-d');
-        $guest->G_PHONE = $_SESSION['phone'];
-        $guest->G_NATIONALITY = $_SESSION['nationality'];
-        $guest->G_COMPANY = $_SESSION['company'];
-        $guest->G_CADDRESS = $_SESSION['caddress'];
+        $guest->G_PHONE = validateAndSanitizeInput($_SESSION['phone']);
+        $guest->G_NATIONALITY = validateAndSanitizeInput($_SESSION['nationality']);
+        $guest->G_COMPANY = validateAndSanitizeInput($_SESSION['company']);
+        $guest->G_CADDRESS = validateAndSanitizeInput($_SESSION['caddress']);
         $guest->G_TERMS = 1; // Assuming terms are accepted
-        $guest->G_UNAME = $_SESSION['username'];
+        $guest->G_UNAME = validateAndSanitizeInput($_SESSION['username']);
         $guest->G_PASS = password_hash($_SESSION['pass'], PASSWORD_DEFAULT);
-        $guest->ZIP = $_SESSION['zip'];
+        $guest->ZIP = validateAndSanitizeInput($_SESSION['zip']);
    
 $guest->create(); 
   $lastguest=$guest->id; 
