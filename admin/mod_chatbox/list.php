@@ -54,7 +54,7 @@
     </div>
                 <?php 
                        $sql = "SELECT g.G_AVATAR, l.* FROM `livechat` l 
-                       JOIN `tblguest` g ON l.sender_id = g. GUESTID
+                       JOIN `tblguest` g ON l.sender_id = g.GUESTID
                        GROUP BY l.sender_id";
                       $result = $connection->query($sql);
                         while ($row = $result->fetch_assoc()) {
