@@ -261,7 +261,7 @@ $_SESSION['GUESTID'] =   $lastguest;
     // Use prepared statements for SQL queries
     $stmt = $mydb->prepare("INSERT INTO `tblpayment` (`TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `GUESTID`, `SPRICE`, `MSGVIEW`, `STATUS`, `PAYMENT_STATUS`, `PAYMENT_METHOD`, `AMOUNT_PAID`)
     VALUES (?, ?, ?, ?, ?, 0, 'Pending', ?, 'GCash', ?)");
-    $stmt->bind_param("ssiiisi", date('Y-m-d h:i:s'), $_SESSION['confirmation'], $item, $_SESSION['GUESTID'], $tot, $_POST['txtstatus'], $amountPaid);
+    $stmt->bind_param("ssiiisi", date('Y-m-d h:i:s'), $_SESSION['confirmation'], $item, $_SESSION['GUESTID'], $tot, $paymentStatus, $amountPaid);
     $stmt->execute();
     if ($stmt->error) {
         echo "Error executing first query: " . $stmt->error;
@@ -269,7 +269,7 @@ $_SESSION['GUESTID'] =   $lastguest;
 
     $stmt1 = $mydb->prepare("INSERT INTO `notifications` (`TRANSDATE`, `CONFIRMATIONCODE`, `GUESTID`, `SPRICE`, `PAYMENT_STATUS`, `AMOUNT_PAID`, `IS_READ`, `ROOMID`)
     VALUES (?, ?, ?, ?, ?, ?, 0, ?)");
-    $stmt1->bind_param("ssissi", date('Y-m-d H:i:s'), $_SESSION['confirmation'], $_SESSION['GUESTID'], $tot, $_POST['txtstatus'], $amountPaid, $reservation->ROOMID);
+    $stmt1->bind_param("ssissi", date('Y-m-d H:i:s'), $_SESSION['confirmation'], $_SESSION['GUESTID'], $tot, $paymentStatus, $amountPaid, $reservation->ROOMID);
     $stmt1->execute();
     if ($stmt1->error) {
         echo "Error executing second query: " . $stmt1->error;
