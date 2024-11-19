@@ -4,10 +4,14 @@ require_once("../../includes/initialize.php");
     // Prepare the SQL query to delete all notifications
     $query = "DELETE FROM notifications"; // Adjust this table name if necessary
 
-    // Execute the query
-    if (mysqli_query($connection, $query)) {
-        // If successful, return a success response
-        echo "successfully deleted";
+   // Execute the query
+if (mysqli_query($connection, $query)) {
+    // If successful, return a success response
+    echo "successfully deleted";
+
+    // Redirect to index.php
+    header("Location: ../index.php");
+    exit();
     } else {
         // If there was an error, return an error response
         echo "error";
