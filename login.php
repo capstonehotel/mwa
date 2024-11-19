@@ -17,7 +17,7 @@
          
     } else {   
         $guest = new Guest();
-        $res = $guest::guest_login($email,$h_upass);
+        $res = $guest::guest_login($email,$upass);
 
         if ($res == true) {
        
