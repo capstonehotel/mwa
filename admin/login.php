@@ -26,6 +26,9 @@ require_once("../includes/initialize.php");
             position: relative;
             overflow: hidden;
         }
+        .swal2-container {
+        top: 20%; /* Adjust this value to move the alert higher */
+    }
         .title {
             text-align: center;
             color: #7fb6dc;
@@ -188,7 +191,6 @@ if (isset($_POST['btnlogin'])) {
                     text: 'Hello, {$row['UNAME']}.',
                     timer: 2000,
                     showConfirmButton: false
-                    position: 'top'
                 }).then(() => {
                     window.location = 'index.php';
                 });
