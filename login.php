@@ -1,32 +1,25 @@
 <?php
- require_once ("initialize.php"); 
- //require_once ("sendOTP.php");
+//user
+require_once("initialize.php"); 
 
-
- if(isset($_POST['gsubmit'])){
-
+if (isset($_POST['gsubmit'])) { 
+    $email = trim($_POST['username']);
+    $upass = trim($_POST['pass']); // use the plain password
     
-
-  $email = trim($_POST['username']);
-  $upass  = trim($_POST['pass']);
-  $h_upass = sha1($upass);
-  }
-   if ($email == '' OR $upass == '') { 
-      message("Invalid Username and Password!", "error");
-       redirect("https://mcchmhotelreservation.com/index.php?page=6");
-         
+    if ($email == '' OR $upass == '') { 
+        message("Invalid Username and Password!", "error");
+        redirect("https://mcchmhotelreservation.com/index.php?page=6");
     } else {   
         $guest = new Guest();
-        $res = $guest::guest_login($email,$h_upass);
+        // Pass plain password instead of hashed password
+        $res = $guest::guest_login($email, $upass);
 
         if ($res == true) {
-       
-             redirect("https://mcchmhotelreservation.com/booking/index.php?view=payment");
-         } else {
-             message(" Please try again.", "error");
-             redirect("https://mcchmhotelreservation.com/booking/index.php?view=logininfo");
-         }
-     }
- 
- 
+            redirect("https://mcchmhotelreservation.com/booking/index.php?view=payment");
+        } else {
+            message("Invalid Username and Password! Please contact administrator", "error");
+            redirect("https://mcchmhotelreservation.com/booking/index.php?view=logininfo");
+        }
+    }
+}
 ?>
