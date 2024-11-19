@@ -23,7 +23,7 @@ if (isset($_POST['save_accomodation'])) {
     }
 
     // Use prepared statements to prevent SQL injection
-    $stmt = $conn->prepare("SELECT COUNT(*) as count FROM tblaccomodation WHERE ACCOMODATION = ?");
+    $stmt = $connection->prepare("SELECT COUNT(*) as count FROM tblaccomodation WHERE ACCOMODATION = ?");
     $stmt->bind_param("s", $ACCOMODATION);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -45,7 +45,7 @@ if (isset($_POST['save_accomodation'])) {
               </script>";
     } else {
         // Insert into database using prepared statements
-        $insert_stmt = $connn->prepare("INSERT INTO tblaccomodation (ACCOMODATION, ACCOMDESC) VALUES (?, ?)");
+        $insert_stmt = $connection->prepare("INSERT INTO tblaccomodation (ACCOMODATION, ACCOMDESC) VALUES (?, ?)");
         $insert_stmt->bind_param("ss", $ACCOMODATION, $ACCOMDESC);
         
         if ($insert_stmt->execute()) {
@@ -64,7 +64,7 @@ if (isset($_POST['save_accomodation'])) {
             echo "<script>
                     Swal.fire({
                       title: 'Error!',
-                      text: 'Error adding new Accommodation: " . $conne->error . "',
+                      text: 'Error adding new Accommodation: " . $connection->error . "',
                       icon: 'error'
                     });
                   </script>";
