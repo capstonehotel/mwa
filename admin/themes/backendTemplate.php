@@ -302,7 +302,7 @@ mysqli_close($conn);
      <div id="notificationMenu" class="notification-menu" style="display: none;">
         <div class="menu-header">
             <span class="menu-title">Notifications</span>
-            <a href="themes/clearallnotif.php" class="clear-noti">Clear All</a>
+            <a href="clearallnotif.php" class="clear-noti">Clear All</a>
         </div>
         <div class="menu-content">
             <div class="menu-section">
