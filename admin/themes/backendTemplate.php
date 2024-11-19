@@ -294,8 +294,8 @@ mysqli_close($conn);
 <li class="nav-item my-auto" style="position: relative;">
     <a href="javascript:void(0);" class="text-dark" id="bookingNotification" onclick="toggleNotificationMenu(event)">
         <i class="fa fa-bell"></i>
-        <?php if ($countnotif > 0): ?>
-            <span class="badge badge-pill badge-danger notification-badge"><?php echo $countnotif; ?></span>
+        <?php if ($count_notifications_query > 0): ?>
+            <span class="badge badge-pill badge-danger notification-badge"><?php echo $count_notifications_query; ?></span>
         <?php endif; ?>
     </a>
     
