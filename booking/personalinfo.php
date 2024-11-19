@@ -1,104 +1,107 @@
 
 <?php
 require_once 'sendOTP.php';
-if (isset($_POST['submit'])){
+if (isset($_POST['submit'])) {
+  // Sanitize and validate inputs
+  $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+  $last = filter_input(INPUT_POST, 'last', FILTER_SANITIZE_STRING);
+  $gender = filter_input(INPUT_POST, 'gender', FILTER_SANITIZE_STRING);
+  $dob = filter_input(INPUT_POST, 'dbirth', FILTER_SANITIZE_STRING);
+  $nationality = filter_input(INPUT_POST, 'nationality', FILTER_SANITIZE_STRING);
+  $city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_STRING);
+  $address = filter_input(INPUT_POST, 'address', FILTER_SANITIZE_STRING);
+  $company = filter_input(INPUT_POST, 'company', FILTER_SANITIZE_STRING);
+  $caddress = filter_input(INPUT_POST, 'caddress', FILTER_SANITIZE_STRING);
+  $zip = filter_input(INPUT_POST, 'zip', FILTER_SANITIZE_STRING);
+  $phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING);
+  $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_EMAIL);
+  $password = filter_input(INPUT_POST, 'pass', FILTER_SANITIZE_STRING);
 
-	$targetDirectory = "../images/user_avatar/";  // Directory where uploaded images will be stored
+  // Validate that the email is valid
+  if (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
+      $_SESSION['ERRMSG_ARR'][] = "Invalid email format.";
+  }
+
+  // Validate date of birth
+  $dobDate = DateTime::createFromFormat('Y-m-d', $dob);
+  $today = new DateTime();
+  $ageInterval = $today->diff($dobDate);
+  $age = $ageInterval->y;
+
+  if ($age < 18) {
+      $_SESSION['ERRMSG_ARR'][] = 'You must be at least 18 years old.';
+  }
+
+  // File upload handling
+  $targetDirectory = "../images/user_avatar/";  // Directory where uploaded images will be stored
   $targetFile = $targetDirectory . basename($_FILES["image"]["name"]);
   $fileName = basename($_FILES["image"]["name"]);
   $uploadOk = 1;
   $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
- // Allow only certain file formats
- $allowedExtensions = array('jpg', 'jpeg', 'png');
- $check = getimagesize($_FILES["image"]["tmp_name"]);
+  $maxFileSize = 2 * 1024 * 1024; // 2MB
 
- if ($check !== false && in_array($imageFileType, $allowedExtensions)) {
-     // File is an image and has a valid extension
-     if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
-         echo "The file " . $fileName . " has been uploaded.";
-     } else {
-         echo "Sorry, there was an error uploading your file.";
-     }
- } else {
-     // If not an image, set an error message
-     echo "Sorry, only JPG, JPEG, and PNG files are allowed.";
-     $_SESSION['ERRMSG_ARR'][] = "Only JPG, JPEG, and PNG files are allowed.";
- }
-	    
+  // Check if file is an actual image
+  $check = getimagesize($_FILES["image"]["tmp_name"]);
+  if ($check === false) {
+      $_SESSION['ERRMSG_ARR'][] = "File is not an image.";
+      $uploadOk = 0;
+  }
 
-    // Server-side DOB validation
-    $dob = $_POST['dbirth'];
-    $dobDate = DateTime::createFromFormat('Y-m-d', $dob);
-    $today = new DateTime();
-    $ageInterval = $today->diff($dobDate);
-    $age = $ageInterval->y;
+  // Check file size
+  if ($_FILES["image"]["size"] > $maxFileSize) {
+      $_SESSION['ERRMSG_ARR'][] = "Sorry, your file is too large.";
+      $uploadOk = 0;
+  }
 
-    if ($age < 18) {
-        $_SESSION['ERRMSG_ARR'][] = 'You must be at least 18 years old.';
-      } else {};
- $arival   = $_SESSION['from']; 
-  $departure = $_SESSION['to'];
-  /*$adults = $_SESSION['adults'];
-  $child = $_SESSION['child'];*/
-  // $adults = 1;
-  // $child = 1;
-  $ROOMID = $_SESSION['ROOMID'];
- $_SESSION['image']   		= $fileName;
- $_SESSION['name']   		= $_POST['name'];
- $_SESSION['last']   		= $_POST['last'];
- $_SESSION['gender']   		= $_POST['gender'];
- $_SESSION['dbirth']   		= $_POST['dbirth'];
- $_SESSION['nationality']   = $_POST['nationality'];
- $_SESSION['city']   		= $_POST['city'];
- $_SESSION['address'] 		= $_POST['address'];
- $_SESSION['company']  		= $_POST['company'];
- $_SESSION['caddress']  	= $_POST['caddress'];
- $_SESSION['zip']   		= $_POST['zip'];
- $_SESSION['phone']   		= $_POST['phone'];
- $_SESSION['username']		= $_POST['username'];
- $_SESSION['pass']  		= $_POST['pass'];
- $_SESSION['pending']  		= 'pending'; ///sanitize this part
+  // Allow only certain file formats
+  if (!in_array($imageFileType, ['jpg', 'jpeg', 'png'])) {
+      $_SESSION['ERRMSG_ARR'][] = "Sorry, only JPG, JPEG, and PNG files are allowed.";
+      $uploadOk = 0;
+  }
 
+  // Attempt to upload file if no errors
+  if ($uploadOk === 1) {
+      if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
+          echo "The file " . htmlspecialchars($fileName) . " has been uploaded.";
+      } else {
+          $_SESSION['ERRMSG_ARR'][] = "Sorry, there was an error uploading your file.";
+      }
+  }
 
-  // $name   = $_SESSION['name']; 
-  // $last   = $_SESSION['last'];
-  // $country= $_SESSION['country'];
-  // $city   = $_SESSION['city'] ;
-  // $address =$_SESSION['address'];
-  // $zip    =  $_SESSION['zip'] ;
-  // $phone  = $_SESSION['phone'];
-  // $email  = $_SESSION['email'];
-  // $password =$_SESSION['pass'];
+  // Store sanitized inputs in session
+  $_SESSION['image'] = $fileName;
+  $_SESSION['name'] = $name;
+  $_SESSION['last'] = $last;
+  $_SESSION['gender'] = $gender;
+  $_SESSION['dbirth'] = $dob;
+  $_SESSION['nationality'] = $nationality;
+  $_SESSION['city'] = $city;
+  $_SESSION['address'] = $address;
+  $_SESSION['company'] = $company;
+  $_SESSION['caddress'] = $caddress;
+  $_SESSION['zip'] = $zip;
+  $_SESSION['phone'] = $phone;
+  $_SESSION['username'] = $username;
+  $_SESSION['pass'] = $password;
+  $_SESSION['pending'] = 'pending';
 
+  // Send OTP
+  $_SESSION['otp'] = sendOTP($username, $name, $last);
 
-  // $days = dateDiff($arival,$departure);
+  // Redirect to payment page
+  redirect('index.php?view=payment&verify=true');
+}
 
-  
-// redirect('index.php?view=payment');
-$_SESSION['otp'] = sendOTP($_SESSION['username'],$_SESSION['name'], $_SESSION['last']);
-//$_SESSION['otp'] = $otp;
-// var_dump($_SESSION['otp']);
-        // echo '<script>$("#otp-modal").modal("show");</script>';
-        // Redirect to payment page
-         redirect('index.php?view=payment&verify=true');
+// Display error messages if any
+if (isset($_SESSION['ERRMSG_ARR']) && is_array($_SESSION[' ERRMSG_ARR']) && count($_SESSION['ERRMSG_ARR']) > 0) {
+  echo '<ul class="err">';
+  foreach ($_SESSION['ERRMSG_ARR'] as $msg) {
+      echo '<li>' . htmlspecialchars($msg) . '</li>';
+  }
+  echo '</ul>';
+  unset($_SESSION['ERRMSG_ARR']);
 }
 ?>
-
-
- 
-                 <?php //include'navigator.php';?>
-                
-			 
-					<?php
-					if( isset($_SESSION['ERRMSG_ARR']) && is_array($_SESSION['ERRMSG_ARR']) && count($_SESSION['ERRMSG_ARR']) >0 ) {
-							echo '<ul class="err">';
-							foreach($_SESSION['ERRMSG_ARR'] as $msg) {
-								echo '<li>',$msg,'</li>'; 
-							}
-							echo '</ul>';
-							unset($_SESSION['ERRMSG_ARR']);
-						}
-					?>
    
          		<form class="form-horizontal" action="index.php?view=logininfo" method="post"  name="personal" enctype="multipart/form-data">
 					 <h2>Personal Details</h2> 
@@ -107,7 +110,7 @@ $_SESSION['otp'] = sendOTP($_SESSION['username'],$_SESSION['name'], $_SESSION['l
     <div class="col-md-12">
       <div class="form-group">
         <label class ="control-label" for="image">Avatar</label>
-        <input type="file" name="image" id="image" accept=".jpg, .jpeg, .png" onchange="previewImage(event)" required>
+        <input type="file" name="image" id="image" accept=".jpg, .jpeg, .png"onchange="validateImage(event)" required>
         <img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-width: 150px; max-height: 150px;">
       </div>
       <style>
@@ -121,8 +124,37 @@ $_SESSION['otp'] = sendOTP($_SESSION['username'],$_SESSION['name'], $_SESSION['l
     margin-top: 10px;
   }
 </style>
-
 <script>
+function validateImage(event) {
+    const fileInput = event.target;
+    const filePath = fileInput.value;
+    const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i; // Allowed file extensions
+
+    // Check if the file is an image
+    if (!allowedExtensions.exec(filePath)) {
+        // Show SweetAlert2 error message
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid File Type',
+            text: 'Please upload an image file (JPG, JPEG, PNG).',
+            confirmButtonText: 'OK'
+        });
+        fileInput.value = ""; // Clear the input
+        document.getElementById('imagePreview').style.display = 'none'; // Hide the preview
+        return false;
+    } else {
+        // If valid, show the image preview
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const imagePreview = document.getElementById('imagePreview');
+            imagePreview.style.display = 'block';
+            imagePreview.src = e.target.result;
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+    }
+}
+</script>
+<!-- <script>
   function previewImage(event) {
     const input = event.target;
     const imagePreview = document.getElementById('imagePreview');
@@ -141,7 +173,7 @@ $_SESSION['otp'] = sendOTP($_SESSION['username'],$_SESSION['name'], $_SESSION['l
       imagePreview.src = '#';
     }
   }
-</script>
+</script> -->
 									
 			            </div>
 			          </div> 
@@ -318,7 +350,7 @@ function validatePassword() {
 </script>
 
 
-<script>
+<!-- <script>
     document.getElementById('username').addEventListener('input', function() {
         const emailInput = this.value;
         const gmailDomain = 'gmail.com';
@@ -343,7 +375,7 @@ function validatePassword() {
             }
         }
     });
-</script>
+</script> -->
 <!-- <script>
 function validatePassword() {
     const password = document.getElementById('password').value;
@@ -377,43 +409,60 @@ function validatePassword() {
 }
 </script> -->
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-                 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        function detectXSS(inputField, fieldName) {
-            const xssPattern =  /[<>:\/\$\;\,\?\!]/; //!@#$%^&*
-            inputField.addEventListener('input', function() {
-                if (xssPattern.test(this.value)) {
-                  Swal.fire("XSS Detected", `Please avoid using invalid characters in your ${fieldName}.`, "error");
-                    this.value = "";
-                }
-            });
-        }
-        
-        const firstInput = document.getElementById('name');
-        const lastInput = document.getElementById('last');
-        const phoneInput = document.getElementById('phone');
-        const cityInput = document.getElementById('city');
-        const addressInput = document.getElementById('address');
-        const zipInput = document.getElementById('zip');
-        const nationalityInput = document.getElementById('nationality');
-        const companyInput = document.getElementById('company');
-        const caddressInput = document.getElementById('caddress');
-        const emailInput = document.getElementById('username');
-        const passwordInput = document.getElementById('password');
-        detectXSS(firstInput, 'First Name');
-        detectXSS(lastInput, 'Last Name');
-        detectXSS(phoneInput, 'Phone');
-        detectXSS(cityInput, 'City');
-        detectXSS(addressInput, 'Address');
-        detectXSS(zipInput, 'Zip Code');
-        detectXSS(nationalityInput, 'Nationality');
-        detectXSS(companyInput, 'Company');
-        detectXSS(caddressInput, 'Company Address');
-        detectXSS(emailInput, 'Email');
-        detectXSS(passwordInput, 'Password');
-    });
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.4/purify.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Define allowed characters for each field
+    const allowedChars = {
+        name: /^[a-zA-Z\s]*$/, // Only letters and spaces
+        last: /^[a-zA-Z\s]*$/, // Only letters and spaces
+       // phone: /^[0-9]{11}$/, // Only digits (10 digits for a phone number)
+        city: /^[a-zA-Z\s]*$/, // Only letters and spaces
+        address: /^[a-zA-Z0-9\s,.-]*$/, // Alphanumeric, spaces, commas, periods, hyphens
+        //zip: /^[0-9]{5}$/, // Only digits (5 digits for a zip code)
+        nationality: /^[a-zA-Z\s]*$/, // Only letters and spaces
+        company: /^[a-zA-Z0-9\s]*$/, // Alphanumeric and spaces
+        caddress: /^[a-zA-Z0-9\s,.-]*$/, // Alphanumeric, spaces, commas, periods, hyphens
+        email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ // Basic email format
+    };
+
+    function validateInput(inputField, fieldName, pattern) {
+        inputField.addEventListener('input', function() {
+            if (!pattern.test(this.value)) {
+                Swal.fire("Invalid Input", `Please enter a valid ${fieldName}.`, "error");
+                this.value = ""; // Clear the input if invalid
+            }
+        });
+    }
+
+    // Get input fields
+    const firstInput = document.getElementById('name');
+    const lastInput = document.getElementById('last');
+    // const phoneInput = document.getElementById('phone');
+    const cityInput = document.getElementById('city');
+    const addressInput = document.getElementById('address');
+    const zipInput = document.getElementById('zip');
+    const nationalityInput = document.getElementById('nationality');
+    const companyInput = document.getElementById('company');
+    const caddressInput = document.getElementById('caddress');
+    const emailInput = document.getElementById('username');
+
+    // Validate inputs
+    validateInput(firstInput, 'First Name', allowedChars.name);
+    validateInput(lastInput, 'Last Name', allowedChars.last);
+    validateInput(phoneInput, 'Phone', allowedChars.phone);
+    validateInput(cityInput, 'City', allowedChars.city);
+    validateInput(addressInput, 'Address', allowedChars.address);
+    validateInput(zipInput, 'Zip Code', allowedChars.zip);
+    validateInput(nationalityInput, 'Nationality', allowedChars.nationality);
+    validateInput(companyInput, 'Company', allowedChars.company);
+    validateInput(caddressInput, 'Company Address', allowedChars.caddress);
+    validateInput(emailInput, 'Email', allowedChars.email);
+});
 </script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
 
                  
