@@ -247,13 +247,15 @@ if (isset($_GET['viewed']) && $_GET['viewed'] === 'bookings') {
 $count_messages_query = $conn->query("SELECT COUNT(*) FROM tblcontact WHERE is_read = 0");
 $cnt_message = $count_messages_query->fetch_array();
 
+$count_notifications_query = $conn->query("SELECT COUNT(*) FROM notifications WHERE IS_READ = 0");
+$cnt_notifications = $count_notifications_query->fetch_array();
+
 // Count today's unread bookings
 $count_bookings_query = $conn->query("SELECT COUNT(*) FROM tblreservation WHERE is_read = 0 AND DATE(TRANSDATE) = CURDATE()");
 $today_bookings = $count_bookings_query->fetch_array();
 
 // Calculate total notifications
-$count_notifications_query =$conn->query("SELECT COUNT(*) FROM notifications WHERE IS_READ = 0");
-$countnotif = $count_notifications_query->fetch_array();
+$total_notifications = $cnt_notifications[0];
 
 // Close the database connection
 mysqli_close($conn);
@@ -294,8 +296,8 @@ mysqli_close($conn);
 <li class="nav-item my-auto" style="position: relative;">
     <a href="javascript:void(0);" class="text-dark" id="bookingNotification" onclick="toggleNotificationMenu(event)">
         <i class="fa fa-bell"></i>
-        <?php if ($count_notifications_query > 0): ?>
-            <span class="badge badge-pill badge-danger notification-badge"><?php echo $count_notifications_query; ?></span>
+        <?php if ($total_notifications > 0): ?>
+            <span class="badge badge-pill badge-danger notification-badge"><?php echo $total_notifications; ?></span>
         <?php endif; ?>
     </a>
     
