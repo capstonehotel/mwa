@@ -252,7 +252,8 @@ $count_bookings_query = $conn->query("SELECT COUNT(*) FROM tblreservation WHERE 
 $today_bookings = $count_bookings_query->fetch_array();
 
 // Calculate total notifications
-$total_notifications = $cnt_message[0] + $today_bookings[0];
+$count_notifications_query =$conn->query("SELECT COUNT(*) FROM notifications WHERE IS_READ = 0");
+$countnotif = $count_notifications_query->fetch_array();
 
 // Close the database connection
 mysqli_close($conn);
@@ -293,8 +294,8 @@ mysqli_close($conn);
 <li class="nav-item my-auto" style="position: relative;">
     <a href="javascript:void(0);" class="text-dark" id="bookingNotification" onclick="toggleNotificationMenu(event)">
         <i class="fa fa-bell"></i>
-        <?php if ($total_notifications > 0): ?>
-            <span class="badge badge-pill badge-danger notification-badge"><?php echo $total_notifications; ?></span>
+        <?php if ($countnotif > 0): ?>
+            <span class="badge badge-pill badge-danger notification-badge"><?php echo $countnotif; ?></span>
         <?php endif; ?>
     </a>
     
