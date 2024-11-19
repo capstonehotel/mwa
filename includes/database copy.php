@@ -32,28 +32,6 @@ class Database {
 			exit();
 		} 
 	}
-	private $stmt; // To hold prepared statements
-
-    // Add this method for prepared statements
-    public function prepare($sql) {
-        $this->stmt = mysqli_prepare($this->conn, $sql);
-        return $this->stmt;
-    }
-
-    public function bind_param($types, ...$params) {
-        // Bind parameters to the prepared statement
-        mysqli_stmt_bind_param($this->stmt, $types, ...$params);
-    }
-
-    public function execute() {
-        // Execute the prepared statement
-        return mysqli_stmt_execute($this->stmt);
-    }
-
-    public function get_result() {
-        // Get the result set from the prepared statement
-        return mysqli_stmt_get_result($this->stmt);
-    }
 	
 	function setQuery($sql='') {
 		$this->sql_string=$sql;
