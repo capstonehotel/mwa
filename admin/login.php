@@ -26,9 +26,7 @@ require_once("../includes/initialize.php");
             position: relative;
             overflow: hidden;
         }
-        .swal2-container {
-        top: 20%; /* Adjust this value to move the alert higher */
-    }
+       
         .title {
             text-align: center;
             color: #7fb6dc;
@@ -109,6 +107,18 @@ require_once("../includes/initialize.php");
             font-size: 16px;
             text-decoration: none;
         }
+          /* New CSS for the wave SVG */
+          .wave-container {
+            position: absolute;
+            bottom: 0; /* Always stick to the bottom */
+            left: 0;
+            width: 100%; /* Full width */
+            overflow: hidden; /* Hide overflow */
+            z-index: 0; /* Behind other content */
+        }
+        .waves {
+            display: block; /* Ensure it behaves as a block element */
+        }
 
         @media (max-width: 768px) {
             .container {
@@ -133,7 +143,7 @@ require_once("../includes/initialize.php");
     </style>
 </head>
 <body>
-
+<div class="wave-container">
   <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
   viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
     <defs>
@@ -146,6 +156,7 @@ require_once("../includes/initialize.php");
     <use xlink:href="#gentle-wave" x="48" y="7" fill="#cfe8f9" />
     </g>
   </svg>
+    </div>
 
   <?php
 if (admin_logged_in()) { ?>
