@@ -188,6 +188,7 @@ if (isset($_POST['btnlogin'])) {
                     text: 'Hello, {$row['UNAME']}.',
                     timer: 2000,
                     showConfirmButton: false
+                    position: 'top'
                 }).then(() => {
                     window.location = 'index.php';
                 });
