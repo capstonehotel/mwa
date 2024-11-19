@@ -274,7 +274,7 @@ $_SESSION['GUESTID'] =   $lastguest;
            $amountPaid = ( $paymentStatus === 'Fully Paid') ? $tot : ($tot / 2);
            
 
-      $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`,`PAYMENT_STATUS`,`PAYMENT_METHOD`, ,`AMOUNT_PAID` )
+      $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`,`PAYMENT_STATUS`,`PAYMENT_METHOD` ,`AMOUNT_PAID` )
        VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentStatus . "', 'GCash','" . $amountPaid . "' )" ;
         // mysql_query($sql);
             // Execute the first SQL
