@@ -80,7 +80,7 @@ if (!isset($_SESSION['monbela_cart'])) {
 
     ?>  
   <div class="login-container">
-        <form action="<?php echo 'https://mcchmhotelreservation.com/login.php'; ?>" method="post">
+        <form action="<?php echo "https://mcchmhotelreservation.com/login.php"; ?>" method="post">
             <div class="form-group">             
                 <input type="email" class="form-control" id="username" name="username" placeholder="Enter your email" required>
             </div>
@@ -88,7 +88,7 @@ if (!isset($_SESSION['monbela_cart'])) {
                 <input type="password" class="form-control" id="password" name="pass" placeholder="Enter your password" required>
             </div>
             <p  style="margin-top: 10px; margin-left: 10px;">
-                <a href="<?php echo  'https://mcchmhotelreservation.com/booking/forgot_password.php'; ?>">Forgot Password?</a>
+                <a href="<?php echo  "https://mcchmhotelreservation.com/booking/forgot_password.php"; ?>">Forgot Password?</a>
             </p>
             <button type="submit" name="gsubmit" class="btn btn-primary btn-block" style="margin-top: 10px;">Sign In</button>
         </form>

@@ -1,22 +1,26 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
 
+
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> Include SweetAlert2 -->
 <?php
 
-// session_start();
-
-// CSRF Token Generation
-if (empty($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
-
 if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify']) && $_GET['verify'] == 'true') {
+    // var_dump($_GET['view']);
+    // var_dump($_GET['verify']);
+
     ?>
-    <script>
+  <script>
         console.log('SweetAlert2 script is running'); // JS log
+        
 
         // Function to show the OTP input prompt
         function showOtpInput() {
@@ -39,7 +43,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
                         url: 'otp_verify.php',
                         data: {
                             otp: result.value,
-                            email: '<?php echo htmlspecialchars($_SESSION['username']); ?>'
+                            email: '<?php echo $_SESSION['username']; ?>'
                         },
                         success: function(response) {
                             console.log('OTP verification response:', response); // Debugging log for response
@@ -62,19 +66,21 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
                                     text: 'The OTP you entered is incorrect. Please try again or click "Resend" to receive a new code.',
                                     showConfirmButton: true
                                 }).then(() => {
+                                    // Show the OTP input again if the OTP is invalid
                                     showOtpInput(); // Call the function to show the OTP input again
                                 });
                             }
                         }
                     });
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    // Handle cancel action
                     var referer = document.referrer; // Get the referer URL
                     if (referer.includes('personalinfo.php')) {
                         window.location.href = 'personalinfo.php'; // Redirect to personalinfo.php
                     } else if (referer.includes('login.php')) {
                         window.location.href = '../logout.php'; // Redirect to logout.php
                     } else {
-                        window.location.href = 'http://localhost/booking/index.php?view=logininfo'; // Default redirect
+                        window.location.href = 'https://mcchmhotelreservation.com/booking/index.php?view=logininfo'; // Default redirect
                     }
                 }
             });
@@ -93,7 +99,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
                     type: 'POST',
                     url: 'resendOTP.php',
                     data: {
-                        email: '<?php echo htmlspecialchars($_SESSION['username']); ?>'
+                        email: '<?php echo $_SESSION['username']; ?>'
                     },
                     success: function(response) {
                         console.log('OTP resend response:', response); // Debugging log for resend response
@@ -104,6 +110,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
                             text: 'Please check your email for the new OTP.',
                             showConfirmButton: true
                         }).then(() => {
+                            // After the user acknowledges the success message, show the OTP input again
                             showOtpInput(); // Call the function to show the OTP input
                         });
                     }
@@ -117,32 +124,58 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
 ?>
 
 <?php
-
-
 if (!isset($_SESSION['monbela_cart'])) {
-    redirect(WEB_ROOT . 'index.php');
+  # code...
+  redirect(WEB_ROOT.'index.php');
 }
 
 function createRandomPassword() {
-    
+
     $chars = "abcdefghijkmnopqrstuvwxyz023456789";
-    srand((double)microtime() * 1000000);
+
+    srand((double)microtime()*1000000);
+
     $i = 0;
-    $pass = '';
+
+    $pass = '' ;
     while ($i <= 7) {
+
         $num = rand() % 33;
+
         $tmp = substr($chars, $num, 1);
+
         $pass = $pass . $tmp;
+
         $i++;
+
     }
+
     return $pass;
+
 }
 
-$confirmation = createRandomPassword();
+ $confirmation = createRandomPassword();
 $_SESSION['confirmation'] = $confirmation;
 
-$count_cart = count($_SESSION['monbela_cart']);
 
+
+// $arival    = $_SESSION['from']; 
+// $departure = $_SESSION['to'];
+// echo $name      = $_SESSION['name']; 
+// echo $last      = $_SESSION['last'];
+// echo $nationality   = $_SESSION['nationality'];
+// // echo // $city      = $_SESSION['city'] ;
+// echo $address   =  $_SESSION['city'] . ' ' . $_SESSION['address'];
+// echo $zip       = $_SESSION['zip'] ;
+// echo $phone     = $_SESSION['phone'];
+// echo $username     = $_SESSION['username'];
+// echo $company     = $_SESSION['company'];
+// echo $caddress     = $_SESSION['caddress'];
+// echo $password  = $_SESSION['pass'];
+// echo $dbirth   = $_SESSION['dbirth'];
+
+
+ $count_cart = count($_SESSION['monbela_cart']);
 
 // if(isset($_POST['btnsubmitbooking'])){
     if (isset($_POST['btnsubmitbooking']) || isset($_SESSION['payment_successful'])) { 
@@ -174,40 +207,22 @@ if(!isset($_SESSION['GUESTID'])){
 
   // var_dump($_SESSION);exit;
 
-// $guest = New Guest();
-// $guest->G_AVATAR          = validateAndSanitize($_SESSION)['image'];
-// $guest->G_FNAME          = validateAndSanitize($_SESSION)['name'];    
-// $guest->G_LNAME          = validateAndSanitize($_SESSION)['last'];
-// $guest->G_GENDER         = validateAndSanitize($_SESSION)['gender'];    
-// $guest->G_CITY           = validateAndSanitize($_SESSION)['city'];
-// $guest->G_ADDRESS        =validateAndSanitize($_SESSION)['address'] ;        
-// $guest->DBIRTH           = date_format(date_create($_SESSION['dbirth']), 'Y-m-d');   
-// $guest->G_PHONE          = validateAndSanitize($_SESSION)['phone'];    
-// $guest->G_NATIONALITY    = validateAndSanitize($_SESSION)['nationality'];          
-// $guest->G_COMPANY        = validateAndSanitize($_SESSION)['company'];      
-// $guest->G_CADDRESS       = validateAndSanitize($_SESSION)['caddress'];        
-// $guest->G_TERMS          = 1;    
-// $guest->G_UNAME          = validateAndSanitize($_SESSION)['username'];    
-// $guest->G_PASS           = sha1($_SESSION['pass']);    
-// $guest->ZIP              = validateAndSanitize($_SESSION)['zip'];
-
-// Validate and sanitize inputs
-$guest->G_AVATAR = filter_var($_SESSION['image'], FILTER_SANITIZE_STRING);
-$guest->G_FNAME = filter_var($_SESSION['name'], FILTER_SANITIZE_STRING);
-$guest->G_LNAME = filter_var($_SESSION['last'], FILTER_SANITIZE_STRING);
-$guest->G_GENDER = filter_var($_SESSION['gender'], FILTER_SANITIZE_STRING);
-$guest->G_CITY = filter_var($_SESSION['city'], FILTER_SANITIZE_STRING);
-$guest->G_ADDRESS = filter_var($_SESSION['address'], FILTER_SANITIZE_STRING);
-$guest->DBIRTH = date_format(date_create($_SESSION['dbirth']), 'Y-m-d');
-$guest->G_PHONE = filter_var($_SESSION['phone'], FILTER_SANITIZE_STRING);
-$guest->G_NATIONALITY = filter_var($_SESSION['nationality'], FILTER_SANITIZE_STRING);
-$guest->G_COMPANY = filter_var($_SESSION['company'], FILTER_SANITIZE_STRING);
-$guest->G_CADDRESS = filter_var($_SESSION['caddress'], FILTER_SANITIZE_STRING);
-$guest->G_TERMS = 1;
-$guest->G_UNAME = filter_var($_SESSION['username'], FILTER_SANITIZE_STRING);
-$guest->G_PASS = password_hash(filter_var($_SESSION['pass'], FILTER_SANITIZE_STRING), PASSWORD_DEFAULT);
-$guest->ZIP = filter_var($_SESSION['zip'], FILTER_SANITIZE_STRING);
-
+$guest = New Guest();
+$guest->G_AVATAR          = validateAndSanitize($_SESSION)['image'];
+$guest->G_FNAME          = validateAndSanitize($_SESSION)['name'];    
+$guest->G_LNAME          = validateAndSanitize($_SESSION)['last'];
+$guest->G_GENDER         = validateAndSanitize($_SESSION)['gender'];    
+$guest->G_CITY           = validateAndSanitize($_SESSION)['city'];
+$guest->G_ADDRESS        =validateAndSanitize($_SESSION)['address'] ;        
+$guest->DBIRTH           = date_format(date_create($_SESSION['dbirth']), 'Y-m-d');   
+$guest->G_PHONE          = validateAndSanitize($_SESSION)['phone'];    
+$guest->G_NATIONALITY    = validateAndSanitize($_SESSION)['nationality'];          
+$guest->G_COMPANY        = validateAndSanitize($_SESSION)['company'];      
+$guest->G_CADDRESS       = validateAndSanitize($_SESSION)['caddress'];        
+$guest->G_TERMS          = 1;    
+$guest->G_UNAME          = validateAndSanitize($_SESSION)['username'];    
+$guest->G_PASS           = sha1($_SESSION['pass']);    
+$guest->ZIP              = validateAndSanitize($_SESSION)['zip'];
 
    
 $guest->create(); 
@@ -235,19 +250,19 @@ $_SESSION['GUESTID'] =   $lastguest;
            
             $paymentStatus = $_GET['paymentstatus'];
 
+
             $reservation = new Reservation();
-            $reservation->CONFIRMATIONCODE = filter_var($_SESSION['confirmation'], FILTER_SANITIZE_STRING);
-            $reservation->TRANSDATE = date('Y-m-d h:i:s');
-            $reservation->ROOMID = filter_var($_SESSION['monbela_cart'][$i]['monbelaroomid'], FILTER_SANITIZE_NUMBER_INT);
-            $reservation->ARRIVAL = date_format(date_create($_SESSION['monbela_cart'][$i]['monbelacheckin']), 'Y-m-d');
-            $reservation->DEPARTURE = date_format(date_create($_SESSION['monbela_cart'][$i]['monbelacheckout']), 'Y-m-d');
-            $reservation->RPRICE = filter_var($_SESSION['monbela_cart'][$i]['monbelaroomprice'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-            $reservation->NIGHTS = intval($_SESSION['monbela_cart'][$i]['monbeladay']);
-            $reservation->GUESTID = $_SESSION['GUESTID'];
-            $reservation->PRORPOSE = 'Travel';
-            $reservation->PAYMENT_STATUS = $paymentStatus;
-            $reservation->PAYMENT_METHOD = 'GCash';
-            $reservation->STATUS = 'Pending';
+            $reservation->CONFIRMATIONCODE  = $_SESSION['confirmation'];
+            $reservation->TRANSDATE         = date('Y-m-d h:i:s'); 
+            $reservation->ROOMID            = $_SESSION['monbela_cart'][$i]['monbelaroomid'];
+            $reservation->ARRIVAL           = date_format(date_create( $_SESSION['monbela_cart'][$i]['monbelacheckin']), 'Y-m-d');  
+            $reservation->DEPARTURE         = date_format(date_create( $_SESSION['monbela_cart'][$i]['monbelacheckout']), 'Y-m-d'); 
+            $reservation->RPRICE            = $_SESSION['monbela_cart'][$i]['monbelaroomprice'];  
+            $reservation->GUESTID           = $_SESSION['GUESTID']; 
+            $reservation->PRORPOSE          = 'Travel';
+            $reservation->PAYMENT_STATUS    = $paymentStatus;
+            $reservation->PAYMENT_METHOD    = 'GCash';
+            $reservation->STATUS            = 'Pending';
             $reservation->create(); 
 
             
@@ -257,33 +272,18 @@ $_SESSION['GUESTID'] =   $lastguest;
            $item = count($_SESSION['monbela_cart']);
            
 
-           
-    // Use prepared statements for SQL queries
-    $stmt = $mydb->prepare("INSERT INTO `tblpayment` (`TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `GUESTID`, `SPRICE`, `MSGVIEW`, `STATUS`, `PAYMENT_STATUS`, `PAYMENT_METHOD`, `AMOUNT_PAID`)
-    VALUES (?, ?, ?, ?, ?, 0, 'Pending', ?, 'GCash', ?)");
-    $stmt->bind_param("ssiiisi", date('Y-m-d h:i:s'), $_SESSION['confirmation'], $item, $_SESSION['GUESTID'], $tot, $paymentStatus, $amountPaid);
-    $stmt->execute();
-    if ($stmt->error) {
-        echo "Error executing first query: " . $stmt->error;
-    }
+      $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`,`PAYMENT_STATUS`,`PAYMENT_METHOD` )
+       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentStatus . "', 'GCash' )" ;
+        // mysql_query($sql);
 
-    $stmt1 = $mydb->prepare("INSERT INTO `notifications` (`TRANSDATE`, `CONFIRMATIONCODE`, `GUESTID`, `SPRICE`, `PAYMENT_STATUS`, `AMOUNT_PAID`, `IS_READ`, `ROOMID`)
-    VALUES (?, ?, ?, ?, ?, ?, 0, ?)");
-    $stmt1->bind_param("ssissi", date('Y-m-d H:i:s'), $_SESSION['confirmation'], $_SESSION['GUESTID'], $tot, $paymentStatus, $amountPaid, $reservation->ROOMID);
-    $stmt1->execute();
-    if ($stmt1->error) {
-        echo "Error executing second query: " . $stmt1->error;
-    }
+        
+     
 
-    // Close the statements
-    $stmt->close();
-    $stmt1->close();
 
-    //   $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`,`PAYMENT_STATUS`,`PAYMENT_METHOD` )
-    //    VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentStatus . "', 'GCash' )" ;
-    //     // mysql_query($sql);
-    //  $mydb->setQuery($sql);
-    //  $msg = $mydb->executeQuery();
+
+
+     $mydb->setQuery($sql);
+     $msg = $mydb->executeQuery();
 
     //  $mydb1->setQuery($sql1);
     //  $msg1 = $mydb1->executeQuery();
