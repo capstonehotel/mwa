@@ -12,39 +12,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> Include SweetAlert2 -->
 <?php
-// Function to validate and sanitize input
-function validateAndSanitizeInput($data) {
-    // Trim whitespace
-    $data = trim($data);
-    // Strip tags to prevent XSS
-    $data = strip_tags($data);
-    // Escape special characters for SQL
-    $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
-    return $data;
-}
-// Validate and sanitize session inputs
-// $_SESSION['name'] = validateAndSanitizeInput($_SESSION['name']);
-// $_SESSION['last'] = validateAndSanitizeInput($_SESSION['last']);
-// $_SESSION['city'] = validateAndSanitizeInput($_SESSION['city']);
-// $_SESSION['address'] = validateAndSanitizeInput($_SESSION['address']);
-// $_SESSION['phone'] = validateAndSanitizeInput($_SESSION['phone']);
-// $_SESSION['nationality'] = validateAndSanitizeInput($_SESSION['nationality']);
-// $_SESSION['company'] = validateAndSanitizeInput($_SESSION['company']);
-// $_SESSION['caddress'] = validateAndSanitizeInput($_SESSION['caddress']);
-// $_SESSION['zip'] = validateAndSanitizeInput($_SESSION['zip']);
-// $_SESSION['dbirth'] = validateAndSanitizeInput($_SESSION['dbirth']);
-
-// // Validate email format (assuming username is an email)
-// if (!filter_var($_SESSION['username'], FILTER_VALIDATE_EMAIL)) {
-//     die("Invalid email format.");
-// }
-
-// // Validate phone number (example: only digits and length check)
-// if (!preg_match('/^[0-9]{10,15}$/', $_SESSION['phone'])) {
-//     die("Invalid phone number.");
-// }
-
-
 
 if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify']) && $_GET['verify'] == 'true') {
     // var_dump($_GET['view']);
@@ -241,21 +208,22 @@ if(!isset($_SESSION['GUESTID'])){
   // var_dump($_SESSION);exit;
 
 $guest = New Guest();
-$guest->G_AVATAR = $_SESSION['image'];
-        $guest->G_FNAME = validateAndSanitizeInput($_SESSION['name']);
-        $guest->G_LNAME = validateAndSanitizeInput($_SESSION['last']);
-        $guest->G_GENDER = validateAndSanitizeInput($_SESSION['gender']);
-        $guest->G_CITY = validateAndSanitizeInput($_SESSION['city']);
-        $guest->G_ADDRESS = validateAndSanitizeInput($_SESSION['address']);
-        $guest->DBIRTH = date_format(date_create($_SESSION['dbirth']), 'Y-m-d');
-        $guest->G_PHONE = validateAndSanitizeInput($_SESSION['phone']);
-        $guest->G_NATIONALITY = validateAndSanitizeInput($_SESSION['nationality']);
-        $guest->G_COMPANY = validateAndSanitizeInput($_SESSION['company']);
-        $guest->G_CADDRESS = validateAndSanitizeInput($_SESSION['caddress']);
-        $guest->G_TERMS = 1; // Assuming terms are accepted
-        $guest->G_UNAME = validateAndSanitizeInput($_SESSION['username']);
-        $guest->G_PASS = password_hash($_SESSION['pass'], PASSWORD_DEFAULT);
-        $guest->ZIP = validateAndSanitizeInput($_SESSION['zip']);
+$guest->G_AVATAR          = validateAndSanitize($_SESSION)['image'];
+$guest->G_FNAME          = validateAndSanitize($_SESSION)['name'];    
+$guest->G_LNAME          = validateAndSanitize($_SESSION)['last'];
+$guest->G_GENDER         = validateAndSanitize($_SESSION)['gender'];    
+$guest->G_CITY           = validateAndSanitize($_SESSION)['city'];
+$guest->G_ADDRESS        =validateAndSanitize($_SESSION)['address'] ;        
+$guest->DBIRTH           = date_format(date_create($_SESSION['dbirth']), 'Y-m-d');   
+$guest->G_PHONE          = validateAndSanitize($_SESSION)['phone'];    
+$guest->G_NATIONALITY    = validateAndSanitize($_SESSION)['nationality'];          
+$guest->G_COMPANY        = validateAndSanitize($_SESSION)['company'];      
+$guest->G_CADDRESS       = validateAndSanitize($_SESSION)['caddress'];        
+$guest->G_TERMS          = 1;    
+$guest->G_UNAME          = validateAndSanitize($_SESSION)['username'];    
+$guest->G_PASS           = sha1($_SESSION['pass']);    
+$guest->ZIP              = validateAndSanitize($_SESSION)['zip'];
+
    
 $guest->create(); 
   $lastguest=$guest->id; 
@@ -280,19 +248,19 @@ $_SESSION['GUESTID'] =   $lastguest;
       
             // }
            
-            $paymentStatus = validateAndSanitizeInput($_GET['paymentstatus']);
+            $paymentStatus = $_GET['paymentstatus'];
 
 
             $reservation = new Reservation();
-            $reservation->CONFIRMATIONCODE  = validateAndSanitizeInput($_SESSION['confirmation']);
+            $reservation->CONFIRMATIONCODE  = $_SESSION['confirmation'];
             $reservation->TRANSDATE         = date('Y-m-d h:i:s'); 
             $reservation->ROOMID            = $_SESSION['monbela_cart'][$i]['monbelaroomid'];
             $reservation->ARRIVAL           = date_format(date_create( $_SESSION['monbela_cart'][$i]['monbelacheckin']), 'Y-m-d');  
             $reservation->DEPARTURE         = date_format(date_create( $_SESSION['monbela_cart'][$i]['monbelacheckout']), 'Y-m-d'); 
-            $reservation->RPRICE            = floatval(validateAndSanitizeInput($_SESSION['monbela_cart'][$i]['price'])); 
-            $reservation->GUESTID           = intval(validateAndSanitizeInput($_SESSION['GUESTID'])); 
+            $reservation->RPRICE            = $_SESSION['monbela_cart'][$i]['monbelaroomprice'];  
+            $reservation->GUESTID           = $_SESSION['GUESTID']; 
             $reservation->PRORPOSE          = 'Travel';
-            $reservation->PAYMENT_STATUS    = validateAndSanitizeInput($paymentStatus);
+            $reservation->PAYMENT_STATUS    = $paymentStatus;
             $reservation->PAYMENT_METHOD    = 'GCash';
             $reservation->STATUS            = 'Pending';
             $reservation->create(); 
@@ -302,30 +270,11 @@ $_SESSION['GUESTID'] =   $lastguest;
             }
 
            $item = count($_SESSION['monbela_cart']);
-           // Use prepared statements for SQL queries
-    $stmt = $mydb->prepare("INSERT INTO `tblpayment` (`TRANSDATE`, `CONFIRMATIONCODE`, `PQTY`, `GUESTID`, `SPRICE`, `MSGVIEW`, `STATUS`, `PAYMENT_STATUS`, `PAYMENT_METHOD`, `AMOUNT_PAID`)
-    VALUES (?, ?, ?, ?, ?, 0, 'Pending', ?, 'GCash', ?)");
-    $stmt->bind_param("ssiiisi", date('Y-m-d h:i:s'), $_SESSION['confirmation'], $item, $_SESSION['GUESTID'], $tot, $paymentStatus, $amountPaid);
-    $stmt->execute();
-    if ($stmt->error) {
-        echo "Error executing first query: " . $stmt->error;
-    }
+           
 
-    $stmt1 = $mydb->prepare("INSERT INTO `notifications` (`TRANSDATE`, `CONFIRMATIONCODE`, `GUESTID`, `SPRICE`, `PAYMENT_STATUS`, `AMOUNT_PAID`, `IS_READ`, `ROOMID`)
-    VALUES (?, ?, ?, ?, ?, ?, 0, ?)");
-    $stmt1->bind_param("ssissi", date('Y-m-d H:i:s'), $_SESSION['confirmation'], $_SESSION['GUESTID'], $tot, $paymentStatus, $amountPaid, $reservation->ROOMID);
-    $stmt1->execute();
-    if ($stmt1->error) {
-        echo "Error executing second query: " . $stmt1->error;
-    }
-
-    // Close the statements
-    $stmt->close();
-    $stmt1->close();
-
-    //   $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`,`PAYMENT_STATUS`,`PAYMENT_METHOD` )
-    //    VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentStatus . "', 'GCash' )" ;
-    //     // mysql_query($sql);
+      $sql = "INSERT INTO `tblpayment` (`TRANSDATE`,`CONFIRMATIONCODE`,`PQTY`, `GUESTID`, `SPRICE`,`MSGVIEW`,`STATUS`,`PAYMENT_STATUS`,`PAYMENT_METHOD` )
+       VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentStatus . "', 'GCash' )" ;
+        // mysql_query($sql);
 
         
      
@@ -333,8 +282,8 @@ $_SESSION['GUESTID'] =   $lastguest;
 
 
 
-    //  $mydb->setQuery($sql);
-    //  $msg = $mydb->executeQuery();
+     $mydb->setQuery($sql);
+     $msg = $mydb->executeQuery();
 
     //  $mydb1->setQuery($sql1);
     //  $msg1 = $mydb1->executeQuery();
