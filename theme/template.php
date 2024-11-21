@@ -682,11 +682,11 @@ s0.parentNode.insertBefore(s1,s0);
             ?>
 
           
-                    <li class="nav-item dropdown" style="right: 50px;">
+                    <li class="nav-item dropdown" >
                       <a class="nav-link active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                          <i class="fa fa-user fa-fw"></i><?php echo $_SESSION['name']. ' ' . $_SESSION['last']; ?> <i class="fa fa-caret-down fa-fw"></i> 
                       </a>
-                      <ul class="dropdown-menu" style="width: 200px;">
+                      <ul class="dropdown-menu" style="width: 200px; right: 50px;">
                           
                     <li class="widget-user-header bg-yellow">
                       <div class="widget-user-image" style="padding-top: 20px; text-align: center;">
