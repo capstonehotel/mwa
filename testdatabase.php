@@ -20,7 +20,7 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
-        echo "ID " . $row["name"] . "<br />";
+        echo "ID " . $row["message"] . "<br />";
     }
 } else {
     echo "No tables found.";
