@@ -29,6 +29,7 @@ if (empty($message)) {
   echo "error";
 } else {
   $conn->query($sql);
+  echo "success";
 }
 
 // if ($conn->query($sql) === TRUE) {
