@@ -88,7 +88,9 @@ if (!isset($_SESSION['monbela_cart'])) {
                 <input type="password" class="form-control" id="password" name="pass" placeholder="Enter your password" required>
             </div>
             <div class="form-group" style="margin-top: 10px;">
-                <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div>
+                <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126" data-callback="onSuccess"
+                 data-error-callback="onError"
+                 data-expired-callback="onExpired"></div>
             </div>
             <p  style="margin-top: 10px; margin-left: 10px;">
                 <a href="<?php echo  "https://mcchmhotelreservation.com/booking/forgot_password.php"; ?>">Forgot Password?</a>
@@ -99,14 +101,19 @@ if (!isset($_SESSION['monbela_cart'])) {
  
     <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
     <script>
-    // Enable the button when hCaptcha is successfully completed
-    function onHcaptchaSuccess() {
-        document.getElementById('signin-button').disabled = false;
+    // Function called when hCaptcha is successful
+    function onSuccess(token) {
+        document.getElementById('signin-button').disabled = false; // Enable the button
     }
 
-    // Disable the button if hCaptcha expires or is reset
-    function onHcaptchaExpired() {
-        document.getElementById('signin-button').disabled = true;
+    // Function called when hCaptcha fails
+    function onError() {
+        document.getElementById('signin-button').disabled = true; // Disable the button
+    }
+
+    // Function called when hCaptcha expires
+    function onExpired() {
+        document.getElementById('signin-button').disabled = true; // Disable the button
     }
 </script>
 <?php
