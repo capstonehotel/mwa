@@ -54,14 +54,14 @@
     </div>
                 <?php 
                        $sql = "SELECT g.G_AVATAR, l.* FROM `livechat` l 
-                       JOIN `tblguest` g ON l.sender_id = g.GUESTID
+                       JOIN `tblguest` g ON l.sender_id = g. GUESTID
                        GROUP BY l.sender_id";
-                      $result = $connection->query($sql);
+                      $result = $conn->query($sql);
                         while ($row = $result->fetch_assoc()) {
 
 
                             $badgesql = "SELECT  *  FROM `livechat` WHERE status=0 AND sender_id=".$row['sender_id'];
-                            $badgeresult = $connection->query($badgesql);
+                            $badgeresult = $conn->query($badgesql);
                             $count = 0;
                             while ($rowbadge = $badgeresult->fetch_assoc()) {
                                 $count++;
@@ -71,7 +71,7 @@
 
                     ?>
                       <a href="<?php echo '?id='.$row['sender_id']; ?>" class="list-group-item list-group-item-action" style="border-left:0px; border-right:0px;">
-            <img src="https://mcchmhotelreservation.com/images/user_avatar/<?php echo $row['G_AVATAR']; ?>" alt="<?php echo $row['name']; ?>'s avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+            <img src="../../images/user_avatar/<?php echo $row['G_AVATAR']; ?>" alt="<?php echo $row['name']; ?>'s avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
             <?php echo $row['name']; ?> 
             <?php if ($badge > 0) { ?>
             <span class="badge badge-pill badge-danger"><?php echo $badge; ?></span>
@@ -93,24 +93,24 @@ if (isset($_GET['id'])) {
     $userSql = "SELECT g.G_AVATAR, l.name FROM `livechat` l 
                 JOIN `tblguest` g ON l.sender_id = g. GUESTID 
                 WHERE l.sender_id = $sender_id LIMIT 1";
-    $userResult = $connection->query($userSql);
+    $userResult = $conn->query($userSql);
     
     // Fetch user details
     if ($userRow = $userResult->fetch_assoc()) {
         $userAvatar = $userRow['G_AVATAR'];
         $userName = $userRow['name'];
     } else {
-        $userAvatar = 'https://mcchmhotelreservation.com/admin/img/undraw_profile.svg'; // Fallback avatar
+        $userAvatar = '../img/undraw_profile.svg'; // Fallback avatar
         $userName = ''; // Fallback name
     }
 } else {
-    $userAvatar = 'https://mcchmhotelreservation.com/admin/img/undraw_profile.svg'; // Fallback avatar
+    $userAvatar = '../img/undraw_profile.svg'; // Fallback avatar
     $userName = ''; // Fallback name
 }
 ?>
         <div class="main">
         <div class="header" style="position: relative;">
-        <img src="https://mcchmhotelreservation.com/images/user_avatar/<?php echo $userAvatar; ?>" alt="<?php echo $userName; ?>'s avatar" style="width: 50px; height: 50px; border-radius: 50%;">
+        <img src="../../images/user_avatar/<?php echo $userAvatar; ?>" alt="<?php echo $userName; ?>'s avatar" style="width: 50px; height: 50px; border-radius: 50%;">
         <div class="name"><?php echo $userName; ?></div>
          <!-- Three Dots Menu -->
          <div class="three-dots" onclick="toggleMenu(event)">
@@ -452,7 +452,7 @@ $('.chat-messages').scrollTop($('.chat-messages')[0].scrollHeight);
 
     function sendMessageToServer(messageText) {
         const userId = new URLSearchParams(window.location.search).get('id');
-        fetch('chatbox.php', {
+        fetch('https://mcchmhotelreservation.com/admin/themes/chatbox.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `message=${messageText}&user_id=${userId}`

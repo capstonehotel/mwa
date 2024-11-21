@@ -2,15 +2,15 @@
 
 $senderid=$_GET['id'];
 
-    // Database connection details
-    $servername = "127.0.0.1";
-    $username = "u510162695_hmsystemdb";
-    $password = "1Hmsystemdb";
-    $dbname = "u510162695_hmsystemdb";
-    $dbport ="3306";
+// $servername = "localhost";
+// $username = "root";
+// $password = "";
+// $dbname = "hmsystemdb";
 
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname, $dbport);
+
+// $conn = new mysqli($servername, $username, $password, $dbname);
+
+$conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 
 $sql = "UPDATE livechat SET status='1' WHERE sender_id=$senderid";
 
