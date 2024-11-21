@@ -1,5 +1,5 @@
 <?php
-require_once '../../includes/initialize.php';
+require_once 'https://mcchmhotelreservation.com/includes/initialize.php';
 // Check if the necessary POST variables are set
 
     $user_id = $_GET['user_id'];
