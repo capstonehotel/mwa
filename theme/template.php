@@ -476,6 +476,7 @@ s0.parentNode.insertBefore(s1,s0);
 <div id="chatbox" class="chatbox">
     <div class="chatbox-header">
         <span class="chatbox-title">Chat with Admin</span>
+        <?php echo $_SESSION['GUESTID']; ?>
         <button class="close-button" onclick="closeChatbox()">×</button>
     </div>
     <div id="chat-messages" class="chat-messages">
