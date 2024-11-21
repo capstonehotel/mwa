@@ -90,7 +90,8 @@ if (!isset($_SESSION['monbela_cart'])) {
             <div class="form-group" style="margin-top: 10px;">
                 <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div>
             </div>
-            <p style="margin-top: 10px; margin-left: 10px;">
+            <div id="errorMessage" style="color:red; margin-top: 10px;"></div>
+            <p style="margin-top: 10px; margin-right: 10px;">
                 <a href="https://mcchmhotelreservation.com/booking/forgot_password.php">Forgot Password?</a>
             </p>
             <button type="submit" name="gsubmit" class="btn btn-primary btn-block" style="margin-top: 10px;">Sign In</button>
