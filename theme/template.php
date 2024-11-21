@@ -519,7 +519,7 @@ s0.parentNode.insertBefore(s1,s0);
             messageInput.value = '';
             checkInput();
 
-            fetch('https://mcchmhotelreservation.com/admin/themes/chatbox.php', {
+            fetch('/admin/themes/chatbox.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: `message=${encodeURIComponent(message)}&name=${encodeURIComponent(name)}&user_id=${userId}`
