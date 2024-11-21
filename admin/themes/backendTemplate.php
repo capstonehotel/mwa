@@ -519,31 +519,6 @@ mysqli_close($conn);
 
 </style>
 <script>
-    function toggleNotificationMenu() {
-    var menu = document.getElementById("notificationMenu");
-    if (menu.style.display === "block") {
-        menu.style.display = "none";
-        localStorage.setItem('notificationMenuOpen', 'false'); // Save state as closed
-    } else {
-        menu.style.display = "block";
-        localStorage.setItem('notificationMenuOpen', 'true'); // Save state as open
-    }
-}
-
-
-$(document).ready(function() {
-        // Check the stored state of the notification menu
-        var menuState = localStorage.getItem('notificationMenuOpen');
-        var menu = document.getElementById("notificationMenu");
-        
-        if (menuState === 'true') {
-            menu.style.display = "block"; // Show the menu if it was previously open
-        } else {
-            menu.style.display = "none"; // Hide the menu if it was previously closed
-        }
-    });
-</script>
-<script>
     document.getElementById('chat-button').addEventListener('click', function() {
         document.getElementById('chatbox').classList.add('open');
         loadMessages();
@@ -605,6 +580,31 @@ $(document).ready(function() {
                 }
             });
     }, 5000);
+</script>
+<script>
+    function toggleNotificationMenu() {
+    var menu = document.getElementById("notificationMenu");
+    if (menu.style.display === "block") {
+        menu.style.display = "none";
+        localStorage.setItem('notificationMenuOpen', 'false'); // Save state as closed
+    } else {
+        menu.style.display = "block";
+        localStorage.setItem('notificationMenuOpen', 'true'); // Save state as open
+    }
+}
+
+
+$(document).ready(function() {
+        // Check the stored state of the notification menu
+        var menuState = localStorage.getItem('notificationMenuOpen');
+        var menu = document.getElementById("notificationMenu");
+        
+        if (menuState === 'true') {
+            menu.style.display = "block"; // Show the menu if it was previously open
+        } else {
+            menu.style.display = "none"; // Hide the menu if it was previously closed
+        }
+    });
 </script>
 <!-- JavaScript to handle chat interactions -->
 <script>
@@ -670,6 +670,8 @@ $(document).ready(function() {
             });
     }, 5000);
 </script>
+
+
 <!-- <script>
     function toggleNotificationMenu() {
     var menu = document.getElementById("notificationMenu");
