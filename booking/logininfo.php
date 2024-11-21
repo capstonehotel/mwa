@@ -80,33 +80,60 @@ if (!isset($_SESSION['monbela_cart'])) {
 
     ?>  
   <div class="login-container">
-    <form id="loginForm" action="<?php echo "https://mcchmhotelreservation.com/login.php"; ?>" method="post">
-        <div class="form-group">             
-            <input type="email" class="form-control" id="username" name="username" placeholder="Enter your email" required>
-        </div>
-        <div class="form-group" style="margin-top: 10px;">                
-            <input type="password" class="form-control" id="password" name="pass" placeholder="Enter your password" required>
-        </div>
-        <div class="form-group" style="margin-top: 10px;">
-            <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div>
-        </div>
-        <p id="captchaMessage" style="color:red; display:none;">Please complete the hCaptcha.</p>
-        <p style="margin-top: 10px; margin-left: 10px;">
-            <a href="<?php echo "https://mcchmhotelreservation.com/booking/forgot_password.php"; ?>">Forgot Password?</a>
-        </p>
-        <button type="submit" name="gsubmit" class="btn btn-primary btn-block" style="margin-top: 10px;">Sign In</button>
-    </form>
-</div>
+        <form id="loginForm" method="post">
+            <div class="form-group">             
+                <input type="email" class="form-control" id="username" name="username" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group" style="margin-top: 10px;">                
+                <input type="password" class="form-control" id="password" name="pass" placeholder="Enter your password" required>
+            </div>
 
-<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
-<script>
+            <div class="form-group" style="margin-top: 10px;">
+                <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div>
+                <p id="captchaMessage" style="color:red; display:none;">Please complete the hCaptcha.</p>
+            </div>
+            <p  style="margin-top: 10px; margin-left: 10px;">
+                <a href="<?php echo  "https://mcchmhotelreservation.com/booking/forgot_password.php"; ?>">Forgot Password?</a>
+            </p>
+            <button type="submit" name="gsubmit" class="btn btn-primary btn-block" style="margin-top: 10px;">Sign In</button>
+        </form>
+    </div>
+ 
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+    <script>
     document.getElementById('loginForm').addEventListener('submit', function(event) {
         const hcaptchaResponse = document.querySelector('input[name="h-captcha-response"]').value;
+        const email = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
         if (!hcaptchaResponse) {
             event.preventDefault(); // Prevent form submission
             document.getElementById('captchaMessage').style.display = 'block'; // Show message
         } else {
             document.getElementById('captchaMessage').style.display = 'none'; // Hide message if hCaptcha is completed
+            
+            // Create a FormData object to send the form data
+            const formData = new FormData();
+            formData.append('username', email);
+            formData.append('pass', password);
+            formData.append('h-captcha-response', hcaptchaResponse);
+
+            // Send the data using fetch
+            fetch('https://mcchmhotelreservation.com/login.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Handle response data here (you can redirect or show a message)
+                console.log(data); // For debugging
+                // You can redirect or show a success message based on the response
+                // For example, if login is successful, redirect to the payment page
+                // window.location.href = 'https://mcchmhotelreservation.com/booking/index.php?view=payment';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         }
     });
 </script>
