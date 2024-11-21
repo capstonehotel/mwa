@@ -1,9 +1,9 @@
 <?php
 // Check if the necessary POST variables are set
-if (isset($_POST['user_id']) && isset($_POST['name']) && isset($_POST['message'])) {
-    $user_id = $_POST['user_id'];
-    $name = $_POST['name'];
-    $message = $_POST['message'];
+if (isset($_GET['user_id']) && isset($_GET['name']) && isset($_GET['message'])) {
+    $user_id = $_GET['user_id'];
+    $name = $_GET['name'];
+    $message = $_GET['message'];
 
     // // Database connection details
     // $servername = "127.0.0.1";
