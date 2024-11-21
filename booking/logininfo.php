@@ -80,7 +80,7 @@ if (!isset($_SESSION['monbela_cart'])) {
 
     ?>  
   <div class="login-container">
-        <form action="<?php echo "https://mcchmhotelreservation.com/login.php"; ?>" method="post">
+        <form id="loginForm" action="<?php echo "https://mcchmhotelreservation.com/login.php"; ?>" method="post">
             <div class="form-group">             
                 <input type="email" class="form-control" id="username" name="username" placeholder="Enter your email" required>
             </div>
@@ -106,6 +106,8 @@ if (!isset($_SESSION['monbela_cart'])) {
         if (!hcaptchaResponse) {
             event.preventDefault(); // Prevent form submission
             document.getElementById('captchaMessage').style.display = 'block'; // Show message
+        } else {
+            document.getElementById('captchaMessage').style.display = 'none'; // Hide message if hCaptcha is completed
         }
     });
 </script>
