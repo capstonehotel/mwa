@@ -15,12 +15,12 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SHOW TABLES";
+$sql = "SELECT * FROM livechat";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
-        echo "Tables " . $row["notifications,livechat,tblroom,tblguest"] . "<br />";
+        echo "ID " . $row["sender_id"] . "<br />";
     }
 } else {
     echo "No tables found.";
