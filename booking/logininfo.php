@@ -80,41 +80,35 @@ if (!isset($_SESSION['monbela_cart'])) {
 
     ?>  
   <div class="login-container">
-        <form id="loginForm">
+        <form action="<?php echo "https://mcchmhotelreservation.com/login.php"; ?>" method="post">
             <div class="form-group">             
                 <input type="email" class="form-control" id="username" name="username" placeholder="Enter your email" required>
             </div>
             <div class="form-group" style="margin-top: 10px;">                
                 <input type="password" class="form-control" id="password" name="pass" placeholder="Enter your password" required>
             </div>
+
             <div class="form-group" style="margin-top: 10px;">
                 <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div>
+                <p id="captchaMessage" style="color:red; display:none;">Please complete the hCaptcha.</p>
             </div>
-            <div id="errorMessage" style="color:red; margin-top: 10px;"></div>
-            <p style="margin-top: 10px; margin-right: 10px;">
-                <a href="https://mcchmhotelreservation.com/booking/forgot_password.php">Forgot Password?</a>
+            <p  style="margin-top: 10px; margin-left: 10px;">
+                <a href="<?php echo  "https://mcchmhotelreservation.com/booking/forgot_password.php"; ?>">Forgot Password?</a>
             </p>
             <button type="submit" name="gsubmit" class="btn btn-primary btn-block" style="margin-top: 10px;">Sign In</button>
-            <p id="errorMessage" style="color:red; margin-top: 10px;"></p> <!-- Changed to <p> -->
         </form>
     </div>
-
+ 
     <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the form from submitting
-
-            var hcaptchaResponse = document.querySelector('input[name="h-captcha-response"]').value;
-            if (!hcaptchaResponse) {
-                document.getElementById('errorMessage').innerText = "Please complete the hCaptcha.";
-                return; // Exit the function if hCaptcha is not completed
-            }
-
-            // If hCaptcha is completed, submit the form using AJAX or redirect as needed
-            this.submit(); // Proceed with form submission
-        });
-    </script>
-
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        const hcaptchaResponse = document.querySelector('input[name="h-captcha-response"]').value;
+        if (!hcaptchaResponse) {
+            event.preventDefault(); // Prevent form submission
+            document.getElementById('captchaMessage').style.display = 'block'; // Show message
+        }
+    });
+</script>
 <?php
   }
 
