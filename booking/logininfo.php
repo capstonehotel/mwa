@@ -87,6 +87,9 @@ if (!isset($_SESSION['monbela_cart'])) {
             <div class="form-group" style="margin-top: 10px;">                
                 <input type="password" class="form-control" id="password" name="pass" placeholder="Enter your password" required>
             </div>
+            <div class="form-group" style="margin-top: 10px;">
+                <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div>
+            </div>
             <p  style="margin-top: 10px; margin-left: 10px;">
                 <a href="<?php echo  "https://mcchmhotelreservation.com/booking/forgot_password.php"; ?>">Forgot Password?</a>
             </p>
@@ -94,7 +97,7 @@ if (!isset($_SESSION['monbela_cart'])) {
         </form>
     </div>
  
- 
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
 
 <?php
   }
