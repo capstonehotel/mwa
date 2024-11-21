@@ -15,16 +15,28 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT * FROM notifications";
+$sql = "SHOW TABLES";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-  // output data of each row
-  while($row = $result->fetch_assoc()) {
-    echo "GUESTID " . $row["GUESTID"] . "<br />";
-  }
+    while($row = $result->fetch_assoc()) {
+        echo $row["livechat"] . "\n";
+    }
 } else {
-  echo "0 results";
+    echo "No tables found.";
 }
+
 $conn->close();
+// $sql = "SELECT * FROM notifications";
+// $result = $conn->query($sql);
+
+// if ($result->num_rows > 0) {
+//   // output data of each row
+//   while($row = $result->fetch_assoc()) {
+//     echo "GUESTID " . $row["GUESTID"] . "<br />";
+//   }
+// } else {
+//   echo "0 results";
+// }
+// $conn->close();
 ?>
