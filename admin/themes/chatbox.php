@@ -32,7 +32,7 @@ error_reporting(E_ALL);
         echo "error";
     } else {
         // Prepare and execute SQL query
-        $sql = "INSERT INTO livechat (sender_id, name, message, status) VALUES ('148', 'linux', 'sir', '0')";
+        $sql = "INSERT INTO livechat (sender_id, message, status) VALUES ('148', 'sir', '0')";
         $conn->query($sql);
         echo "sent";
     }
