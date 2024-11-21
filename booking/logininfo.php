@@ -95,7 +95,7 @@ if (!isset($_SESSION['monbela_cart'])) {
                 <a href="https://mcchmhotelreservation.com/booking/forgot_password.php">Forgot Password?</a>
             </p>
             <button type="submit" name="gsubmit" class="btn btn-primary btn-block" style="margin-top: 10px;">Sign In</button>
-            <div id="errorMessage" style="color:red; margin-top: 10px;"></div>
+            <p id="errorMessage" style="color:red; margin-top: 10px;"></p> <!-- Changed to <p> -->
         </form>
     </div>
 
