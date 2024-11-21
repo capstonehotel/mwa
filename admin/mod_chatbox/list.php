@@ -84,7 +84,7 @@
         </div>
         <?php 
 // Assuming you have already established a database connection
-
+require_once '../../includes/initialize.php';
 // Check if an ID is set in the URL
 if (isset($_GET['id'])) {
     $sender_id = $_GET['id'];
