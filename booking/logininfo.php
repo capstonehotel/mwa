@@ -95,19 +95,18 @@ if (!isset($_SESSION['monbela_cart'])) {
             <p  style="margin-top: 10px; margin-left: 10px;">
                 <a href="<?php echo  "https://mcchmhotelreservation.com/booking/forgot_password.php"; ?>">Forgot Password?</a>
             </p>
-            <button type="submit" name="gsubmit" class="btn btn-primary btn-block" style="margin-top: 10px;">Sign In</button>
+            <button type="submit" name="gsubmit" id="signInButton" class="btn btn-primary btn-block" style="margin-top: 10px;">Sign In</button>
         </form>
     </div>
  
     <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
     <script>
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
+    document.getElementById('signInButton').addEventListener('click', function() {
         const hcaptchaResponse = document.querySelector('input[name="h-captcha-response"]').value;
         const email = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
         if (!hcaptchaResponse) {
-            event.preventDefault(); // Prevent form submission
             document.getElementById('captchaMessage').style.display = 'block'; // Show message
         } else {
             document.getElementById('captchaMessage').style.display = 'none'; // Hide message if hCaptcha is completed
