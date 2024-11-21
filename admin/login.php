@@ -11,80 +11,55 @@ require_once("../includes/initialize.php");
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        
         body {
-           
-    color:white;
+            color: white;
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-color: white ;
+            background-color: white;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             position: relative;
             overflow: hidden;
-           
         }
+        
         .title {
             text-align: center;
-    color:#7fb6dc;
-    padding: 15px 0;
-    font-size: 20px;
-    font-weight: bold;
-    width: 100%;
-    position: absolute;
-    top: 50px; /* Adjusts position at the top of the page */
-    z-index: 2;
-}
+            color: #7fb6dc;
+            padding: 15px 0;
+            font-size: 20px;
+            font-weight: bold;
+            width: 100%;
+            position: absolute;
+            top: 50px; /* Adjusts position at the top of the page */
+            z-index: 2;
+        }
         .container {
-            
-            /* margin-top: 10px; */
             display: flex;
             background-color: #ffffff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             overflow: hidden;
-            height: 60%;
-            width: 1000px;
+            height: 40%;
+            width: 400px; /* Reduced width */
             max-width: 100%;
             position: relative;
             z-index: 1;
-        }
-        .left {
-            
-
-            background-size: contain; /* Adjusts the image to fit within the container */
-    background-position: center; /* Centers the image */
-    background-repeat: no-repeat; /* Prevents the image from repeating */
-            /* background-image: url("../laptop.gif"); */
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            width: 50%;
-        }
-        .left h2 {
-            color: black;
-            font-size: 36px;
-            margin-bottom: 400px;
+            padding: 40px; /* Added padding for spacing */
         }
         .right {
-            
-            padding: 40px;
+            padding: 0; /* Reset padding */
             display: flex;
             flex-direction: column;
             justify-content: center;
-            width: 50%;
+            width: 100%; /* Full width */
         }
         .right h2 {
-            text-align:center;
+            text-align: center;
             color: black;
             font-size: 24px;
             margin-bottom: 50px;
@@ -94,19 +69,18 @@ require_once("../includes/initialize.php");
             flex-direction: column;
         }
         .right form .input-group {
-    position: relative;
-    margin-bottom: 20px;
-    width: 100%; /* Ensures the input group takes full width */
-}
-
-.right form .input-group input {
-    width: 100%;
-    padding: 10px 40px 10px 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    box-sizing: border-box; /* Ensures padding is included in total width */
-}
+            position: relative;
+            margin-bottom: 20px;
+            width: 100%; /* Ensures the input group takes full width */
+        }
+        .right form .input-group input {
+            width: 100%;
+            padding: 10px 40px 10px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box; /* Ensures padding is included in total width */
+        }
         .right form .input-group i {
             position: absolute;
             right: 10px;
@@ -124,59 +98,40 @@ require_once("../includes/initialize.php");
             cursor: pointer;
         }
         .right form .links {
-            
             display: flex;
             justify-content: center;
             margin-top: 10px;
         }
         .right form .links a {
-            color:#337AB7;
+            color: #337AB7;
             font-size: 16px;
             text-decoration: none;
-
         }
-       
+
         @media (max-width: 768px) {
-    .container {
-        flex-direction: column; /* Stack elements vertically on mobile */
-        height: 600px;
-        width: 90%;
-        margin: 0 auto;
-    }
-    .title {
-        max-width: 90%; /* Set a max width to allow wrapping */
-        white-space: normal; /* Allow text to wrap onto the next line */
-        padding: 10px 0; /* Adjust padding for mobile */
-    }
-
-    .left, .right {
-        width: 100%; /* Full width on mobile */
-        padding: 20px;
-        padding-left: 5px;
-    }
-
-    .left {
-        
-        order: -1; /* Move image to the top */
-        background-size: 50%; /* Set height for the image section */
-        height: 280px;  /* Cover to ensure cropping */
-        background-size: cover;
-    }
-
-    .right form {
-        max-width: 90%;
-        margin: 0 auto;
-    }
-}
+            .container {
+                flex-direction: column; /* Stack elements vertically on mobile */
+                height: auto; /* Allow height to adjust */
+                width: 90%;
+                margin: 0 auto;
+            }
+            .title {
+                max-width: 90%; /* Set a max width to allow wrapping */
+                white-space: normal; /* Allow text to wrap onto the next line */
+                padding: 10px 0; /* Adjust padding for mobile */
+            }
+            .right {
+                padding: 20px; /* Add padding for mobile */
+            }
+            .right form {
+                max-width: 90%;
+                margin: 0 auto;
+            }
+        }
     </style>
 </head>
 <body>
 
-<!-- <div class="title">
-        <h1>HM Hotel Reservation System</h1>
-    </div> -->
- 
-  <!-- Waves Container -->
   <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
   viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
     <defs>
@@ -184,9 +139,9 @@ require_once("../includes/initialize.php");
     </defs>
     <g class="parallax">
     <use xlink:href="#gentle-wave" x="48" y="0" fill="#cfe8f9" opacity="0.7" />
-<use xlink:href="#gentle-wave" x="48" y="3" fill="#cfe8f9" opacity="0.5" />
-<use xlink:href="#gentle-wave" x="48" y="5" fill="#cfe8f9" opacity="0.3" />
-<use xlink:href="#gentle-wave" x="48" y="7" fill="#cfe8f9" />
+    <use xlink:href="#gentle-wave" x="48" y="3" fill="#cfe8f9" opacity="0.5" />
+    <use xlink:href="#gentle-wave" x="48" y="5" fill="#cfe8f9" opacity="0.3" />
+    <use xlink:href="#gentle-wave" x="48" y="7" fill="#cfe8f9" />
     </g>
   </svg>
 
@@ -211,7 +166,6 @@ if (isset($_POST['btnlogin'])) {
             });
         </script>";
     } else {
-        // Fetch the user by username
         $sql = "SELECT * FROM tbluseraccount WHERE USER_NAME = '$uname'";
         $result = $connection->query($sql);
 
@@ -221,9 +175,7 @@ if (isset($_POST['btnlogin'])) {
 
         $row = mysqli_fetch_assoc($result);
 
-        // Check if user exists and verify password
         if ($row && password_verify($upass, $row['UPASS'])) {
-            // Password is correct, set session variables
             $_SESSION['ADMIN_ID'] = $row['USERID'];
             $_SESSION['ADMIN_UNAME'] = $row['UNAME'];
             $_SESSION['ADMIN_USERNAME'] = $row['USER_NAME'];
@@ -255,11 +207,7 @@ if (isset($_POST['btnlogin'])) {
     }
 }
 ?>
-    <div class="container row">
-        
-        <div class="left">
-            
-        </div>
+    <div class="container">
         <div class="right">
             <h2>LOGIN CREDENTIALS</h2>
             <form method="POST" action="login.php">
@@ -271,7 +219,7 @@ if (isset($_POST['btnlogin'])) {
                     <input id="password" placeholder="Password" type="password" name="pass" minlength="8" maxlength="12" required>
                     <i class="far fa-eye" id="eyeIcon"></i>
                 </div>
-                <button type="submit"  name="btnlogin" >Login</button>
+                <button type="submit" name="btnlogin">Login</button>
                 <div class="links">
                     <a href="../index.php" class="text-primary">Back to the website</a>
                 </div>
@@ -283,18 +231,11 @@ if (isset($_POST['btnlogin'])) {
     const passwordInput = document.getElementById('password');
 
     eyeIcon.addEventListener('click', function () {
-        // Toggle the type attribute
         const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
         passwordInput.setAttribute('type', type);
-        
-        // Toggle the eye icon
         eyeIcon.classList.toggle('fa-eye');
         eyeIcon.classList.toggle('fa-eye-slash');
     });
-</script>
+    </script>
 </body>
 </html>
-
-
-
-
