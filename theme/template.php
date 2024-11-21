@@ -561,19 +561,19 @@ s0.parentNode.insertBefore(s1,s0);
         }, 300);
     }
 
-    setInterval(function() {
-        const mid = "<?php echo $_SESSION['GUESTID']; ?>";
+    // setInterval(function() {
+    //     const mid = "<?php //echo $_SESSION['GUESTID']; ?>";
 
-        fetch("https://mcchmhotelreservation.com/admin/mod_chatbox/autoloadchat.php", {
-            method: "POST",
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `mid=${mid}`
-        })
-        .then(response => response.text())
-        .then(data => {
-            document.querySelector('.chat-messages').innerHTML = data;
-        });
-    }, 1000);
+    //     fetch("https://mcchmhotelreservation.com/admin/mod_chatbox/autoloadchat.php", {
+    //         method: "POST",
+    //         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    //         body: `mid=${mid}`
+    //     })
+    //     .then(response => response.text())
+    //     .then(data => {
+    //         document.querySelector('.chat-messages').innerHTML = data;
+    //     });
+    // }, 1000);
 </script>
 
 
