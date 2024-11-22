@@ -36,73 +36,38 @@ class Guest{
 			$row_count = $mydb->num_rows($cur);//get the number of count
 			return $row_count;
 	}
-	// static function guest_login($email = "", $pass = "") {
-	// 	global $mydb;
-	// 	$mydb->setQuery("SELECT * FROM " . self::$tbl_name . " WHERE `G_UNAME` ='" . $email . "'");
-	// 	$cur = $mydb->executeQuery();
-		
-	// 	if ($cur == false) {
-	// 		die(mysql_error());
-	// 	}
-		
-	// 	$row_count = $mydb->num_rows($cur); // get the number of count
-	// 	if ($row_count == 1) {
-	// 		$found_user = $mydb->loadSingleResult();
-			
-	// 		// Check if password matches using password_verify
-	// 		if (password_verify($pass, $found_user->G_PASS)) {
-	// 			$_SESSION['GUESTID'] = $found_user->GUESTID;
-	// 			$_SESSION['name'] = $found_user->G_FNAME;
-	// 			$_SESSION['last'] = $found_user->G_LNAME;
-	// 			$_SESSION['gender'] = $found_user->G_GENDER;
-	// 			$_SESSION['address'] = $found_user->G_ADDRESS;
-	// 			$_SESSION['phone'] = $found_user->G_PHONE;
-	// 			$_SESSION['username'] = $found_user->G_UNAME;
-	
-	// 			return true; // Successful login
-	// 		} else {
-	// 			return false; // Invalid password
-	// 		}
-	// 	} else {
-	// 		return false; // Invalid email
-	// 	}
-	// }
 	static function guest_login($email = "", $pass = "") {
-    global $mydb;
-
-    // Sanitize email
-    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
-
-    // Use prepared statement for the query
-    $query = "SELECT * FROM " . self::$tbl_name . " WHERE `G_UNAME` = ?";
-    $stmt = $mydb->prepare($query);
-    $stmt->bind_param("s", $email); // Bind the sanitized email parameter
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows === 1) {
-        $found_user = $result->fetch_object();
-
-        // Check if password matches using password_verify
-        if (password_verify($pass, $found_user->G_PASS)) {
-            // Set session variables securely
-            $_SESSION['GUESTID'] = htmlspecialchars($found_user->GUESTID, ENT_QUOTES, 'UTF-8');
-            $_SESSION['name'] = htmlspecialchars($found_user->G_FNAME, ENT_QUOTES, 'UTF-8');
-            $_SESSION['last'] = htmlspecialchars($found_user->G_LNAME, ENT_QUOTES, 'UTF-8');
-            $_SESSION['gender'] = htmlspecialchars($found_user->G_GENDER, ENT_QUOTES, 'UTF-8');
-            $_SESSION['address'] = htmlspecialchars($found_user->G_ADDRESS, ENT_QUOTES, 'UTF-8');
-            $_SESSION['phone'] = htmlspecialchars($found_user->G_PHONE, ENT_QUOTES, 'UTF-8');
-            $_SESSION['username'] = htmlspecialchars($found_user->G_UNAME, ENT_QUOTES, 'UTF-8');
-
-            return true; // Successful login
-        } else {
-            return false; // Invalid password
-        }
-    } else {
-        return false; // Invalid email
-    }
-}
-
+		global $mydb;
+		$mydb->setQuery("SELECT * FROM " . self::$tbl_name . " WHERE `G_UNAME` ='" . $email . "'");
+		$cur = $mydb->executeQuery();
+		
+		if ($cur == false) {
+			die(mysql_error());
+		}
+		
+		$row_count = $mydb->num_rows($cur); // get the number of count
+		if ($row_count == 1) {
+			$found_user = $mydb->loadSingleResult();
+			
+			// Check if password matches using password_verify
+			if (password_verify($pass, $found_user->G_PASS)) {
+				$_SESSION['GUESTID'] = $found_user->GUESTID;
+				$_SESSION['name'] = $found_user->G_FNAME;
+				$_SESSION['last'] = $found_user->G_LNAME;
+				$_SESSION['gender'] = $found_user->G_GENDER;
+				$_SESSION['address'] = $found_user->G_ADDRESS;
+				$_SESSION['phone'] = $found_user->G_PHONE;
+				$_SESSION['username'] = $found_user->G_UNAME;
+	
+				return true; // Successful login
+			} else {
+				return false; // Invalid password
+			}
+		} else {
+			return false; // Invalid email
+		}
+	}
+	
 	/*---Instantiation of Object dynamically---*/
 	static function instantiate($record) {
 		$object = new self;
