@@ -55,6 +55,7 @@ if (!isset($_SESSION['monbela_cart'])) {
               <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Register</button>
             </div>
           </nav>
+          <br>
           <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
               <div class="col-md-12">
@@ -92,7 +93,7 @@ if (!isset($_SESSION['monbela_cart'])) {
                  data-error-callback="onError"
                  data-expired-callback="onExpired"></div>
             </div>
-            <p  style="margin-top: 10px; margin-left: 10px;">
+            <p  style="margin-top: 10px; text-align: right;">
                 <a href="<?php echo  "https://mcchmhotelreservation.com/booking/forgot_password.php"; ?>">Forgot Password?</a>
             </p>
             <button id="signin-button" type="submit" name="gsubmit" class="btn btn-primary btn-block" style="margin-top: 10px;" disabled>Sign In</button>
