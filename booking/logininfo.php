@@ -58,7 +58,7 @@ if (!isset($_SESSION['monbela_cart'])) {
           <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
               <div class="col-md-12">
-                <h4>Service Two</h4> 
+                <h4>Sign In</h4> 
                     <?php echo logintab(); ?>
               </div>
             </div>
