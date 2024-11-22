@@ -92,10 +92,13 @@ if (!isset($_SESSION['monbela_cart'])) {
                 <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126" data-callback="onSuccess"
                  data-error-callback="onError"
                  data-expired-callback="onExpired"></div>
-            </div>
-            <p  style="margin-top: 10px; text-align: right;">
+                 <p  style="margin-top: 10px; text-align: right;">
                 <a href="<?php echo  "https://mcchmhotelreservation.com/booking/forgot_password.php"; ?>">Forgot Password?</a>
             </p>
+            </div>
+            <!-- <p  style="margin-top: 10px; text-align: right;">
+                <a href="<?php echo  "https://mcchmhotelreservation.com/booking/forgot_password.php"; ?>">Forgot Password?</a>
+            </p> -->
             <button id="signin-button" type="submit" name="gsubmit" class="btn btn-primary btn-block" style="margin-top: 10px;" disabled>Sign In</button>
         </form>
     </div>
