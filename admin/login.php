@@ -280,14 +280,16 @@ document.addEventListener("DOMContentLoaded", function () {
                         icon: "error",
                         title: "Location Required",
                         text: message,
-                    }).then(() => {
-                        // After the error message is dismissed, reload the page to prompt the user again
-                        location.reload();
                     });
 
                     locationStatus.textContent = message;
                     locationStatus.style.color = "red";
                     isLocationEnabled = false; // Reset location state
+
+                    // Reload the page to check location again
+                    setTimeout(function () {
+                        location.reload();
+                    }, 2000); // Wait for 2 seconds before reload
                 }
             );
         } else {
@@ -297,9 +299,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 title: "Location Not Supported",
                 text: "Your browser does not support geolocation. Please use a compatible browser.",
             });
-
-            // Stay on the page or reload if needed
-            location.reload();
         }
     }
 
@@ -315,14 +314,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 icon: "error",
                 title: "Location Required",
                 text: "You must enable location services to log in.",
-            }).then(() => {
-                // Optionally reload the page if location is required again
-                location.reload();
             });
         }
     });
 });
 </script>
+
 
 
 </body>
