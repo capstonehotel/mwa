@@ -14,16 +14,6 @@ require_once("../includes/initialize.php");
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://www.hcaptcha.com/1/api.js" async defer></script> <!-- hCaptcha JS -->
     <style>
-        .waves {
-    position: absolute; /* Fix the waves to a static position */
-    bottom: 0; /* Keep waves at the bottom of the viewport */
-    width: 100%;
-    z-index: 0; /* Ensure they stay behind the modal */
-}
-        html, body {
-    overflow: hidden; /* Prevent background scrolling */
-    height: 100%; /* Ensure height is fully constrained */
-}
         body {
             color: white;
             margin: 0;
@@ -34,7 +24,7 @@ require_once("../includes/initialize.php");
             justify-content: center;
             align-items: center;
             height: 100vh;
-            position: fixed;
+            position: relative;
             overflow: hidden;
         }
         
@@ -200,17 +190,13 @@ if (isset($_POST['btnlogin'])) {
     if (!$verification->success) {
         // hCaptcha failed
         echo "<script>
-            document.body.style.overflow = 'hidden'; // Disable scrolling
-Swal.fire({
-    icon: 'success',
-    title: 'Welcome back!',
-    text: 'Login successful.',
-    timer: 2000,
-    showConfirmButton: false,
-}).then(() => {
-    document.body.style.overflow = 'auto'; // Re-enable scrolling after the SweetAlert closes
-    window.location = 'index.php';
-});
+            Swal.fire({
+                icon: 'error',
+                title: 'hCaptcha Verification Failed',
+                text: 'Please verify that you are not a robot.'
+            }).then(() => {
+                    window.location = 'login.php';
+                });
         </script>";
         return;
     }
