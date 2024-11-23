@@ -25,6 +25,7 @@ require_once("../includes/initialize.php");
             height: 100vh;
             position: relative;
             overflow: hidden;
+            overflow-y: hidden;
         }
         
         .title {
@@ -44,13 +45,23 @@ require_once("../includes/initialize.php");
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             overflow: hidden;
-            height: 40%;
+            height: auto; /* Let the height adjust naturally */
+            min-height: 400px; /* Minimum height */
             width: 400px; /* Reduced width */
             max-width: 100%;
             position: relative;
             z-index: 1;
             padding: 40px; /* Added padding for spacing */
+            margin-top: 50px;
         }
+        .waves {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 1; /* Ensure waves are behind the form */
+}
         .right {
             padding: 0; /* Reset padding */
             display: flex;
@@ -189,6 +200,15 @@ if (isset($_POST['btnlogin'])) {
                     text: 'Hello, {$row['UNAME']}.',
                     timer: 2000,
                     showConfirmButton: false
+                     customClass: {
+        popup: 'custom-swal-popup' // Add a custom class if further customization is needed
+    },
+    willOpen: () => {
+        document.body.style.overflow = 'hidden'; // Disable body scroll
+    },
+    didClose: () => {
+        document.body.style.overflow = ''; // Restore body scroll
+    }
                 }).then(() => {
                     window.location = 'index.php';
                 });
@@ -237,5 +257,60 @@ if (isset($_POST['btnlogin'])) {
         eyeIcon.classList.toggle('fa-eye-slash');
     });
     </script>
+    <script>
+    const loginButton = document.querySelector('button[name="btnlogin"]');
+    let locationEnabled = false;
+
+    // Check if the user's location is enabled
+    function checkLocationPermission() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    locationEnabled = true;
+                    loginButton.disabled = false; // Enable the login button
+                },
+                (error) => {
+                    locationEnabled = false;
+                    loginButton.disabled = true; // Disable the login button
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Location Required',
+                        text: 'Please enable your location to log in.',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            );
+        } else {
+            locationEnabled = false;
+            loginButton.disabled = true; // Disable the login button
+            Swal.fire({
+                icon: 'error',
+                title: 'Geolocation Not Supported',
+                text: 'Your browser does not support location services.',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
+
+    // Check location permission on page load
+    window.onload = () => {
+        loginButton.disabled = true; // Disable login button initially
+        checkLocationPermission();
+    };
+
+    // Recheck location permission when the user tries to interact
+    loginButton.addEventListener('click', (e) => {
+        if (!locationEnabled) {
+            e.preventDefault();
+            Swal.fire({
+                icon: 'warning',
+                title: 'Location Required',
+                text: 'Please enable your location to log in.',
+                confirmButtonText: 'OK'
+            });
+        }
+    });
+</script>
+
 </body>
 </html>

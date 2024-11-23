@@ -19,7 +19,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
 
     ?>
   <script>
-        console.log('SweetAlert2 script is running'); // JS log
+        console.log('SweetAlert2 script is running'); // JS log;s
         
 
         // Function to show the OTP input prompt

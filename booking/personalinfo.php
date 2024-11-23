@@ -281,7 +281,7 @@ function validateImage(event) {
 					    </div>
 					</div>
 					NOTE: 
-					We recommend that your password should be at least 6 characters long and should be different from your username.
+					We recommend that your password should be at least 8 characters long and should be different from your username.
 					Your e-mail address must be valid. We use e-mail for communication purposes (order notifications, etc). Therefore, it is essential to provide a valid e-mail address to be able to use our services correctly.
 					All your private data is confidential. We will never sell, exchange or market it in any way. For further information on the responsibilities of both parties, you may refer to us.
 			    </div>
