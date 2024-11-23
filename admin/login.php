@@ -12,7 +12,6 @@ require_once("../includes/initialize.php");
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://www.hcaptcha.com/1/api.js" async defer></script>
     <style>
         body {
             color: white;
@@ -45,7 +44,7 @@ require_once("../includes/initialize.php");
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             overflow: hidden;
-            height: 65%;
+            height: 50%;
             width: 400px; /* Reduced width */
             max-width: 100%;
             position: relative;
@@ -109,10 +108,6 @@ require_once("../includes/initialize.php");
             text-decoration: none;
         }
 
-        .h-captcha {
-            margin-top: 10px; /* Adjust the spacing */
-        }
-
         @media (max-width: 768px) {
             .container {
                 flex-direction: column; /* Stack elements vertically on mobile */
@@ -170,37 +165,6 @@ if (admin_logged_in()) { ?>
 if (isset($_POST['btnlogin'])) {
     $uname = sanitize_input($_POST['email']);
     $upass = sanitize_input($_POST['pass']);
-    $hcaptcha_response = $_POST['h-captcha-response'];
-// Verify hCaptcha response
-$secret_key = 'ES_84f7194c2cd04982851c0b2c910b33f3';  // Replace with your hCaptcha Secret Key
-$url = 'https://hcaptcha.com/siteverify';
-$data = [
-    'secret' => $secret_key,
-    'response' => $hcaptcha_response,
-];
-
-// Use cURL to send request to hCaptcha
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-$result = curl_exec($ch);
-curl_close($ch);
-
-$verification = json_decode($result);
-
-if (!$verification->success) {
-    // hCaptcha failed
-    echo "<script>
-        Swal.fire({
-            icon: 'error',
-            title: 'hCaptcha Verification Failed',
-            text: 'Please verify that you are not a robot.'
-        });
-    </script>";
-    return;
-}
 
 
     if ($uname == '' || $upass == '') {
@@ -317,7 +281,7 @@ if (!$verification->success) {
     <div class="container">
         <div class="right">
             <h2>LOGIN CREDENTIALS</h2>
-            <form method="POST" action="login.php" id="loginForm">
+            <form method="POST" action="login.php">
                 <div class="input-group">
                     <input placeholder="Username" type="text" name="email" required>
                     <i class="fas fa-user"></i>
@@ -326,9 +290,6 @@ if (!$verification->success) {
                     <input id="password" placeholder="Password" type="password" name="pass" minlength="8" maxlength="12" required>
                     <i class="far fa-eye" id="eyeIcon"></i>
                 </div>
-                 <!-- hCaptcha widget -->
-                 <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div> <!-- Replace with your hCaptcha Site Key -->
-
                 <button type="submit" name="btnlogin">Login</button>
                 <div class="links">
                     <a href="../index.php" class="text-primary">Back to the website</a>
@@ -345,20 +306,6 @@ if (!$verification->success) {
         passwordInput.setAttribute('type', type);
         eyeIcon.classList.toggle('fa-eye');
         eyeIcon.classList.toggle('fa-eye-slash');
-    });
-     // Add form submission listener to validate hCaptcha completion
-     document.getElementById('loginForm').addEventListener('submit', function(event) {
-        const hCaptchaResponse = grecaptcha.getResponse();
-
-        if (hCaptchaResponse.length == 0) {
-            // If hCaptcha is not completed, show alert and prevent form submission
-            event.preventDefault();
-            Swal.fire({
-                icon: 'error',
-                title: 'hCaptcha Required',
-                text: 'Please complete the hCaptcha to proceed.'
-            });
-        }
     });
     </script>
 <script>
