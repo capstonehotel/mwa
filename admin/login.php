@@ -301,8 +301,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Check location status when the page loads
-    checkLocation();
+    // Function to continuously monitor location status
+    function monitorLocation() {
+        // Call checkLocation every 2 seconds to ensure location status is updated
+        setInterval(checkLocation, 2000);
+    }
+
+    // Start monitoring the location
+    monitorLocation();
 
     // Validate location on form submit
     loginForm.addEventListener("submit", function (event) {
