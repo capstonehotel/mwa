@@ -184,6 +184,7 @@ if (isset($_POST['btnlogin'])) {
             });
         </script>";
   
+ 
     } else {
         // Use prepared statements to prevent SQL injection
         $sql = "SELECT * FROM tbluseraccount WHERE USER_NAME = ?";
@@ -195,7 +196,38 @@ if (isset($_POST['btnlogin'])) {
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
+            // Check if the account is locked due to too many failed attempts
+            if ($row['failed_attempts'] >= 3) {
+                // Check the time since the last failed attempt
+                $last_attempt_time = strtotime($row['last_failed_attempt']);
+                $lockout_time = 5 * 60;  // 5 minutes in seconds
+                if (time() - $last_attempt_time < $lockout_time) {
+                    $remaining_time = $lockout_time - (time() - $last_attempt_time);
+                    echo "<script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Account Locked',
+                            text: 'Too many failed login attempts. Please try again in " . gmdate("i:s", $remaining_time) . ".'
+                        });
+                    </script>";
+                    return;
+                } else {
+                    // Reset failed attempts after lockout period expires
+                    $sql_reset_attempts = "UPDATE tbluseraccount SET failed_attempts = 0 WHERE USER_NAME = ?";
+                    $stmt_reset = $connection->prepare($sql_reset_attempts);
+                    $stmt_reset->bind_param('s', $uname);
+                    $stmt_reset->execute();
+                }
+            }
+
+            // Check if the password matches
             if (password_verify($upass, $row['UPASS'])) {
+                // Reset failed attempts on successful login
+                $sql_reset_attempts = "UPDATE tbluseraccount SET failed_attempts = 0 WHERE USER_NAME = ?";
+                $stmt_reset = $connection->prepare($sql_reset_attempts);
+                $stmt_reset->bind_param('s', $uname);
+                $stmt_reset->execute();
+
                 // Start session and set session variables
                 $_SESSION['ADMIN_ID'] = $row['USERID'];
                 $_SESSION['ADMIN_UNAME'] = $row['UNAME'];
@@ -215,6 +247,12 @@ if (isset($_POST['btnlogin'])) {
                     });
                 </script>";
             } else {
+                // Increment failed attempts on incorrect login
+                $sql_increment_attempts = "UPDATE tbluseraccount SET failed_attempts = failed_attempts + 1, last_failed_attempt = NOW() WHERE USER_NAME = ?";
+                $stmt_increment = $connection->prepare($sql_increment_attempts);
+                $stmt_increment->bind_param('s', $uname);
+                $stmt_increment->execute();
+
                 echo "<script>
                     Swal.fire({
                         icon: 'error',
