@@ -41,7 +41,7 @@ if (isset($_POST['reset_request'])) {
             $mail->addAddress($email);
             $mail->isHTML(true);
             $mail->Subject = 'Password Reset Request';
-            $mail->Body = "Click the link to reset your password: <a href='http://localhost/HM_HotelReservation/booking/reset_password.php?token=$token&email=$email'>Reset Password</a>";
+            $mail->Body = "Click the link to reset your password: <a href='https://mcchmhotelreservation.com/booking/reset_password.php?token=$token&email=$email'>Reset Password</a>";
 
             if ($mail->send()) {
                 echo "<script>

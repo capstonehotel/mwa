@@ -184,8 +184,8 @@ if (isset($_POST['btnlogin'])) {
             });
         </script>";
   
- 
-    } else {
+  
+      } else {
         // Use prepared statements to prevent SQL injection
         $sql = "SELECT * FROM tbluseraccount WHERE USER_NAME = ?";
         $stmt = $connection->prepare($sql);

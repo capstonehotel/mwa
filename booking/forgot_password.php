@@ -93,12 +93,13 @@
             <button type="submit">Send</button>
         </form>
         <div class="footer">
-        <p>Remember your password? <a href="http://localhost/HM_HotelReservation/booking/index.php?view=logininfo">Login here</a></p>
+        <p>Remember your password? <a href="https://mcchmhotelreservation.com/booking/index.php?view=logininfo">Login here</a></p>
         </div>
     </div>
 
 
 <?php
+require_once("../includes/initialize.php");
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -109,7 +110,7 @@ require '../PHPMailer/src/SMTP.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $conn = new mysqli('localhost', 'root', '', 'hmsystemdb');
+    $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
     if ($conn->connect_error) {
         die("Database connection failed: " . $conn->connect_error);
     }
