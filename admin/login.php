@@ -194,7 +194,9 @@ if (isset($_POST['btnlogin'])) {
                 icon: 'error',
                 title: 'hCaptcha Verification Failed',
                 text: 'Please verify that you are not a robot.'
-            });
+            }).then(() => {
+                    window.location = 'login.php';
+                });
         </script>";
         return;
     }
