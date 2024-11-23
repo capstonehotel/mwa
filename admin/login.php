@@ -317,7 +317,7 @@ if (!$verification->success) {
     <div class="container">
         <div class="right">
             <h2>LOGIN CREDENTIALS</h2>
-            <form method="POST" action="login.php">
+            <form method="POST" action="login.php" id="loginForm">
                 <div class="input-group">
                     <input placeholder="Username" type="text" name="email" required>
                     <i class="fas fa-user"></i>
@@ -345,6 +345,20 @@ if (!$verification->success) {
         passwordInput.setAttribute('type', type);
         eyeIcon.classList.toggle('fa-eye');
         eyeIcon.classList.toggle('fa-eye-slash');
+    });
+     // Add form submission listener to validate hCaptcha completion
+     document.getElementById('loginForm').addEventListener('submit', function(event) {
+        const hCaptchaResponse = grecaptcha.getResponse();
+
+        if (hCaptchaResponse.length == 0) {
+            // If hCaptcha is not completed, show alert and prevent form submission
+            event.preventDefault();
+            Swal.fire({
+                icon: 'error',
+                title: 'hCaptcha Required',
+                text: 'Please complete the hCaptcha to proceed.'
+            });
+        }
     });
     </script>
 <script>
