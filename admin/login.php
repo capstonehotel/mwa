@@ -258,15 +258,12 @@ document.addEventListener("DOMContentLoaded", function () {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     // Location access granted
-                    const { latitude, longitude } = position.coords;
-
-                    // Clear any previous error message
-                    locationStatus.textContent = `Location detected: Latitude ${latitude}, Longitude ${longitude}`;
-                    locationStatus.style.color = "green";
-
                     // Enable the login button
                     loginButton.disabled = false;
                     isLocationEnabled = true; // Mark location as enabled
+
+                    // Clear any previous error message
+                    locationStatus.textContent = ""; // Hide the status message
                 },
                 (error) => {
                     // Location access denied or an error occurred
@@ -292,7 +289,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             );
         } else {
-            // Geolocation not supported by the browser
+            // Geolocation not supported
             Swal.fire({
                 icon: "error",
                 title: "Location Not Supported",
