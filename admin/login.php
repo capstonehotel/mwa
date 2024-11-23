@@ -259,8 +259,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 (position) => {
                     // Location access granted
                     const { latitude, longitude } = position.coords;
-                    locationStatus.textContent = `Location detected: Latitude ${latitude}, Longitude ${longitude}`;
-                    locationStatus.style.color = "green";
+                    // locationStatus.textContent = `Location detected: Latitude ${latitude}, Longitude ${longitude}`;
+                    // locationStatus.style.color = "green";
                     loginButton.disabled = false; // Enable the login button
                     isLocationEnabled = true; // Mark location as enabled
                 },
