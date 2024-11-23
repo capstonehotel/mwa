@@ -268,7 +268,7 @@ if (isset($_POST['btnlogin'])) {
                 </div>
                  <!-- hCaptcha widget -->
                  <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div> <!-- Replace with your hCaptcha Site Key -->
-
+                 <div id="hCaptchaError" style="display: none; color: red; font-size: 14px; text-align: center; margin-top: 10px;"></div>
                 <button type="submit" name="btnlogin">Login</button>
                 <div class="links">
                     <a href="../index.php" class="text-primary">Back to the website</a>
@@ -287,19 +287,20 @@ if (isset($_POST['btnlogin'])) {
         eyeIcon.classList.toggle('fa-eye-slash');
     });
     // Add form submission listener to validate hCaptcha completion
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
-        const hCaptchaResponse = grecaptcha.getResponse();
+document.getElementById('loginForm').addEventListener('submit', function (event) {
+    const hCaptchaResponse = grecaptcha.getResponse(); // Ensure you're using hCaptcha's method if this is for hCaptcha
 
-        if (hCaptchaResponse.length == 0) {
-            // If hCaptcha is not completed, show alert and prevent form submission
-            event.preventDefault();
-            Swal.fire({
-                icon: 'error',
-                title: 'hCaptcha Required',
-                text: 'Please complete the hCaptcha to proceed.'
-            });
-        }
-    });
+    if (hCaptchaResponse.length == 0) {
+        // Prevent form submission if hCaptcha is not completed
+        event.preventDefault();
+
+        // Display inline error message
+        const hCaptchaError = document.getElementById('hCaptchaError');
+        hCaptchaError.textContent = 'Please complete the hCaptcha to proceed.';
+        hCaptchaError.style.display = 'block';
+    }
+});
+
     </script>
     
 <script>
