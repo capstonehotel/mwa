@@ -237,7 +237,7 @@ if (isset($_POST['btnlogin'])) {
         eyeIcon.classList.toggle('fa-eye-slash');
     });
     </script>
-    <script>
+ <script>
 document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.querySelector("form");
     const loginButton = document.querySelector("button[name='btnlogin']");
@@ -249,7 +249,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Disable login button by default
     loginButton.disabled = true;
 
-    // Variable to store location state
+    // Variable to track location state
     let isLocationEnabled = false;
 
     // Function to request location
@@ -259,13 +259,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 (position) => {
                     // Location access granted
                     const { latitude, longitude } = position.coords;
-                    // locationStatus.textContent = `Location detected: Latitude ${latitude}, Longitude ${longitude}`;
-                    // locationStatus.style.color = "green";
-                    loginButton.disabled = false; // Enable the login button
+
+                    // Clear any previous error message
+                    locationStatus.textContent = `Location detected: Latitude ${latitude}, Longitude ${longitude}`;
+                    locationStatus.style.color = "green";
+
+                    // Enable the login button
+                    loginButton.disabled = false;
                     isLocationEnabled = true; // Mark location as enabled
                 },
                 (error) => {
-                    // Location access denied or error occurred
+                    // Location access denied or an error occurred
                     let message = "Unable to get location.";
                     if (error.code === error.PERMISSION_DENIED) {
                         message = "Location access denied. Please enable location to proceed.";
@@ -275,6 +279,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         message = "The request to get location timed out.";
                     }
 
+                    // Display the error message
                     Swal.fire({
                         icon: "error",
                         title: "Location Required",
@@ -283,10 +288,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     locationStatus.textContent = message;
                     locationStatus.style.color = "red";
+                    isLocationEnabled = false; // Reset location state
                 }
             );
         } else {
-            // Geolocation not supported
+            // Geolocation not supported by the browser
             Swal.fire({
                 icon: "error",
                 title: "Location Not Supported",
@@ -297,6 +303,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Prompt for location when the page loads
     requestLocation();
+
+    // Allow users to retry location access by clicking a button
+    const retryButton = document.createElement("button");
+    retryButton.textContent = "Retry Location Access";
+    retryButton.style.marginTop = "10px";
+    retryButton.type = "button";
+    retryButton.addEventListener("click", requestLocation);
+    loginButton.parentNode.insertBefore(retryButton, loginButton);
 
     // Validate location on form submit
     loginForm.addEventListener("submit", function (event) {
@@ -312,6 +326,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 </script>
+
 
 </body>
 </html>
