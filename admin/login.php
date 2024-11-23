@@ -290,6 +290,7 @@ if (isset($_POST['btnlogin'])) {
                     <input id="password" placeholder="Password" type="password" name="pass" minlength="8" maxlength="12" required>
                     <i class="far fa-eye" id="eyeIcon"></i>
                 </div>
+                
                 <button type="submit" name="btnlogin">Login</button>
                 <div class="links">
                     <a href="../index.php" class="text-primary">Back to the website</a>
