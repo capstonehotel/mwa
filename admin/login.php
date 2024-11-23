@@ -290,6 +290,20 @@ if (isset($_POST['btnlogin'])) {
         eyeIcon.classList.toggle('fa-eye');
         eyeIcon.classList.toggle('fa-eye-slash');
     });
+     // Add form submission listener to validate hCaptcha completion
+     document.getElementById('loginForm').addEventListener('submit', function(event) {
+        const hCaptchaResponse = grecaptcha.getResponse();
+
+        if (hCaptchaResponse.length == 0) {
+            // If hCaptcha is not completed, show alert and prevent form submission
+            event.preventDefault();
+            Swal.fire({
+                icon: 'error',
+                title: 'hCaptcha Required',
+                text: 'Please complete the hCaptcha to proceed.'
+            });
+        }
+    });
     </script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
