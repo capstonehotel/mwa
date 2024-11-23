@@ -258,12 +258,11 @@ document.addEventListener("DOMContentLoaded", function () {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     // Location access granted
-                    isLocationEnabled = true; // Mark location as enabled
-                    locationStatus.textContent = "Location detected.";
-                    locationStatus.style.color = "green";
-
-                    // Enable the login button
-                    loginButton.disabled = false;
+                    if (isLocationEnabled === false) {
+                        locationStatus.textContent = "";  // Remove any existing messages
+                        isLocationEnabled = true; // Mark location as enabled
+                        loginButton.disabled = false; // Enable login button
+                    }
                 },
                 (error) => {
                     // Handle location access errors
@@ -295,7 +294,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Function to continuously monitor location status
     function monitorLocation() {
         // Call checkLocation every 2 seconds to ensure location status is updated
-        setInterval(checkLocation, 2000);
+        setInterval(checkLocation, 1000);
     }
 
     // Start monitoring the location
