@@ -25,7 +25,6 @@ require_once("../includes/initialize.php");
             height: 100vh;
             position: relative;
             overflow: hidden;
-            overflow-y: hidden;
         }
         
         .title {
@@ -45,23 +44,13 @@ require_once("../includes/initialize.php");
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             overflow: hidden;
-            height: auto; /* Let the height adjust naturally */
-            min-height: 400px; /* Minimum height */
+            height: 40%;
             width: 400px; /* Reduced width */
             max-width: 100%;
             position: relative;
             z-index: 1;
             padding: 40px; /* Added padding for spacing */
-            margin-top: 50px;
         }
-        .waves {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: auto;
-    z-index: 1; /* Ensure waves are behind the form */
-}
         .right {
             padding: 0; /* Reset padding */
             display: flex;
@@ -200,15 +189,6 @@ if (isset($_POST['btnlogin'])) {
                     text: 'Hello, {$row['UNAME']}.',
                     timer: 2000,
                     showConfirmButton: false
-                     customClass: {
-        popup: 'custom-swal-popup' // Add a custom class if further customization is needed
-    },
-    willOpen: () => {
-        document.body.style.overflow = 'hidden'; // Disable body scroll
-    },
-    didClose: () => {
-        document.body.style.overflow = ''; // Restore body scroll
-    }
                 }).then(() => {
                     window.location = 'index.php';
                 });
@@ -258,58 +238,79 @@ if (isset($_POST['btnlogin'])) {
     });
     </script>
     <script>
-    const loginButton = document.querySelector('button[name="btnlogin"]');
-    let locationEnabled = false;
+document.addEventListener("DOMContentLoaded", function () {
+    const loginForm = document.querySelector("form");
+    const loginButton = document.querySelector("button[name='btnlogin']");
+    const locationStatus = document.createElement("div");
+    locationStatus.id = "location-status";
+    locationStatus.style.marginBottom = "10px";
+    loginButton.parentNode.insertBefore(locationStatus, loginButton);
 
-    // Check if the user's location is enabled
-    function checkLocationPermission() {
+    // Disable login button by default
+    loginButton.disabled = true;
+
+    // Variable to store location state
+    let isLocationEnabled = false;
+
+    // Function to request location
+    function requestLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    locationEnabled = true;
+                    // Location access granted
+                    const { latitude, longitude } = position.coords;
+                    locationStatus.textContent = `Location detected: Latitude ${latitude}, Longitude ${longitude}`;
+                    locationStatus.style.color = "green";
                     loginButton.disabled = false; // Enable the login button
+                    isLocationEnabled = true; // Mark location as enabled
                 },
                 (error) => {
-                    locationEnabled = false;
-                    loginButton.disabled = true; // Disable the login button
+                    // Location access denied or error occurred
+                    let message = "Unable to get location.";
+                    if (error.code === error.PERMISSION_DENIED) {
+                        message = "Location access denied. Please enable location to proceed.";
+                    } else if (error.code === error.POSITION_UNAVAILABLE) {
+                        message = "Location information is unavailable.";
+                    } else if (error.code === error.TIMEOUT) {
+                        message = "The request to get location timed out.";
+                    }
+
                     Swal.fire({
-                        icon: 'warning',
-                        title: 'Location Required',
-                        text: 'Please enable your location to log in.',
-                        confirmButtonText: 'OK'
+                        icon: "error",
+                        title: "Location Required",
+                        text: message,
                     });
+
+                    locationStatus.textContent = message;
+                    locationStatus.style.color = "red";
                 }
             );
         } else {
-            locationEnabled = false;
-            loginButton.disabled = true; // Disable the login button
+            // Geolocation not supported
             Swal.fire({
-                icon: 'error',
-                title: 'Geolocation Not Supported',
-                text: 'Your browser does not support location services.',
-                confirmButtonText: 'OK'
+                icon: "error",
+                title: "Location Not Supported",
+                text: "Your browser does not support geolocation. Please use a compatible browser.",
             });
         }
     }
 
-    // Check location permission on page load
-    window.onload = () => {
-        loginButton.disabled = true; // Disable login button initially
-        checkLocationPermission();
-    };
+    // Prompt for location when the page loads
+    requestLocation();
 
-    // Recheck location permission when the user tries to interact
-    loginButton.addEventListener('click', (e) => {
-        if (!locationEnabled) {
-            e.preventDefault();
+    // Validate location on form submit
+    loginForm.addEventListener("submit", function (event) {
+        if (!isLocationEnabled) {
+            // Prevent form submission if location is not enabled
+            event.preventDefault();
             Swal.fire({
-                icon: 'warning',
-                title: 'Location Required',
-                text: 'Please enable your location to log in.',
-                confirmButtonText: 'OK'
+                icon: "error",
+                title: "Location Required",
+                text: "You must enable location services to log in.",
             });
         }
     });
+});
 </script>
 
 </body>
