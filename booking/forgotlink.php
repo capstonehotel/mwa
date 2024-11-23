@@ -19,7 +19,7 @@ if (isset($_POST['reset_request'])) {
     } else {
         // Check if the username exists in the database
         $query = "SELECT * FROM tblguest WHERE G_UNAME='$username'";
-        $result = mysqli_query($con, $query);
+        $result = mysqli_query($conn, $query);
         
         if (mysqli_num_rows($result) > 0) {
             // Generate a unique token
@@ -27,7 +27,7 @@ if (isset($_POST['reset_request'])) {
             $expDate = date("Y-m-d H:i:s", strtotime('+1 hour'));
 
             // Update the token and expiration date in the database
-            mysqli_query($con, "UPDATE tblguest SET VERIFICATION_TOKEN='$token', OTP_EXPIRE_AT='$expDate' WHERE G_UNAME='$username'");
+            mysqli_query($conn, "UPDATE tblguest SET VERIFICATION_TOKEN='$token', OTP_EXPIRE_AT='$expDate' WHERE G_UNAME='$username'");
 
             // Send the email
             $mail = new PHPMailer();
