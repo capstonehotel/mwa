@@ -188,16 +188,12 @@ if (isset($_POST['btnlogin'])) {
     $verification = json_decode($result);
 
     if (!$verification->success) {
-        // hCaptcha failed
-        echo "<script>
-            Swal.fire({
-                icon: 'error',
-                title: 'hCaptcha Verification Failed',
-                text: 'Please verify that you are not a robot.'
-            });
-        </script>";
-        return;
-    }
+         // hCaptcha failed
+         echo "<div style='color: red; text-align: center; font-size: 18px;'>
+         <strong>hCaptcha Verification Failed:</strong> Please verify that you are not a robot.
+       </div>";
+ return;
+}
 
 
     if ($uname == '' || $upass == '') {
@@ -292,32 +288,7 @@ if (isset($_POST['btnlogin'])) {
     });
     
     </script>
-    <script>
-    // Add form submission listener to validate hCaptcha completion
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
-        const hCaptchaResponse = grecaptcha.getResponse();
-
-        // Check if the hCaptcha is not completed
-        if (hCaptchaResponse.length == 0) {
-            // If hCaptcha is not completed, show text message and prevent form submission
-            event.preventDefault();
-            
-            // Create a div for the error message if it doesn't exist
-            let errorMessage = document.getElementById('hcaptcha-error-message');
-            if (!errorMessage) {
-                errorMessage = document.createElement('div');
-                errorMessage.id = 'hcaptcha-error-message';
-                errorMessage.style.color = 'red';  // Style the text as error
-                errorMessage.style.marginTop = '10px';  // Add some spacing
-                document.getElementById('loginForm').appendChild(errorMessage);
-            }
-
-            // Update the error message text
-            errorMessage.textContent = 'Please complete the hCaptcha to proceed.';
-        }
-    });
-</script>
-
+    
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.querySelector("form");
