@@ -187,13 +187,13 @@ if (isset($_POST['btnlogin'])) {
 
     $verification = json_decode($result);
 
-//     if (!$verification->success) {
-//          // hCaptcha failed
-//          echo "<div style='color: red; text-align: center; font-size: 18px;'>
-//          <strong>hCaptcha Verification Failed:</strong> Please verify that you are not a robot.
-//        </div>";
-//  return;
-// }
+    if (!$verification->success) {
+         // hCaptcha failed
+         echo "<div style='color: red; text-align: center; font-size: 18px;'>
+         <strong>hCaptcha Verification Failed:</strong> Please verify that you are not a robot.
+       </div>";
+ return;
+}
 
 
     if ($uname == '' || $upass == '') {
