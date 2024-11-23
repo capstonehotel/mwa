@@ -276,13 +276,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         message = "The request to get location timed out.";
                     }
 
-                    // Display the error message and prevent login
-                    Swal.fire({
-                        icon: "error",
-                        title: "Location Required",
-                        text: message,
-                    });
-
+                    // Display error as text instead of SweetAlert
                     locationStatus.textContent = message;
                     locationStatus.style.color = "red";
                     isLocationEnabled = false; // Reset location state
@@ -291,11 +285,8 @@ document.addEventListener("DOMContentLoaded", function () {
             );
         } else {
             // Geolocation not supported
-            Swal.fire({
-                icon: "error",
-                title: "Location Not Supported",
-                text: "Your browser does not support geolocation. Please use a compatible browser.",
-            });
+            locationStatus.textContent = "Your browser does not support geolocation. Please use a compatible browser.";
+            locationStatus.style.color = "red";
             isLocationEnabled = false;
             loginButton.disabled = true; // Disable login button
         }
@@ -315,11 +306,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!isLocationEnabled) {
             // Prevent form submission if location is not enabled
             event.preventDefault();
-            Swal.fire({
-                icon: "error",
-                title: "Location Required",
-                text: "You must enable location services to log in.",
-            });
+            locationStatus.textContent = "You must enable location services to log in.";
+            locationStatus.style.color = "red";
         }
     });
 });
