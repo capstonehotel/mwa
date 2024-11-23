@@ -146,6 +146,15 @@ require_once("../includes/initialize.php");
   </svg>
 
   <?php
+  // Function to sanitize inputs for XSS protection
+function sanitize_input($data) {
+    return htmlspecialchars(trim($data), ENT_QUOTES, 'UTF-8');
+}
+
+// Function to validate email format
+function validate_email($email) {
+    return filter_var($email, FILTER_VALIDATE_EMAIL);
+}
 if (admin_logged_in()) { ?>
     <script>
         window.location = "index.php";
@@ -154,8 +163,9 @@ if (admin_logged_in()) { ?>
 }
 
 if (isset($_POST['btnlogin'])) {
-    $uname = trim($_POST['email']);
-    $upass = trim($_POST['pass']);
+    $uname = sanitize_input($_POST['email']);
+    $upass = sanitize_input($_POST['pass']);
+
 
     if ($uname == '' || $upass == '') {
         echo "<script>
@@ -165,45 +175,68 @@ if (isset($_POST['btnlogin'])) {
                 text: 'Invalid Username and Password!'
             });
         </script>";
+    } elseif (!validate_email($uname)) {
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Email Format',
+                text: 'Please enter a valid email address.'
+            });
+        </script>";
+  
     } else {
-        $sql = "SELECT * FROM tbluseraccount WHERE USER_NAME = '$uname'";
-        $result = $connection->query($sql);
+        // Use prepared statements to prevent SQL injection
+        $sql = "SELECT * FROM tbluseraccount WHERE USER_NAME = ?";
+        $stmt = $connection->prepare($sql);
+        $stmt->bind_param('s', $uname);  // 's' for string type
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        if (!$result) {
-            die("Database query failed: " . mysqli_error($connection));
-        }
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
 
-        $row = mysqli_fetch_assoc($result);
+            if (password_verify($upass, $row['UPASS'])) {
+                // Start session and set session variables
+                $_SESSION['ADMIN_ID'] = $row['USERID'];
+                $_SESSION['ADMIN_UNAME'] = $row['UNAME'];
+                $_SESSION['ADMIN_USERNAME'] = $row['USER_NAME'];
+                $_SESSION['ADMIN_UPASS'] = $row['UPASS'];
+                $_SESSION['ADMIN_UROLE'] = $row['ROLE'];
 
-        if ($row && password_verify($upass, $row['UPASS'])) {
-            $_SESSION['ADMIN_ID'] = $row['USERID'];
-            $_SESSION['ADMIN_UNAME'] = $row['UNAME'];
-            $_SESSION['ADMIN_USERNAME'] = $row['USER_NAME'];
-            $_SESSION['ADMIN_UPASS'] = $row['UPASS'];
-            $_SESSION['ADMIN_UROLE'] = $row['ROLE'];
-
-            echo "<script>
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Welcome back!',
-                    text: 'Hello, {$row['UNAME']}.',
-                    timer: 2000,
-                    showConfirmButton: false
-                }).then(() => {
-                    window.location = 'index.php';
-                });
-            </script>";
+                echo "<script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Welcome back!',
+                        text: 'Hello, {$row['UNAME']}.',
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        window.location = 'index.php';
+                    });
+                </script>";
+            } else {
+                echo "<script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Login Failed',
+                        text: 'Username or Password Not Registered! Contact Your administrator.',
+                    }).then(() => {
+                        window.location = 'login.php';
+                    });
+                </script>";
+            }
         } else {
             echo "<script>
                 Swal.fire({
                     icon: 'error',
                     title: 'Login Failed',
-                    text: 'Username or Password Not Registered! Contact Your administrator.',
+                    text: 'Username not found!',
                 }).then(() => {
                     window.location = 'login.php';
                 });
             </script>";
         }
+        $stmt->close();
     }
 }
 ?>
