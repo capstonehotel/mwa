@@ -253,17 +253,16 @@ document.addEventListener("DOMContentLoaded", function () {
     let isLocationEnabled = false;
 
     // Function to request location
-    function requestLocation(onSuccess, onError) {
+    function requestLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     // Location access granted
-                    isLocationEnabled = true; // Mark location as enabled
                     loginButton.disabled = false;
+                    isLocationEnabled = true; // Mark location as enabled
 
                     // Clear any previous error message
                     locationStatus.textContent = ""; // Hide the status message
-                    if (typeof onSuccess === "function") onSuccess(position);
                 },
                 (error) => {
                     // Location access denied or an error occurred
@@ -277,12 +276,18 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
 
                     // Display the error message
+                    Swal.fire({
+                        icon: "error",
+                        title: "Location Required",
+                        text: message,
+                    }).then(() => {
+                        // After the error message is dismissed, reload the page to prompt the user again
+                        location.reload();
+                    });
+
                     locationStatus.textContent = message;
                     locationStatus.style.color = "red";
                     isLocationEnabled = false; // Reset location state
-                    loginButton.disabled = true;
-
-                    if (typeof onError === "function") onError(error);
                 }
             );
         } else {
@@ -292,6 +297,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 title: "Location Not Supported",
                 text: "Your browser does not support geolocation. Please use a compatible browser.",
             });
+
+            // Stay on the page or reload if needed
+            location.reload();
         }
     }
 
@@ -300,28 +308,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Validate location on form submit
     loginForm.addEventListener("submit", function (event) {
-        // Check location again before submission
-        requestLocation(
-            (position) => {
-                // Allow form submission if location is enabled
-                loginForm.submit();
-            },
-            (error) => {
-                // Prevent form submission if location is not enabled
-                event.preventDefault();
-                Swal.fire({
-                    icon: "error",
-                    title: "Location Required",
-                    text: "You must enable location services to log in.",
-                });
-            }
-        );
-
-        // Prevent form submission until location is validated
-        event.preventDefault();
+        if (!isLocationEnabled) {
+            // Prevent form submission if location is not enabled
+            event.preventDefault();
+            Swal.fire({
+                icon: "error",
+                title: "Location Required",
+                text: "You must enable location services to log in.",
+            }).then(() => {
+                // Optionally reload the page if location is required again
+                location.reload();
+            });
+        }
     });
 });
 </script>
+
 
 </body>
 </html>
