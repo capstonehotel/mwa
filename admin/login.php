@@ -44,7 +44,7 @@ require_once("../includes/initialize.php");
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             overflow: hidden;
-            height: 40%;
+            height: 50%;
             width: 400px; /* Reduced width */
             max-width: 100%;
             position: relative;
