@@ -252,20 +252,21 @@ document.addEventListener("DOMContentLoaded", function () {
     // Variable to track location state
     let isLocationEnabled = false;
 
-    // Function to request location
-    function requestLocation() {
+    // Function to request location and check if it's enabled
+    function checkLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     // Location access granted
-                    loginButton.disabled = false;
                     isLocationEnabled = true; // Mark location as enabled
+                    locationStatus.textContent = "Location detected.";
+                    locationStatus.style.color = "green";
 
-                    // Clear any previous error message
-                    locationStatus.textContent = ""; // Hide the status message
+                    // Enable the login button
+                    loginButton.disabled = false;
                 },
                 (error) => {
-                    // Location access denied or an error occurred
+                    // Handle location access errors
                     let message = "Unable to get location.";
                     if (error.code === error.PERMISSION_DENIED) {
                         message = "Location access denied. Please enable location to proceed.";
@@ -275,7 +276,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         message = "The request to get location timed out.";
                     }
 
-                    // Display the error message
+                    // Display the error message and prevent login
                     Swal.fire({
                         icon: "error",
                         title: "Location Required",
@@ -285,11 +286,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     locationStatus.textContent = message;
                     locationStatus.style.color = "red";
                     isLocationEnabled = false; // Reset location state
-
-                    // Reload the page to check location again
-                    setTimeout(function () {
-                        location.reload();
-                    }, 2000); // Wait for 2 seconds before reload
+                    loginButton.disabled = true; // Disable login button
                 }
             );
         } else {
@@ -299,11 +296,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 title: "Location Not Supported",
                 text: "Your browser does not support geolocation. Please use a compatible browser.",
             });
+            isLocationEnabled = false;
+            loginButton.disabled = true; // Disable login button
         }
     }
 
-    // Prompt for location when the page loads
-    requestLocation();
+    // Check location status when the page loads
+    checkLocation();
 
     // Validate location on form submit
     loginForm.addEventListener("submit", function (event) {
