@@ -237,7 +237,7 @@ if (isset($_POST['btnlogin'])) {
         eyeIcon.classList.toggle('fa-eye-slash');
     });
     </script>
- <script>
+<script>
 document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.querySelector("form");
     const loginButton = document.querySelector("button[name='btnlogin']");
@@ -258,7 +258,6 @@ document.addEventListener("DOMContentLoaded", function () {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     // Location access granted
-                    // Enable the login button
                     loginButton.disabled = false;
                     isLocationEnabled = true; // Mark location as enabled
 
@@ -301,14 +300,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Prompt for location when the page loads
     requestLocation();
 
-    // Allow users to retry location access by clicking a button
-    const retryButton = document.createElement("button");
-    retryButton.textContent = "Retry Location Access";
-    retryButton.style.marginTop = "10px";
-    retryButton.type = "button";
-    retryButton.addEventListener("click", requestLocation);
-    loginButton.parentNode.insertBefore(retryButton, loginButton);
-
     // Validate location on form submit
     loginForm.addEventListener("submit", function (event) {
         if (!isLocationEnabled) {
@@ -323,6 +314,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 </script>
+
 
 
 </body>
