@@ -187,13 +187,13 @@ if (isset($_POST['btnlogin'])) {
 
     $verification = json_decode($result);
 
-    if (!$verification->success) {
-         // hCaptcha failed
-         echo "<div style='color: red; text-align: center; font-size: 18px;'>
-         <strong>hCaptcha Verification Failed:</strong> Please verify that you are not a robot.
-       </div>";
- return;
-}
+//     if (!$verification->success) {
+//          // hCaptcha failed
+//          echo "<div style='color: red; text-align: center; font-size: 18px;'>
+//          <strong>hCaptcha Verification Failed:</strong> Please verify that you are not a robot.
+//        </div>";
+//  return;
+// }
 
 
     if ($uname == '' || $upass == '') {
@@ -269,6 +269,14 @@ if (isset($_POST['btnlogin'])) {
                  <!-- hCaptcha widget -->
                  <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div> <!-- Replace with your hCaptcha Site Key -->
                  <div id="hCaptchaError" style="display: none; color: red; font-size: 14px; text-align: center; margin-top: 10px;"></div>
+                 <!-- PHP Error Message -->
+    <?php
+    if (isset($verification) && !$verification->success) {
+        echo "<div class='captcha-error-message'>
+                <strong>hCaptcha Verification Failed:</strong> Please verify that you are not a robot.
+              </div>";
+    }
+    ?>
                 <button type="submit" name="btnlogin">Login</button>
                 <div class="links">
                     <a href="../index.php" class="text-primary">Back to the website</a>
