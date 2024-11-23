@@ -189,14 +189,15 @@ if (isset($_POST['btnlogin'])) {
 
     if (!$verification->success) {
         // hCaptcha failed
-        // hCaptcha failed
-    echo "<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const hCaptchaError = document.getElementById('hCaptchaError');
-        hCaptchaError.textContent = 'hCaptcha verification failed. Please verify that you are not a robot.';
-        hCaptchaError.style.display = 'block';
-    });
-</script>";
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'hCaptcha Verification Failed',
+                text: 'Please verify that you are not a robot.'
+            }).then(() => {
+                    window.location = 'login.php';
+                });
+        </script>";
         return;
     }
 
@@ -290,10 +291,11 @@ if (isset($_POST['btnlogin'])) {
         eyeIcon.classList.toggle('fa-eye');
         eyeIcon.classList.toggle('fa-eye-slash');
     });
-    document.getElementById('loginForm').addEventListener('submit', function (event) {
-    const hCaptchaResponse = document.querySelector('.h-captcha textarea').value; // Adjust to get the actual response field
+    // Add form submission listener to validate hCaptcha completion
+document.getElementById('loginForm').addEventListener('submit', function (event) {
+    const hCaptchaResponse = grecaptcha.getResponse(); // Ensure you're using hCaptcha's method if this is for hCaptcha
 
-    if (!hCaptchaResponse) {
+    if (hCaptchaResponse.length == 0) {
         // Prevent form submission if hCaptcha is not completed
         event.preventDefault();
 
@@ -303,7 +305,6 @@ if (isset($_POST['btnlogin'])) {
         hCaptchaError.style.display = 'block';
     }
 });
-
 
     </script>
     
