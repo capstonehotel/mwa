@@ -290,21 +290,34 @@ if (isset($_POST['btnlogin'])) {
         eyeIcon.classList.toggle('fa-eye');
         eyeIcon.classList.toggle('fa-eye-slash');
     });
-     // Add form submission listener to validate hCaptcha completion
-     document.getElementById('loginForm').addEventListener('submit', function(event) {
+    
+    </script>
+    <script>
+    // Add form submission listener to validate hCaptcha completion
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
         const hCaptchaResponse = grecaptcha.getResponse();
 
+        // Check if the hCaptcha is not completed
         if (hCaptchaResponse.length == 0) {
-            // If hCaptcha is not completed, show alert and prevent form submission
+            // If hCaptcha is not completed, show text message and prevent form submission
             event.preventDefault();
-            Swal.fire({
-                icon: 'error',
-                title: 'hCaptcha Required',
-                text: 'Please complete the hCaptcha to proceed.'
-            });
+            
+            // Create a div for the error message if it doesn't exist
+            let errorMessage = document.getElementById('hcaptcha-error-message');
+            if (!errorMessage) {
+                errorMessage = document.createElement('div');
+                errorMessage.id = 'hcaptcha-error-message';
+                errorMessage.style.color = 'red';  // Style the text as error
+                errorMessage.style.marginTop = '10px';  // Add some spacing
+                document.getElementById('loginForm').appendChild(errorMessage);
+            }
+
+            // Update the error message text
+            errorMessage.textContent = 'Please complete the hCaptcha to proceed.';
         }
     });
-    </script>
+</script>
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.querySelector("form");
