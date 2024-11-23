@@ -183,98 +183,45 @@ if (isset($_POST['btnlogin'])) {
                 text: 'Please enter a valid email address.'
             });
         </script>";
-  
-  
-      } else {
-        // Use prepared statements to prevent SQL injection
-        $sql = "SELECT * FROM tbluseraccount WHERE USER_NAME = ?";
-        $stmt = $connection->prepare($sql);
-        $stmt->bind_param('s', $uname);  // 's' for string type
-        $stmt->execute();
-        $result = $stmt->get_result();
+    } else {
+        $sql = "SELECT * FROM tbluseraccount WHERE USER_NAME = '$uname'";
+        $result = $connection->query($sql);
 
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
+        if (!$result) {
+            die("Database query failed: " . mysqli_error($connection));
+        }
 
-            // Check if the account is locked due to too many failed attempts
-            if ($row['failed_attempts'] >= 3) {
-                // Check the time since the last failed attempt
-                $last_attempt_time = strtotime($row['last_failed_attempt']);
-                $lockout_time = 5 * 60;  // 5 minutes in seconds
-                if (time() - $last_attempt_time < $lockout_time) {
-                    $remaining_time = $lockout_time - (time() - $last_attempt_time);
-                    echo "<script>
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Account Locked',
-                            text: 'Too many failed login attempts. Please try again in " . gmdate("i:s", $remaining_time) . ".'
-                        });
-                    </script>";
-                    return;
-                } else {
-                    // Reset failed attempts after lockout period expires
-                    $sql_reset_attempts = "UPDATE tbluseraccount SET failed_attempts = 0 WHERE USER_NAME = ?";
-                    $stmt_reset = $connection->prepare($sql_reset_attempts);
-                    $stmt_reset->bind_param('s', $uname);
-                    $stmt_reset->execute();
-                }
-            }
+        $row = mysqli_fetch_assoc($result);
 
-            // Check if the password matches
-            if (password_verify($upass, $row['UPASS'])) {
-                // Reset failed attempts on successful login
-                $sql_reset_attempts = "UPDATE tbluseraccount SET failed_attempts = 0 WHERE USER_NAME = ?";
-                $stmt_reset = $connection->prepare($sql_reset_attempts);
-                $stmt_reset->bind_param('s', $uname);
-                $stmt_reset->execute();
+        if ($row && password_verify($upass, $row['UPASS'])) {
+            $_SESSION['ADMIN_ID'] = $row['USERID'];
+            $_SESSION['ADMIN_UNAME'] = $row['UNAME'];
+            $_SESSION['ADMIN_USERNAME'] = $row['USER_NAME'];
+            $_SESSION['ADMIN_UPASS'] = $row['UPASS'];
+            $_SESSION['ADMIN_UROLE'] = $row['ROLE'];
 
-                // Start session and set session variables
-                $_SESSION['ADMIN_ID'] = $row['USERID'];
-                $_SESSION['ADMIN_UNAME'] = $row['UNAME'];
-                $_SESSION['ADMIN_USERNAME'] = $row['USER_NAME'];
-                $_SESSION['ADMIN_UPASS'] = $row['UPASS'];
-                $_SESSION['ADMIN_UROLE'] = $row['ROLE'];
-
-                echo "<script>
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Welcome back!',
-                        text: 'Hello, {$row['UNAME']}.',
-                        timer: 2000,
-                        showConfirmButton: false
-                    }).then(() => {
-                        window.location = 'index.php';
-                    });
-                </script>";
-            } else {
-                // Increment failed attempts on incorrect login
-                $sql_increment_attempts = "UPDATE tbluseraccount SET failed_attempts = failed_attempts + 1, last_failed_attempt = NOW() WHERE USER_NAME = ?";
-                $stmt_increment = $connection->prepare($sql_increment_attempts);
-                $stmt_increment->bind_param('s', $uname);
-                $stmt_increment->execute();
-
-                echo "<script>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Login Failed',
-                        text: 'Username or Password Not Registered! Contact Your administrator.',
-                    }).then(() => {
-                        window.location = 'login.php';
-                    });
-                </script>";
-            }
+            echo "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Welcome back!',
+                    text: 'Hello, {$row['UNAME']}.',
+                    timer: 2000,
+                    showConfirmButton: false
+                }).then(() => {
+                    window.location = 'index.php';
+                });
+            </script>";
         } else {
             echo "<script>
                 Swal.fire({
                     icon: 'error',
                     title: 'Login Failed',
-                    text: 'Username not found!',
+                    text: 'Username or Password Not Registered! Contact Your administrator.',
                 }).then(() => {
                     window.location = 'login.php';
                 });
             </script>";
         }
-        $stmt->close();
     }
 }
 ?>
@@ -290,7 +237,6 @@ if (isset($_POST['btnlogin'])) {
                     <input id="password" placeholder="Password" type="password" name="pass" minlength="8" maxlength="12" required>
                     <i class="far fa-eye" id="eyeIcon"></i>
                 </div>
-                
                 <button type="submit" name="btnlogin">Login</button>
                 <div class="links">
                     <a href="../index.php" class="text-primary">Back to the website</a>
