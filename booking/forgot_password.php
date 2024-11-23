@@ -159,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mail->isHTML(true);
         $mail->Subject = 'Password Reset Request';
         $mail->Body    = "Click the link below to reset your password:<br><br>
-                          <a href='http://localhost/HM_HotelReservation/booking/reset_password.php?token=$token'>Reset Password</a><br><br>
+                          <a href='https://mcchmhotelreservation.com/booking/reset_password.php?token=$token'>Reset Password</a><br><br>
                           If you did not request a password reset, please ignore this email.";
 
         $mail->send();
@@ -171,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             confirmButtonText: 'OK'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = 'http://localhost/HM_HotelReservation/booking/index.php?view=logininfo'; // Redirect to login page or any other page
+                window.location.href = 'https://mcchmhotelreservation.com/booking/index.php?view=logininfo'; // Redirect to login page or any other page
             }
         });
     </script>";
