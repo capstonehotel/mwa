@@ -33,6 +33,57 @@ $_SESSION['to']  = $_POST['to'];
    
 
     <?php
+    header("Content-Security-Policy: default-src 'self'; script-src 'self' https://trusted-scripts.com;");
+    header("X-Frame-Options: DENY");
+    header("Content-Security-Policy: frame-ancestors 'none';");
+    header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload");
+    
+    
+    // Redirect all HTTP requests to HTTPS if not already using HTTPS
+    if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
+      header("Location: https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+      exit();
+    }
+    
+    
+    
+    //Secure session cookie settings
+    ini_set('session.cookie_secure', '1');    // Enforces HTTPS-only session cookies
+    ini_set('session.cookie_httponly', '1');  // Prevents JavaScript from accessing session cookies
+    ini_set('session.cookie_samesite', 'Strict'); // Prevents CSRF by limiting cross-site cookie usage
+    
+    
+    // Additional security headers
+    header("X-Content-Type-Options: nosniff");
+    header("X-Frame-Options: DENY");
+    header("X-XSS-Protection: 1; mode=block");
+    
+    
+    // Anti-XXE: Secure XML parsing
+    libxml_disable_entity_loader(true); // Disable loading of external entities
+    libxml_use_internal_errors(true);   // Suppress libxml errors for better handling
+    
+    function parseXMLSecurely($xmlString) {
+        $dom = new DOMDocument();
+        
+        // Load the XML string securely
+        if (!$dom->loadXML($xmlString, LIBXML_NOENT | LIBXML_DTDLOAD | LIBXML_DTDATTR | LIBXML_NOCDATA)) {
+            throw new Exception('Error loading XML');
+        }
+        
+        // Process the XML content safely
+        return $dom;
+    }
+    
+    // Example usage
+    try {
+        $xmlString = '<root><element>Sample</element></root>'; // Replace with actual XML input
+        $dom = parseXMLSecurely($xmlString);
+        // Continue processing $dom...
+    } catch (Exception $e) {
+        // Handle errors securely
+        echo 'Error processing XML: ' . $e->getMessage();
+    }
         if (isset($_SESSION['monbela_cart'])){
             if (count($_SESSION['monbela_cart'])>0) { $cart = '
                 <span class="carttxtactive"> '.count($_SESSION['monbela_cart']) .' </span>
@@ -41,57 +92,7 @@ $_SESSION['to']  = $_POST['to'];
                 ';
             }
         }
-        header("Content-Security-Policy: default-src 'self'; script-src 'self' https://trusted-scripts.com;");
-header("X-Frame-Options: DENY");
-header("Content-Security-Policy: frame-ancestors 'none';");
-header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload");
 
-
-// Redirect all HTTP requests to HTTPS if not already using HTTPS
-if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
-  header("Location: https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-  exit();
-}
-
-
-
-//Secure session cookie settings
-ini_set('session.cookie_secure', '1');    // Enforces HTTPS-only session cookies
-ini_set('session.cookie_httponly', '1');  // Prevents JavaScript from accessing session cookies
-ini_set('session.cookie_samesite', 'Strict'); // Prevents CSRF by limiting cross-site cookie usage
-
-
-// Additional security headers
-header("X-Content-Type-Options: nosniff");
-header("X-Frame-Options: DENY");
-header("X-XSS-Protection: 1; mode=block");
-
-
-// Anti-XXE: Secure XML parsing
-libxml_disable_entity_loader(true); // Disable loading of external entities
-libxml_use_internal_errors(true);   // Suppress libxml errors for better handling
-
-function parseXMLSecurely($xmlString) {
-    $dom = new DOMDocument();
-    
-    // Load the XML string securely
-    if (!$dom->loadXML($xmlString, LIBXML_NOENT | LIBXML_DTDLOAD | LIBXML_DTDATTR | LIBXML_NOCDATA)) {
-        throw new Exception('Error loading XML');
-    }
-    
-    // Process the XML content safely
-    return $dom;
-}
-
-// Example usage
-try {
-    $xmlString = '<root><element>Sample</element></root>'; // Replace with actual XML input
-    $dom = parseXMLSecurely($xmlString);
-    // Continue processing $dom...
-} catch (Exception $e) {
-    // Handle errors securely
-    echo 'Error processing XML: ' . $e->getMessage();
-}
     ?>
 <style>
   .bd-placeholder-img {

@@ -65,13 +65,24 @@
 
 <div class="container">
     <h2>Reset Your Password</h2>
-    <form method="POST" action="reset_password.php">
-        <label for="username">Enter your email:</label>
-        <input type="text" name="username" required placeholder="example@gmail.com">
+    <form id="resetForm" method="POST" action="reset_password.php">
+        <!-- <label for="username">Enter your email:</label>
+        <input type="text" name="username" required placeholder="example@gmail.com"> -->
         
-        <label for="new_password">Enter your new password:</label>
+        <!-- <label for="new_password">Enter your new password:</label>
         <input type="password" name="new_password" required placeholder="New Password">
+         -->
+
+         <label for="new_password">Enter your new password:</label>
+        <input type="password" id="new_password" name="new_password" required placeholder="New Password">
         
+        <label for="confirm_password">Confirm your new password:</label>
+        <input type="password" id="confirm_password" name="confirm_password" required placeholder="Confirm Password">
+        <!--<div id="error-message" style="color: red; font-size: 14px; text-align: left; display: none;">Passwords do not match.</div>-->
+        <?php if (!empty($error_message)): ?>
+    <div id="error-message" style="color: red; font-size: 14px; text-align: left;"><?php echo $error_message; ?></div>
+<?php endif; ?>
+
         <input type="hidden" name="token" value="<?php echo htmlspecialchars($_GET['token']); ?>">
         
         <button type="submit">Reset Password</button>
@@ -80,30 +91,35 @@
 
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $conn = new mysqli('localhost', 'root', '', 'hmsystemdb');
+    $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
     if ($conn->connect_error) {
         die("Database connection failed: " . $conn->connect_error);
     }
 
     $token = $conn->real_escape_string($_POST['token']);
-    $new_password = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
+    $new_password = $_POST['new_password'];
+    $confirm_password = $_POST['confirm_password'];
 
-    // Validate the token and expiration
-    $result = $conn->query("SELECT * FROM tblguest WHERE VERIFICATION_TOKEN = '$token' AND OTP_EXPIRE_AT >= NOW()");
-    if ($result->num_rows === 0) {
-        echo "<script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Invalid or Expired Token',
-            text: 'The token is invalid or has expired.',
-            confirmButtonText: 'OK'
-        });
-        </script>";
-        exit;
+    // Check if passwords match
+    if ($new_password !== $confirm_password) {
+        $error_message = "Passwords do not match.";
+    } else {
+        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+
+        // Validate the token and expiration
+        $result = $conn->query("SELECT * FROM tblguest WHERE VERIFICATION_TOKEN = '$token' AND OTP_EXPIRE_AT >= NOW()");
+        if ($result->num_rows === 0) {
+            $error_message = "Invalid or expired token.";
+        } else {
+            // Update the password and clear the token
+            $conn->query("UPDATE tblguest SET G_PASS = '$hashed_password', VERIFICATION_TOKEN = NULL, OTP_EXPIRE_AT = NULL WHERE VERIFICATION_TOKEN = '$token'");
+            header('Location: http://localhost/HM_HotelReservation/booking/index.php?view=logininfo');
+            exit;
+        }
     }
 
     // Update the password and clear the token
-    $conn->query("UPDATE tblguest SET G_PASS = '$new_password', VERIFICATION_TOKEN = NULL, OTP_EXPIRE_AT = NULL WHERE VERIFICATION_TOKEN = '$token'");
+    $conn->query("UPDATE tblguest SET G_PASS = '$hashed_password', VERIFICATION_TOKEN = NULL, OTP_EXPIRE_AT = NULL WHERE VERIFICATION_TOKEN = '$token'");
     echo "<script>
     Swal.fire({
         icon: 'success',
@@ -112,9 +128,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         confirmButtonText: 'OK'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = 'http://localhost/HM_HotelReservation/booking/index.php?view=logininfo'; // Redirect to login page or any other page
+            window.location.href = 'https://mcchmhotelreservation.com/booking/index.php?view=logininfo';
         }
     });
     </script>";
+
 }
 ?>
+<script>
+    document.getElementById('resetForm').addEventListener('submit', function (event) {
+        const newPassword = document.getElementById('new_password').value;
+        const confirmPassword = document.getElementById('confirm_password').value;
+        const errorMessage = document.getElementById('error-message');
+
+        if (newPassword !== confirmPassword) {
+            event.preventDefault();
+            errorMessage.style.display = 'block';
+            errorMessage.textContent = 'Passwords do not match.';
+        } else {
+            errorMessage.style.display = 'none';
+        }
+    });
+</script>
+
