@@ -1,9 +1,10 @@
 <?php
-$servername = "127.0.0.1";
-$username = "u510162695_hmsystemdb";
-$password = "1Hmsystemdb";
-$dbname = "u510162695_hmsystemdb";
-$dbport = "3306";
+require_once 'includes/initialize.php';
+// $servername = "127.0.0.1";
+// $username = "u510162695_hmsystemdb";
+// $password = "1Hmsystemdb";
+// $dbname = "u510162695_hmsystemdb";
+// $dbport = "3306";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname, $dbport);
