@@ -13,26 +13,36 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT * FROM livechat";
+// SQL query to count rows
+$sql = "SELECT COUNT(*) AS total_rows FROM livechat";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    echo "<table border='1'>";
-    echo "<tr><th>ID</th><th>Sender ID</th><th>Username</th><th>Message</th></tr>";
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td>" . htmlspecialchars($row["id"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["sender_id"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["username"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["message"]) . "</td>";
-        echo "</tr>";
-    }
-    echo "</table>";
+    $row = $result->fetch_assoc();
+    echo "Total number of rows in the livechat table: " . $row["total_rows"];
 } else {
-    echo "No records found.";
+    echo "Unable to count rows. The table may be empty.";
 }
+// $sql = "SELECT * FROM livechat";
+// $result = $conn->query($sql);
 
-$conn->close();
+// if ($result->num_rows > 0) {
+//     echo "<table border='1'>";
+//     echo "<tr><th>ID</th><th>Sender ID</th><th>Username</th><th>Message</th></tr>";
+//     while ($row = $result->fetch_assoc()) {
+//         echo "<tr>";
+//         echo "<td>" . htmlspecialchars($row["id"]) . "</td>";
+//         echo "<td>" . htmlspecialchars($row["sender_id"]) . "</td>";
+//         echo "<td>" . htmlspecialchars($row["username"]) . "</td>";
+//         echo "<td>" . htmlspecialchars($row["message"]) . "</td>";
+//         echo "</tr>";
+//     }
+//     echo "</table>";
+// } else {
+//     echo "No records found.";
+// }
+
+ $conn->close();
 
 
 // $servername = "127.0.0.1";
