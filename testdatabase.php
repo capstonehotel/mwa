@@ -26,7 +26,7 @@ if ($connection->connect_error) {
 //     echo "Unable to count rows. The table may be empty.";
 // }
 $sql = "SELECT * FROM livechat";
-$result = $conn->query($sql);
+$result = $connection->query($sql);
 
 if ($result->num_rows > 0) {
     echo "<table border='1'>";
@@ -44,7 +44,7 @@ if ($result->num_rows > 0) {
     echo "No records found.";
 }
 
- $conn->close();
+ $connection->close();
 
 
 // $servername = "127.0.0.1";
