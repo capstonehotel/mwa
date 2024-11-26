@@ -1,5 +1,5 @@
 <?php
-require_once ("../../includes/initialize.php");
+require_once ("../../initialize.php");
 // Check if the necessary POST variables are set
 if (isset($_POST['user_id']) && isset($_POST['user_name']) && isset($_POST['message'])) {
     $user_id = $_POST['user_id'];
