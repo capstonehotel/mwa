@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/initialize.php';
+require_once 'initialize.php';
 // $servername = "127.0.0.1";
 // $username = "u510162695_hmsystemdb";
 // $password = "1Hmsystemdb";
