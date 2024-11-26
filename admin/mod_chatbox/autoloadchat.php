@@ -1,5 +1,5 @@
 <?php
-require_once '../../initialize.php';
+require_once '../../includes/initialize.php';
 $senderid=$_POST['mid'];
 
 // $servername = "localhost";

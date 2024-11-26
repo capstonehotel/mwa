@@ -464,6 +464,7 @@ s0.parentNode.insertBefore(s1,s0);
 })();
 </script> -->
 <!--End of Tawk.to Script-->
+
 <!-- Chatbox button -->
 <button id="chat-button" class="btn btn-primary">
     <i class="fa fa-comments"></i> <!-- Replace 'fa-comments' with the specific icon you want -->
@@ -520,7 +521,7 @@ s0.parentNode.insertBefore(s1,s0);
             messageInput.value = '';
             checkInput();
 
-            fetch('https://mcchmhotelreservation.com/admin/themes/chatbox.php', {
+            fetch('admin/themes/chatbox.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: `message=${encodeURIComponent(message)}&name=${encodeURIComponent(name)}&user_id=${userId}`
@@ -576,13 +577,6 @@ s0.parentNode.insertBefore(s1,s0);
         });
     }, 1000);
 </script>
-
-
-
-
-
-
-
 
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Offcanvas navbar large">
