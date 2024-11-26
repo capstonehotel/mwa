@@ -502,7 +502,7 @@ s0.parentNode.insertBefore(s1,s0);
     function sendMessage() {
         const messageInput = document.getElementById('message-input');
         const message = messageInput.value.trim();
-        const name = '<?php echo $_SESSION['user_name'] . " " . $_SESSION['last']; ?>';
+        const name = '<?php echo $_SESSION['name'] . " " . $_SESSION['last']; ?>';
         const userId = <?php echo json_encode($_SESSION['GUESTID']); ?>;
 
         if (message) {
