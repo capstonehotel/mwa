@@ -56,12 +56,12 @@
                        $sql = "SELECT g.G_AVATAR, l.* FROM `livechat` l 
                        JOIN `tblguest` g ON l.sender_id = g. GUESTID
                        GROUP BY l.sender_id";
-                      $result = $conn->query($sql);
+                      $result = $connection->query($sql);
                         while ($row = $result->fetch_assoc()) {
 
 
                             $badgesql = "SELECT  *  FROM `livechat` WHERE status=0 AND sender_id=".$row['sender_id'];
-                            $badgeresult = $conn->query($badgesql);
+                            $badgeresult = $connection->query($badgesql);
                             $count = 0;
                             while ($rowbadge = $badgeresult->fetch_assoc()) {
                                 $count++;
@@ -84,27 +84,27 @@
         </div>
         <?php 
 // Assuming you have already established a database connection
-require_once ("../../includes/initialize.php");
+
 // Check if an ID is set in the URL
 if (isset($_GET['id'])) {
     $sender_id = $_GET['id'];
 
     // SQL query to get the user's name and avatar based on sender_id
-    $userSql = "SELECT g.G_AVATAR, l.user_name  FROM `livechat` l 
+    $userSql = "SELECT g.G_AVATAR, l.user_name FROM `livechat` l 
                 JOIN `tblguest` g ON l.sender_id = g. GUESTID 
                 WHERE l.sender_id = $sender_id LIMIT 1";
-    $userResult = $conn->query($userSql);
+    $userResult = $connection->query($userSql);
     
     // Fetch user details
     if ($userRow = $userResult->fetch_assoc()) {
         $userAvatar = $userRow['G_AVATAR'];
         $userName = $userRow['user_name'];
     } else {
-        $userAvatar = '../img/undraw_profile.svg'; // Fallback avatar
+        $userAvatar = 'undraw_profile.svg'; // Fallback avatar
         $userName = ''; // Fallback name
     }
 } else {
-    $userAvatar = '../img/undraw_profile.svg'; // Fallback avatar
+    $userAvatar = 'undraw_profile.svg'; // Fallback avatar
     $userName = ''; // Fallback name
 }
 ?>
@@ -285,7 +285,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             var adminmessage = $('#adminmessage').val();
 
-            fetch('https://mcchmhotelreservation.com/admin/themes/chatbox.php', {
+            fetch('http://localhost/HM_HotelReservation/admin/themes/chatbox.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: `message=`+adminmessage+`&name=admin&user_id=`+<?php echo $_GET['id']; ?>
@@ -317,7 +317,7 @@ var mid = "<?php echo $_GET['id']; ?>";
 $.ajax({
     type: "POST",
     datatype: "html",
-    url: "https://mcchmhotelreservation.com/admin/mod_chatbox/autoloadchat.php",
+    url: "http://localhost/HM_HotelReservation/admin/mod_chatbox/autoloadchat.php",
     data: {
         mid: mid,            
     },
@@ -452,7 +452,7 @@ $('.chat-messages').scrollTop($('.chat-messages')[0].scrollHeight);
 
     function sendMessageToServer(messageText) {
         const userId = new URLSearchParams(window.location.search).get('id');
-        fetch('https://mcchmhotelreservation.com/admin/themes/chatbox.php', {
+        fetch('chatbox.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `message=${messageText}&user_id=${userId}`
