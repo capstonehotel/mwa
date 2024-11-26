@@ -7,16 +7,17 @@ require_once 'includes/initialize.php';
 // $dbport = "3306";
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname, $dbport);
+// $conn = new mysqli($servername, $username, $password, $dbname, $dbport);
+$connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 
 // Check connection
-if ($conn->connect_error) {
+if ($connection->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
 // SQL query to count rows
 $sql = "SELECT COUNT(*) AS total_rows FROM livechat";
-$result = $conn->query($sql);
+$result = $connection->query($sql);
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
