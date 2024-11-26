@@ -100,11 +100,11 @@ if (isset($_GET['id'])) {
         $userAvatar = $userRow['G_AVATAR'];
         $userName = $userRow['user_name'];
     } else {
-        $userAvatar = 'undraw_profile.svg'; // Fallback avatar
+        $userAvatar = '../img/undraw_profile.svg'; // Fallback avatar
         $userName = ''; // Fallback name
     }
 } else {
-    $userAvatar = 'undraw_profile.svg'; // Fallback avatar
+    $userAvatar = '../img/undraw_profile.svg'; // Fallback avatar
     $userName = ''; // Fallback name
 }
 ?>
