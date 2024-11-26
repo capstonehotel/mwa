@@ -8,10 +8,10 @@ require_once ("initialize.php");
 
 // Create connection
 // $conn = new mysqli($servername, $username, $password, $dbname, $dbport);
-$connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
+$conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 
 // Check connection
-if ($connection->connect_error) {
+if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
@@ -26,7 +26,7 @@ if ($connection->connect_error) {
 //     echo "Unable to count rows. The table may be empty.";
 // }
 $sql = "SELECT * FROM livechat";
-$result = $connection->query($sql);
+$result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     echo "<table border='1'>";
@@ -44,7 +44,7 @@ if ($result->num_rows > 0) {
     echo "No records found.";
 }
 
- $connection->close();
+ $conn->close();
 
 
 // $servername = "127.0.0.1";
