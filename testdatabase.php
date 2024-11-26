@@ -1,5 +1,5 @@
 <?php
-require_once 'initialize.php';
+require_once ("initialize.php");
 // $servername = "127.0.0.1";
 // $username = "u510162695_hmsystemdb";
 // $password = "1Hmsystemdb";
@@ -8,7 +8,7 @@ require_once 'initialize.php';
 
 // Create connection
 // $conn = new mysqli($servername, $username, $password, $dbname, $dbport);
-$conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
+$connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 
 // Check connection
 if ($connection->connect_error) {
@@ -17,7 +17,7 @@ if ($connection->connect_error) {
 
 // SQL query to count rows
 $sql = "SELECT COUNT(*) AS total_rows FROM livechat";
-$result = $conn->query($sql);
+$result = $connection->query($sql);
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
