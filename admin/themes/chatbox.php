@@ -1,27 +1,16 @@
 <?php
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-
-// require_once 'https://mcchmhotelreservation.com/includes/initialize.php';
+require_once ("../../includes/initialize.php");
 // Check if the necessary POST variables are set
+if (isset($_POST['user_id']) && isset($_POST['user_name']) && isset($_POST['message'])) {
+    $user_id = $_POST['user_id'];
+    $name = $_POST['user_name'];
+    $message = $_POST['message'];
 
-    $user_id = $_GET['user_id'];
-    $name = $_GET['name'];
-    $message = $_GET['message'];
+   
 
-    // Database connection details
-    $servername = "127.0.0.1";
-    $username = "u510162695_hmsystemdb";
-    $password = "1Hmsystemdb";
-    $dbname = "u510162695_hmsystemdb";
-    $dbport ="3306";
+    // Create connection
+    $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 
-    // // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname, $dbport);
-    //$conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
     // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
@@ -32,12 +21,20 @@ error_reporting(E_ALL);
         echo "error";
     } else {
         // Prepare and execute SQL query
-        $sql = "INSERT INTO livechat (sender_id, name, message, status) VALUES ('148','Linux Ungon', 'sir', '0')";
-        $conn->query($sql);
-        echo "sent";
+        $sql = "INSERT INTO livechat (sender_id, user_name, message, status) VALUES (?, ?, ?, '0')";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("iss", $user_id, $name, $message);
+
+        if ($stmt->execute()) {
+            echo "Sent";
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+
+        $stmt->close();
     }
 
     $conn->close();
 
-
+}
 ?>

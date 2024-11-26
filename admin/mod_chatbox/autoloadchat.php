@@ -16,7 +16,7 @@ $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
         while ($row = $result->fetch_assoc()) {
     ?>
 
-    <?php if ($row['name'] === "admin") { ?>
+    <?php if ($row['user_name'] === "admin") { ?>
         <div class="message sent">
             <div class="content"><?php echo $row['message']; ?></div>
         </div>

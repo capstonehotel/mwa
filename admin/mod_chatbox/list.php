@@ -71,7 +71,7 @@
 
                     ?>
                       <a href="<?php echo '?id='.$row['sender_id']; ?>" class="list-group-item list-group-item-action" style="border-left:0px; border-right:0px;">
-            <img src="../../images/user_avatar/<?php echo $row['G_AVATAR']; ?>" alt="<?php echo $row['name']; ?>'s avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+            <img src="../../images/user_avatar/<?php echo $row['G_AVATAR']; ?>" alt="<?php echo $row['user_name']; ?>'s avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
             <?php echo $row['user_name']; ?> 
             <?php if ($badge > 0) { ?>
             <span class="badge badge-pill badge-danger"><?php echo $badge; ?></span>
@@ -90,7 +90,7 @@ if (isset($_GET['id'])) {
     $sender_id = $_GET['id'];
 
     // SQL query to get the user's name and avatar based on sender_id
-    $userSql = "SELECT g.G_AVATAR, l.user_name FROM `livechat` l 
+    $userSql = "SELECT g.G_AVATAR, l.user_name  FROM `livechat` l 
                 JOIN `tblguest` g ON l.sender_id = g. GUESTID 
                 WHERE l.sender_id = $sender_id LIMIT 1";
     $userResult = $conn->query($userSql);
