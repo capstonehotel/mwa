@@ -71,8 +71,8 @@
 
                     ?>
                       <a href="<?php echo '?id='.$row['sender_id']; ?>" class="list-group-item list-group-item-action" style="border-left:0px; border-right:0px;">
-            <img src="../../images/user_avatar/<?php echo $row['G_AVATAR']; ?>" alt="<?php echo $row['name']; ?>'s avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
-            <?php echo $row['name']; ?> 
+            <img src="../../images/user_avatar/<?php echo $row['G_AVATAR']; ?>" alt="<?php echo $row['user_name']; ?>'s avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+            <?php echo $row['user_name']; ?> 
             <?php if ($badge > 0) { ?>
             <span class="badge badge-pill badge-danger"><?php echo $badge; ?></span>
         <?php } ?>
@@ -90,7 +90,7 @@ if (isset($_GET['id'])) {
     $sender_id = $_GET['id'];
 
     // SQL query to get the user's name and avatar based on sender_id
-    $userSql = "SELECT g.G_AVATAR, l.name FROM `livechat` l 
+    $userSql = "SELECT g.G_AVATAR, l.user_name FROM `livechat` l 
                 JOIN `tblguest` g ON l.sender_id = g. GUESTID 
                 WHERE l.sender_id = $sender_id LIMIT 1";
     $userResult = $conn->query($userSql);
@@ -98,7 +98,7 @@ if (isset($_GET['id'])) {
     // Fetch user details
     if ($userRow = $userResult->fetch_assoc()) {
         $userAvatar = $userRow['G_AVATAR'];
-        $userName = $userRow['name'];
+        $userName = $userRow['user_name'];
     } else {
         $userAvatar = '../img/undraw_profile.svg'; // Fallback avatar
         $userName = ''; // Fallback name
@@ -111,7 +111,7 @@ if (isset($_GET['id'])) {
         <div class="main">
         <div class="header" style="position: relative;">
         <img src="../../images/user_avatar/<?php echo $userAvatar; ?>" alt="<?php echo $userName; ?>'s avatar" style="width: 50px; height: 50px; border-radius: 50%;">
-        <div class="name"><?php echo $userName; ?></div>
+        <div class="user_name"><?php echo $userName; ?></div>
          <!-- Three Dots Menu -->
          <div class="three-dots" onclick="toggleMenu(event)">
             <div class="dot"></div>
