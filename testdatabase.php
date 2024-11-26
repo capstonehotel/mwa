@@ -8,7 +8,7 @@ require_once 'includes/initialize.php';
 
 // Create connection
 // $conn = new mysqli($servername, $username, $password, $dbname, $dbport);
-$connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
+$conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 
 // Check connection
 if ($connection->connect_error) {
@@ -17,7 +17,7 @@ if ($connection->connect_error) {
 
 // SQL query to count rows
 $sql = "SELECT COUNT(*) AS total_rows FROM livechat";
-$result = $connection->query($sql);
+$result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
