@@ -102,6 +102,34 @@ if (isset($_SESSION['ERRMSG_ARR']) && is_array($_SESSION[' ERRMSG_ARR']) && coun
   unset($_SESSION['ERRMSG_ARR']);
 }
 ?>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $password = $_POST['password'];
+    $errorMessages = [];
+
+    // Validation checks
+    if (strlen($password) < 8) {
+        $errorMessages[] = "Password must be at least 8 characters long.";
+    }
+    if (!preg_match("/[!@#$%^&*()_+\-=\[\]{};':\"\\\\|,.<>\/?]+/", $password)) {
+        $errorMessages[] = "Password must contain at least one special character.";
+    }
+    if (!preg_match("/\d/", $password)) {
+        $errorMessages[] = "Password must contain at least one number.";
+    }
+    if (!preg_match("/[A-Z]/", $password)) {
+        $errorMessages[] = "Password must contain at least one capital letter.";
+    }
+
+    // Return error messages or success message
+    if (empty($errorMessages)) {
+        echo ""; // No errors
+    } else {
+        echo implode(" ", $errorMessages); // Join all error messages
+    }
+    exit;
+}
+?>
    
          		<form class="form-horizontal" action="index.php?view=logininfo" method="post"  name="personal" enctype="multipart/form-data">
 					 <h2>Personal Details</h2> 
@@ -257,10 +285,11 @@ function validateImage(event) {
         <input name="username" type="email" class="form-control input-sm" id="username" required  placeholder="User@gmail.com">
     
       </div>
+
       <div class="form-group">
-    <label class="control-label" for="password">Password:</label>
-    <input name="pass" type="password" class="form-control input-sm" id="password" onkeyup="validatePassword()" required placeholder="Ex@mple123">
-    <span id="password-error" style="color: red;"></span>
+    <label  class ="control-label" for="password">Password:</label>
+    <input name="pass" type="password" class="form-control input-sm" id="password" onkeyup="validatePassword()" required  placeholder="Ex@mple123">
+		 <span id="password-error" style="color: red;"></span>           
 </div>
 			            </div>
 			          </div>
@@ -311,6 +340,24 @@ function validateDOB(input) {
 }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.4/purify.min.js"></script>
+<script>
+function validatePassword() {
+    var passwordInput = document.getElementById("password");
+    var password = passwordInput.value;
+
+    // Send the password to the server using AJAX
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "<?php echo $_SERVER['PHP_SELF']; ?>", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            // Update the error message span with the response
+            document.getElementById("password-error").textContent = xhr.responseText;
+        }
+    };
+    xhr.send("password=" + encodeURIComponent(password));
+}
+</script>
 <!-- <script>
 function validatePassword() {
     var passwordInput = document.getElementById("password");
@@ -346,8 +393,8 @@ function validatePassword() {
     // Trigger native validation after setting custom validity
     passwordInput.reportValidity();
 }
-</script>
- -->
+</script> -->
+
 
 <!-- <script>
     document.getElementById('username').addEventListener('input', function() {
@@ -407,35 +454,6 @@ function validatePassword() {
     document.getElementById('password').setCustomValidity(allValid ? '' : 'Invalid password');
 }
 </script> -->
-<script>
-function validatePassword() {
-    const password = document.getElementById('password').value;
-    const passwordError = document.getElementById('password-error');
-
-    // Regex patterns for validation
-    const lengthPattern = /^.{8,12}$/;  // 8-12 characters
-    const capitalPattern = /[A-Z]/;    // At least one uppercase letter
-    const numberPattern = /\d/;        // At least one number
-    const specialPattern = /[@$!%*?&]/; // At least one special character
-
-    // Determine which error to display
-    if (!lengthPattern.test(password)) {
-        passwordError.textContent = "Password must be 8–12 characters long.";
-    } else if (!capitalPattern.test(password)) {
-        passwordError.textContent = "Password must contain at least one capital letter.";
-    } else if (!numberPattern.test(password)) {
-        passwordError.textContent = "Password must contain at least one number.";
-    } else if (!specialPattern.test(password)) {
-        passwordError.textContent = "Password must contain at least one special character (@, $, !, %, *, ?, &).";
-    } else {
-        passwordError.textContent = ""; // Clear error when all conditions are met
-    }
-
-    // Set form validation state based on all requirements being met or not
-    document.getElementById('password').setCustomValidity(passwordError.textContent ? "Invalid password" : "");
-}
-</script>
-
 
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.4/purify.min.js"></script>-->
 <script>
