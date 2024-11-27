@@ -267,7 +267,7 @@ function validateImage(event) {
     <label class="control-label" for="password">Password:</label>
     <input 
         name="pass" 
-        type="text" 
+        type="password" 
         class="form-control input-sm is-invalid" 
         id="password" 
         onkeyup="validatePassword()" 
