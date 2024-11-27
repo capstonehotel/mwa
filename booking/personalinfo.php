@@ -261,7 +261,13 @@ function validateImage(event) {
       <div class="form-group">
     <label  class ="control-label" for="password">Password:</label>
     <input name="pass" type="password" class="form-control input-sm" id="password" onkeyup="validatePassword()" required  placeholder="Ex@mple123">
-					            <span id="password-error" style="color: red;"></span>
+					            <!-- <span id="password-error" style="color: red;"></span> -->
+                      <ul id="password-requirements" style="color: red; list-style-type: none; padding: 0; display: none;">
+        <li id="length-error">Password must be 8–12 characters long.</li>
+        <li id="capital-error">Password must contain at least one capital letter.</li>
+        <li id="number-error">Password must contain at least one number.</li>
+        <li id="special-error">Password must contain at least one special character (@, $, !, %, *, ?, &).</li>
+    </ul>
 </div>
 			            </div>
 			          </div>
@@ -312,7 +318,7 @@ function validateDOB(input) {
 }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.4/purify.min.js"></script>
-<script>
+<!-- <script>
 function validatePassword() {
     var passwordInput = document.getElementById("password");
     var password = passwordInput.value;
@@ -348,7 +354,7 @@ function validatePassword() {
     passwordInput.reportValidity();
 }
 </script>
-
+ -->
 
 <!-- <script>
     document.getElementById('username').addEventListener('input', function() {
@@ -408,8 +414,76 @@ function validatePassword() {
     document.getElementById('password').setCustomValidity(allValid ? '' : 'Invalid password');
 }
 </script> -->
+<div class="form-group">
+    <label class="control-label" for="password">Password:</label>
+    <input name="pass" type="password" class="form-control input-sm" id="password" onkeyup="validatePassword()" required placeholder="Ex@mple123">
+    <ul id="password-requirements" style="color: red; list-style-type: none; padding: 0; display: none;">
+        <li id="length-error">Password must be 8–12 characters long.</li>
+        <li id="capital-error">Password must contain at least one capital letter.</li>
+        <li id="number-error">Password must contain at least one number.</li>
+        <li id="special-error">Password must contain at least one special character (@, $, !, %, *, ?, &).</li>
+    </ul>
+</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.4/purify.min.js"></script>
+<script>
+function validatePassword() {
+    const password = document.getElementById('password').value;
+
+    // Regex patterns for validation
+    const lengthPattern = /^.{8,12}$/;  // 8-12 characters
+    const capitalPattern = /[A-Z]/;   // At least one uppercase letter
+    const numberPattern = /\d/;       // At least one number
+    const specialPattern = /[@$!%*?&]/; // At least one special character
+
+    // Select the error messages
+    const lengthError = document.getElementById('length-error');
+    const capitalError = document.getElementById('capital-error');
+    const numberError = document.getElementById('number-error');
+    const specialError = document.getElementById('special-error');
+    const passwordRequirements = document.getElementById('password-requirements');
+
+    // Track any invalid requirements
+    let hasError = false;
+
+    // Validate each rule and hide or show the corresponding error message
+    if (!lengthPattern.test(password)) {
+        lengthError.style.display = 'list-item';
+        hasError = true;
+    } else {
+        lengthError.style.display = 'none';
+    }
+
+    if (!capitalPattern.test(password)) {
+        capitalError.style.display = 'list-item';
+        hasError = true;
+    } else {
+        capitalError.style.display = 'none';
+    }
+
+    if (!numberPattern.test(password)) {
+        numberError.style.display = 'list-item';
+        hasError = true;
+    } else {
+        numberError.style.display = 'none';
+    }
+
+    if (!specialPattern.test(password)) {
+        specialError.style.display = 'list-item';
+        hasError = true;
+    } else {
+        specialError.style.display = 'none';
+    }
+
+    // Show or hide the entire list based on errors
+    passwordRequirements.style.display = hasError ? 'block' : 'none';
+
+    // Set form validation state based on all requirements being met or not
+    document.getElementById('password').setCustomValidity(hasError ? 'Invalid password' : '');
+}
+</script>
+
+
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.4/purify.min.js"></script>-->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Define allowed characters for each field
