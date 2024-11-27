@@ -34,7 +34,7 @@ if (isset($_POST['save_user'])) {
                                 text: 'User updated successfully!',
                                 icon: 'success'
                             }).then(() => {
-                                window.location = 'index.php';
+                                window.location = '../index.php';
                             });
                           </script>";
     } else {
