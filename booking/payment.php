@@ -19,7 +19,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
 
     ?>
   <script>
-        console.log('SweetAlert2 script is running'); // JS log;s
+       // console.log('SweetAlert2 script is running'); // JS log;s
         
 
         // Function to show the OTP input prompt
@@ -331,7 +331,7 @@ if (!$msg1) {
     }).then((result) => {
         if (result.isConfirmed) {
             // Redirect after confirmation
-            window.location.href = "index.php";
+            window.location.href = "../guest/index.php";
         }
     });
 </script>
