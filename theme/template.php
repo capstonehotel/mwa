@@ -33,17 +33,17 @@ $_SESSION['to']  = $_POST['to'];
    
 
     <?php
-    // header("Content-Security-Policy: default-src 'self'; script-src 'self' https://trusted-scripts.com;");
-    // header("X-Frame-Options: DENY");
-    // header("Content-Security-Policy: frame-ancestors 'none';");
-    // header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload");
+    header("Content-Security-Policy: default-src 'self'; script-src 'self' https://trusted-scripts.com;");
+    header("X-Frame-Options: DENY");
+    header("Content-Security-Policy: frame-ancestors 'none';");
+    header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload");
     
     
-    // // Redirect all HTTP requests to HTTPS if not already using HTTPS
-    // if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
-    //   header("Location: https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-    //   exit();
-    // }
+    // Redirect all HTTP requests to HTTPS if not already using HTTPS
+    if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
+      header("Location: https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+      exit();
+    }
     
     
     
