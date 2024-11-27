@@ -258,10 +258,26 @@ function validateImage(event) {
     
       </div>
 
-      <div class="form-group">
+      <!-- <div class="form-group">
     <label  class ="control-label" for="password">Password:</label>
-    <input name="pass" type="password" class="form-control input-sm" id="password" onkeyup="validatePassword()" required  placeholder="Ex@mple123">
+    <input name="pass" type="password" class="form-control input-sm" id="password" onkeyup="validatePassword()" minlength="8" maxlength="12" required   placeholder="Ex@mple123">
 					            <span id="password-error" style="color: red;"></span>
+</div> -->
+<div class="form-group">
+    <label class="control-label" for="password">Password:</label>
+    <input 
+        name="pass" 
+        type="password" 
+        class="form-control input-sm is-invalid" 
+        id="password" 
+        onkeyup="validatePassword()" 
+        minlength="8" 
+        maxlength="12" 
+        required 
+        placeholder="Ex@mple123" 
+        aria-describedby="password-feedback"
+    >
+    <div id="password-feedback" class="invalid-feedback"></div>
 </div>
 			            </div>
 			          </div>
@@ -348,45 +364,36 @@ function validatePassword() {
     passwordInput.reportValidity();
 }
 </script> -->
-
 <script>
 function validatePassword() {
     var passwordInput = document.getElementById("password");
     var password = passwordInput.value;
-    var passwordError = document.getElementById("password-error");
+    var feedback = document.getElementById("password-feedback");
     
-    // Reset custom validity message and error message
-    passwordInput.setCustomValidity("");
-    passwordError.textContent = "";
+    // Reset custom validity and classes
+    passwordInput.classList.remove("is-valid", "is-invalid");
+    feedback.textContent = "";
 
     // Validation checks
     if (password.length < 8) {
-        passwordError.textContent = "Password must be at least 8 characters long.";
-        passwordInput.setCustomValidity("Password must be at least 8 characters long.");
-    } 
-    else if (password.length > 12) {
-        passwordError.textContent = "Password must not exceed 12 characters.";
-        passwordInput.setCustomValidity("Password must not exceed 12 characters.");
-    } 
-    else if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password)) {
-        passwordError.textContent = "Password must contain at least one special character.";
-        passwordInput.setCustomValidity("Password must contain at least one special character.");
-    } 
-    else if (!/\d/.test(password)) {
-        passwordError.textContent = "Password must contain at least one number.";
-        passwordInput.setCustomValidity("Password must contain at least one number.");
-    } 
-    else if (!/[A-Z]/.test(password)) {
-        passwordError.textContent = "Password must contain at least one capital letter.";
-        passwordInput.setCustomValidity("Password must contain at least one capital letter.");
-    } 
-    else {
-        // All checks passed
-        passwordInput.setCustomValidity(""); // Clear any custom validity
+        feedback.textContent = "Password must be at least 8 characters long.";
+        passwordInput.classList.add("is-invalid");
+    } else if (password.length > 12) {
+        feedback.textContent = "Password must not exceed 12 characters.";
+        passwordInput.classList.add("is-invalid");
+    } else if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password)) {
+        feedback.textContent = "Password must contain at least one special character.";
+        passwordInput.classList.add("is-invalid");
+    } else if (!/\d/.test(password)) {
+        feedback.textContent = "Password must contain at least one number.";
+        passwordInput.classList.add("is-invalid");
+    } else if (!/[A-Z]/.test(password)) {
+        feedback.textContent = "Password must contain at least one capital letter.";
+        passwordInput.classList.add("is-invalid");
+    } else {
+        // If all checks pass
+        passwordInput.classList.add("is-valid");
     }
-    
-    // Trigger native validation after setting custom validity
-    passwordInput.reportValidity();
 }
 </script>
 <!-- <script>
@@ -500,6 +507,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
