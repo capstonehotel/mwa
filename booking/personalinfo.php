@@ -31,79 +31,42 @@ if (isset($_POST['submit'])) {
   if ($age < 18) {
       $_SESSION['ERRMSG_ARR'][] = 'You must be at least 18 years old.';
   }
-  // Secure file upload handling
-$targetDirectory = "../images/user_avatar/";
-$uploadOk = 1;
-$maxFileSize = 2 * 1024 * 1024; // 2MB
-
-// Sanitize file name and generate a unique name
-$imageFileType = strtolower(pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION));
-$newFileName = uniqid('avatar_', true) . '.' . $imageFileType;
-$targetFile = $targetDirectory . $newFileName;
-
-// Validate file MIME type
-$finfo = finfo_open(FILEINFO_MIME_TYPE);
-$mimeType = finfo_file($finfo, $_FILES["image"]["tmp_name"]);
-finfo_close($finfo);
-
-if (!in_array($mimeType, ['image/jpeg', 'image/png'])) {
-    $_SESSION['ERRMSG_ARR'][] = "Invalid file type.";
-    $uploadOk = 0;
-}
-
-// Check file size
-if ($_FILES["image"]["size"] > $maxFileSize) {
-    $_SESSION['ERRMSG_ARR'][] = "Sorry, your file is too large.";
-    $uploadOk = 0;
-}
-
-// Proceed with the upload if no errors
-if ($uploadOk === 1) {
-    if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
-        echo "The file " . htmlspecialchars($newFileName) . " has been uploaded.";
-    } else {
-        $_SESSION['ERRMSG_ARR'][] = "Sorry, there was an error uploading your file.";
-    }
-} else {
-    $_SESSION['ERRMSG_ARR'][] = "File upload failed.";
-}
-
 
   // File upload handling
-  // $targetDirectory = "../images/user_avatar/";  // Directory where uploaded images will be stored
-  // $targetFile = $targetDirectory . basename($_FILES["image"]["name"]);
-  // $fileName = basename($_FILES["image"]["name"]);
-  // $uploadOk = 1;
-  // $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-  // $maxFileSize = 2 * 1024 * 1024; // 2MB
+  $targetDirectory = "../images/user_avatar/";  // Directory where uploaded images will be stored
+  $targetFile = $targetDirectory . basename($_FILES["image"]["name"]);
+  $fileName = basename($_FILES["image"]["name"]);
+  $uploadOk = 1;
+  $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+  $maxFileSize = 2 * 1024 * 1024; // 2MB
 
-  // // Check if file is an actual image
-  // $check = getimagesize($_FILES["image"]["tmp_name"]);
-  // if ($check === false) {
-  //     $_SESSION['ERRMSG_ARR'][] = "File is not an image.";
-  //     $uploadOk = 0;
-  // }
+  // Check if file is an actual image
+  $check = getimagesize($_FILES["image"]["tmp_name"]);
+  if ($check === false) {
+      $_SESSION['ERRMSG_ARR'][] = "File is not an image.";
+      $uploadOk = 0;
+  }
 
-  // // Check file size
-  // if ($_FILES["image"]["size"] > $maxFileSize) {
-  //     $_SESSION['ERRMSG_ARR'][] = "Sorry, your file is too large.";
-  //     $uploadOk = 0;
-  // }
+  // Check file size
+  if ($_FILES["image"]["size"] > $maxFileSize) {
+      $_SESSION['ERRMSG_ARR'][] = "Sorry, your file is too large.";
+      $uploadOk = 0;
+  }
 
-  // // Allow only certain file formats
-  // if (!in_array($imageFileType, ['jpg', 'jpeg', 'png'])) {
-  //     $_SESSION['ERRMSG_ARR'][] = "Sorry, only JPG, JPEG, and PNG files are allowed.";
-  //     $uploadOk = 0;
-  // }
+  // Allow only certain file formats
+  if (!in_array($imageFileType, ['jpg', 'jpeg', 'png'])) {
+      $_SESSION['ERRMSG_ARR'][] = "Sorry, only JPG, JPEG, and PNG files are allowed.";
+      $uploadOk = 0;
+  }
 
-  // // Attempt to upload file if no errors
-  // if ($uploadOk === 1) {
-  //     if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
-  //         echo "The file " . htmlspecialchars($fileName) . " has been uploaded.";
-  //     } else {
-  //         $_SESSION['ERRMSG_ARR'][] = "Sorry, there was an error uploading your file.";
-  //     }
-  // }
+  // Attempt to upload file if no errors
+  if ($uploadOk === 1) {
+      if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
+          echo "The file " . htmlspecialchars($fileName) . " has been uploaded.";
+      } else {
+          $_SESSION['ERRMSG_ARR'][] = "Sorry, there was an error uploading your file.";
+      }
+  }
 
   // Store sanitized inputs in session
   $_SESSION['image'] = $fileName;
@@ -161,7 +124,7 @@ if (isset($_SESSION['ERRMSG_ARR']) && is_array($_SESSION[' ERRMSG_ARR']) && coun
     margin-top: 10px;
   }
 </style>
-<!-- <script>
+<script>
 function validateImage(event) {
     const fileInput = event.target;
     const filePath = fileInput.value;
@@ -190,46 +153,6 @@ function validateImage(event) {
         reader.readAsDataURL(fileInput.files[0]);
     }
 }
-</script> -->
-<script>
-  function validateImage(event) {
-    const fileInput = event.target;
-    const file = fileInput.files[0];
-    const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
-
-    if (!allowedExtensions.exec(file.name)) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Invalid File Type',
-            text: 'Please upload an image file (JPG, JPEG, PNG).',
-            confirmButtonText: 'OK'
-        });
-        fileInput.value = "";
-        document.getElementById('imagePreview').style.display = 'none';
-        return false;
-    }
-
-    if (file.size > 2 * 1024 * 1024) { // 2MB
-        Swal.fire({
-            icon: 'error',
-            title: 'File Too Large',
-            text: 'Please upload a file smaller than 2MB.',
-            confirmButtonText: 'OK'
-        });
-        fileInput.value = "";
-        document.getElementById('imagePreview').style.display = 'none';
-        return false;
-    }
-
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        const imagePreview = document.getElementById('imagePreview');
-        imagePreview.style.display = 'block';
-        imagePreview.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-}
-
 </script>
 <!-- <script>
   function previewImage(event) {
@@ -389,7 +312,7 @@ function validateDOB(input) {
 }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.4/purify.min.js"></script>
-<!-- <script>
+<script>
 function validatePassword() {
     var passwordInput = document.getElementById("password");
     var password = passwordInput.value;
@@ -425,7 +348,7 @@ function validatePassword() {
     passwordInput.reportValidity();
 }
 </script>
- -->
+
 
 <!-- <script>
     document.getElementById('username').addEventListener('input', function() {
