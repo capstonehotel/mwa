@@ -472,7 +472,7 @@ s0.parentNode.insertBefore(s1,s0);
 
 <!-- Chatbox container -->
 <?php
-
+require_once("../initialize.php");
 ?>
 
 <div id="chatbox" class="chatbox">
