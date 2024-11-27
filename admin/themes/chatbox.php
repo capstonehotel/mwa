@@ -1,8 +1,8 @@
 <?php
 // Check if the necessary POST variables are set
-if (isset($_POST['user_id']) && isset($_POST['name']) && isset($_POST['message'])) {
+if (isset($_POST['user_id']) && isset($_POST['user_name']) && isset($_POST['message'])) {
     $user_id = $_POST['user_id'];
-    $name = $_POST['name'];
+    $name = $_POST['user_name'];
     $message = $_POST['message'];
 
     // Database connection details
