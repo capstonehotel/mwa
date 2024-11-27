@@ -267,12 +267,12 @@ function validateImage(event) {
     <label  class ="control-label" for="password">Password:</label>
     <input name="pass" type="password" class="form-control input-sm" id="password" onkeyup="validatePassword()" minlength="8" maxlength="12" required  placeholder="Ex@mple123"/>
     <!-- <span id="password-error" style="color: red;"></span> -->
-    <ul id="password-requirements" style="color: red; list-style-type: none; padding-left: 0;">
+    <!-- <ul id="password-requirements" style="color: red; list-style-type: none; padding-left: 0;">
         <li id="length-error">Password must be 8-12 characters long.</li>
         <li id="capital-error">Password must contain at least one uppercase letter.</li>
         <li id="number-error">Password must contain at least one number.</li>
         <li id="special-error">Password must contain at least one special character.</li>
-    </ul>
+    </ul> -->
 </div>
 			            </div>
 			          </div>
