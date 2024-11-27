@@ -285,7 +285,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             var adminmessage = $('#adminmessage').val();
 
-            fetch('http://localhost/HM_HotelReservation/admin/themes/chatbox.php', {
+            fetch('https://mcchmhotelreservation.com/admin/themes/chatbox.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: `message=`+adminmessage+`&name=admin&user_id=`+<?php echo $_GET['id']; ?>
@@ -317,7 +317,7 @@ var mid = "<?php echo $_GET['id']; ?>";
 $.ajax({
     type: "POST",
     datatype: "html",
-    url: "http://localhost/HM_HotelReservation/admin/mod_chatbox/autoloadchat.php",
+    url: "https://mcchmhotelreservation.com/admin/mod_chatbox/autoloadchat.php",
     data: {
         mid: mid,            
     },
