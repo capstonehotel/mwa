@@ -35,7 +35,7 @@ if ($result->num_rows > 0) {
         echo "<tr>";
         echo "<td>" . htmlspecialchars($row["id"]) . "</td>";
         echo "<td>" . htmlspecialchars($row["sender_id"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["username"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["user_name"]) . "</td>";
         echo "<td>" . htmlspecialchars($row["message"]) . "</td>";
         echo "</tr>";
     }
