@@ -453,7 +453,7 @@ $('.chat-messages').scrollTop($('.chat-messages')[0].scrollHeight);
 
     function sendMessageToServer(messageText) {
         const userId = new URLSearchParams(window.location.search).get('id');
-        fetch('chatbox.php', {
+        fetch('../themes/chatbox.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `message=${messageText}&user_id=${userId}`
