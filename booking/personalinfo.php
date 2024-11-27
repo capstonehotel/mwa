@@ -376,7 +376,7 @@ function validatePassword() {
         }
     });
 </script> -->
-<script>
+<!-- <script>
 function validatePassword() {
     const password = document.getElementById('password').value;
 
@@ -407,7 +407,7 @@ function validatePassword() {
     // Set form validation state based on all requirements being met or not
     document.getElementById('password').setCustomValidity(allValid ? '' : 'Invalid password');
 }
-</script>
+</script> -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.4/purify.min.js"></script>
 <script>
