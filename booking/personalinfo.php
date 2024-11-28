@@ -234,7 +234,7 @@ function validateImage(event) {
       
       <div class="form-group">
         <label class ="control-label" for="zip">Zip Code:</label>
-        <input name="zip" type="number" class="form-control input-sm" id="zip" maxlength="4" required >
+        <input name="zip" type="text" class="form-control input-sm" id="zip" maxlength="4" required oninput="this.value = this.value.replace(/\D/, ''); if(this.value.length > 4) this.value = this.value.slice(0, 4);">
       </div>
 	  
       <div class="form-group">
