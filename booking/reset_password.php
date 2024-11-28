@@ -107,10 +107,13 @@
             <input type="password" id="confirm_password" name="confirm_password" minlength="8" maxlength="12" required placeholder="Confirm Password">
             <i class="far fa-eye" id="confirm_password_toggle"></i>
         </div>
+        <div id="error-message" style="color: red; font-size: 14px; text-align: left; display: none;"></div>
+
         <!--<div id="error-message" style="color: red; font-size: 14px; text-align: left; display: none;">Passwords do not match.</div>-->
         <?php if (!empty($error_message)): ?>
     <div id="error-message" style="color: red; font-size: 14px; text-align: left;"><?php echo $error_message; ?></div>
 <?php endif; ?>
+
 
         <input type="hidden" name="token" value="<?php echo htmlspecialchars($_GET['token']); ?>">
         
@@ -165,43 +168,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 <script>
-    document.getElementById('resetForm').addEventListener('submit', function (event) {
-        const newPassword = document.getElementById('new_password').value;
-        const confirmPassword = document.getElementById('confirm_password').value;
-        const errorMessage = document.getElementById('error-message');
+document.getElementById('resetForm').addEventListener('submit', function (event) {
+    const newPassword = document.getElementById('new_password').value;
+    const confirmPassword = document.getElementById('confirm_password').value;
+    const errorMessage = document.getElementById('error-message');
 
-        // Clear any previous error messages
-        errorMessage.style.display = 'none';
-        errorMessage.innerHTML = '';
+    // Clear previous error messages
+    errorMessage.style.display = 'none'; // Hide previous error messages
+    errorMessage.innerHTML = ''; // Reset content
 
-        // Password requirements
-        const errors = [];
-        if (newPassword.length < 8 || newPassword.length > 12) {
-            errors.push('Password must be between 8 and 12 characters.');
-        }
-        if (!/[a-z]/.test(newPassword)) {
-            errors.push('Password must include at least one lowercase letter.');
-        }
-        if (!/[A-Z]/.test(newPassword)) {
-            errors.push('Password must include at least one uppercase letter.');
-        }
-        if (!/\d/.test(newPassword)) {
-            errors.push('Password must include at least one number.');
-        }
-        if (!/[@$!%*?&#]/.test(newPassword)) {
-            errors.push('Password must include at least one special character.');
-        }
-        if (newPassword !== confirmPassword) {
-            errors.push('Passwords do not match.');
-        }
+    // Password requirements
+    const errors = [];
+    if (newPassword.length < 8 || newPassword.length > 12) {
+        errors.push('Password must be between 8 and 12 characters.');
+    }
+    if (!/[a-z]/.test(newPassword)) {
+        errors.push('Password must include at least one lowercase letter.');
+    }
+    if (!/[A-Z]/.test(newPassword)) {
+        errors.push('Password must include at least one uppercase letter.');
+    }
+    if (!/\d/.test(newPassword)) {
+        errors.push('Password must include at least one number.');
+    }
+    if (!/[@$!%*?&#]/.test(newPassword)) {
+        errors.push('Password must include at least one special character.');
+    }
+    if (newPassword !== confirmPassword) {
+        errors.push('Passwords do not match.');
+    }
 
-        // Display errors if any
-        if (errors.length > 0) {
-            event.preventDefault();
-            errorMessage.style.display = 'block';
-            errorMessage.innerHTML = errors.join('<br>');
-        }
-    });
+    // If there are any errors, prevent the form from submitting and show errors
+    if (errors.length > 0) {
+        event.preventDefault(); // Prevent form submission
+        errorMessage.style.display = 'block'; // Display the error container
+        errorMessage.innerHTML = errors.join('<br>'); // Show all error messages
+    }
+});
 </script>
 
 <script>
