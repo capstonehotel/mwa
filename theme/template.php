@@ -467,7 +467,7 @@ s0.parentNode.insertBefore(s1,s0);
 <?php
 // Check if the user is logged in
 $isLoggedIn = isset($_SESSION['GUESTID']);
-$loginPageUrl = 'https://mcchmhotelreservation.com/index.php?page=6'; // Update to your login page URL
+$loginPageUrl = 'https://mcchmhotelreservation.com/booking/index.php?view=logininfo'; // Update to your login page URL
 ?>
 <!-- Chatbox button -->
 <button id="chat-button" class="btn btn-primary">
