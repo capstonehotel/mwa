@@ -107,7 +107,7 @@
             <input type="password" id="confirm_password" name="confirm_password" minlength="8" maxlength="12" required placeholder="Confirm Password">
             <i class="far fa-eye" id="confirm_password_toggle"></i>
         </div>
-        <div id="error-message" style="color: red; font-size: 14px; text-align: left; display: none;"></div>
+        <!--<div id="error-message" style="color: red; font-size: 14px; text-align: left; display: none;"></div>-->
 
         <!--<div id="error-message" style="color: red; font-size: 14px; text-align: left; display: none;">Passwords do not match.</div>-->
         <?php if (!empty($error_message)): ?>
