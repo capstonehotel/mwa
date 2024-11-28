@@ -408,8 +408,8 @@ function validatePassword() {
     document.getElementById('password').setCustomValidity(allValid ? '' : 'Invalid password');
 }
 </script> -->
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.4/purify.min.js"></script>
+<!-- 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.4/purify.min.js"></script> -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Define allowed characters for each field
