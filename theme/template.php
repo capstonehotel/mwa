@@ -467,10 +467,10 @@ s0.parentNode.insertBefore(s1,s0);
 <?php
 // Check if the user is logged in
 $isLoggedIn = isset($_SESSION['GUESTID']);
-$loginPageUrl = 'https://mcchmhotelreservation.com/booking/index.php?view=logininfo'; // Update to your login page URL
 ?>
+
 <!-- Chatbox button -->
-<button id="chat-button" class="btn btn-primary">
+<button id="chat-button" class="btn btn-primary"<?php echo $isLoggedIn ? '' : 'disabled'; ?>>
     <i class="fa fa-comments"></i> <!-- Replace 'fa-comments' with the specific icon you want -->
 </button>
 
@@ -545,22 +545,19 @@ $loginPageUrl = 'https://mcchmhotelreservation.com/booking/index.php?view=logini
         }
     }
 
-    const isLoggedIn = <?php echo json_encode($isLoggedIn); ?>;
-    const loginPageUrl = <?php echo json_encode($loginPageUrl); ?>;
-
-    document.getElementById('chat-button').addEventListener('click', function () {
-        if (!isLoggedIn) {
-            window.location.href = loginPageUrl;
+    document.getElementById('chat-button').addEventListener('click', function() {
+      if (!isLoggedIn) {
+            alert('Please log in to use the chat feature.');
+            return;
+        }
+        const chatbox = document.getElementById('chatbox');
+        if (chatbox.classList.contains('open')) {
+            closeChatbox();
         } else {
-            const chatbox = document.getElementById('chatbox');
-            if (chatbox.classList.contains('open')) {
-                closeChatbox();
-            } else {
-                chatbox.classList.add('open');
-                chatbox.style.height = chatbox.scrollHeight + "px";
-                chatbox.style.opacity = "1";
-                chatbox.style.transform = "scale(1) translate(0, 0)";
-            }
+            chatbox.classList.add('open');
+            chatbox.style.height = chatbox.scrollHeight + "px";
+            chatbox.style.opacity = "1";
+            chatbox.style.transform = "scale(1) translate(0, 0)";
         }
     });
 
