@@ -214,6 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const newPasswordToggle = document.getElementById('new_password_toggle');
     const confirmPasswordToggle = document.getElementById('confirm_password_toggle');
 
+    // Add event listeners for toggling visibility
     newPasswordToggle.addEventListener('click', () => {
         toggleVisibility(newPasswordInput, newPasswordToggle);
     });
@@ -222,12 +223,16 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleVisibility(confirmPasswordInput, confirmPasswordToggle);
     });
 
+    // Function to toggle password visibility
     function toggleVisibility(input, toggleIcon) {
-        const isPassword = input.type === 'password';
-        input.type = isPassword ? 'text' : 'password';
-        toggleIcon.classList.toggle('fa-eye');
-        toggleIcon.classList.toggle('fa-eye-slash');
+        const isPassword = input.type === 'password';  // Check if it's a password field
+        input.type = isPassword ? 'text' : 'password';  // Toggle between text and password
+
+        // Toggle the icon class for eye visibility
+        toggleIcon.classList.toggle('fa-eye');  // Show eye icon
+        toggleIcon.classList.toggle('fa-eye-slash');  // Show eye-slash icon
     }
 });
+
 </script>
 
