@@ -435,7 +435,7 @@ mysqli_close($conn);
                         <li class="notification-message <?php echo $readClass; ?>" >
                         <a href="../mod_reservation/index.php?view=view&code=<?php echo $row['CONFIRMATIONCODE']; ?>" onclick="markAsRead()">
         <div class="notification" style="display: flex; align-items: center;">
-            <img alt="" src="../../images/user_avatar/<?php echo $avatar; ?>" class="avatar-img rounded-circle" style="margin-right: 10px; margin-bottom: 12px; height: 50px; width: 50px;" />
+            <img alt="" src="../../images/user_avatar/<?php echo $avatar; ?>" class="avatar-img rounded-circle" style="height: 50px; width: 50px; border-radius: 50%; object-fit: cover; margin-right: 10px;" />
             <div class="content" style="font-size: 15px;">
                 <p style="margin: 0 0 2px 0;">
                     <strong><?php echo $fullName; ?></strong> has made a booking in <strong><?php echo $roomName; ?></strong> (<?php echo $roomDesc; ?>) and <?php echo $paidstatus; ?> ₱ <?php echo $paid; ?> pesos.
