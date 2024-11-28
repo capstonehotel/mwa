@@ -257,12 +257,27 @@ function validateImage(event) {
         <input name="username" type="email" class="form-control input-sm" id="username" required  placeholder="User@gmail.com">
     
       </div>
-
       <div class="form-group">
+    <label class="control-label" for="password">Password:</label>
+    <input 
+        name="pass" 
+        type="password" 
+        class="form-control input-sm" 
+        id="password" 
+        onkeyup="validatePassword()" 
+        oninput="clearErrorMessage()" 
+        oninvalid="setCustomErrorMessage(event)" 
+        minlength="8" 
+        maxlength="12" 
+        required  
+        placeholder="Ex@mple123">
+    <span id="password-error" style="color: red;"></span>
+</div>
+      <!-- <div class="form-group">
     <label  class ="control-label" for="password">Password:</label>
     <input name="pass" type="password" class="form-control input-sm" id="password" oninput="validatePassword()" minlength="8" maxlength="12" required  placeholder="Ex@mple123">
-					            <!-- <span id="password-error" style="color: red;"></span> -->
-</div>
+					            <span id="password-error" style="color: red;"></span> 
+</div> -->
 			            </div>
 			          </div>
  
@@ -312,7 +327,7 @@ function validateDOB(input) {
 }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.4/purify.min.js"></script>
-<script>
+<!-- <script>
 function validatePassword() {
     var passwordInput = document.getElementById("password");
     var password = passwordInput.value;
@@ -347,8 +362,57 @@ function validatePassword() {
     // Trigger native validation after setting custom validity
     passwordInput.reportValidity();
 }
-</script>
+</script> -->
+<script>
+function validatePassword() {
+    var passwordInput = document.getElementById("password");
+    var password = passwordInput.value;
+    var passwordError = document.getElementById("password-error");
 
+    // Reset custom validity message and error message
+    passwordInput.setCustomValidity("");
+    passwordError.textContent = "";
+
+    // Validation checks
+    if (password.length < 8) {
+        passwordError.textContent = "Password must be at least 8 characters long.";
+        passwordInput.setCustomValidity("Password must be at least 8 characters long.");
+    } 
+    else if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password)) {
+        passwordError.textContent = "Password must contain at least one special character.";
+        passwordInput.setCustomValidity("Password must contain at least one special character.");
+    } 
+    else if (!/\d/.test(password)) {
+        passwordError.textContent = "Password must contain at least one number.";
+        passwordInput.setCustomValidity("Password must contain at least one number.");
+    } 
+    else if (!/[A-Z]/.test(password)) {
+        passwordError.textContent = "Password must contain at least one capital letter.";
+        passwordInput.setCustomValidity("Password must contain at least one capital letter.");
+    } 
+
+    // Trigger native validation after setting custom validity
+    passwordInput.reportValidity();
+}
+
+function clearErrorMessage() {
+    var passwordError = document.getElementById("password-error");
+    passwordError.textContent = ""; // Clear error message
+}
+
+function setCustomErrorMessage(event) {
+    var passwordInput = event.target;
+    var passwordError = document.getElementById("password-error");
+
+    // Display custom message for the required field
+    if (passwordInput.validity.valueMissing) {
+        passwordError.textContent = "Password is required.";
+        passwordInput.setCustomValidity("Password is required.");
+    } else {
+        passwordInput.setCustomValidity(""); // Reset custom validity
+    }
+}
+</script>
 
 <!-- <script>
     document.getElementById('username').addEventListener('input', function() {
