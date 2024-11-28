@@ -510,46 +510,45 @@ $isLoggedIn = isset($_SESSION['GUESTID']);
     }
 
     function sendMessage() {
-    const messageInput = document.getElementById('message-input');
-    const message = messageInput.value.trim();
-    const name = '<?php echo $_SESSION['name'] . " " . $_SESSION['last']; ?>';
-    const userId = <?php echo json_encode($_SESSION['GUESTID']); ?>;
+        const messageInput = document.getElementById('message-input');
+        const message = messageInput.value.trim();
+        const name = '<?php echo $_SESSION['name'] . " " . $_SESSION['last']; ?>';
+        const userId = <?php echo json_encode($_SESSION['GUESTID']); ?>;
 
-    if (message) {
-        const sanitizedMessage = sanitizeMessage(message); // Sanitize the input message
-        let userMessageElement = document.createElement('div');
-        userMessageElement.innerHTML = sanitizedMessage; // Use innerHTML after sanitizing
+        if (message) {
+            let userMessageElement = document.createElement('div');
+            userMessageElement.textContent = message;
+            userMessageElement.classList.add('message', 'received');
 
-        userMessageElement.classList.add('message', 'received');
-        if (sanitizedMessage.length < 20) {
-            userMessageElement.style.backgroundColor = '#007bff';
-        } else {
-            userMessageElement.style.backgroundColor = '#5bc0de';
-        }
-
-        document.getElementById('chat-messages').appendChild(userMessageElement);
-        messageInput.value = '';
-        checkInput();
-
-        fetch('https://mcchmhotelreservation.com/admin/themes/chatbox.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `message=${encodeURIComponent(sanitizedMessage)}&name=${encodeURIComponent(name)}&user_id=${userId}`
-        })
-        .then(response => response.text())
-        .then(data => {
-            console.log('Response from server:', data);
-            if (data === 'Sent') {
-                console.log('Message sent successfully');
+            if (message.length < 20) {
+                userMessageElement.style.backgroundColor = '#007bff';
             } else {
-                console.log('Server error:', data);
+                userMessageElement.style.backgroundColor = '#5bc0de';
             }
-        })
-        .catch(error => console.error('Error:', error));
-    } else {
-        alert('Please enter a message');
+
+            document.getElementById('chat-messages').appendChild(userMessageElement);
+            messageInput.value = '';
+            checkInput();
+
+            fetch('https://mcchmhotelreservation.com/admin/themes/chatbox.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `message=${encodeURIComponent(message)}&name=${encodeURIComponent(name)}&user_id=${userId}`
+            })
+            .then(response => response.text()) // Using text() to debug response
+            .then(data => {
+                console.log('Response from server:', data);
+                if (data === 'Sent') {
+                    console.log('Message sent successfully');
+                } else {
+                    console.log('Server error:', data);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        } else {
+            alert('Please enter a message');
+        }
     }
-}
     const isLoggedIn = <?php echo json_encode($isLoggedIn); ?>;
     document.getElementById('chat-button').addEventListener('click', function() {
       if (!isLoggedIn) {
