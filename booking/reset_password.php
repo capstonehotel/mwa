@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 
 <style>
     body {
@@ -61,6 +62,26 @@
     .container button:hover {
         background-color: #0056b3;
     }
+    .password-field {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.password-field input {
+    width: 100%;
+    padding-right: 40px; /* Space for the icon */
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #666;
+}
+
 </style>
 
 <div class="container">
@@ -75,9 +96,15 @@
 
          <label for="new_password">Enter your new password:</label>
         <input type="password" id="new_password" name="new_password" required placeholder="New Password">
+        <span class="toggle-password" onclick="togglePasswordVisibility('new_password')">
+        <span class="material-icons-outlined">visibility</span>
+    </span>
         
         <label for="confirm_password">Confirm your new password:</label>
         <input type="password" id="confirm_password" name="confirm_password" required placeholder="Confirm Password">
+        <span class="toggle-password" onclick="togglePasswordVisibility('confirm_password')">
+        <span class="material-icons-outlined">visibility</span>
+    </span>
         <!--<div id="error-message" style="color: red; font-size: 14px; text-align: left; display: none;">Passwords do not match.</div>-->
         <?php if (!empty($error_message)): ?>
     <div id="error-message" style="color: red; font-size: 14px; text-align: left;"><?php echo $error_message; ?></div>
@@ -149,5 +176,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             errorMessage.style.display = 'none';
         }
     });
+</script>
+<script>
+    function togglePasswordVisibility(inputId) {
+        const input = document.getElementById(inputId);
+        const icon = input.nextElementSibling.querySelector('.material-icons-outlined');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.textContent = 'visibility_off';
+        } else {
+            input.type = 'password';
+            icon.textContent = 'visibility';
+        }
+    }
 </script>
 
