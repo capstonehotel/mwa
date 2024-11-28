@@ -221,7 +221,7 @@ $guest->G_COMPANY        = validateAndSanitize($_SESSION)['company'];
 $guest->G_CADDRESS       = validateAndSanitize($_SESSION)['caddress'];        
 $guest->G_TERMS          = 1;    
 $guest->G_UNAME          = validateAndSanitize($_SESSION)['username'];    
-$guest->G_PASS           = sha1($_SESSION['pass']);    
+$guest->G_PASS           =  password_hash($_SESSION['pass'], PASSWORD_DEFAULT);   
 $guest->ZIP              = validateAndSanitize($_SESSION)['zip'];
 
    
@@ -278,18 +278,22 @@ $_SESSION['GUESTID'] =   $lastguest;
        VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentStatus . "', 'GCash','" . $amountPaid . "' )" ;
         // mysql_query($sql);
             // Execute the first SQL
-            $mydb->setQuery($sql);
-            $msg = $mydb->executeQuery();
-       
+$mydb->setQuery($sql);
+$msg = $mydb->executeQuery();
+if (!$msg) {
+    echo "Error executing first query: " . $mydb->getLastError();
+}
 
-//         $sql1 = "INSERT INTO `notifications` (`TRANSDATE`, `CONFIRMATIONCODE`, `GUESTID`, `SPRICE`, `PAYMENT_STATUS`, `AMOUNT_PAID`, `IS_READ`, `ROOMID`)
-//        VALUES ('" . date('Y-m-d H:i:s') . "','" . $_SESSION['confirmation'] . "'," . $_SESSION['GUESTID'] . "," . $tot . ", '" . $paymentStatus . "' , " . $amountPaid . ", 0, " .  $reservation->ROOMID . ")";
-//         // mysql_query($sql);
+        $sql1 = "INSERT INTO `notifications` (`TRANSDATE`, `CONFIRMATIONCODE`, `GUESTID`, `SPRICE`, `PAYMENT_STATUS`, `AMOUNT_PAID`, `IS_READ`, `ROOMID`)
+       VALUES ('" . date('Y-m-d H:i:s') . "','" . $_SESSION['confirmation'] . "'," . $_SESSION['GUESTID'] . "," . $tot . ", '" . $paymentStatus . "' , " . $amountPaid . ", 0, " .  $reservation->ROOMID . ")";
+        // mysql_query($sql);
         
-// // Execute the second SQL
-// $mydb->setQuery($sql1);
-// $msg1 = $mydb->executeQuery();
-
+// Execute the second SQL
+$mydb->setQuery($sql1);
+$msg1 = $mydb->executeQuery();
+if (!$msg1) {
+    echo "Error executing second query: " . $mydb->getLastError();
+}
 
 
     //  $mydb->setQuery($sql);
