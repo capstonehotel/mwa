@@ -331,7 +331,7 @@ if (!$msg1) {
     }).then((result) => {
         if (result.isConfirmed) {
             // Redirect after confirmation
-            window.location.href = "../guest/index.php";
+            window.location.href = "index.php";
         }
     });
 </script>
