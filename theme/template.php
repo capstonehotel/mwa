@@ -464,9 +464,13 @@ s0.parentNode.insertBefore(s1,s0);
 })();
 </script> -->
 <!--End of Tawk.to Script-->
+<?php
+// Check if the user is logged in
+$isLoggedIn = isset($_SESSION['GUESTID']);
+?>
 
 <!-- Chatbox button -->
-<button id="chat-button" class="btn btn-primary">
+<button id="chat-button" class="btn btn-primary"<?php echo $isLoggedIn ? '' : 'disabled'; ?>>
     <i class="fa fa-comments"></i> <!-- Replace 'fa-comments' with the specific icon you want -->
 </button>
 
@@ -540,8 +544,12 @@ s0.parentNode.insertBefore(s1,s0);
             alert('Please enter a message');
         }
     }
-
+    const isLoggedIn = <?php echo json_encode($isLoggedIn); ?>;
     document.getElementById('chat-button').addEventListener('click', function() {
+      if (!isLoggedIn) {
+            alert('Please log in to use the chat feature.');
+            return;
+        }
         const chatbox = document.getElementById('chatbox');
         if (chatbox.classList.contains('open')) {
             closeChatbox();
