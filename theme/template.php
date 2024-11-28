@@ -611,7 +611,7 @@ $isLoggedIn = isset($_SESSION['GUESTID']);
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle <?php if(isset($_GET['p']) && $_GET['p'] == "accomodation"){echo "active";} ?>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Accomondation
+                Accomodation
               </a>
               <ul class="dropdown-menu">
                 <?php  foreach ($cur as $result) { ?>
