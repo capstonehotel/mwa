@@ -261,7 +261,7 @@ function validateImage(event) {
       <div class="form-group">
     <label  class ="control-label" for="password">Password:</label>
     <input name="pass" type="password" class="form-control input-sm" id="password" oninput="validatePassword()" minlength="8" maxlength="12" required  placeholder="Ex@mple123">
-					            <span id="password-error" style="color: red;"></span>
+					            <!-- <span id="password-error" style="color: red;"></span> -->
 </div>
 			            </div>
 			          </div>
@@ -312,7 +312,7 @@ function validateDOB(input) {
 }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.4/purify.min.js"></script>
-<!-- <script>
+<script>
 function validatePassword() {
     var passwordInput = document.getElementById("password");
     var password = passwordInput.value;
@@ -347,7 +347,7 @@ function validatePassword() {
     // Trigger native validation after setting custom validity
     passwordInput.reportValidity();
 }
-</script> -->
+</script>
 
 
 <!-- <script>
@@ -376,7 +376,7 @@ function validatePassword() {
         }
     });
 </script> -->
- <script>
+<!-- <script>
 function validatePassword() {
     const password = document.getElementById('password').value;
 
@@ -407,7 +407,7 @@ function validatePassword() {
     // Set form validation state based on all requirements being met or not
     document.getElementById('password').setCustomValidity(allValid ? '' : 'Invalid password');
 }
-</script>
+</script> -->
 <!-- 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.4/purify.min.js"></script> -->
 <script>
