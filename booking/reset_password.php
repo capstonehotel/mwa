@@ -208,31 +208,31 @@ document.getElementById('resetForm').addEventListener('submit', function (event)
 </script>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const newPasswordInput = document.getElementById('new_password');
-    const confirmPasswordInput = document.getElementById('confirm_password');
-    const newPasswordToggle = document.getElementById('new_password_toggle');
-    const confirmPasswordToggle = document.getElementById('confirm_password_toggle');
 
-    // Add event listeners for toggling visibility
-    newPasswordToggle.addEventListener('click', () => {
-        toggleVisibility(newPasswordInput, newPasswordToggle);
+    document.addEventListener('DOMContentLoaded', () => {
+        const newPasswordInput = document.getElementById('new_password');
+        const confirmPasswordInput = document.getElementById('confirm_password');
+        const newPasswordToggle = document.getElementById('new_password_toggle');
+        const confirmPasswordToggle = document.getElementById('confirm_password_toggle');
+
+        // Add event listeners for toggling visibility
+        newPasswordToggle.addEventListener('click', () => {
+            toggleVisibility(newPasswordInput, newPasswordToggle);
+        });
+
+        confirmPasswordToggle.addEventListener('click', () => {
+            toggleVisibility(confirmPasswordInput, confirmPasswordToggle);
+        });
+
+        // Function to toggle password visibility
+        function toggleVisibility(input, toggleIcon) {
+            const isPassword = input.type === 'password';  // Check if it's a password field
+            input.type = isPassword ? 'text' : 'password';  // Toggle between text and password
+
+            // Toggle the icon class for eye visibility
+            toggleIcon.classList.toggle('fa-eye');  // Show eye icon
+            toggleIcon.classList.toggle('fa-eye-slash');  // Show eye-slash icon
+        }
     });
-
-    confirmPasswordToggle.addEventListener('click', () => {
-        toggleVisibility(confirmPasswordInput, confirmPasswordToggle);
-    });
-
-    // Function to toggle password visibility
-    function toggleVisibility(input, toggleIcon) {
-        const isPassword = input.type === 'password';  // Check if it's a password field
-        input.type = isPassword ? 'text' : 'password';  // Toggle between text and password
-
-        // Toggle the icon class for eye visibility
-        toggleIcon.classList.toggle('fa-eye');  // Show eye icon
-        toggleIcon.classList.toggle('fa-eye-slash');  // Show eye-slash icon
-    }
-});
-
 </script>
 
