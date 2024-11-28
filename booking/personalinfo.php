@@ -302,73 +302,8 @@ function validateImage(event) {
 			    </div>
 
 			</form>   
-      <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $password = $_POST['password'];
-    $response = ["valid" => true, "errors" => []];
 
-    // Check password length
-    if (strlen($password) < 8) {
-        $response["valid"] = false;
-        $response["errors"][] = "Password must be at least 8 characters long.";
-    }
 
-    if (strlen($password) > 12) {
-        $response["valid"] = false;
-        $response["errors"][] = "Password must not exceed 12 characters.";
-    }
-
-    // Check for at least one special character
-    if (!preg_match('/[!@#$%^&*()_+\-=\[\]{};\'":\\|,.<>\/?]+/', $password)) {
-        $response["valid"] = false;
-        $response["errors"][] = "Password must contain at least one special character.";
-    }
-
-    // Check for at least one digit
-    if (!preg_match('/\d/', $password)) {
-        $response["valid"] = false;
-        $response["errors"][] = "Password must contain at least one number.";
-    }
-
-    // Check for at least one uppercase letter
-    if (!preg_match('/[A-Z]/', $password)) {
-        $response["valid"] = false;
-        $response["errors"][] = "Password must contain at least one uppercase letter.";
-    }
-
-    // Return response as JSON
-    header('Content-Type: application/json');
-    echo json_encode($response);
-    exit;
-}
-?>
-
-<script>
-        function validatePassword() {
-            const passwordInput = document.getElementById("password");
-            const passwordError = document.getElementById("password-error");
-
-            // Send AJAX request to PHP for validation
-            const xhr = new XMLHttpRequest();
-            xhr.open("POST", "validate_password.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-            xhr.onload = function () {
-                if (xhr.status === 100) {
-                    const response = JSON.parse(xhr.responseText);
-                    if (response.valid) {
-                        passwordError.textContent = "Password is valid.";
-                        passwordError.style.color = "green";
-                    } else {
-                        passwordError.textContent = response.errors.join(" ");
-                        passwordError.style.color = "red";
-                    }
-                }
-            };
-
-            xhr.send("password=" + encodeURIComponent(passwordInput.value));
-        }
-    </script>
 <script type="text/javascript">
 function capitalizeInput(input) {
     var inputValue = input.value;
@@ -428,10 +363,7 @@ function validatePassword() {
     passwordInput.reportValidity();
 }
 </script> -->
-
-
-
-<!-- <script>
+<script>
 function validatePassword() {
     var passwordInput = document.getElementById("password");
     var password = passwordInput.value;
@@ -480,10 +412,7 @@ function setCustomErrorMessage(event) {
         passwordInput.setCustomValidity(""); // Reset custom validity
     }
 }
-</script> -->
-
-
-
+</script>
 
 <!-- <script>
     document.getElementById('username').addEventListener('input', function() {
@@ -599,7 +528,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 
 
