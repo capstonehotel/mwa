@@ -282,13 +282,13 @@ $_SESSION['GUESTID'] =   $lastguest;
             $msg = $mydb->executeQuery();
        
 
-        $sql1 = "INSERT INTO `notifications` (`TRANSDATE`, `CONFIRMATIONCODE`, `GUESTID`, `SPRICE`, `PAYMENT_STATUS`, `AMOUNT_PAID`, `IS_READ`, `ROOMID`)
-       VALUES ('" . date('Y-m-d H:i:s') . "','" . $_SESSION['confirmation'] . "'," . $_SESSION['GUESTID'] . "," . $tot . ", '" . $paymentStatus . "' , " . $amountPaid . ", 0, " .  $reservation->ROOMID . ")";
-        // mysql_query($sql);
+//         $sql1 = "INSERT INTO `notifications` (`TRANSDATE`, `CONFIRMATIONCODE`, `GUESTID`, `SPRICE`, `PAYMENT_STATUS`, `AMOUNT_PAID`, `IS_READ`, `ROOMID`)
+//        VALUES ('" . date('Y-m-d H:i:s') . "','" . $_SESSION['confirmation'] . "'," . $_SESSION['GUESTID'] . "," . $tot . ", '" . $paymentStatus . "' , " . $amountPaid . ", 0, " .  $reservation->ROOMID . ")";
+//         // mysql_query($sql);
         
-// Execute the second SQL
-$mydb->setQuery($sql1);
-$msg1 = $mydb->executeQuery();
+// // Execute the second SQL
+// $mydb->setQuery($sql1);
+// $msg1 = $mydb->executeQuery();
 
 
 
