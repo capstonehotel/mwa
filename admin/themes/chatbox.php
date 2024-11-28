@@ -1,9 +1,9 @@
 <?php
 require_once ("../../initialize.php");
 // Check if the necessary POST variables are set
-if (isset($_POST['user_id']) && isset($_POST['user_name']) && isset($_POST['message'])) {
+if (isset($_POST['user_id']) && isset($_POST['name']) && isset($_POST['message'])) {
     $user_id = $_POST['user_id'];
-    $name = $_POST['user_name'];
+    $name = $_POST['name'];
     $message = $_POST['message'];
 
     // Database connection details
