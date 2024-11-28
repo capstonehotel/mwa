@@ -69,7 +69,7 @@
 
 .input-group input {
     width: 100%;
-    padding: 10px 40px 10px 10px; /* Space for the eye icon */
+    padding: 10px 30px 10px 10px; /* Space for the eye icon */
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
