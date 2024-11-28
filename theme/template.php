@@ -464,7 +464,11 @@ s0.parentNode.insertBefore(s1,s0);
 })();
 </script> -->
 <!--End of Tawk.to Script-->
-
+<?php
+// Check if the user is logged in
+$isLoggedIn = isset($_SESSION['GUESTID']);
+$loginPageUrl = 'https://mcchmhotelreservation.com/index.php?page=6'; // Update to your login page URL
+?>
 <!-- Chatbox button -->
 <button id="chat-button" class="btn btn-primary">
     <i class="fa fa-comments"></i> <!-- Replace 'fa-comments' with the specific icon you want -->
@@ -541,15 +545,22 @@ s0.parentNode.insertBefore(s1,s0);
         }
     }
 
-    document.getElementById('chat-button').addEventListener('click', function() {
-        const chatbox = document.getElementById('chatbox');
-        if (chatbox.classList.contains('open')) {
-            closeChatbox();
+    const isLoggedIn = <?php echo json_encode($isLoggedIn); ?>;
+    const loginPageUrl = <?php echo json_encode($loginPageUrl); ?>;
+
+    document.getElementById('chat-button').addEventListener('click', function () {
+        if (!isLoggedIn) {
+            window.location.href = loginPageUrl;
         } else {
-            chatbox.classList.add('open');
-            chatbox.style.height = chatbox.scrollHeight + "px";
-            chatbox.style.opacity = "1";
-            chatbox.style.transform = "scale(1) translate(0, 0)";
+            const chatbox = document.getElementById('chatbox');
+            if (chatbox.classList.contains('open')) {
+                closeChatbox();
+            } else {
+                chatbox.classList.add('open');
+                chatbox.style.height = chatbox.scrollHeight + "px";
+                chatbox.style.opacity = "1";
+                chatbox.style.transform = "scale(1) translate(0, 0)";
+            }
         }
     });
 
