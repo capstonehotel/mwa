@@ -19,7 +19,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
 
     ?>
   <script>
-       // console.log('SweetAlert2 script is running'); // JS log;s
+        console.log('SweetAlert2 script is running'); // JS log;s
         
 
         // Function to show the OTP input prompt
@@ -278,11 +278,9 @@ $_SESSION['GUESTID'] =   $lastguest;
        VALUES ('" .date('Y-m-d h:i:s')."','" . $_SESSION['confirmation'] ."',".$item."," . $_SESSION['GUESTID'] . ",".$tot.",0,'Pending', '" . $paymentStatus . "', 'GCash','" . $amountPaid . "' )" ;
         // mysql_query($sql);
             // Execute the first SQL
-$mydb->setQuery($sql);
-$msg = $mydb->executeQuery();
-if (!$msg) {
-    echo "Error executing first query: " . $mydb->getLastError();
-}
+            $mydb->setQuery($sql);
+            $msg = $mydb->executeQuery();
+       
 
         $sql1 = "INSERT INTO `notifications` (`TRANSDATE`, `CONFIRMATIONCODE`, `GUESTID`, `SPRICE`, `PAYMENT_STATUS`, `AMOUNT_PAID`, `IS_READ`, `ROOMID`)
        VALUES ('" . date('Y-m-d H:i:s') . "','" . $_SESSION['confirmation'] . "'," . $_SESSION['GUESTID'] . "," . $tot . ", '" . $paymentStatus . "' , " . $amountPaid . ", 0, " .  $reservation->ROOMID . ")";
@@ -291,9 +289,7 @@ if (!$msg) {
 // Execute the second SQL
 $mydb->setQuery($sql1);
 $msg1 = $mydb->executeQuery();
-if (!$msg1) {
-    echo "Error executing second query: " . $mydb->getLastError();
-}
+
 
 
     //  $mydb->setQuery($sql);

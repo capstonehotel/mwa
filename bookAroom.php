@@ -589,7 +589,7 @@ if ($countrated == 0) {
                             <?php } else { ?>
                                 <button disabled class="btn btn-primary submitrate">Submit</button>
                             <?php } ?>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button> -->
                         </div>
                     </div>
 
