@@ -142,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             // Update the password and clear the token
             $conn->query("UPDATE tblguest SET G_PASS = '$hashed_password', VERIFICATION_TOKEN = NULL, OTP_EXPIRE_AT = NULL WHERE VERIFICATION_TOKEN = '$token'");
-            header('Location: http://localhost/HM_HotelReservation/booking/index.php?view=logininfo');
+            header('Location: https://mcchmhotelreservation.com/booking/index.php?view=logininfo');
             exit;
         }
     }
@@ -170,15 +170,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         const confirmPassword = document.getElementById('confirm_password').value;
         const errorMessage = document.getElementById('error-message');
 
+        // Clear any previous error messages
+        errorMessage.style.display = 'none';
+        errorMessage.innerHTML = '';
+
+        // Password requirements
+        const errors = [];
+        if (newPassword.length < 8 || newPassword.length > 12) {
+            errors.push('Password must be between 8 and 12 characters.');
+        }
+        if (!/[a-z]/.test(newPassword)) {
+            errors.push('Password must include at least one lowercase letter.');
+        }
+        if (!/[A-Z]/.test(newPassword)) {
+            errors.push('Password must include at least one uppercase letter.');
+        }
+        if (!/\d/.test(newPassword)) {
+            errors.push('Password must include at least one number.');
+        }
+        if (!/[@$!%*?&#]/.test(newPassword)) {
+            errors.push('Password must include at least one special character.');
+        }
         if (newPassword !== confirmPassword) {
+            errors.push('Passwords do not match.');
+        }
+
+        // Display errors if any
+        if (errors.length > 0) {
             event.preventDefault();
             errorMessage.style.display = 'block';
-            errorMessage.textContent = 'Passwords do not match.';
-        } else {
-            errorMessage.style.display = 'none';
+            errorMessage.innerHTML = errors.join('<br>');
         }
     });
 </script>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const newPasswordInput = document.getElementById('new_password');
