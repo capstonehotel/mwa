@@ -544,7 +544,7 @@ $isLoggedIn = isset($_SESSION['GUESTID']);
             alert('Please enter a message');
         }
     }
-
+    const isLoggedIn = <?php echo json_encode($isLoggedIn); ?>;
     document.getElementById('chat-button').addEventListener('click', function() {
       if (!isLoggedIn) {
             alert('Please log in to use the chat feature.');
