@@ -79,7 +79,7 @@
 .input-group i {
     position: absolute;
     right: 10px;
-    top: 25%;
+    top: 40%;
     transform: translateY(-50%);
     color: #ccc;
     cursor: pointer;
