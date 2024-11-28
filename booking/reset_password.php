@@ -62,25 +62,29 @@
     .container button:hover {
         background-color: #0056b3;
     }
-    .password-field {
+    .input-group {
     position: relative;
     width: 100%;
-    margin-bottom: 20px;
 }
 
-.password-field input {
+.input-group input {
     width: 100%;
-    padding-right: 40px; /* Space for the icon */
+    padding: 10px 40px 10px 10px; /* Space for the eye icon */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
 }
 
-.toggle-password {
+.input-group i {
     position: absolute;
-    top: 50%;
     right: 10px;
+    top: 50%;
     transform: translateY(-50%);
+    color: #ccc;
     cursor: pointer;
-    color: #666;
 }
+
 
 </style>
 
@@ -93,18 +97,16 @@
         <!-- <label for="new_password">Enter your new password:</label>
         <input type="password" name="new_password" required placeholder="New Password">
          -->
-
          <label for="new_password">Enter your new password:</label>
-        <input type="password" id="new_password" name="new_password" required placeholder="New Password">
-        <span class="toggle-password" onclick="togglePasswordVisibility('new_password')">
-        <span class="material-icons-outlined">visibility</span>
-    </span>
-        
+        <div class="input-group">
+            <input type="password" id="new_password" name="new_password" required placeholder="New Password">
+            <i class="far fa-eye" id="new_password_toggle"></i>
+        </div>
         <label for="confirm_password">Confirm your new password:</label>
-        <input type="password" id="confirm_password" name="confirm_password" required placeholder="Confirm Password">
-        <span class="toggle-password" onclick="togglePasswordVisibility('confirm_password')">
-        <span class="material-icons-outlined">visibility</span>
-    </span>
+        <div class="input-group">
+            <input type="password" id="confirm_password" name="confirm_password" required placeholder="Confirm Password">
+            <i class="far fa-eye" id="confirm_password_toggle"></i>
+        </div>
         <!--<div id="error-message" style="color: red; font-size: 14px; text-align: left; display: none;">Passwords do not match.</div>-->
         <?php if (!empty($error_message)): ?>
     <div id="error-message" style="color: red; font-size: 14px; text-align: left;"><?php echo $error_message; ?></div>
@@ -178,16 +180,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     });
 </script>
 <script>
-    function togglePasswordVisibility(inputId) {
-        const input = document.getElementById(inputId);
-        const icon = input.nextElementSibling.querySelector('.material-icons-outlined');
-        if (input.type === 'password') {
-            input.type = 'text';
-            icon.textContent = 'visibility_off';
-        } else {
-            input.type = 'password';
-            icon.textContent = 'visibility';
-        }
+document.addEventListener('DOMContentLoaded', () => {
+    const newPasswordInput = document.getElementById('new_password');
+    const confirmPasswordInput = document.getElementById('confirm_password');
+    const newPasswordToggle = document.getElementById('new_password_toggle');
+    const confirmPasswordToggle = document.getElementById('confirm_password_toggle');
+
+    newPasswordToggle.addEventListener('click', () => {
+        toggleVisibility(newPasswordInput, newPasswordToggle);
+    });
+
+    confirmPasswordToggle.addEventListener('click', () => {
+        toggleVisibility(confirmPasswordInput, confirmPasswordToggle);
+    });
+
+    function toggleVisibility(input, toggleIcon) {
+        const isPassword = input.type === 'password';
+        input.type = isPassword ? 'text' : 'password';
+        toggleIcon.classList.toggle('fa-eye');
+        toggleIcon.classList.toggle('fa-eye-slash');
     }
+});
 </script>
 
