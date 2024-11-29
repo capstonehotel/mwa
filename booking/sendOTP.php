@@ -10,6 +10,7 @@ require '../PHPMailer/src/SMTP.php';
 function sendOTP($email,$name, $lastname) {
     // Generate OTP
     $otp = rand(100000, 999999);
+    
     $_SESSION['otp_email'] = $email;
     // Send OTP via PHPMailer
     $mail = new PHPMailer(true);

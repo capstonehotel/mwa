@@ -2,6 +2,7 @@
 	//before we store information of our member, we need to start first the session
 	
 	session_start();
+	session_regenerate_id(true);
 	
 	//create a new function to check if the session variable member_id is on set
 	function logged_in() {
