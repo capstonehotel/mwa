@@ -20,7 +20,7 @@ require_once("initialize.php");
 
 // 1. Find the session
 @session_start();
-session_regenerate_id(true);
+//session_regenerate_id(true);
 // 2. Unset all the session variables
 unset($_SESSION['GUESTID']);	
 unset($_SESSION['name']); 		
