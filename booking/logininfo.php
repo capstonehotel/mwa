@@ -83,7 +83,11 @@ function logintab() {
     $remaining_attempts = max(0, 3 - ($_SESSION['login_attempts'] ?? 0));
     ?>
   <div class="login-container">
-
+  <?php if ($isBlocked): ?>
+            <p class="text-danger">You are locked out. Please try again in <?= $remaining_time ?> seconds.</p>
+        <?php else: ?>
+            <p class="text-info">You have <?= $remaining_attempts ?> attempts left.</p>
+        <?php endif; ?>
         <form action="<?php echo "https://mcchmhotelreservation.com/login.php"; ?>" method="post">
             <div class="form-group">             
                 <input type="email" class="form-control" id="username" name="username" placeholder="Enter your email" <?= $isBlocked ? 'disabled' : '' ?> required>
@@ -92,11 +96,14 @@ function logintab() {
                 <input type="password" class="form-control" id="password" name="pass" placeholder="Enter your password" <?= $isBlocked ? 'disabled' : '' ?> required>
             </div>
             <div class="form-group" style="margin-top: 10px;">
+                <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126" data-callback="onSuccess" data-error-callback="onError" data-expired-callback="onExpired" <?= $isBlocked ? 'style="display:none;"' : '' ?>></div>
+            </div>
+            <!-- <div class="form-group" style="margin-top: 10px;">
                 <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126" data-callback="onSuccess"
                  data-error-callback="onError"
                  data-expired-callback="onExpired"></div>
                 
-            </div>
+            </div> -->
             <!-- <p  style="margin-top: 10px; text-align: right;">
                 <a href="<?php echo  "https://mcchmhotelreservation.com/booking/forgot_password.php"; ?>">Forgot Password?</a>
             </p> -->
