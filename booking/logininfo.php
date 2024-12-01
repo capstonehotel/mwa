@@ -90,13 +90,13 @@ function logintab() {
         <?php endif; ?>
         <form action="<?php echo "https://mcchmhotelreservation.com/login.php"; ?>" method="post">
             <div class="form-group">             
-                <input type="email" class="form-control" id="username" name="username" placeholder="Enter your email" <?= $isBlocked ? 'disabled' : '' ?> required>
+                <input type="email" class="form-control" id="username" name="username" placeholder="Enter your email" <?= ($remaining_attempts == 0 && $isBlocked) ? 'disabled' : '' ?>  required>
             </div>
             <div class="form-group" style="margin-top: 10px;">                
-                <input type="password" class="form-control" id="password" name="pass" placeholder="Enter your password" <?= $isBlocked ? 'disabled' : '' ?> required>
+                <input type="password" class="form-control" id="password" name="pass" placeholder="Enter your password" <?= ($remaining_attempts == 0 && $isBlocked) ? 'disabled' : '' ?>  required>
             </div>
             <div class="form-group" style="margin-top: 10px;">
-                <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126" data-callback="onSuccess" data-error-callback="onError" data-expired-callback="onExpired" <?= $isBlocked ? 'style="display:none;"' : '' ?>></div>
+                <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126" data-callback="onSuccess" data-error-callback="onError" data-expired-callback="onExpired" <?= ($remaining_attempts == 0 && $isBlocked) ? 'style="display:none;"' : '' ?>></div>
             </div>
             <!-- <div class="form-group" style="margin-top: 10px;">
                 <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126" data-callback="onSuccess"
@@ -107,7 +107,7 @@ function logintab() {
             <!-- <p  style="margin-top: 10px; text-align: right;">
                 <a href="<?php echo  "https://mcchmhotelreservation.com/booking/forgot_password.php"; ?>">Forgot Password?</a>
             </p> -->
-            <button id="signin-button" type="submit" name="gsubmit" class="btn btn-primary btn-block" style="margin-top: 10px;" disabled <?= $isBlocked ? 'disabled' : '' ?>>Sign In</button>
+            <button id="signin-button" type="submit" name="gsubmit" class="btn btn-primary btn-block" style="margin-top: 10px;" disabled<?= ($remaining_attempts == 0 && $isBlocked) ? 'disabled' : '' ?>>Sign In</button>
             <p  style="margin-top: 10px; text-align: left;">
                 <a href="<?php echo  "https://mcchmhotelreservation.com/booking/forgot_password.php"; ?>">Forgot Password?</a>
             </p>
