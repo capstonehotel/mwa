@@ -1,7 +1,35 @@
 <?php 
  require_once("initialize.php");
 
-
+ 
+ // Database credentials
+ $host = "127.0.0.1";
+ $dbname = "u510162695_hmsystemdb";
+ $username = "u510162695_hmsystemdb";
+ $password = "1Hmsystemdb";
+ $dbport = "3306";
+ 
+ try {
+     // Create a new PDO instance
+     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password, $dbport);
+     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+ 
+     // Define the SQL query to add a new column
+     $tableName = "tblguest";
+     $newColumnName = "SESSION_TOKEN";
+     $columnType = "VARCHAR(64) DEFAULT NULL"; // Specify the column type and constraints
+ 
+     $sql = "ALTER TABLE $tableName ADD $newColumnName $columnType";
+ 
+     // Execute the query
+     $pdo->exec($sql);
+ 
+     echo "Column '$newColumnName' added successfully to the table '$tableName'.";
+ } catch (PDOException $e) {
+     echo "Error: " . $e->getMessage();
+ }
+ 
+ 
 
 
 // require_once("includes/initialize.php");

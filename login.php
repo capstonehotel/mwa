@@ -90,12 +90,13 @@ if (!isset($_SESSION['login_attempts'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['gsubmit'])) {
+    
     if ($_SESSION['login_attempts'] >= 3) {
         if (time() < $_SESSION['block_time']) {
-            $remaining_time = $_SESSION['block_time'] - time();
-            die("Too many attempts. Please try again in " . ceil($remaining_time) . " seconds.");
+            $_SESSION['error_message'] = "Too many login attempts. Please try again later.";
+            redirect("https://mcchmhotelreservation.com/booking/index.php?view=logininfo");
         } else {
-            $_SESSION['login_attempts'] = 0; // Reset attempts
+            $_SESSION['login_attempts'] = 0; // Reset attempts after block time
         }
     }
 
@@ -111,6 +112,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['gsubmit'])) {
 
     if ($responseKeys["success"]) {
         if (empty($email) || empty($upass)) {
+            $_SESSION['login_attempts']++;
+            if ($_SESSION['login_attempts'] >= 3) {
+                $_SESSION['block_time'] = time() + 300; // Block for 5 minutes
+                $_SESSION['error_message'] = "Too many login attempts. Please try again later.";
+                redirect("https://mcchmhotelreservation.com/booking/index.php?view=logininfo");
+            }
             message("Invalid Username and Password!", "error");
             redirect("https://mcchmhotelreservation.com/index.php?page=6");
         } else {
@@ -125,6 +132,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['gsubmit'])) {
                 $_SESSION['login_attempts']++;
                 if ($_SESSION['login_attempts'] >= 3) {
                     $_SESSION['block_time'] = time() + 300; // Block for 5 minutes
+                    $_SESSION['error_message'] = "Too many login attempts. Please try again later.";
+                } else {
+                    $_SESSION['error_message'] = "Invalid Username or Password. You have " . (3 - $_SESSION['login_attempts']) . " attempts left.";
                 }
                 message("Please try again.", "error");
                 redirect("https://mcchmhotelreservation.com/booking/index.php?view=logininfo");

@@ -77,16 +77,19 @@ if (!isset($_SESSION['monbela_cart'])) {
 
 <?php
 
-  function logintab(){
-
-    ?>  
+function logintab() {
+  $isBlocked = isset($_SESSION['block_time']) && time() < $_SESSION['block_time'];
+    $remaining_time = $isBlocked ? ceil($_SESSION['block_time'] - time()) : 0;
+    $remaining_attempts = max(0, 3 - ($_SESSION['login_attempts'] ?? 0));
+    ?>
   <div class="login-container">
+
         <form action="<?php echo "https://mcchmhotelreservation.com/login.php"; ?>" method="post">
             <div class="form-group">             
-                <input type="email" class="form-control" id="username" name="username" placeholder="Enter your email" required>
+                <input type="email" class="form-control" id="username" name="username" placeholder="Enter your email" <?= $isBlocked ? 'disabled' : '' ?> required>
             </div>
             <div class="form-group" style="margin-top: 10px;">                
-                <input type="password" class="form-control" id="password" name="pass" placeholder="Enter your password" required>
+                <input type="password" class="form-control" id="password" name="pass" placeholder="Enter your password" <?= $isBlocked ? 'disabled' : '' ?> required>
             </div>
             <div class="form-group" style="margin-top: 10px;">
                 <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126" data-callback="onSuccess"
@@ -97,7 +100,7 @@ if (!isset($_SESSION['monbela_cart'])) {
             <!-- <p  style="margin-top: 10px; text-align: right;">
                 <a href="<?php echo  "https://mcchmhotelreservation.com/booking/forgot_password.php"; ?>">Forgot Password?</a>
             </p> -->
-            <button id="signin-button" type="submit" name="gsubmit" class="btn btn-primary btn-block" style="margin-top: 10px;" disabled>Sign In</button>
+            <button id="signin-button" type="submit" name="gsubmit" class="btn btn-primary btn-block" style="margin-top: 10px;" disabled <?= $isBlocked ? 'disabled' : '' ?>>Sign In</button>
             <p  style="margin-top: 10px; text-align: left;">
                 <a href="<?php echo  "https://mcchmhotelreservation.com/booking/forgot_password.php"; ?>">Forgot Password?</a>
             </p>
