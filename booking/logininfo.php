@@ -85,8 +85,10 @@ function logintab() {
   <div class="login-container">
   <?php if ($isBlocked): ?>
             <p id="remaining-time" class="text-danger">You are locked out. Please try again in <?= $remaining_time ?> seconds.</p>
-        <?php else: ?>
-            <p class="text-info">You have <?= $remaining_attempts ?> attempts left.</p>
+            <?php elseif ($remaining_attempts > 0 && isset($_SESSION['login_attempts'])): ?>
+            <!-- Show remaining attempts only if attempts have been made -->
+            <p class="text-info" id="remaining-attempts">You have <?= $remaining_attempts ?> attempts left.</p>
+            
         <?php endif; ?>
         <form action="<?php echo "https://mcchmhotelreservation.com/login.php"; ?>" method="post">
             <div class="form-group">             
