@@ -126,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['gsubmit'])) {
 
             if ($res === true) {
                 $_SESSION['login_attempts'] = 0; // Reset attempts
-                session_regenerate_id(true); // Regenerate session ID
+                //session_regenerate_id(true); // Regenerate session ID
                 redirect("https://mcchmhotelreservation.com/booking/index.php?view=payment");
             } else {
                 $_SESSION['login_attempts']++;
