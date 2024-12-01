@@ -107,7 +107,7 @@ function logintab() {
             <!-- <p  style="margin-top: 10px; text-align: right;">
                 <a href="<?php echo  "https://mcchmhotelreservation.com/booking/forgot_password.php"; ?>">Forgot Password?</a>
             </p> -->
-            <button id="signin-button" type="submit" name="gsubmit" class="btn btn-primary btn-block" style="margin-top: 10px;" disabled<?= ($remaining_attempts == 0 && $isBlocked) ? 'disabled' : '' ?>>Sign In</button>
+            <button id="signin-button" type="submit" name="gsubmit" class="btn btn-primary btn-block" style="margin-top: 10px;" <?= ($remaining_attempts == 0 && $isBlocked) ? 'disabled' : '' ?>>Sign In</button>
             <p  style="margin-top: 10px; text-align: left;">
                 <a href="<?php echo  "https://mcchmhotelreservation.com/booking/forgot_password.php"; ?>">Forgot Password?</a>
             </p>
