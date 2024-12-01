@@ -84,7 +84,7 @@ function logintab() {
     ?>
   <div class="login-container">
   <?php if ($isBlocked): ?>
-            <p class="text-danger">You are locked out. Please try again in <?= $remaining_time ?> seconds.</p>
+            <p id="remaining-time" class="text-danger">You are locked out. Please try again in <?= $remaining_time ?> seconds.</p>
         <?php else: ?>
             <p class="text-info">You have <?= $remaining_attempts ?> attempts left.</p>
         <?php endif; ?>
@@ -130,6 +130,26 @@ function logintab() {
     function onExpired() {
         document.getElementById('signin-button').disabled = true; // Disable the button
     }
+     // Countdown Timer Animation
+     function startCountdown(remainingTime) {
+        const countdownElement = document.getElementById("countdown");
+
+        const interval = setInterval(() => {
+            if (remainingTime <= 0) {
+                clearInterval(interval); // Stop the countdown when time is up
+                return;
+            }
+
+            remainingTime--; // Decrease the time by 1 second
+            countdownElement.textContent = remainingTime; // Update the countdown UI
+        }, 1000);
+    }
+
+    <?php if ($remaining_attempts == 0 && $isBlocked): ?>
+        // Start the countdown if blocked
+        startCountdown(<?= $remaining_time ?>);
+    <?php endif; ?>
+  
 </script>
 <?php
   }
