@@ -84,6 +84,9 @@ $_SESSION['to']  = $_POST['to'];
         // Handle errors securely
         echo 'Error processing XML: ' . $e->getMessage();
     }
+
+
+    
         if (isset($_SESSION['monbela_cart'])){
             if (count($_SESSION['monbela_cart'])>0) { $cart = '
                 <span class="carttxtactive"> '.count($_SESSION['monbela_cart']) .' </span>
