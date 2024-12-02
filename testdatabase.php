@@ -25,7 +25,7 @@ if ($conn->connect_error) {
 // } else {
 //     echo "Unable to count rows. The table may be empty.";
 // }
-$sql = "SELECT * FROM livechat";
+$sql = "SELECT * FROM tblpayment";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -33,10 +33,10 @@ if ($result->num_rows > 0) {
     echo "<tr><th>ID</th><th>Sender ID</th><th>Username</th><th>Message</th></tr>";
     while ($row = $result->fetch_assoc()) {
         echo "<tr>";
-        echo "<td>" . htmlspecialchars($row["id"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["sender_id"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["user_name"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["message"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["SUMMARYID"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["PAYMENT_STATUS"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["STATUS"]) . "</td>";
+       
         echo "</tr>";
     }
     echo "</table>";
