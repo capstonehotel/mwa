@@ -197,16 +197,28 @@ $(document).ready(function() {
     });
 
     // Handle tab change events to reset table page to 1
-    $('#reservationTabs a').on('shown.bs.tab', function(e) {
-        var currentTab = $(e.target).attr('href');
-        var table = $(currentTab + ' table').DataTable();
+    // $('#reservationTabs a').on('shown.bs.tab', function(e) {
+    //     var currentTab = $(e.target).attr('href');
+    //     var table = $(currentTab + ' table').DataTable();
         
-        // Reset DataTable to the first page
-        table.page('first').draw(false);
+    //     // Reset DataTable to the first page
+    //     table.page('first').draw(false);
 
-        // Save the active tab
-        saveState();
-    });
+    //     // Save the active tab
+    //     saveState();
+    // });
+    $('#reservationTabs a').on('shown.bs.tab', function (e) {
+    var currentTab = $(e.target).attr('href');
+    var table = $(currentTab + ' table').DataTable();
+
+    // Reset DataTable page to the first one
+    table.page('first').draw(false);
+
+    // Ensure the active tab's table is shown
+    $('.table-responsive').hide();
+    $(currentTab).find('.table-responsive').show();
+});
+
 });
 </script>
 
