@@ -2,37 +2,53 @@
 	//before we store information of our member, we need to start first the session
 	
 	session_start();
-	//session_regenerate_id(true);
+	session_regenerate_id(true);
 	
 	//create a new function to check if the session variable member_id is on set
 	function logged_in() {
 		return isset($_SESSION['GUESTID']);
         
 	}
-	//this function if session member is not set then it will be redirected to index.php
-	function confirm_logged_in() {
-		if (!logged_in()) {?>
-			<script type="text/javascript">
-				window.location = "admin/index.php";
-			</script>
-
-		<?php
-		}
+	
+   // Redirect to admin index if not logged in
+   function confirm_logged_in() {
+	if (!logged_in()) {
+		header("Location: admin/index.php");
+		exit();
 	}
+}
+	// //this function if session member is not set then it will be redirected to index.php
+	// function confirm_logged_in() {
+	// 	if (!logged_in()) {?>
+	<!-- // 		<script type="text/javascript">
+	// 			window.location = "admin/index.php";
+	// 		</script> -->
+
+	// 	<?php
+	// 	}
+	// }
+
 	function admin_logged_in() {
 		return isset($_SESSION['ADMIN_ID']);
         
 	}
-	//this function if session member is not set then it will be redirected to index.php
+	// Redirect to index if admin is not logged in
 	function admin_confirm_logged_in() {
-		if (!admin_logged_in()) {?>
-			<script type="text/javascript">
-				window.location = "index.php";
-			</script>
-
-		<?php
+		if (!admin_logged_in()) {
+			header("Location: index.php");
+			exit();
 		}
 	}
+	// //this function if session member is not set then it will be redirected to index.php
+	// function admin_confirm_logged_in() {
+	// 	if (!admin_logged_in()) {?>
+	<!-- // 		<script type="text/javascript">
+	// 			window.location = "index.php";
+	// 		</script> -->
+
+	// 	<?php
+	// 	}
+	// }
 	
 	function message($msg="", $msgtype="") {
 	  if(!empty($msg)) {
@@ -121,5 +137,21 @@ function product_exists($pid){
 		}
 		$_SESSION['monbela_cart']=array_values($_SESSION['monbela_cart']);
 	}
+ // Additional security measures
+ function secure_session() {
+	// Set cookie parameters
+	$cookieParams = session_get_cookie_params();
+	session_set_cookie_params([
+		'lifetime' => $cookieParams['lifetime'],
+		// 'path' => $cookieParams['path'],
+		'path' => '/', 
+		'domain' => $cookieParams[' mcchmhotelreservation.com'],
+		'secure' => true, // Only send cookie over HTTPS
+		'httponly' => true, // Prevent JavaScript access to session cookie
+		'samesite' => 'Strict' // Prevent CSRF attacks
+	]);
+}
 
+// Call secure_session() to apply the settings
+secure_session();
 ?>

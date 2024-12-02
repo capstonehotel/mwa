@@ -84,14 +84,14 @@ $_SESSION['to']  = $_POST['to'];
         // Handle errors securely
         echo 'Error processing XML: ' . $e->getMessage();
     }
-    setcookie("cookie_name", "cookie_value", [
-      'expires' => time() + 3600, // 1 hour
-      'path' => '/',
-      'domain' => 'mcchmhotelreservation.com',
-      'secure' => true, // Only send cookie over HTTPS
-      'httponly' => true, // Prevent JavaScript access
-      'samesite' => 'Lax' // Prevent CSRF
-  ]);
+  //   setcookie("cookie_name", "cookie_value", [
+  //     'expires' => time() + 3600, // 1 hour
+  //     'path' => '/',
+  //     'domain' => 'mcchmhotelreservation.com',
+  //     'secure' => true, // Only send cookie over HTTPS
+  //     'httponly' => true, // Prevent JavaScript access
+  //     'samesite' => 'Lax' // Prevent CSRF
+  // ]);
 
     
         if (isset($_SESSION['monbela_cart'])){
