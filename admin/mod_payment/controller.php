@@ -1,5 +1,5 @@
 <?php
-$connection = new mysqli('localhost', 'root', '', 'hmsystemdb');
+ $connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 require_once("../../includes/initialize.php");
 require_once("../../includes/config.php");
 echo '<script src="../sweetalert2.all.min.js"></script>';
