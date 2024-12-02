@@ -2,7 +2,7 @@
 	//before we store information of our member, we need to start first the session
 	
 	session_start();
-	session_regenerate_id(true);
+	//session_regenerate_id(true);
 	
 	//create a new function to check if the session variable member_id is on set
 	function logged_in() {
@@ -143,8 +143,8 @@ function product_exists($pid){
 	$cookieParams = session_get_cookie_params();
 	session_set_cookie_params([
 		'lifetime' => $cookieParams['lifetime'],
-		// 'path' => $cookieParams['path'],
-		'path' => '/', 
+		'path' => $cookieParams['/index.php'],
+		// 'path' => '/', 
 		'domain' => $cookieParams[' mcchmhotelreservation.com'],
 		'secure' => true, // Only send cookie over HTTPS
 		'httponly' => true, // Prevent JavaScript access to session cookie
