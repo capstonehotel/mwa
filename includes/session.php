@@ -143,7 +143,7 @@ function product_exists($pid){
 	$cookieParams = session_get_cookie_params();
 	session_set_cookie_params([
 		'lifetime' => $cookieParams['lifetime'],
-		'path' => $cookieParams['/index.php'],
+		// 'path' => $cookieParams['/index.php'],
 		// 'path' => '/', 
 		'domain' => $cookieParams[' mcchmhotelreservation.com'],
 		'secure' => true, // Only send cookie over HTTPS
