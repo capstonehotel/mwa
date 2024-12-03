@@ -147,32 +147,20 @@ require_once("../includes/initialize.php");
   </svg>
 
   <?php
-  // Initialize login attempt variables
-if (!isset($_SESSION['login_attempts'])) {
-    $_SESSION['login_attempts'] = 0;
-    $_SESSION['lockout_time'] = 0; // Time when the user will be unlocked
+  // Define the max number of attempts and lockout time (5 minutes)
+define('MAX_ATTEMPTS', 3);
+define('LOCKOUT_TIME', 300); // 5 minutes in seconds
+
+// Check if the user is already locked out
+if (isset($_SESSION['lockout_time']) && (time() - $_SESSION['lockout_time'] < LOCKOUT_TIME)) {
+    // User is locked out, show the countdown message
+    $remaining_time = LOCKOUT_TIME - (time() - $_SESSION['lockout_time']);
+    $lockout_message = "You have " . ceil($remaining_time / 60) . " minute(s) remaining before you can try again.";
+} else {
+    // Reset lockout message if the lockout period has passed
+    unset($_SESSION['lockout_time']);
+    $lockout_message = '';
 }
-
-$max_attempts = 3;
-$lockout_duration = 300; // 5 minutes in seconds
-
-// Check if the user is locked out
-if ($_SESSION['login_attempts'] >= $max_attempts) {
-    if (time() < $_SESSION['lockout_time']) {
-        $remaining_time = $_SESSION['lockout_time'] - time();
-        echo "<div style='color: red; text-align: center;'>Account Locked. Please try again in " . gmdate("i:s", $remaining_time) . ".</div>";
-        echo "<script>
-            document.addEventListener('DOMContentLoaded', function() {
-                startCountdown($remaining_time);
-            });
-        </script>";
-        exit; // Prevent further execution
-    } else {
-        // Reset attempts after lockout duration
-        $_SESSION['login_attempts'] = 0;
-    }
-}
-
   // Function to sanitize inputs for XSS protection
 function sanitize_input($data) {
     return htmlspecialchars(trim($data), ENT_QUOTES, 'UTF-8');
@@ -188,7 +176,7 @@ if (admin_logged_in()) { ?>
     </script>
 <?php
 }
-$error_message = "";
+
 if (isset($_POST['btnlogin'])) {
     $uname = sanitize_input($_POST['email']);
     $upass = sanitize_input($_POST['pass']);
@@ -214,11 +202,43 @@ if (isset($_POST['btnlogin'])) {
     $verification = json_decode($result);
 
     if (!$verification->success) {
-        $error_message = "hCaptcha Verification Failed. Please verify that you are not a robot.";
-    } elseif ($uname == '' || $upass == '') {
-        $error_message = "Invalid Username and Password!";
+        // hCaptcha failed
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'hCaptcha Verification Failed',
+                text: 'Please verify that you are not a robot.'
+            }).then(() => {
+                    window.location = 'login.php';
+                });
+        </script>";
+        return;
+    }
+       // Check for login attempt limits
+       if (isset($_SESSION['attempts']) && $_SESSION['attempts'] >= MAX_ATTEMPTS) {
+        // Lockout user if they exceeded the max attempts
+        $_SESSION['lockout_time'] = time();
+        $lockout_message = 'You have reached the maximum number of login attempts. Please try again later.';
+        $lockout_error = true;
+    }
+    if ($uname == '' || $upass == '') {
+        $_SESSION['attempts'] = isset($_SESSION['attempts']) ? $_SESSION['attempts'] + 1 : 1;
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Invalid Username and Password!'
+            });
+        </script>";
     } elseif (!validate_email($uname)) {
-        $error_message = "Please enter a valid email address.";
+        $_SESSION['attempts'] = isset($_SESSION['attempts']) ? $_SESSION['attempts'] + 1 : 1;
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Email Format',
+                text: 'Please enter a valid email address.'
+            });
+        </script>";
     } else {
         $sql = "SELECT * FROM tbluseraccount WHERE USER_NAME = '$uname'";
         $result = $connection->query($sql);
@@ -235,8 +255,7 @@ if (isset($_POST['btnlogin'])) {
             $_SESSION['ADMIN_USERNAME'] = $row['USER_NAME'];
             $_SESSION['ADMIN_UPASS'] = $row['UPASS'];
             $_SESSION['ADMIN_UROLE'] = $row['ROLE'];
- // Reset login attempts on successful login
- $_SESSION['login_attempts'] = 0;
+
             echo "<script>
                 Swal.fire({
                     icon: 'success',
@@ -249,6 +268,7 @@ if (isset($_POST['btnlogin'])) {
                 });
             </script>";
         } else {
+            $_SESSION['attempts'] = isset($_SESSION['attempts']) ? $_SESSION['attempts'] + 1 : 1;
             echo "<script>
                 Swal.fire({
                     icon: 'error',
@@ -258,12 +278,7 @@ if (isset($_POST['btnlogin'])) {
                     window.location = 'login.php';
                 });
             </script>";
-        } else {
-            $_SESSION['login_attempts']++;
-            if ($_SESSION['login_attempts'] >= $max_attempts) {
-                $_SESSION['lockout_time'] = time() + $lockout_duration; // Set lockout time
-                $error_message = "Too many failed login attempts. Please try again in 5 minutes.";
-            }
+        }
     }
 }
 ?>
@@ -271,9 +286,6 @@ if (isset($_POST['btnlogin'])) {
         <div class="right">
             <h2>LOGIN CREDENTIALS</h2>
             <form method="POST" action="login.php">
-            <?php if ($error_message): ?>
-                <div style="color: red; text-align: center; margin-bottom: 10px;"><?= $error_message ?></div>
-            <?php endif; ?>
                 <div class="input-group">
                     <input placeholder="Username" type="text" name="email" required>
                     <i class="fas fa-user"></i>
@@ -284,7 +296,7 @@ if (isset($_POST['btnlogin'])) {
                 </div>
                  <!-- hCaptcha widget -->
                  <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div> <!-- Replace with your hCaptcha Site Key -->
-                 <div id="hCaptchaError" style="display: none; color: red; font-size: 14px; text-align: center; margin-top: 10px;"></div>
+                 <div id="hCaptchaError" style="display: <?php echo $lockout_error ? 'block' : 'none'; ?>; color: red; font-size: 14px; text-align: center; margin-top: 10px;"></div>
                 <button type="submit" name="btnlogin">Login</button>
                 <div class="links">
                     <a href="../index.php" class="text-primary">Back to the website</a>
@@ -393,7 +405,35 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const loginButton = document.querySelector("button[name='btnlogin']");
+    const lockoutMessageDiv = document.getElementById("hCaptchaError");
 
+    // Check if the user is locked out
+    <?php if (isset($lockout_error) && $lockout_error) { ?>
+        loginButton.disabled = true; // Disable login button
+    <?php } else { ?>
+        loginButton.disabled = false; // Enable login button
+    <?php } ?>
+
+    // Start countdown for lockout time if user is locked out
+    let countdownTimer;
+    if (<?php echo isset($remaining_time) ? $remaining_time : 0; ?> > 0) {
+        let remainingTime = <?php echo $remaining_time; ?>;
+        countdownTimer = setInterval(function() {
+            remainingTime--;
+            let minutes = Math.floor(remainingTime / 60);
+            let seconds = remainingTime % 60;
+            lockoutMessageDiv.innerHTML = `You have ${minutes}:${seconds < 10 ? '0' : ''}${seconds} minute(s) remaining.`;
+            if (remainingTime <= 0) {
+                clearInterval(countdownTimer);
+                location.reload(); // Refresh the page after countdown ends
+            }
+        }, 1000);
+    }
+});
+</script>
 
 
 </body>
