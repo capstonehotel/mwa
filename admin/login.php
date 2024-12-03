@@ -108,6 +108,21 @@ require_once("../includes/initialize.php");
             font-size: 16px;
             text-decoration: none;
         }
+        
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .text-danger {
+            color: red;
+            font-size: 14px;
+        }
+
+        .text-info {
+            color: blue;
+            font-size: 14px;
+        }
 
         @media (max-width: 768px) {
             .container {
@@ -147,6 +162,51 @@ require_once("../includes/initialize.php");
   </svg>
 
   <?php
+  
+function log_attempt() {
+    if (!isset($_SESSION['login_attempts'])) {
+        $_SESSION['login_attempts'] = 0;
+    }
+    $_SESSION['login_attempts']++;
+
+    if ($_SESSION['login_attempts'] >= 3) {
+        $_SESSION['block_time'] = time() + (5 * 60); // Block for 5 minutes
+    }
+}
+
+function reset_attempts() {
+    unset($_SESSION['login_attempts']);
+    unset($_SESSION['block_time']);
+}
+
+$isBlocked = isset($_SESSION['block_time']) && time() < $_SESSION['block_time'];
+$remainingTime = $isBlocked ? ceil($_SESSION['block_time'] - time()) : 0;
+$remainingAttempts = $isBlocked ? 0 : max(0, 3 - ($_SESSION['login_attempts'] ?? 0));
+
+if (isset($_POST['btnlogin'])) {
+    if ($isBlocked) {
+        // Prevent login attempt during block period
+        echo "<script>alert('You are currently locked out. Please wait for {$remainingTime} seconds.');</script>";
+    } else {
+        $uname = sanitize_input($_POST['email']);
+        $upass = sanitize_input($_POST['pass']);
+
+        // Dummy credentials for demonstration
+        $adminUsername = "admin@example.com";
+        $adminPassword = "password123";
+
+        if ($uname === $adminUsername && $upass === $adminPassword) {
+            reset_attempts(); // Reset attempts on successful login
+            $_SESSION['ADMIN_LOGGED_IN'] = true;
+            header("Location: index.php");
+            exit;
+        } else {
+            log_attempt();
+            $remainingAttempts = 3 - ($_SESSION['login_attempts'] ?? 0);
+            echo "<script>alert('Invalid credentials. You have {$remainingAttempts} attempts remaining.');</script>";
+        }
+    }
+}
   // Function to sanitize inputs for XSS protection
 function sanitize_input($data) {
     return htmlspecialchars(trim($data), ENT_QUOTES, 'UTF-8');
@@ -262,25 +322,48 @@ if (isset($_POST['btnlogin'])) {
     <div class="container">
         <div class="right">
             <h2>LOGIN CREDENTIALS</h2>
+            <?php if ($isBlocked): ?>
+            <p id="remaining-time" class="text-danger">
+                You are locked out. Please try again in <?= $remainingTime ?> seconds.
+            </p>
+        <?php elseif ($remainingAttempts > 0 && isset($_SESSION['login_attempts'])): ?>
+            <p class="text-info">You have <?= $remainingAttempts ?> attempts left.</p>
+        <?php endif; ?>
             <form method="POST" action="login.php">
                 <div class="input-group">
-                    <input placeholder="Username" type="text" name="email" required>
+                    <input placeholder="Username" type="email" name="email" <?= ($isBlocked ? 'disabled' : '') ?> required>
                     <i class="fas fa-user"></i>
                 </div>
                 <div class="input-group">
-                    <input id="password" placeholder="Password" type="password" name="pass" minlength="8" maxlength="12" required>
+                    <input id="password" placeholder="Password" type="password" name="pass" minlength="8" maxlength="12"  <?= ($isBlocked ? 'disabled' : '') ?> required>
                     <i class="far fa-eye" id="eyeIcon"></i>
                 </div>
                  <!-- hCaptcha widget -->
                  <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div> <!-- Replace with your hCaptcha Site Key -->
                  <div id="hCaptchaError" style="display: none; color: red; font-size: 14px; text-align: center; margin-top: 10px;"></div>
-                <button type="submit" name="btnlogin">Login</button>
+                <button type="submit" name="btnlogin" <?= ($isBlocked ? 'disabled' : '') ?>>Login</button>
                 <div class="links">
                     <a href="../index.php" class="text-primary">Back to the website</a>
                 </div>
             </form>
         </div>
     </div>
+    <script>
+        <?php if ($isBlocked): ?>
+        let remainingTime = <?= $remainingTime ?>;
+        const countdownElement = document.getElementById("remaining-time");
+
+        function updateRemainingTime() {
+            remainingTime--;
+            countdownElement.textContent = "You are locked out. Please try again in " + remainingTime + " seconds.";
+            if (remainingTime <= 0) {
+                location.reload(); // Reload the page after the lockout period ends
+            }
+        }
+
+        setInterval(updateRemainingTime, 1000);
+        <?php endif; ?>
+    </script>
     <script>
     const eyeIcon = document.getElementById('eyeIcon');
     const passwordInput = document.getElementById('password');

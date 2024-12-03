@@ -95,10 +95,10 @@ function logintab() {
                 <input type="email" class="form-control" id="username" name="username" placeholder="Enter your email" <?= ($remaining_attempts == 0 && $isBlocked) ? 'disabled' : '' ?>  required>
             </div>
             <div class="form-group" style="margin-top: 10px;">                
-                <input type="password" class="form-control" id="password" name="pass" placeholder="Enter your password" <?= ($remaining_attempts == 0 && $isBlocked) ? 'disabled' : '' ?>  required>
+                <input type="password" class="form-control" id="password" name="pass" placeholder="Enter your password"  minlength="8" maxlength="12" <?= ($remaining_attempts == 0 && $isBlocked) ? 'disabled' : '' ?>  required>
             </div>
             <div class="form-group" style="margin-top: 10px;">
-                <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126" data-callback="onSuccess" data-error-callback="onError" data-expired-callback="onExpired" <?= ($remaining_attempts == 0 && $isBlocked) ? 'style="display:none;"' : '' ?>></div>
+                <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126" data-callback="onSuccess" data-error-callback="onError" data-expired-callback="onExpired" disabled <?= ($remaining_attempts == 0 && $isBlocked) ? 'style="display:none;"' : '' ?>></div>
             </div>
             <!-- <div class="form-group" style="margin-top: 10px;">
                 <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126" data-callback="onSuccess"
