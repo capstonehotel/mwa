@@ -183,30 +183,7 @@ $isBlocked = isset($_SESSION['block_time']) && time() < $_SESSION['block_time'];
 $remainingTime = $isBlocked ? ceil($_SESSION['block_time'] - time()) : 0;
 $remainingAttempts = $isBlocked ? 0 : max(0, 3 - ($_SESSION['login_attempts'] ?? 0));
 
-if (isset($_POST['btnlogin'])) {
-    if ($isBlocked) {
-        // Prevent login attempt during block period
-        echo "<script>alert('You are currently locked out. Please wait for {$remainingTime} seconds.');</script>";
-    } else {
-        $uname = sanitize_input($_POST['email']);
-        $upass = sanitize_input($_POST['pass']);
 
-        // Dummy credentials for demonstration
-        $adminUsername = "admin@example.com";
-        $adminPassword = "password123";
-
-        if ($uname === $adminUsername && $upass === $adminPassword) {
-            reset_attempts(); // Reset attempts on successful login
-            $_SESSION['ADMIN_LOGGED_IN'] = true;
-            header("Location: index.php");
-            exit;
-        } else {
-            log_attempt();
-            $remainingAttempts = 3 - ($_SESSION['login_attempts'] ?? 0);
-            echo "<script>alert('Invalid credentials. You have {$remainingAttempts} attempts remaining.');</script>";
-        }
-    }
-}
   // Function to sanitize inputs for XSS protection
 function sanitize_input($data) {
     return htmlspecialchars(trim($data), ENT_QUOTES, 'UTF-8');
@@ -224,6 +201,10 @@ if (admin_logged_in()) { ?>
 }
 
 if (isset($_POST['btnlogin'])) {
+    if ($isBlocked) {
+        // Prevent login attempt during block period
+        echo "<script>alert('You are currently locked out. Please wait for {$remainingTime} seconds.');</script>";
+    } else {
     $uname = sanitize_input($_POST['email']);
     $upass = sanitize_input($_POST['pass']);
     $hcaptcha_response = $_POST['h-captcha-response'];  // Get the hCaptcha response
@@ -316,7 +297,8 @@ if (isset($_POST['btnlogin'])) {
                 });
             </script>";
         }
-    }
+   
+     } }
 }
 ?>
     <div class="container">
