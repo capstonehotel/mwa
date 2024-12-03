@@ -243,6 +243,7 @@ if (isset($_POST['btnlogin'])) {
     }
 
     if ($uname == '' || $upass == '') {
+        reset_attempts();
         echo "<script>
             Swal.fire({
                 icon: 'error',
@@ -286,6 +287,7 @@ if (isset($_POST['btnlogin'])) {
                     window.location = 'index.php';
                 });
             </script>";
+            
         } else {
             echo "<script>
                 Swal.fire({
