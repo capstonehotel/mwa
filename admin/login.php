@@ -298,9 +298,9 @@ if (isset($_POST['btnlogin'])) {
                  <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div> <!-- Replace with your hCaptcha Site Key -->
                  <div id="hCaptchaError" style="display: <?php echo $lockout_error ? 'block' : 'none'; ?>; color: red; font-size: 14px; text-align: center; margin-top: 10px;"></div>
                 <button type="submit" name="btnlogin">Login</button>
-                <div class="links">
+                <!-- <div class="links">
                     <a href="../index.php" class="text-primary">Back to the website</a>
-                </div>
+                </div> -->
             </form>
         </div>
     </div>
