@@ -1,4 +1,6 @@
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
         .login-container {
             padding: 20px;
@@ -22,6 +24,22 @@
         }
         .login-container button:hover {
             background-color: #0056b3;
+        }
+        
+.input-group input {
+            width: 100%;
+            padding: 10px 40px 10px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box; /* Ensures padding is included in total width */
+        }
+.input-group i {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ccc;
         }
     </style>
 <?php 
@@ -73,24 +91,6 @@ if (!isset($_SESSION['monbela_cart'])) {
 
 </div>
 
-<style>
-
-.input-group input {
-            width: 100%;
-            padding: 10px 40px 10px 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            box-sizing: border-box; /* Ensures padding is included in total width */
-        }
-.input-group i {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #ccc;
-        }
-</style>
 
 <?php
 
