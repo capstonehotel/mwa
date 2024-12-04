@@ -395,7 +395,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['OTP_TIMESTAMP'] = time();
             
             // Update OTP in database
-            $update_stmt = $conn->prepare("UPDATE users SET SMSOTP = ?, OTP_TIMESTAMP = CURRENT_TIMESTAMP WHERE phone = ?");
+            $update_stmt = $conn->prepare("UPDATE tblguest SET OTP = ?, OTP_EXPIRY_AT = CURRENT_TIMESTAMP WHERE G_PHONE = ?");
             if (!$update_stmt) {
                 throw new Exception("Database prepare error: " . $conn->error);
             }
@@ -438,5 +438,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-
 ?>
+
