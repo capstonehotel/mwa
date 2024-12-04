@@ -125,37 +125,42 @@
             <input type="email" id="username" name="username" required placeholder="example@gmail.com" aria-required="true" aria-describedby="emailHelp">
             <button type="submit">Send</button>
         </form> -->
-        <div class="button-row">
-        <button id="sendGmailButton" class="option-button">Send via Gmail</button><br>
-        <button id="sendNumberButton" class="option-button">Send via Number</button>
-    </div>
-    <br>
-    <form id="gmailForm" method="POST" action="forgot_password.php" style="display: none;">
-        <label for="username">Enter your email:</label>
-        <input type="email" id="username" name="username" required placeholder="example@gmail.com" aria-required="true" aria-describedby="emailHelp">
-        <button type="submit">Send</button>
-    </form>
-    <form id="numberForm" method="POST" action="forgot_password.php" style="display: none;">
-        <label for="phonenumber">Enter your phone number:</label>
-        <input type="text" id="phonenumber" name="phonenumber" required placeholder="09XXXXXXXXX" aria-required="true" pattern="09[0-9]{9}">
-        <button type="submit">Send</button>
-    </form>
+        <div class="button-row" id="buttonContainer">
+            <button id="sendGmailButton" class="option-button">Send via Gmail</button>
+            <button id="sendNumberButton" class="option-button">Send via Number</button>
+        </div>
+        <form id="gmailForm" method="POST" action="forgot_password.php" style="display: none;">
+            <label for="username">Enter your email:</label>
+            <input type="email" id="username" name="username" required placeholder="example@gmail.com" aria-required="true">
+            <button type="submit">Send</button>
+        </form>
+        <form id="numberForm" method="POST" action="forgot_password.php" style="display: none;">
+            <label for="phonenumber">Enter your phone number:</label>
+            <input type="text" id="phonenumber" name="phonenumber" required placeholder="09XXXXXXXXX" aria-required="true" pattern="09[0-9]{9}">
+            <button type="submit">Send</button>
+        </form>
         <div class="footer">
         <p>Remember your password? <a href="https://mcchmhotelreservation.com/booking/index.php?view=logininfo">Login here</a></p>
         </div>
     </div>
 
     <script>
-    document.getElementById('sendGmailButton').addEventListener('click', function () {
-        document.getElementById('gmailForm').style.display = 'block';
-        document.getElementById('numberForm').style.display = 'none';
-    });
+        const buttonContainer = document.getElementById('buttonContainer');
+        const sendGmailButton = document.getElementById('sendGmailButton');
+        const sendNumberButton = document.getElementById('sendNumberButton');
+        const gmailForm = document.getElementById('gmailForm');
+        const numberForm = document.getElementById('numberForm');
 
-    document.getElementById('sendNumberButton').addEventListener('click', function () {
-        document.getElementById('numberForm').style.display = 'block';
-        document.getElementById('gmailForm').style.display = 'none';
-    });
-</script>
+        sendGmailButton.addEventListener('click', function () {
+            buttonContainer.style.display = 'none';
+            gmailForm.style.display = 'block';
+        });
+
+        sendNumberButton.addEventListener('click', function () {
+            buttonContainer.style.display = 'none';
+            numberForm.style.display = 'block';
+        });
+    </script>
 <?php
 require_once("../includes/initialize.php");
 use PHPMailer\PHPMailer\PHPMailer;
