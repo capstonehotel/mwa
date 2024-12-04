@@ -41,7 +41,7 @@
             color: #333;
             font-weight: bold;
         }
-        .container input[type="email"] {
+        .container input {
             width: 100%;
             padding: 10px;
             margin-bottom: 20px;
@@ -49,7 +49,7 @@
             border-radius: 5px;
             font-size: 16px;
         }
-        .container input[type="email"]:focus {
+        .container input:focus {
             border-color: #007bff;
             outline: none;
         }
