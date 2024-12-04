@@ -126,6 +126,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['gsubmit'])) {
 
             if ($res === true) {
                 $_SESSION['login_attempts'] = 0; // Reset attempts
+
+                // Generate and send OTP
+                $otp = rand(100000, 999999);
+                $_SESSION['otp'] = $otp;
+                $_SESSION['otp_expiry'] = time() + 300; // OTP expires in 5 minutes
+                $_SESSION['user_email'] = $email;
+
+                // Example email sending function (implement PHPMailer or similar)
+                mail($email, "Your OTP Code", "Your OTP code is: $otp");
                 //session_regenerate_id(true); // Regenerate session ID
                 redirect("https://mcchmhotelreservation.com/booking/index.php?view=payment");
             } else {
@@ -143,6 +152,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['gsubmit'])) {
     } else {
         message("hCaptcha verification failed!", "error");
         redirect("https://mcchmhotelreservation.com/booking/index.php?view=logininfo");
+    }
+}
+
+// OTP Verification
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['verify_otp'])) {
+    $user_otp = trim($_POST['otp']);
+
+    if (isset($_SESSION['otp']) && $_SESSION['otp'] == $user_otp && time() < $_SESSION['otp_expiry']) {
+        unset($_SESSION['otp'], $_SESSION['otp_expiry']);
+        redirect("https://mcchmhotelreservation.com/booking/index.php?view=payment");
+    } else {
+        $_SESSION['error_message'] = "Invalid or expired OTP.";
+        redirect("https://mcchmhotelreservation.com/booking/index.php?view=verify_otp");
     }
 }
 ?>

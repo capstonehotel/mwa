@@ -1,5 +1,6 @@
 <?php
 require_once("../includes/initialize.php");
+require_once("sendOTP.php");
 ?>
 
 <!DOCTYPE html>
@@ -256,17 +257,53 @@ if (isset($_POST['btnlogin'])) {
             $_SESSION['ADMIN_UPASS'] = $row['UPASS'];
             $_SESSION['ADMIN_UROLE'] = $row['ROLE'];
 
-            echo "<script>
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Welcome back!',
-                    text: 'Hello, {$row['UNAME']}.',
-                    timer: 1000,
-                    showConfirmButton: false
-                }).then(() => {
-                    window.location = 'index.php';
-                });
-            </script>";
+            // Generate OTP
+    $otp = rand(100000, 999999); // Generate a 6-digit OTP
+    $_SESSION['OTP'] = $otp; // Store OTP in session for verification
+    $_SESSION['OTP_EXPIRY'] = time() + 300; // Set OTP expiry time (5 minutes)
+
+    // Send OTP to user's email
+    if (sendOTPEmail($row['USER_NAME'], $otp)) {
+        echo "<script>
+            Swal.fire({
+                title: 'OTP Sent!',
+                text: 'An OTP has been sent to your email. Please enter it to continue.',
+                input: 'text',
+                showCancelButton: true,
+                confirmButtonText: 'Verify',
+                preConfirm: (input) => {
+                    return new Promise((resolve) => {
+                        if (input === '') {
+                            Swal.showValidationMessage('Please enter the OTP');
+                        } else {
+                            resolve(input);
+                        }
+                    });
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Verify OTP
+                    if (result.value == '{$_SESSION['OTP']}') {
+                        Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
+                            window.location = 'index.php';
+                        });
+                    } else {
+                        Swal.fire('Invalid OTP!', 'Please try again.', 'error').then(() => {
+                            window.location = 'login.php';
+                        });
+                    }
+                }
+            });
+        </script>";
+    } else {
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to send OTP. Please try again later.'
+            });
+        </script>";
+    }
         } else {
             $_SESSION['attempts'] = isset($_SESSION['attempts']) ? $_SESSION['attempts'] + 1 : 1;
             echo "<script>
