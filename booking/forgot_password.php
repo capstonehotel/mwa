@@ -83,6 +83,33 @@
         .footer i {
             margin-right: 5px;
         }
+        .button-row {
+    display: flex;
+    justify-content: space-between; /* Space out buttons */
+    align-items: center; /* Align buttons vertically */
+    margin: 20px 0; /* Add spacing around the buttons */
+}
+
+.option-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #fd2323; /* Button color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.option-button:hover {
+    background-color: #45a049; /* Change color on hover */
+    transform: translateY(-2px);
+}
+
+.option-button:active {
+    transform: translateY(0);
+}
+
     </style>
 
     <div class="container">
@@ -92,8 +119,8 @@
             <input type="email" id="username" name="username" required placeholder="example@gmail.com" aria-required="true" aria-describedby="emailHelp">
             <button type="submit">Send</button>
         </form> -->
-        <div>
-        <button id="sendGmailButton" class="option-button">Send via Gmail</button>
+        <div class="button-row">
+        <button id="sendGmailButton" class="option-button">Send via Gmail</button><br>
         <button id="sendNumberButton" class="option-button">Send via Number</button>
     </div>
     <br>
