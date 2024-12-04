@@ -376,7 +376,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         error_log("Looking up standardized phone: " . $standardizedPhone);
         
         // Check if phone exists in database
-        $stmt = $conn->prepare("SELECT GUESTID FROM tblguest WHERE G_PHONE = ?");
+        $stmt = $conn->prepare("SELECT * FROM tblguest WHERE G_PHONE = ?");
         if (!$stmt) {
             throw new Exception("Database prepare error: " . $conn->error);
         }
