@@ -99,6 +99,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
+    white-space: nowrap; /* Prevent text from wrapping */
 }
 
 .option-button:hover {
@@ -109,6 +110,11 @@
 .option-button:active {
     transform: translateY(0);
 }
+
+.button-row button {
+    margin: 0 10px; /* Add horizontal spacing between buttons */
+}
+
 
     </style>
 
