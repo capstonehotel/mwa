@@ -87,17 +87,42 @@
 
     <div class="container">
         <h2>Forgot password?</h2><br>
-        <form method="POST" action="forgot_password.php">
+        <!-- <form method="POST" action="forgot_password.php">
             <label for="username">Enter your email:</label>
             <input type="email" id="username" name="username" required placeholder="example@gmail.com" aria-required="true" aria-describedby="emailHelp">
             <button type="submit">Send</button>
-        </form>
+        </form> -->
+        <div>
+        <button id="sendGmailButton" class="option-button">Send via Gmail</button>
+        <button id="sendNumberButton" class="option-button">Send via Number</button>
+    </div>
+    <br>
+    <form id="gmailForm" method="POST" action="forgot_password.php" style="display: none;">
+        <label for="username">Enter your email:</label>
+        <input type="email" id="username" name="username" required placeholder="example@gmail.com" aria-required="true" aria-describedby="emailHelp">
+        <button type="submit">Send</button>
+    </form>
+    <form id="numberForm" method="POST" action="forgot_password.php" style="display: none;">
+        <label for="phonenumber">Enter your phone number:</label>
+        <input type="text" id="phonenumber" name="phonenumber" required placeholder="09XXXXXXXXX" aria-required="true" pattern="09[0-9]{9}">
+        <button type="submit">Send</button>
+    </form>
         <div class="footer">
         <p>Remember your password? <a href="https://mcchmhotelreservation.com/booking/index.php?view=logininfo">Login here</a></p>
         </div>
     </div>
 
+    <script>
+    document.getElementById('sendGmailButton').addEventListener('click', function () {
+        document.getElementById('gmailForm').style.display = 'block';
+        document.getElementById('numberForm').style.display = 'none';
+    });
 
+    document.getElementById('sendNumberButton').addEventListener('click', function () {
+        document.getElementById('numberForm').style.display = 'block';
+        document.getElementById('gmailForm').style.display = 'none';
+    });
+</script>
 <?php
 require_once("../includes/initialize.php");
 use PHPMailer\PHPMailer\PHPMailer;
@@ -187,4 +212,193 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     }
 }
+?>
+<?php
+class SMSGateway {
+    private $apiUrl;
+    private $apiKey;
+
+
+    public function __construct() {
+        $this->apiUrl = 'https://69nv3z.api.infobip.com/sms/2/text/advanced';
+        $this->apiKey = '987224f704dd65a242869526dd497514-f72703e6-670e-41ba-bd92-15dd09a948af';
+    }
+
+    public function sendSMS($phone, $message) {
+        try {
+            $data = [
+                "messages" => [
+                    [
+                        "destinations" => [
+                            ["to" => $phone]
+                        ],
+                        "text" => $message
+                    ]
+                ]
+            ];
+
+            $ch = curl_init();
+            curl_setopt_array($ch, [
+                CURLOPT_URL => $this->apiUrl,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_POST => true,
+                CURLOPT_POSTFIELDS => json_encode($data),
+                CURLOPT_HTTPHEADER => [
+                    'Authorization: App ' . $this->apiKey,
+                    'Content-Type: application/json'
+                ]
+            ]);
+
+            $response = curl_exec($ch);
+
+            if (curl_errno($ch)) {
+                error_log('Infobip SMS Error: ' . curl_error($ch));
+                return false;
+            }
+
+            curl_close($ch);
+
+            $result = json_decode($response, true);
+            if (isset($result['messages'][0]['status']['groupName']) &&
+                $result['messages'][0]['status']['groupName'] === "PENDING") {
+                return true;
+            }
+
+            error_log('Infobip SMS Error: ' . $response);
+            return false;
+        } catch (Exception $e) {
+            error_log('Infobip SMS Exception: ' . $e->getMessage());
+            return false;
+        }
+    }
+}
+
+function sendSMS($phone, $message) {
+    $smsGateway = new SMSGateway();
+
+    // Ensure correct format: +63XXXXXXXXX
+    if (substr($phone, 0, 1) === '0') {
+        $phone = '+63' . substr($phone, 1);
+    }
+
+    return $smsGateway->sendSMS($phone, $message);
+}
+
+
+
+
+
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Function to standardize phone number format for comparison
+function standardizePhoneNumber($phone) {
+    // Remove any non-numeric characters
+    $phone = preg_replace('/[^0-9]/', '', $phone);
+    
+    // If it starts with 63, remove it
+    if (substr($phone, 0, 2) === '63') {
+        $phone = '0' . substr($phone, 2);
+    }
+    
+    return $phone;
+}
+
+// Function to format phone for SMS sending
+function formatPhoneForSMS($phone) {
+    // Remove any non-numeric characters
+    $phone = preg_replace('/[^0-9]/', '', $phone);
+    
+    // If it starts with 0, replace with +63
+    if (substr($phone, 0, 1) === '0') {
+        return '+63' . substr($phone, 1);
+    }
+    
+    // If it starts with 63, add +
+    if (substr($phone, 0, 2) === '63') {
+        return '+' . $phone;
+    }
+    
+    // If no prefix, assume it needs 63
+    return '+63' . $phone;
+}
+
+$error = '';
+$success = '';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    try {
+        $phone = $_POST['phone'];
+        
+        // Standardize phone number for database lookup
+        $standardizedPhone = standardizePhoneNumber($phone);
+        
+        // Debug log
+        error_log("Looking up standardized phone: " . $standardizedPhone);
+        
+        // Check if phone exists in database
+        $stmt = $conn->prepare("SELECT GUESTID FROM tblguest WHERE G_PHONE = ?");
+        if (!$stmt) {
+            throw new Exception("Database prepare error: " . $conn->error);
+        }
+        
+        $stmt->bind_param("s", $standardizedPhone);
+        if (!$stmt->execute()) {
+            throw new Exception("Database execute error: " . $stmt->error);
+        }
+        
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            // Generate OTP
+            $otp = sprintf("%06d", mt_rand(0, 999999));
+            $_SESSION['reset_phone'] = $standardizedPhone;
+            $_SESSION['OTP_TIMESTAMP'] = time();
+            
+            // Update OTP in database
+            $update_stmt = $conn->prepare("UPDATE users SET SMSOTP = ?, OTP_TIMESTAMP = CURRENT_TIMESTAMP WHERE phone = ?");
+            if (!$update_stmt) {
+                throw new Exception("Database prepare error: " . $conn->error);
+            }
+            
+            $update_stmt->bind_param("ss", $otp, $standardizedPhone);
+            
+            if (!$update_stmt->execute()) {
+                throw new Exception("Failed to update OTP: " . $update_stmt->error);
+            }
+            
+            // Format phone number for SMS sending
+            $smsPhone = formatPhoneForSMS($standardizedPhone);
+            
+            // Send OTP via SMS
+            $message = "Your OTP for password reset is: " . $otp;
+            
+            // Log before sending SMS
+            error_log("Attempting to send SMS to: " . $smsPhone);
+            error_log("Message content: " . $message);
+            
+            if (!sendSMS($smsPhone, $message)) {
+                throw new Exception("Failed to send SMS. Please try again later.");
+            }
+            
+            // If we got here, everything worked
+            $_SESSION['success_message'] = "OTP sent successfully! Please check your phone.";
+            header("Location:send_otp.php");
+            exit();
+            
+        } else {
+            throw new Exception("Phone number not found in our records");
+        }
+        
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+        error_log("Forgot Password Error: " . $error);
+    } finally {
+        if (isset($stmt)) $stmt->close();
+        if (isset($update_stmt)) $update_stmt->close();
+    }
+}
+
+
 ?>
