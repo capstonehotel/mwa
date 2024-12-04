@@ -72,6 +72,7 @@ if (!isset($_SESSION['monbela_cart'])) {
     </div>
 
 </div>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
 
 .input-group input {
@@ -135,6 +136,16 @@ function logintab() {
  
     <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
     <script>
+      
+    const eyeIcon = document.getElementById('eyeIcon');
+    const passwordInput = document.getElementById('password');
+
+    eyeIcon.addEventListener('click', function () {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        eyeIcon.classList.toggle('fa-eye');
+        eyeIcon.classList.toggle('fa-eye-slash');
+    });
     // Function called when hCaptcha is successful
     function onSuccess(token) {
         document.getElementById('signin-button').disabled = false; // Enable the button
@@ -164,6 +175,7 @@ function logintab() {
 
         setInterval(updateRemainingTime, 1000); // Update the remaining time every second
     <?php endif; ?>
+    
 </script>
 <?php
   }
