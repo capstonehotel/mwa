@@ -258,7 +258,7 @@ if (isset($_POST['btnlogin'])) {
             $_SESSION['ADMIN_UROLE'] = $row['ROLE'];
 
             // Generate OTP
-    $otp = rand(100000, 999999); // Generate a 6-digit OTP
+    $otp = random_int(100000, 999999); // Generate a 6-digit OTP
     $_SESSION['OTP'] = $otp; // Store OTP in session for verification
     $_SESSION['OTP_EXPIRY'] = time() + 300; // Set OTP expiry time (5 minutes)
 
