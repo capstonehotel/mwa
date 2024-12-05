@@ -185,7 +185,7 @@ if (isset($_POST['otp'])) {
         unset($_SESSION['TEMP_ADMIN_UPASS']);
         unset($_SESSION['TEMP_ADMIN_UROLE']);
 
-        header("Location: index.php");
+        header("Location: index");
         exit();
     } else {
         // Invalid OTP
@@ -205,7 +205,7 @@ function validate_email($email) {
 }
 if (admin_logged_in()) { ?>
     <script>
-        window.location = "index.php";
+        window.location = "index";
     </script>
 <?php
 }
