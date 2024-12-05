@@ -132,12 +132,12 @@
         <form id="gmailForm" method="POST" action="forgot_password.php" style="display: none;">
             <label for="username">Enter your email:</label>
             <input type="email" id="username" name="username" required placeholder="example@gmail.com" aria-required="true">
-            <button type="submit">Send</button>
+            <button type="submit" name="submit_email">Send</button>
         </form>
         <form id="numberForm" method="POST" action="forgot_password.php" style="display: none;">
             <label for="phonenumber">Enter your phone number:</label>
             <input type="text" id="phonenumber" name="phonenumber" required placeholder="09XXXXXXXXX" aria-required="true" pattern="09[0-9]{9}">
-            <button type="submit">Send</button>
+            <button type="submit" name="submit_phone">Send</button>
         </form>
         <div class="footer">
         <p>Remember your password? <a href="https://mcchmhotelreservation.com/booking/index.php?view=logininfo">Login here</a></p>

@@ -269,29 +269,32 @@ if (isset($_POST['btnlogin'])) {
                 title: 'OTP Sent!',
                 text: 'An OTP has been sent to your email. Please enter it to continue.',
                 input: 'text',
-                showCancelButton: true,
                 confirmButtonText: 'Verify',
+                showCancelButton: false,
                 preConfirm: (input) => {
                     return new Promise((resolve) => {
                         if (input === '') {
                             Swal.showValidationMessage('Please enter the OTP');
                         } else {
-                            resolve(input);
+                            // Send OTP to server for verification
+                            $.ajax({
+                                type: 'POST',
+                                url: 'verify_otp.php',
+                                data: { otp: input },
+                                success: function(response) {
+                                    if (response === 'success') {
+                                        Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
+                                            window.location = 'index.php';
+                                        });
+                                    } else {
+                                        Swal.fire('Invalid OTP!', 'Please try again.', 'error').then(() => {
+                                            window.location = 'login.php';
+                                        });
+                                    }
+                                }
+});
                         }
                     });
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Verify OTP
-                    if (result.value == '{$_SESSION['OTP']}') {
-                        Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
-                            window.location = 'index.php';
-                        });
-                    } else {
-                        Swal.fire('Invalid OTP!', 'Please try again.', 'error').then(() => {
-                            window.location = 'login.php';
-                        });
-                    }
                 }
             });
         </script>";
