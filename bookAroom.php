@@ -413,7 +413,7 @@ $_SESSION['departure'] =date_format(date_create($_POST['departure']),"Y-m-d");
 ?>
 
 <div class="col-md-4 col-sm-12 py-2">
-<form method="POST" action="index?p=accomodation">
+<form method="POST" action="index.php?p=accomodation">
     <input type="hidden" name="ROOMPRICE" value="<?php echo $result->PRICE ;?>">
     <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID ;?>">
     
@@ -545,7 +545,7 @@ if ($countrated == 0) {
                 <li>Remaining Rooms : <?php echo $resNum ;?></li>
             </ul>
 
-            <form method="POST" action="index?p=accomodation">
+            <form method="POST" action="index.php?p=accomodation">
                 <input type="hidden" name="ROOMPRICE" value="<?php echo $result->PRICE ;?>">
                 <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID ;?>">
                 <?php echo $btn ;?>

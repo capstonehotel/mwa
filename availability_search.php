@@ -1,4 +1,4 @@
- <form  method="POST" action="index?p=booking">
+ <form  method="POST" action="inde?p=booking">
     <div class="container rounded" style="background-color: white; padding: 20px;">
         <div class="col-lg-12">
             <label class="block">
