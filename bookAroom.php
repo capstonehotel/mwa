@@ -545,7 +545,7 @@ if ($countrated == 0) {
                 <li>Remaining Rooms : <?php echo $resNum ;?></li>
             </ul>
 
-            <form method="POST" action="index.php?p=accomodation">
+            <form method="POST" action="index?p=accomodation">
                 <input type="hidden" name="ROOMPRICE" value="<?php echo $result->PRICE ;?>">
                 <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID ;?>">
                 <?php echo $btn ;?>
