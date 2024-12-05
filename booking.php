@@ -86,12 +86,12 @@ if (isset($_POST['clear'])) {
                         <?php
                         if (isset($_SESSION['GUESTID'])) {
                             ?>
-                            <a href="<?php echo WEB_ROOT; ?>booking/index.php?view=payment" class="btn btn-primary" align="right" name="continue">Continue Booking</a>
+                            <a href="<?php echo WEB_ROOT; ?>booking/index?view=payment" class="btn btn-primary" align="right" name="continue">Continue Booking</a>
                             <?php
                             
                         } else {
                             ?>
-                            <a href="<?php echo WEB_ROOT; ?>booking/index.php?view=logininfo" class="btn btn-primary" align="right" name="continue">Continue Booking</a>
+                            <a href="<?php echo WEB_ROOT; ?>booking/index?view=logininfo" class="btn btn-primary" align="right" name="continue">Continue Booking</a>
                             <?php
                         }
                     } else {
