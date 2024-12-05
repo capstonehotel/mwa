@@ -162,6 +162,34 @@ if (isset($_SESSION['lockout_time']) && (time() - $_SESSION['lockout_time'] < LO
     unset($_SESSION['lockout_time']);
     $lockout_message = '';
 }
+// Handle OTP verification
+if (isset($_POST['otp'])) {
+    $entered_otp = sanitize_input($_POST['otp']);
+    if (isset($_SESSION['OTP']) && $entered_otp == $_SESSION['OTP'] && time() < $_SESSION['OTP_EXPIRY']) {
+        // OTP is valid, log the user in
+        $_SESSION['ADMIN_ID'] = $_SESSION['TEMP_ADMIN_ID'];
+        $_SESSION['ADMIN_UNAME'] = $_SESSION['TEMP_ADMIN_UNAME'];
+        $_SESSION['ADMIN_USERNAME'] = $_SESSION['TEMP_ADMIN_USERNAME'];
+        $_SESSION['ADMIN_UPASS'] = $_SESSION['TEMP_ADMIN_UPASS'];
+        $_SESSION['ADMIN_UROLE'] = $_SESSION['TEMP_ADMIN_UROLE'];
+
+        // Clear OTP session variables
+        unset($_SESSION['OTP']);
+        unset($_SESSION['OTP_EXPIRY']);
+        unset($_SESSION['TEMP_ADMIN_ID']);
+        unset($_SESSION['TEMP_ADMIN_UNAME']);
+        unset($_SESSION['TEMP_ADMIN_USERNAME']);
+        unset($_SESSION['TEMP_ADMIN_UPASS']);
+        unset($_SESSION['TEMP_ADMIN_UROLE']);
+
+        header("Location: index.php");
+        exit();
+    } else {
+        // Invalid OTP
+        $otp_error = "Invalid OTP! Please try again.";
+    }
+}
+
   // Function to sanitize inputs for XSS protection
 function sanitize_input($data) {
     return htmlspecialchars(trim($data), ENT_QUOTES, 'UTF-8');
@@ -262,51 +290,48 @@ if (isset($_POST['btnlogin'])) {
     $_SESSION['OTP'] = $otp; // Store OTP in session for verification
     $_SESSION['OTP_EXPIRY'] = time() + 300; // Set OTP expiry time (5 minutes)
 
-    // Send OTP to user's email
-    if (sendOTPEmail($row['USER_NAME'], $otp)) {
-        echo "<script>
-            Swal.fire({
-                title: 'OTP Sent!',
-                text: 'An OTP has been sent to your email. Please enter it to continue.',
-                input: 'text',
-                confirmButtonText: 'Verify',
-                showCancelButton: false,
-                preConfirm: (input) => {
-                    return new Promise((resolve) => {
-                        if (input === '') {
-                            Swal.showValidationMessage('Please enter the OTP');
-                        } else {
-                            // Send OTP to server for verification
-                            $.ajax({
-                                type: 'POST',
-                                url: 'verify_otp.php',
-                                data: { otp: input },
-                                success: function(response) {
-                                    if (response === 'success') {
-                                        Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
-                                            window.location = 'index.php';
-                                        });
-                                    } else {
-                                        Swal.fire('Invalid OTP!', 'Please try again.', 'error').then(() => {
-                                            window.location = 'login.php';
-                                        });
-                                    }
+    
+            // Send OTP to user's email
+            if (sendOTPEmail($row['USER_NAME'], $otp)) {
+                // Redirect to OTP verification
+                echo "<script>
+                    Swal.fire({
+                        title: 'OTP Sent!',
+                        text: 'An OTP has been sent to your email. Please enter it to continue.',
+                        input: 'text',
+                        confirmButtonText: 'Verify',
+                        showCancelButton: false,
+                        preConfirm: (input) => {
+                            return new Promise((resolve) => {
+                                if (input === '') {
+                                    Swal.showValidationMessage('Please enter the OTP');
+                                } else {
+                                    // Submit OTP for verification
+                                    $.post('login.php', { otp: input }, function(response) {
+                                        if (response === 'success') {
+                                            Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
+                                                window.location = 'index.php';
+                                            });
+                                        } else {
+                                            Swal.fire('Invalid OTP!', 'Please try again.', 'error').then(() => {
+                                                window.location = 'login.php';
+                                            });
+                                        }
+                                    });
                                 }
-});
+                            });
                         }
                     });
-                }
-            });
-        </script>";
-    } else {
-        echo "<script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Failed to send OTP. Please try again later.'
-            });
-        </script>";
-    }
+                </script>";
+            } else {
+                echo "<script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to send OTP. Please try again later.'
+                    });
+                </script>";
+            }
         } else {
             $_SESSION['attempts'] = isset($_SESSION['attempts']) ? $_SESSION['attempts'] + 1 : 1;
             echo "<script>
