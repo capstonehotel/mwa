@@ -107,7 +107,7 @@ function logintab() {
             <p class="text-info" id="remaining-attempts">You have <?= $remaining_attempts ?> attempts left.</p>
             
         <?php endif; ?>
-        <form action="<?php echo "https://mcchmhotelreservation.com/login.php"; ?>" method="post">
+        <form action="<?php echo "https://mcchmhotelreservation.com/login"; ?>" method="post">
             <div class="form-group">             
                 <input type="email" class="form-control" id="username" name="username" placeholder="Enter your email" <?= ($remaining_attempts == 0 && $isBlocked) ? 'disabled' : '' ?>  required>
             </div>
@@ -129,7 +129,7 @@ function logintab() {
             </p> -->
             <button id="signin-button" type="submit" name="gsubmit" class="btn btn-primary btn-block" style="margin-top: 10px;" <?= ($remaining_attempts == 0 && $isBlocked) ? 'disabled' : '' ?>>Sign In</button>
             <p  style="margin-top: 10px; text-align: left;">
-                <a href="<?php echo  "https://mcchmhotelreservation.com/booking/forgot_password.php"; ?>">Forgot Password?</a>
+                <a href="<?php echo  "https://mcchmhotelreservation.com/booking/forgot_password"; ?>">Forgot Password?</a>
             </p>
         </form>
     </div>
