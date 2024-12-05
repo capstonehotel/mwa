@@ -1,6 +1,8 @@
 <?php
 require_once("../includes/initialize.php");
 require_once("sendOTP.php");
+// Start the session
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -162,6 +164,7 @@ if (isset($_SESSION['lockout_time']) && (time() - $_SESSION['lockout_time'] < LO
     unset($_SESSION['lockout_time']);
     $lockout_message = '';
 }
+
 // Handle OTP verification
 if (isset($_POST['otp'])) {
     $entered_otp = sanitize_input($_POST['otp']);
@@ -189,6 +192,7 @@ if (isset($_POST['otp'])) {
         $otp_error = "Invalid OTP! Please try again.";
     }
 }
+
 
   // Function to sanitize inputs for XSS protection
 function sanitize_input($data) {
@@ -279,11 +283,13 @@ if (isset($_POST['btnlogin'])) {
         $row = mysqli_fetch_assoc($result);
 
         if ($row && password_verify($upass, $row['UPASS'])) {
-            $_SESSION['ADMIN_ID'] = $row['USERID'];
-            $_SESSION['ADMIN_UNAME'] = $row['UNAME'];
-            $_SESSION['ADMIN_USERNAME'] = $row['USER_NAME'];
-            $_SESSION['ADMIN_UPASS'] = $row['UPASS'];
-            $_SESSION['ADMIN_UROLE'] = $row['ROLE'];
+            // Store temporary user data in session
+            $_SESSION['TEMP_ADMIN_ID'] = $row['USERID'];
+            $_SESSION['TEMP_ADMIN_UNAME'] = $row['UNAME'];
+            $_SESSION['TEMP_ADMIN_USERNAME'] = $row['USER_NAME'];
+            $_SESSION['TEMP_ADMIN_UPASS'] = $row['UPASS'];
+            $_SESSION['TEMP_ADMIN_UROLE'] = $row['ROLE'];
+
 
             // Generate OTP
     $otp = random_int(100000, 999999); // Generate a 6-digit OTP
@@ -291,47 +297,47 @@ if (isset($_POST['btnlogin'])) {
     $_SESSION['OTP_EXPIRY'] = time() + 300; // Set OTP expiry time (5 minutes)
 
     
-            // Send OTP to user's email
-            if (sendOTPEmail($row['USER_NAME'], $otp)) {
-                // Redirect to OTP verification
-                echo "<script>
-                    Swal.fire({
-                        title: 'OTP Sent!',
-                        text: 'An OTP has been sent to your email. Please enter it to continue.',
-                        input: 'text',
-                        confirmButtonText: 'Verify',
-                        showCancelButton: false,
-                        preConfirm: (input) => {
-                            return new Promise((resolve) => {
-                                if (input === '') {
-                                    Swal.showValidationMessage('Please enter the OTP');
-                                } else {
-                                    // Submit OTP for verification
-                                    $.post('login.php', { otp: input }, function(response) {
-                                        if (response === 'success') {
-                                            Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
-                                                window.location = 'index.php';
-                                            });
-                                        } else {
-                                            Swal.fire('Invalid OTP!', 'Please try again.', 'error').then(() => {
-                                                window.location = 'login.php';
-                                            });
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                    });
-                </script>";
-            } else {
-                echo "<script>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Failed to send OTP. Please try again later.'
-                    });
-                </script>";
-            }
+                // Send OTP to user's email
+                if (sendOTPEmail($row['USER_NAME'], $otp)) {
+                    // Redirect to OTP verification
+                    echo "<script>
+                        Swal.fire({
+                            title: 'OTP Sent!',
+                            text: 'An OTP has been sent to your email. Please enter it to continue.',
+                            input: 'text',
+                            confirmButtonText: 'Verify',
+                            showCancelButton: false,
+                            preConfirm: (input) => {
+                                return new Promise((resolve) => {
+                                    if (input === '') {
+                                        Swal.showValidationMessage('Please enter the OTP');
+                                    } else {
+                                        // Submit OTP for verification
+                                        $.post('login.php', { otp: input }, function(response) {
+                                            if (response === 'success') {
+                                                Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
+                                                    window.location = 'index.php';
+                                                });
+                                            } else {
+                                                Swal.fire('Invalid OTP!', 'Please try again.', 'error').then(() => {
+                                                    window.location = 'login.php';
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    </script>";
+                } else {
+                    echo "<script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Failed to send OTP. Please try again later.'
+                        });
+                    </script>";
+                }
         } else {
             $_SESSION['attempts'] = isset($_SESSION['attempts']) ? $_SESSION['attempts'] + 1 : 1;
             echo "<script>
