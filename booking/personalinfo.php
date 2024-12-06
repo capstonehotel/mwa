@@ -125,6 +125,7 @@ if (isset($_SESSION['ERRMSG_ARR']) && is_array($_SESSION[' ERRMSG_ARR']) && coun
   }
 </style>
 <script>
+	document.getElementById('image').disabled = true;
 function validateImage(event) {
     const fileInput = event.target;
     const filePath = fileInput.value;
