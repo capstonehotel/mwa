@@ -17,6 +17,7 @@ if (isset($_POST['submit'])) {
   $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_EMAIL);
   $password = filter_input(INPUT_POST, 'pass', FILTER_SANITIZE_STRING);
 
+	
   // Validate that the email is valid
   if (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
       $_SESSION['ERRMSG_ARR'][] = "Invalid email format.";
