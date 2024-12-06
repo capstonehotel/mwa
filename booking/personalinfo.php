@@ -108,12 +108,12 @@ if (isset($_SESSION['ERRMSG_ARR']) && is_array($_SESSION[' ERRMSG_ARR']) && coun
 
            <div class="row">
     <div class="col-md-12">
-      <div class="form-group">
+      <!--<div class="form-group">
         <label class ="control-label" for="image">Avatar</label>
         <input type="file" name="image" id="image" accept=".jpg, .jpeg, .png"onchange="validateImage(event)" required>
         <img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-width: 150px; max-height: 150px;">
       </div>
-      <style>
+      <style>-->
   /* Ensure the image preview is fixed at 300x300 pixels (2x2) */
   #imagePreview {
     display: none;
