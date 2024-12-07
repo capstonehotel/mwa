@@ -140,7 +140,7 @@
             <button type="submit" name="submit_phone">Send</button>
         </form> -->
         <div class="footer">
-        <p>Remember your password? <a href="https://mcchmhotelreservation.com/booking/index.php?view=logininfo">Login here</a></p>
+        <p>Remember your password? <a href="https://mcchmhotelreservation.com/booking/index?view=logininfo">Login here</a></p>
         </div>
     </div>
 

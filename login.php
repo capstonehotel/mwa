@@ -136,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['gsubmit'])) {
                 // Example email sending function (implement PHPMailer or similar)
                 mail($email, "Your OTP Code", "Your OTP code is: $otp");
                 //session_regenerate_id(true); // Regenerate session ID
-                redirect("https://mcchmhotelreservation.com/booking/index.php?view=payment");
+                redirect("https://mcchmhotelreservation.com/booking/index?view=payment");
             } else {
                 $_SESSION['login_attempts']++;
                 if ($_SESSION['login_attempts'] >= 3) {
