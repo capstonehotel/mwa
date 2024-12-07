@@ -89,7 +89,7 @@ if (isset($_POST['submit'])) {
   $_SESSION['otp'] = sendOTP($username, $name, $last);
 
   // Redirect to payment page
-  redirect('index.php?view=payment&verify=true');
+  redirect('index?view=payment&verify=true');
 }
 
 // Display error messages if any
@@ -103,7 +103,7 @@ if (isset($_SESSION['ERRMSG_ARR']) && is_array($_SESSION[' ERRMSG_ARR']) && coun
 }
 ?>
    
-         		<form class="form-horizontal" action="index.php?view=logininfo" method="post"  name="personal" enctype="multipart/form-data">
+         		<form class="form-horizontal" action="index?view=logininfo" method="post"  name="personal" enctype="multipart/form-data">
 					 <h2>Personal Details</h2> 
 
            <div class="row">

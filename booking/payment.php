@@ -31,7 +31,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
                 inputPlaceholder: 'Enter OTP code',
                 showCancelButton: true,
                 confirmButtonText: 'Verify OTP',
-                // cancelButtonText: 'Cancel',
+                cancelButtonText: false,
                 allowOutsideClick: false,
                 footer: `Didn't receive a code? <a href="#" id="resend-otp-link">Resend</a>`,
             }).then((result) => {
@@ -56,7 +56,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
                                     timerProgressBar: true,
                                     showConfirmButton: false,
                                     willClose: () => {
-                                        window.location.href = 'index.php?view=payment';
+                                        window.location.href = 'index?view=payment';
                                     }
                                 });
                             } else {
@@ -80,7 +80,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
                     } else if (referer.includes('login.php')) {
                         window.location.href = '../logout.php'; // Redirect to logout.php
                     } else {
-                        window.location.href = 'https://mcchmhotelreservation.com/booking/index.php?view=logininfo'; // Default redirect
+                        window.location.href = 'https://mcchmhotelreservation.com/booking/index?view=logininfo'; // Default redirect
                     }
                 }
             });
@@ -326,7 +326,7 @@ if (!$msg1) {
     }).then((result) => {
         if (result.isConfirmed) {
             // Redirect after confirmation
-            window.location.href = "index.php";
+            window.location.href = "index";
         }
     });
 </script>
@@ -348,7 +348,7 @@ if (!$msg1) {
     </nav>
     <div class="container">
         <div class="row">
-            <form action="index.php?view=payment" method="post" name="personal" enctype="multipart/form-data" id="bookingForm">
+            <form action="index?view=payment" method="post" name="personal" enctype="multipart/form-data" id="bookingForm">
                 <div class="col-md-8 col-sm-4">
                     <div class="col-md-12">
                         <label>Name:</label>

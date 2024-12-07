@@ -242,7 +242,7 @@ if (isset($_POST['btnlogin'])) {
                 title: 'hCaptcha Verification Failed',
                 text: 'Please verify that you are not a robot.'
             }).then(() => {
-                    window.location = 'login.php';
+                    window.location = 'login';
                 });
         </script>";
         return;
@@ -316,11 +316,11 @@ if (isset($_POST['btnlogin'])) {
                                         $.post('login.php', { otp: input }, function(response) {
                                             if (response === 'success') {
                                                 Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
-                                                    window.location = 'index.php';
+                                                    window.location = 'index';
                                                 });
                                             } else {
                                                 Swal.fire('Invalid OTP!', 'Please try again.', 'error').then(() => {
-                                                    window.location = 'login.php';
+                                                    window.location = 'login';
                                                 });
                                             }
                                         });
