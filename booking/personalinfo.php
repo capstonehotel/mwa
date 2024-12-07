@@ -68,6 +68,29 @@ if (isset($_POST['submit'])) {
           $_SESSION['ERRMSG_ARR'][] = "Sorry, there was an error uploading your file.";
       }
   }
+  // Password validation
+$missingRequirements = [];
+
+if (strlen($password) < 8 || strlen($password) > 12) {
+    $missingRequirements[] = "Password must be between 8 and 12 characters long.";
+}
+if (!preg_match('/[A-Z]/', $password)) {
+    $missingRequirements[] = "Password must contain at least one uppercase letter.";
+}
+if (!preg_match('/[a-z]/', $password)) {
+    $missingRequirements[] = "Password must contain at least one lowercase letter.";
+}
+if (!preg_match('/\d/', $password)) {
+    $missingRequirements[] = "Password must contain at least one number.";
+}
+if (!preg_match('/[@$!%*?&]/', $password)) {
+    $missingRequirements[] = "Password must contain at least one special character.";
+}
+
+// If there are any missing requirements, store them in the session
+if (!empty($missingRequirements)) {
+    $_SESSION['ERRMSG_ARR'] = array_merge($_SESSION['ERRMSG_ARR'], $missingRequirements);
+}
 
   // Store sanitized inputs in session
   $_SESSION['image'] = $fileName;
