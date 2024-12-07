@@ -17,6 +17,7 @@ if (isset($_POST['submit'])) {
   $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_EMAIL);
   $password = filter_input(INPUT_POST, 'pass', FILTER_SANITIZE_STRING);
 
+	
   // Validate that the email is valid
   if (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
       $_SESSION['ERRMSG_ARR'][] = "Invalid email format.";
@@ -110,7 +111,7 @@ if (isset($_SESSION['ERRMSG_ARR']) && is_array($_SESSION[' ERRMSG_ARR']) && coun
     <div class="col-md-12">
       <div class="form-group">
         <label class ="control-label" for="image">Avatar</label>
-        <input type="file" name="image" id="image" accept=".jpg, .jpeg, .png"onchange="validateImage(event)" required>
+        <input type="file" name="image" id="image" accept=".jpg, .jpeg, .png"onchange="validateImage(event)" disabled>
         <img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-width: 150px; max-height: 150px;">
       </div>
       <style>
@@ -125,6 +126,7 @@ if (isset($_SESSION['ERRMSG_ARR']) && is_array($_SESSION[' ERRMSG_ARR']) && coun
   }
 </style>
 <script>
+	document.getElementById('image').disabled = true;
 function validateImage(event) {
     const fileInput = event.target;
     const filePath = fileInput.value;
