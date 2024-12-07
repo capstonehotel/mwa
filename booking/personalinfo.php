@@ -456,7 +456,7 @@ $('#pass').on('input', function() {
     });
 
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.4/purify.min.js"></script>
+
 <!-- <script>
 function validatePassword() {
     var passwordInput = document.getElementById("password");
@@ -654,6 +654,7 @@ document.addEventListener('DOMContentLoaded', function() {
     validateInput(emailInput, 'Email', allowedChars.email);
 });
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.4/purify.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
