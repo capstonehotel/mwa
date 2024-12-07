@@ -341,6 +341,7 @@ function validateImage(event) {
         maxlength="12" 
         required  
         placeholder="Ex@mple123">
+        <span id="password-status"></span>
     <span id="password-error" style="color: red;"></span>
 </div>
       <!-- <div class="form-group">
@@ -420,6 +421,40 @@ $(document).ready(function() {
         }
     });
 });
+// Password criteria check
+$('#pass').on('input', function() {
+        var password = $(this).val();
+        var messages = [];
+
+        // Check password length
+        if (password.length < 8 || password.length > 12) {
+            messages.push("Password must be between 8 and 12 characters long.");
+        }
+        // Check for uppercase letter
+        if (!/[A-Z]/.test(password)) {
+            messages.push("Password must contain at least one uppercase letter.");
+        }
+        // Check for lowercase letter
+        if (!/[a-z]/.test(password)) {
+            messages.push("Password must contain at least one lowercase letter.");
+        }
+        // Check for number
+        if (!/\d/.test(password)) {
+            messages.push("Password must contain at least one number.");
+        }
+        // Check for special character
+        if (!/[@$!%*?&]/.test(password)) {
+            messages.push("Password must contain at least one special character.");
+        }
+
+        // Display messages
+        if (messages.length > 0) {
+            $('#password-status').html(messages.join('<br>')).css('color', 'red');
+        } else {
+            $('#password-status').text('Password meets all criteria').css('color', 'green');
+        }
+    });
+
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.4/purify.min.js"></script>
 <!-- <script>
