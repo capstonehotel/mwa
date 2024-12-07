@@ -68,6 +68,52 @@ if (isset($_POST['submit'])) {
           $_SESSION['ERRMSG_ARR'][] = "Sorry, there was an error uploading your file.";
       }
   }
+      // Check for whitespace in inputs
+      $whitespaceFields = [];
+      if (preg_match('/\s/', $name)) {
+          $whitespaceFields[] = "First Name cannot contain whitespace.";
+      }
+      if (preg_match('/\s/', $last)) {
+          $whitespaceFields[] = "Last Name cannot contain whitespace.";
+      }
+      if (preg_match('/\s/', $gender)) {
+          $whitespaceFields[] = "Gender cannot contain whitespace.";
+      }
+      if (preg_match('/\s/', $dob)) {
+          $whitespaceFields[] = "Date of Birth cannot contain whitespace.";
+      }
+      if (preg_match('/\s/', $nationality)) {
+          $whitespaceFields[] = "Nationality cannot contain whitespace.";
+      }
+      if (preg_match('/\s/', $city)) {
+          $whitespaceFields[] = "City cannot contain whitespace.";
+      }
+      if (preg_match('/\s/', $address)) {
+          $whitespaceFields[] = "Address cannot contain whitespace.";
+      }
+      if (preg_match('/\s/', $company)) {
+          $whitespaceFields[] = "Company cannot contain whitespace.";
+      }
+      if (preg_match('/\s/', $caddress)) {
+          $whitespaceFields[] = "Company Address cannot contain whitespace.";
+      }
+      if (preg_match('/\s/', $zip)) {
+          $whitespaceFields[] = "Zip Code cannot contain whitespace.";
+      }
+      if (preg_match('/\s/', $phone)) {
+          $whitespaceFields[] = "Phone cannot contain whitespace.";
+      }
+      if (preg_match('/\s/', $username)) {
+          $whitespaceFields[] = "Email cannot contain whitespace.";
+      }
+      if (preg_match('/\s/', $password)) {
+          $whitespaceFields[] = "Password cannot contain whitespace.";
+      }
+  
+      // If there are any whitespace errors, store them in the session
+      if (!empty($whitespaceFields)) {
+          $_SESSION['ERRMSG_ARR'] = array_merge($_SESSION['ERRMSG_ARR'], $whitespaceFields);
+      }
   // Password validation
 $missingRequirements = [];
 
