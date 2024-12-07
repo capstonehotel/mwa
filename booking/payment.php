@@ -29,7 +29,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
                 title: 'Enter OTP',
                 input: 'text',
                 inputPlaceholder: 'Enter OTP code',
-                showCancelButton: true,
+                
                 confirmButtonText: 'Verify OTP',
                 showCancelButton: false,
                 allowOutsideClick: false,
