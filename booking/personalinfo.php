@@ -17,7 +17,6 @@ if (isset($_POST['submit'])) {
   $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_EMAIL);
   $password = filter_input(INPUT_POST, 'pass', FILTER_SANITIZE_STRING);
 
-	
   // Validate that the email is valid
   if (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
       $_SESSION['ERRMSG_ARR'][] = "Invalid email format.";
@@ -326,7 +325,7 @@ function validateImage(event) {
       <div class="form-group">
         <label  class ="control-label" for="username">Email:</label>
         <input name="username" type="email" class="form-control input-sm" id="username" required  placeholder="User@gmail.com">
-    
+        <span id="email-status"></span>
       </div>
       <div class="form-group">
     <label class="control-label" for="password">Password:</label>
@@ -396,6 +395,31 @@ function validateDOB(input) {
         input.setCustomValidity("");
     }
 }
+</script>
+
+<script>
+$(document).ready(function() {
+    $('#username').on('input', function() {
+        var email = $(this).val();
+        if (email.length > 0) {
+            $.ajax({
+                type: 'POST',
+                url: 'check_email.php',
+                data: { email: email },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'available') {
+                        $('#email-status').text('Email is available').css('color', 'green');
+                    } else {
+                        $('#email-status').text('Email is already in use').css('color', 'red');
+                    }
+                }
+            });
+        } else {
+            $('#email-status').text(''); // Clear the message if the input is empty
+        }
+    });
+});
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.4/purify.min.js"></script>
 <!-- <script>
