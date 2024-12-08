@@ -242,7 +242,7 @@ if (isset($_POST['btnlogin'])) {
                 title: 'hCaptcha Verification Failed',
                 text: 'Please verify that you are not a robot.'
             }).then(() => {
-                    window.location = 'login.php';
+                    window.location = 'login';
                 });
         </script>";
         return;
@@ -320,7 +320,7 @@ if (isset($_POST['btnlogin'])) {
                                                 });
                                             } else {
                                                 Swal.fire('Invalid OTP!', 'Please try again.', 'error').then(() => {
-                                                    window.location = 'login.php';
+                                                    window.location = 'login';
                                                 });
                                             }
                                         });
@@ -346,7 +346,7 @@ if (isset($_POST['btnlogin'])) {
                     title: 'Login Failed',
                     text: 'Username or Password Not Registered! Contact Your administrator.',
                 }).then(() => {
-                    window.location = 'login.php';
+                    window.location = 'login';
                 });
             </script>";
         }
@@ -373,7 +373,7 @@ if (isset($_POST['btnlogin'])) {
                  <div id="hCaptchaError" style="display: <?php echo $lockout_error ? 'block' : 'none'; ?>; color: red; font-size: 14px; text-align: center; margin-top: 10px;"></div>
                 <button type="submit" name="btnlogin">Login</button>
                 <div class="links">
-                    <a href="../index.php" class="text-primary">Back to the website</a>
+                    <a href="../index" class="text-primary">Back to the website</a>
                 </div>
             </form>
         </div>
