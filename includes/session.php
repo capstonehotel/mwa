@@ -2,7 +2,7 @@
 	//before we store information of our member, we need to start first the session
 	
 	session_start();
-	//session_regenerate_id(true);
+	
 	
 	//create a new function to check if the session variable member_id is on set
 	function logged_in() {
@@ -10,7 +10,7 @@
         
 	}
 	
-   // Redirect to admin index if not logged in
+ 
    function confirm_logged_in() {
 	if (!logged_in()) {
 		header("Location: admin/index.php");
@@ -26,7 +26,7 @@
 		return isset($_SESSION['ADMIN_ID']);
         
 	}
-	// Redirect to index if admin is not logged in
+	
 	function admin_confirm_logged_in() {
 		if (!admin_logged_in()) {
 			header("Location: index.php");
