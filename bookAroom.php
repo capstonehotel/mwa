@@ -716,7 +716,7 @@ $(document).ready(function () {
             $.ajax({
                 type: "POST",
                 datatype: "html",
-                url: "https://mcchmhotelreservation.com/rate.php",
+                url: "https://mcchmhotelreservation.com/rate",
                 data: {
                     yourid: yourid,
                     yourname: yourname,
@@ -748,7 +748,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             datatype: "html",
-            url: "https://mcchmhotelreservation.com/getratings.php",
+            url: "https://mcchmhotelreservation.com/getratings",
             data: { roomid: roomId },
             success: function(data) {
                 $(".rating-section-" + roomId).html(data);
@@ -761,7 +761,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             datatype: "html",
-            url: "https://mcchmhotelreservation.com/getratinginfo.php",
+            url: "https://mcchmhotelreservation.com/getratinginfo",
             data: { roomid: roomId },
             success: function(data) {
                 $(".room-id-" + roomId).html(data);
@@ -777,7 +777,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             datatype: "html",
-            url: "https://mcchmhotelreservation.com/getratinginfo.php",
+            url: "https://mcchmhotelreservation.com/getratinginfo",
             data: { roomid: roomid },
             success: function(data) {
                 $(".room-id-" + roomid).html(data);
@@ -788,7 +788,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             datatype: "html",
-            url: "https://mcchmhotelreservation.com/getratings.php",
+            url: "https://mcchmhotelreservation.com/getratings",
             data: { roomid: roomid },
             success: function(data) {
                 $(".rating-section-" + roomid).html(data);
