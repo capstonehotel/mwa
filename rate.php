@@ -26,7 +26,7 @@ $sql = "INSERT INTO star_ratings (user_id, user_name, user_image, room_id, ratin
 VALUES ('$yourid', '$yourname', '$yourimage', '$yourroomid', '$yourstarrate', '$yourcomment')";
 
 if ($conn->query($sql) === TRUE) {
-  echo "Successfully Rated this room";
+  //echo "Successfully Rated this room";
 } else {
   echo "Error: " . $sql . "<br>" . $conn->error;
 }
