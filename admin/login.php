@@ -205,7 +205,7 @@ function validate_email($email) {
 }
 if (admin_logged_in()) { ?>
     <script>
-        window.location = "index";
+        window.location = "index.php";
     </script>
 <?php
 }

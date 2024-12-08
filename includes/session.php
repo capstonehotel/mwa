@@ -13,7 +13,7 @@
    // Redirect to admin index if not logged in
    function confirm_logged_in() {
 	if (!logged_in()) {
-		header("Location: admin/index");
+		header("Location: admin/index.php");
 		exit();
 	}
 }
@@ -35,7 +35,7 @@
 	// Redirect to index if admin is not logged in
 	function admin_confirm_logged_in() {
 		if (!admin_logged_in()) {
-			header("Location: index");
+			header("Location: index.php");
 			exit();
 		}
 	}
