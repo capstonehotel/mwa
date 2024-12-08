@@ -316,11 +316,11 @@ if (isset($_POST['btnlogin'])) {
                                         $.post('login.php', { otp: input }, function(response) {
                                             if (response === 'success') {
                                                 Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
-                                                    window.location = 'index';
+                                                    window.location = 'index.php';
                                                 });
                                             } else {
                                                 Swal.fire('Invalid OTP!', 'Please try again.', 'error').then(() => {
-                                                    window.location = 'login';
+                                                    window.location = 'login.php';
                                                 });
                                             }
                                         });
