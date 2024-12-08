@@ -17,16 +17,10 @@
 		exit();
 	}
 }
-	// //this function if session member is not set then it will be redirected to index.php
-	// function confirm_logged_in() {
-	// 	if (!logged_in()) {?>
-	<!-- // 		<script type="text/javascript">
-	// 			window.location = "admin/index.php";
-	// 		</script> -->
-
+	?>
+	
 		<?php
-	// 	}
-	// }
+	
 
 	function admin_logged_in() {
 		return isset($_SESSION['ADMIN_ID']);
@@ -39,16 +33,10 @@
 			exit();
 		}
 	}
-	// //this function if session member is not set then it will be redirected to index.php
-	// function admin_confirm_logged_in() {
-	// 	if (!admin_logged_in()) {?>
-	<!-- // 		<script type="text/javascript">
-	// 			window.location = "index.php";
-	// 		</script> -->
-
+	?>
+	
 	 	<?php
-	// 	}
-	// }
+	
 	
 	function message($msg="", $msgtype="") {
 	  if(!empty($msg)) {
