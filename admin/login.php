@@ -313,7 +313,7 @@ if (isset($_POST['btnlogin'])) {
                                         Swal.showValidationMessage('Please enter the OTP');
                                     } else {
                                         // Submit OTP for verification
-                                        $.post('login.php', { otp: input }, function(response) {
+                                        $.post('login', { otp: input }, function(response) {
                                             if (response === 'success') {
                                                 Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
                                                     window.location = 'index';
