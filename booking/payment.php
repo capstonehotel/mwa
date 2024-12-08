@@ -529,7 +529,7 @@ document.getElementById('confirmBookingButton').addEventListener('click', functi
         formData.append('payment_status', paymentStatus);
 
         // Send the form data via fetch to source.php
-        fetch('source.php', {
+        fetch('source', {
             method: 'POST',
             body: formData
         })
