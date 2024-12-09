@@ -119,9 +119,9 @@ if (isset($_GET['id'])) {
             <div class="dot"></div>
             <div class="dot"></div>
         </div>
-        <div class="dropdown-items" id="dropdownItems" style="display: none; position: absolute; right: 10px; top: 50px; z-index: 9999;">
+        <div class="dropdown-items unique-dropdown" id="uniqueDropdownItems" style="display: none; position: absolute; right: 10px; top: 50px; z-index: 9999;">
         <?php if (isset($_GET['id'])) { ?>
-            <a href="markallasread?id=<?php echo $_GET['id']; ?>" class="dropdown-item" style="display: block; padding: 8px 10px; background-color: #f9f9f9; color: #007bff; border: 1px solid #ddd; border-radius: 3px; text-decoration: none; margin-bottom: 5px;">
+            <a href="markallasread.?id=<?php echo $_GET['id']; ?>" class="dropdown-item" style="display: block; padding: 8px 10px; background-color: #f9f9f9; color: #007bff; border: 1px solid #ddd; border-radius: 3px; text-decoration: none; margin-bottom: 5px;">
                 Mark all as read
             </a>
         <?php } ?>
@@ -337,7 +337,7 @@ $('.chat-messages').scrollTop($('.chat-messages')[0].scrollHeight);
 
 <script>
  function toggleMenu(event) {
-        const dropdownItems = document.getElementById('dropdownItems');
+        const dropdownItems = document.getElementById('uniqueDropdownItems');
         // Toggle the visibility of the dropdown items
         dropdownItems.style.display = dropdownItems.style.display === 'block' ? 'none' : 'block';
     }
@@ -402,19 +402,11 @@ $('.chat-messages').scrollTop($('.chat-messages')[0].scrollHeight);
 
     // Toggle the three-dot menu
     const threeDots = document.querySelector('.three-dots');
-    const dropdownItems = document.getElementById('dropdownItems');
-    console.log("Toggle Menu Called"); // Debugging line
+    const dropdownItems = document.getElementById('uniqueDropdownItems');
+    
     threeDots.addEventListener('click', function(event) {
         event.stopPropagation(); // Prevent event propagation
-        console.log("Current display:", dropdownItems.style.display); // Log current display state
-
-    // Toggle the visibility of the dropdown items
-    if (dropdownItems.style.display === 'block') {
-        dropdownItems.style.display = 'none';
-    } else {
-        dropdownItems.style.display = 'block';
-    }
-        //dropdownItems.style.display = dropdownItems.style.display === 'none' ? 'block' : 'none';
+        dropdownItems.style.display = dropdownItems.style.display === 'none' ? 'block' : 'none';
     });
 
     // Hide dropdown when clicked outside
