@@ -726,7 +726,7 @@ $(document).ready(function () {
                     yourcomment: yourcomment
                 },
                 success: function(data) {
-                    alert(data);  // Show a success message
+                    //alert(data);  // Show a success message
 
                     // After submission, dynamically reload the rating and review sections
                     updateRatingSection(yourroomid);
