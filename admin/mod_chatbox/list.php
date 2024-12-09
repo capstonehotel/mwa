@@ -15,7 +15,7 @@
 
 /* Dropdown menu styling */
 .dropdown-menu {
-    display: none;
+    display: block !important; ;
     position: absolute;
     background-color: #f9f9f9;
     min-width: 100px;
@@ -406,8 +406,15 @@ $('.chat-messages').scrollTop($('.chat-messages')[0].scrollHeight);
     console.log("Toggle Menu Called"); // Debugging line
     threeDots.addEventListener('click', function(event) {
         event.stopPropagation(); // Prevent event propagation
-        
-        dropdownItems.style.display = dropdownItems.style.display === 'none' ? 'block' : 'none';
+        console.log("Current display:", dropdownItems.style.display); // Log current display state
+
+    // Toggle the visibility of the dropdown items
+    if (dropdownItems.style.display === 'block') {
+        dropdownItems.style.display = 'none';
+    } else {
+        dropdownItems.style.display = 'block';
+    }
+        //dropdownItems.style.display = dropdownItems.style.display === 'none' ? 'block' : 'none';
     });
 
     // Hide dropdown when clicked outside
