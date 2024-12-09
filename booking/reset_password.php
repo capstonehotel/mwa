@@ -95,7 +95,7 @@
 
 <div class="container">
     <h2>Reset Your Password</h2>
-    <form id="resetForm" method="POST" action="reset_password.php">
+    <form id="resetForm" method="POST" action="reset_password">
         <!-- <label for="username">Enter your email:</label>
         <input type="text" name="username" required placeholder="example@gmail.com"> -->
         
@@ -127,6 +127,7 @@
 </div>
 
 <?php
+require_once '../initialize.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
     if ($conn->connect_error) {

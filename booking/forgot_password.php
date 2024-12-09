@@ -216,13 +216,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mail->SMTPSecure = 'tls';
         $mail->Port       = 587;
 
-        $mail->setFrom('mcchmhotelreservation@gmail.com', 'Hotel Reservation');
+        $mail->setFrom('mcchmhotelreservation@gmail.com', 'HM Hotel Reservation');
         $mail->addAddress($email);
 
         $mail->isHTML(true);
         $mail->Subject = 'Password Reset Request';
         $mail->Body    = "Click the link below to reset your password:<br><br>
-                          <a href='https://mcchmhotelreservation.com/booking/reset_password.php?token=$token'>Reset Password</a><br><br>
+                          <a href='https://mcchmhotelreservation.com/booking/reset_password?token=$token'>Reset Password</a><br><br>
                           If you did not request a password reset, please ignore this email.";
 
         $mail->send();
