@@ -121,7 +121,7 @@ if (isset($_GET['id'])) {
         </div>
         <div class="dropdown-items" id="dropdownItems" style="display: none; position: absolute; right: 10px; top: 50px; z-index: 9999;">
         <?php if (isset($_GET['id'])) { ?>
-            <a href="markallasread.php?id=<?php echo $_GET['id']; ?>" class="dropdown-item" style="display: block; padding: 8px 10px; background-color: #f9f9f9; color: #007bff; border: 1px solid #ddd; border-radius: 3px; text-decoration: none; margin-bottom: 5px;">
+            <a href="markallasread?id=<?php echo $_GET['id']; ?>" class="dropdown-item" style="display: block; padding: 8px 10px; background-color: #f9f9f9; color: #007bff; border: 1px solid #ddd; border-radius: 3px; text-decoration: none; margin-bottom: 5px;">
                 Mark all as read
             </a>
         <?php } ?>
@@ -286,7 +286,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             var adminmessage = $('#adminmessage').val();
 
-            fetch('https://mcchmhotelreservation.com/admin/themes/chatbox.php', {
+            fetch('https://mcchmhotelreservation.com/admin/themes/chatbox', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: `message=`+adminmessage+`&name=admin&user_id=`+<?php echo $_GET['id']; ?>
@@ -318,7 +318,7 @@ var mid = "<?php echo $_GET['id']; ?>";
 $.ajax({
     type: "POST",
     datatype: "html",
-    url: "https://mcchmhotelreservation.com/admin/mod_chatbox/autoloadchat.php",
+    url: "https://mcchmhotelreservation.com/admin/mod_chatbox/autoloadchat",
     data: {
         mid: mid,            
     },
@@ -453,7 +453,7 @@ $('.chat-messages').scrollTop($('.chat-messages')[0].scrollHeight);
 
     function sendMessageToServer(messageText) {
         const userId = new URLSearchParams(window.location.search).get('id');
-        fetch('../themes/chatbox.php', {
+        fetch('../themes/chatbox', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `message=${messageText}&user_id=${userId}`

@@ -628,7 +628,7 @@ $isLoggedIn = isset($_SESSION['GUESTID']);
         messageInput.value = '';
         checkInput();
 
-        fetch('https://mcchmhotelreservation.com/admin/themes/chatbox.php', {
+        fetch('https://mcchmhotelreservation.com/admin/themes/chatbox', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `message=${encodeURIComponent(sanitizedMessage)}&name=${encodeURIComponent(name)}&user_id=${userId}`
@@ -677,7 +677,7 @@ $isLoggedIn = isset($_SESSION['GUESTID']);
     setInterval(function() {
         const mid = "<?php echo $_SESSION['GUESTID']; ?>";
 
-        fetch("https://mcchmhotelreservation.com/admin/mod_chatbox/autoloadchat.php", {
+        fetch("https://mcchmhotelreservation.com/admin/mod_chatbox/autoloadchat", {
             method: "POST",
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `mid=${mid}`

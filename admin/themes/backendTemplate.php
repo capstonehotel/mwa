@@ -387,7 +387,7 @@ mysqli_close($conn);
     }
 
     function loadMessages() {
-        fetch('chatbox.php?action=load')
+        fetch('chatbox?action=load')
             .then(response => response.json())
             .then(data => {
                 const chatMessages = document.getElementById('chat-messages');
@@ -407,7 +407,7 @@ mysqli_close($conn);
         const message = messageInput.value.trim();
 
         if (message !== '') {
-            fetch('chatbox.php', {
+            fetch('chatbox', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: `message=${message}&user_type=admin`
@@ -428,7 +428,7 @@ mysqli_close($conn);
     }
 
     setInterval(() => {
-        fetch('chatbox.php?action=get_unread')
+        fetch('chatbox?action=get_unread')
             .then(response => response.json())
             .then(data => {
                 if (data.unread_count > 0) {
