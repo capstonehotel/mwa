@@ -1,6 +1,7 @@
 <?php
 require_once("../includes/initialize.php");
 require_once("sendOTP.php");
+
 // Start the session
 session_start();
 ?>
@@ -372,8 +373,12 @@ if (isset($_POST['btnlogin'])) {
                  <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div> <!-- Replace with your hCaptcha Site Key -->
                  <div id="hCaptchaError" style="display: <?php echo $lockout_error ? 'block' : 'none'; ?>; color: red; font-size: 14px; text-align: center; margin-top: 10px;"></div>
                 <button type="submit" name="btnlogin">Login</button>
+                <!-- Add the Forgot Password link here -->
+                <p style="margin-top: 10px; text-align: left;">
+                    <a href="<?php echo  "https://mcchmhotelreservation.com/admin/forgot_password"; ?>">Forgot Password?</a>
+                </p>
                 <div class="links">
-                    <a href="../index" class="text-primary">Back to the website</a>
+                    <a href="../index" class="text-primary">Back to website</a>
                 </div>
             </form>
         </div>
