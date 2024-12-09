@@ -886,8 +886,8 @@ $isLoggedIn = isset($_SESSION['GUESTID']);
   </div>
 
 </main>
-<script>
-    setInterval(function() {
+<!-- <script>
+    setInterval(function(event) {
         fetch('/check_login_status.php')
             .then(response => response.json())
             .then(data => {
@@ -897,7 +897,7 @@ $isLoggedIn = isset($_SESSION['GUESTID']);
                 }
             });
     }, 1000); // Check every 5 seconds
-</script>
+</script> -->
 <script src="https://mcchmhotelreservation.com/theme/assets/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
