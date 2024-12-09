@@ -564,7 +564,7 @@ document.querySelector('form').addEventListener('submit', function(event) {
         }
     });
 </script>
-<!-- <script>
+<script>
     document.getElementById('username').addEventListener('input', function() {
         const emailInput = this.value;
         const gmailDomain = 'gmail.com';
@@ -589,7 +589,7 @@ document.querySelector('form').addEventListener('submit', function(event) {
             }
         }
     });
-</script> -->
+</script>
 <!-- <script>
 function validatePassword() {
     const password = document.getElementById('password').value;

@@ -91,7 +91,7 @@ if (isset($_POST['save_accomodation'])) {
               <div class="col-md-12 col-sm-12">
                 <label class="col-md-4 control-label" for="ACCOMODATION">Name:</label>
                 <div class="col-md-12">
-                  <input required class="form-control input-sm" id="ACCOMODATION" name="ACCOMODATION" placeholder="Accommodation" type="text" value="">
+                  <input required class="form-control input-sm" id="ACCOMODATION" name="ACCOMODATION"  pattern="^(?!\s*$)[A-Za-z\s.,]+$" placeholder="Accommodation" type="text" value="">
                 </div>
               </div>
             </div>
@@ -99,7 +99,7 @@ if (isset($_POST['save_accomodation'])) {
               <div class="col-md-12 col-sm-12">
                 <label class="col-md-4 control-label" for="ACCOMDESC">Description:</label>
                 <div class="col-md-12">
-                  <input required class="form-control input-sm" id="ACCOMDESC" name="ACCOMDESC" placeholder="Description" type="text" value="">
+                  <input required class="form-control input-sm" id="ACCOMDESC" name="ACCOMDESC"   pattern="^(?!\s*$)[A-Za-z\s.,]+$" placeholder="Description" type="text" value="">
                 </div>
               </div>
             </div>
@@ -110,3 +110,24 @@ if (isset($_POST['save_accomodation'])) {
   </form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<script>
+document.querySelector('form').addEventListener('submit', function(event) {
+        // Check each required input field for empty or space-only values
+        const requiredFields = document.querySelectorAll('input[required], select[required]');
+        let isValid = true;
+    
+        requiredFields.forEach(function(field) {
+            const value = field.value.trim(); // Remove leading/trailing spaces
+            if (value === '') {
+                // Show a custom alert or display the error message
+                alert(Please fill out the required field: ${field.placeholder || field.name});
+                isValid = false;
+                field.focus(); // Focus on the first empty required field
+            }
+        });
+    
+        if (!isValid) {
+            event.preventDefault(); // Prevent form submission if there are invalid fields
+        }
+    });
+    </script>
