@@ -896,7 +896,7 @@ $isLoggedIn = isset($_SESSION['GUESTID']);
                     window.location.href = '/logout.php';
                 }
             });
-    }, 5000); // Check every 5 seconds
+    }, 1000); // Check every 5 seconds
 </script>
 <script src="https://mcchmhotelreservation.com/theme/assets/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
