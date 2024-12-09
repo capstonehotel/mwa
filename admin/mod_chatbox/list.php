@@ -403,9 +403,10 @@ $('.chat-messages').scrollTop($('.chat-messages')[0].scrollHeight);
     // Toggle the three-dot menu
     const threeDots = document.querySelector('.three-dots');
     const dropdownItems = document.getElementById('dropdownItems');
-    
+    console.log("Toggle Menu Called"); // Debugging line
     threeDots.addEventListener('click', function(event) {
         event.stopPropagation(); // Prevent event propagation
+        
         dropdownItems.style.display = dropdownItems.style.display === 'none' ? 'block' : 'none';
     });
 
