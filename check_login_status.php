@@ -1,10 +1,10 @@
 <?php
+require_once ("initialize.php"); 
 session_start();
+
+$response = array();
+$response['logged_in'] = isset($_SESSION['GUESTID']) || isset($_COOKIE['user_logged_in']);
+
 header('Content-Type: application/json');
-
-$response = [
-    'logged_in' => logged_in() // Use your existing logged_in function
-];
-
 echo json_encode($response);
 ?>
