@@ -2,7 +2,19 @@
 	//before we store information of our member, we need to start first the session
 	
 	session_start();
-	
+	// Secure session settings
+function secure_session() {
+    $cookieParams = session_get_cookie_params();
+    session_set_cookie_params([
+        'lifetime' => $cookieParams['lifetime'], // Use default session duration
+        'path' => '/', // Available site-wide
+        'domain' => 'mcchmhotelreservation.com', // Replace with your domain
+        'secure' => true, // Only send cookies over HTTPS
+        'httponly' => true, // Prevent JavaScript access to session cookies
+        'samesite' => 'Strict' // Helps mitigate CSRF attacks
+    ]);
+}
+secure_session();
 	
 	//create a new function to check if the session variable member_id is on set
 	function logged_in() {
@@ -125,21 +137,5 @@ function product_exists($pid){
 		}
 		$_SESSION['monbela_cart']=array_values($_SESSION['monbela_cart']);
 	}
- // Additional security measures
- function secure_session() {
-	// Set cookie parameters
-	$cookieParams = session_get_cookie_params();
-	session_set_cookie_params([
-		'lifetime' => $cookieParams['lifetime'],
-		// 'path' => $cookieParams['path'],
-		'path' => '/', 
-		'domain' => $cookieParams[' mcchmhotelreservation.com'],
-		'secure' => true, // Only send cookie over HTTPS
-		'httponly' => true, // Prevent JavaScript access to session cookie
-		'samesite' => 'Strict' // Prevent CSRF attacks
-	]);
-}
-
-// Call secure_session() to apply the settings
-secure_session();
+ 
 ?>

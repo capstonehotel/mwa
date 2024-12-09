@@ -255,12 +255,12 @@ function validateImage(event) {
     <div class="col-md-6 col-sm-12">
       <div class="form-group">
         <label class ="control-label" for="name">First Name:</label>
-        <input name="name" type="text" class="form-control input-sm" id="name" maxlength="16" onkeyup="capitalizeInput(this)" required>
+        <input name="name" type="text" class="form-control input-sm" id="name" pattern="^(?!\s*$)[A-Za-z\s.,]+$" maxlength="16" onkeyup="capitalizeInput(this)" required>
       </div>
 
       <div class="form-group">
         <label class ="control-label" for="last">Last Name:</label>
-        <input name="last" type="text" class="form-control input-sm" id="last" maxlength="16" onkeyup="capitalizeInput(this)" required>
+        <input name="last" type="text" class="form-control input-sm" id="last" pattern="^(?!\s*$)[A-Za-z\s.,]+$" maxlength="16" onkeyup="capitalizeInput(this)" required>
       </div>
 
       <div class="form-group">
@@ -290,13 +290,13 @@ function validateImage(event) {
     
       <div class="form-group">
         <label class ="control-label" for="city">City:</label>
-        <input name="city" type="text" class="form-control input-sm" id="city" onkeyup="capitalizeInput(this)">
+        <input name="city" type="text" class="form-control input-sm" id="city" pattern="^(?!\s*$)[A-Za-z\s.,]+$" onkeyup="capitalizeInput(this)">
       </div>
 
       
       <div class="form-group">
         <label class ="control-label" for="address">Address:</label>
-        <input name="address" type="text" class="form-control input-sm" id="address" maxlength="50" onkeyup="capitalizeInput(this)">
+        <input name="address" type="text" class="form-control input-sm" id="address" pattern="^(?!\s*$)[A-Za-z\s.,]+$" maxlength="50" onkeyup="capitalizeInput(this)">
       </div>
 	  </div>
 	  <!-- Second Column -->
@@ -304,27 +304,27 @@ function validateImage(event) {
       
       <div class="form-group">
         <label class ="control-label" for="zip">Zip Code:</label>
-        <input name="zip" type="text" class="form-control input-sm" id="zip" maxlength="4" required oninput="this.value = this.value.replace(/\D/, ''); if(this.value.length > 4) this.value = this.value.slice(0, 4);">
+        <input name="zip" type="text" class="form-control input-sm" id="zip"  maxlength="4" required oninput="this.value = this.value.replace(/\D/, ''); if(this.value.length > 4) this.value = this.value.slice(0, 4);">
       </div>
 	  
       <div class="form-group">
         <label class ="control-label" for="nationality">Nationality:</label>
-        <input name="nationality" type="text" class="form-control input-sm" id="nationality" maxlength="17" onkeyup="capitalizeInput(this)">
+        <input name="nationality" type="text" class="form-control input-sm" id="nationality" pattern="^(?!\s*$)[A-Za-z\s.,]+$"  maxlength="17" onkeyup="capitalizeInput(this)">
       </div>
 
       <div class="form-group">
         <label class ="control-label" for="company">Company:</label>
-        <input name="company" type="text" class="form-control input-sm" id="company" required onkeyup="capitalizeInput(this)">
+        <input name="company" type="text" class="form-control input-sm" id="company"  pattern="^(?!\s*$)[A-Za-z\s.,]+$" required onkeyup="capitalizeInput(this)">
       </div>
 
       <div class="form-group">
         <label class ="control-label" for="caddress">Company Address:</label>
-        <input name="caddress" type="text" class="form-control input-sm" id="caddress" required onkeyup="capitalizeInput(this)">
+        <input name="caddress" type="text" class="form-control input-sm" id="caddress" pattern="^(?!\s*$)[A-Za-z\s.,]+$" required onkeyup="capitalizeInput(this)">
       </div>
 
       <div class="form-group">
-        <label  class ="control-label" for="username">Email:</label>
-        <input name="username" type="email" class="form-control input-sm" id="username" required  placeholder="User@gmail.com">
+        <label  class ="control-label" for="username" >Email:</label>
+        <input name="username" type="email" class="form-control input-sm" id="username" pattern="^(?!\s*$)[A-Za-z\s.,]+$" required  placeholder="User@gmail.com">
         <span id="email-status"></span>
       </div>
       <div class="form-group">
@@ -543,7 +543,27 @@ function setCustomErrorMessage(event) {
     }
 }
 </script>
-
+<script>
+document.querySelector('form').addEventListener('submit', function(event) {
+        // Check each required input field for empty or space-only values
+        const requiredFields = document.querySelectorAll('input[required], select[required]');
+        let isValid = true;
+    
+        requiredFields.forEach(function(field) {
+            const value = field.value.trim(); // Remove leading/trailing spaces
+            if (value === '') {
+                // Show a custom alert or display the error message
+                alert(Please fill out the required field: ${field.placeholder || field.name});
+                isValid = false;
+                field.focus(); // Focus on the first empty required field
+            }
+        });
+    
+        if (!isValid) {
+            event.preventDefault(); // Prevent form submission if there are invalid fields
+        }
+    });
+</script>
 <!-- <script>
     document.getElementById('username').addEventListener('input', function() {
         const emailInput = this.value;
