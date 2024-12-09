@@ -120,7 +120,7 @@
 
     <div class="container">
         <h2>Forgot password?</h2><br>
-        <form method="POST" action="forgot_password.php">
+        <form method="POST" action="forgot_password">
             <label for="username">Enter your email:</label>
             <input type="email" id="username" name="username" required placeholder="example@gmail.com" aria-required="true" aria-describedby="emailHelp">
             <button type="submit">Send</button>
