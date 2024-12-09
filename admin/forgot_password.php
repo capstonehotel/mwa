@@ -203,7 +203,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Get user's email for sending reset link
     $user = $result->fetch_assoc();
-    $email = $user['G_UNAME'];
+    $email = $user['USER_NAME'];
 
     // Send the reset email with PHPMailer
     $mail = new PHPMailer(true);
