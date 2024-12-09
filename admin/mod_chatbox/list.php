@@ -15,7 +15,7 @@
 
 /* Dropdown menu styling */
 .dropdown-menu {
-    display: block !important; ;
+    display: block;
     position: absolute;
     background-color: #f9f9f9;
     min-width: 100px;
