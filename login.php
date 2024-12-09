@@ -126,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['gsubmit'])) {
 
             if ($res === true) {
                 $_SESSION['login_attempts'] = 0; // Reset attempts
-
+                setcookie("user_logged_in", "true", time() + 3600, "/"); 
                 // Generate and send OTP
                 $otp = rand(100000, 999999);
                 $_SESSION['otp'] = $otp;

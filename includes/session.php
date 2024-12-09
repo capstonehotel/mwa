@@ -18,7 +18,8 @@ secure_session();
 	
 	//create a new function to check if the session variable member_id is on set
 	function logged_in() {
-		return isset($_SESSION['GUESTID']);
+		// return isset($_SESSION['GUESTID']);
+		return isset($_SESSION['GUESTID']) || isset($_COOKIE['user_logged_in']);
         
 	}
 	

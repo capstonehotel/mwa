@@ -886,6 +886,18 @@ $isLoggedIn = isset($_SESSION['GUESTID']);
   </div>
 
 </main>
+<script>
+    setInterval(function() {
+        fetch('../check_login_status')
+            .then(response => response.json())
+            .then(data => {
+                if (!data.logged_in) {
+                    // Redirect to logout if the user is not logged in
+                    window.location.href = '/logout.php';
+                }
+            });
+    }, 5000); // Check every 5 seconds
+</script>
 <script src="https://mcchmhotelreservation.com/theme/assets/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
