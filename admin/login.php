@@ -102,7 +102,7 @@ session_start();
             font-size: 16px;
             cursor: pointer;
         }
-        .right form .links {
+        /* .right form .links {
             display: flex;
             justify-content: center;
             margin-top: 10px;
@@ -111,6 +111,18 @@ session_start();
             color: #337AB7;
             font-size: 16px;
             text-decoration: none;
+        } */
+         /* Your existing styles */
+        .links-container {
+            display: flex;
+            justify-content: space-between; /* Space between the links */
+            margin-top: 10px; /* Add some margin on top */
+            width: 100%; /* Ensure it takes full width */
+        }
+        .links-container a {
+            color: #337AB7; /* Link color */
+            font-size: 16px; /* Font size */
+            text-decoration: none; /* Remove underline */
         }
 
         @media (max-width: 768px) {
@@ -375,9 +387,9 @@ if (isset($_POST['btnlogin'])) {
                 <button type="submit" name="btnlogin">Login</button>
                 <!-- Add the Forgot Password link here -->
                 <p style="margin-top: 10px; text-align: left;">
-                    <a href="<?php echo  "https://mcchmhotelreservation.com/admin/forgot_password"; ?>">Forgot Password?</a>
+                    <a href="<?php echo  "https://mcchmhotelreservation.com/admin/forgot_password"; ?>"  class="text-primary">Forgot Password?</a>
                 </p>
-                <div class="links">
+                <div class="links-container">
                     <a href="../index" class="text-primary">Back to website</a>
                 </div>
             </form>
