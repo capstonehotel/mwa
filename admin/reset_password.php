@@ -145,19 +145,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
 
         // Validate the token and expiration
-        $result = $conn->query("SELECT * FROM tblguest WHERE VERIFICATION_TOKEN = '$token' AND OTP_EXPIRE_AT >= NOW()");
+        $result = $conn->query("SELECT * FROM tbluseraccount WHERE VERIFICATION_TOKEN = '$token' AND OTP_EXPIRE_AT >= NOW()");
         if ($result->num_rows === 0) {
             $error_message = "Invalid or expired token.";
         } else {
             // Update the password and clear the token
-            $conn->query("UPDATE tblguest SET G_PASS = '$hashed_password', VERIFICATION_TOKEN = NULL, OTP_EXPIRE_AT = NULL WHERE VERIFICATION_TOKEN = '$token'");
-            header('Location: https://mcchmhotelreservation.com/booking/index.php?view=logininfo');
+            $conn->query("UPDATE tbluseraccount SET UPASS = '$hashed_password', VERIFICATION_TOKEN = NULL, OTP_EXPIRE_AT = NULL WHERE VERIFICATION_TOKEN = '$token'");
+            header('Location: https://mcchmhotelreservation.com/admin/login');
             exit;
         }
     }
 
     // Update the password and clear the token
-    $conn->query("UPDATE tblguest SET G_PASS = '$hashed_password', VERIFICATION_TOKEN = NULL, OTP_EXPIRE_AT = NULL WHERE VERIFICATION_TOKEN = '$token'");
+    $conn->query("UPDATE tbluseraccount SET UPASS = '$hashed_password', VERIFICATION_TOKEN = NULL, OTP_EXPIRE_AT = NULL WHERE VERIFICATION_TOKEN = '$token'");
     echo "<script>
     Swal.fire({
         icon: 'success',
@@ -166,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         confirmButtonText: 'OK'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = 'https://mcchmhotelreservation.com/booking/index.php?view=logininfo';
+            window.location.href = 'https://mcchmhotelreservation.com/admin/login';
         }
     });
     </script>";
