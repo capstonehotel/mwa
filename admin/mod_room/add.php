@@ -129,7 +129,7 @@ if (isset($_POST['save_room'])) {
               <!-- Room Name Input -->
               <div class="form-group">
                 <label for="ROOM">Name:</label>
-                <input required class="form-control" id="ROOM" name="ROOM" placeholder="Room Name" type="text" value="<?= isset($ROOM) ? htmlspecialchars($ROOM) : ''; ?>">
+                <input required class="form-control" id="ROOM" name="ROOM" pattern="^(?!\s*$)[A-Za-z\s.,]+$" placeholder="Room Name" type="text" value="<?= isset($ROOM) ? htmlspecialchars($ROOM) : ''; ?>">
               </div>
               <!-- Accommodation Selection -->
               <div class="form-group">
@@ -148,7 +148,7 @@ if (isset($_POST['save_room'])) {
               <!-- Room Description -->
               <div class="form-group">
                 <label for="ROOMDESC">Description:</label>
-                <input required class="form-control" id="ROOMDESC" name="ROOMDESC" placeholder="Description" type="text" value="<?= isset($ROOMDESC) ? htmlspecialchars($ROOMDESC) : ''; ?>">
+                <input required class="form-control" id="ROOMDESC" name="ROOMDESC"  pattern="^(?!\s*$)[A-Za-z\s.,]+$" placeholder="Description" type="text" value="<?= isset($ROOMDESC) ? htmlspecialchars($ROOMDESC) : ''; ?>">
               </div>
               <!-- Number of Persons -->
               <div class="form-group">
@@ -163,7 +163,7 @@ if (isset($_POST['save_room'])) {
               <!-- Room Number -->
               <div class="form-group">
                 <label for="ROOMNUM">Room Number:</label>
-                <input required class="form-control" id="ROOMNUM" name="ROOMNUM" placeholder="Room #" type="number" value="<?= isset($ROOMNUM) ? $ROOMNUM : ''; ?>">
+                <input required class="form-control" id="ROOMNUM" name="ROOMNUM"  placeholder="Room #" type="number" value="<?= isset($ROOMNUM) ? $ROOMNUM : ''; ?>">
               </div>
               <!-- Image Upload -->
               <div class="form-group">
@@ -214,3 +214,25 @@ if (isset($_POST['save_room'])) {
     </div>
   </form>
 </div>
+<script>
+document.querySelector('form').addEventListener('submit', function(event) {
+        // Check each required input field for empty or space-only values
+        const requiredFields = document.querySelectorAll('input[required], select[required]');
+        let isValid = true;
+    
+    
+        requiredFields.forEach(function(field) {
+            const value = field.value.trim(); // Remove leading/trailing spaces
+            if (value === '') {
+                // Show a custom alert or display the error message
+                alert(Please fill out the required field: ${field.placeholder || field.name});
+                isValid = false;
+                field.focus(); // Focus on the first empty required field
+            }
+        });
+    
+        if (!isValid) {
+            event.preventDefault(); // Prevent form submission if there are invalid fields
+        }
+    });
+    </script>
