@@ -17,7 +17,7 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT * FROM star_ratings WHERE room_id = $roomid";
+$sql = "SELECT * FROM star_ratings WHERE room_id = $roomid ORDER BY created_at DESC";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
