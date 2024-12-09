@@ -116,6 +116,7 @@ document.querySelector('form').addEventListener('submit', function(event) {
         const requiredFields = document.querySelectorAll('input[required], select[required]');
         let isValid = true;
     
+    
         requiredFields.forEach(function(field) {
             const value = field.value.trim(); // Remove leading/trailing spaces
             if (value === '') {
