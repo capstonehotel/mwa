@@ -16,20 +16,7 @@ function secure_session() {
 }
 secure_session();
 
-	// sessions.php
-function get_active_sessions() {
-    $file = 'active_sessions.json';
-    if (!file_exists($file)) {
-        return [];
-    }
-    $json = file_get_contents($file);
-    return json_decode($json, true);
-}
-
-function save_active_sessions($sessions) {
-    $file = 'active_sessions.json';
-    file_put_contents($file, json_encode($sessions));
-}
+	
 	//create a new function to check if the session variable member_id is on set
 	function logged_in() {
 		 return isset($_SESSION['GUESTID']);
