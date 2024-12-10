@@ -4,6 +4,17 @@ require_once("sendOTP.php");
 
 // Start the session
 session_start();
+// Generate a unique global token
+$globalToken = bin2hex(random_bytes(16));
+
+// Store it in a global variable (accessible to all sessions)
+$_SESSION['global_admin_token'] = $globalToken;
+
+// Save the global token in a file (to share across sessions)
+file_put_contents('global_admin_token.txt', $globalToken);
+
+// Store the token in the session
+$_SESSION['admin_token'] = $globalToken;
 ?>
 
 <!DOCTYPE html>

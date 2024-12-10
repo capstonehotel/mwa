@@ -1,3 +1,6 @@
+<?php
+include 'check_login.php'; 
+?>
 <style>
 .material-symbols-outlined {
     weight: 200px;

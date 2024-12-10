@@ -1,3 +1,6 @@
+<?php
+include '../check_login.php'; 
+?>
 <link href="chat.css" rel="stylesheet">
 <style>
    /* Three dots styling */

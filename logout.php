@@ -5,9 +5,6 @@ require_once("initialize.php");
 // 1. Find the session
 @session_start();
 
-// Invalidate the global token
-file_put_contents('global_session_token.txt', '');
-
 // $user_id = $_SESSION['GUESTID'];
 
 // // Get active sessions

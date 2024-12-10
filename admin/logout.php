@@ -6,7 +6,7 @@ require_once("../includes/initialize.php");
 
 
 // // 1. Find the session
-// session_start();
+session_start();
 
 // 2. Unset all the session variables
 unset( $_SESSION['ADMIN_ID'] );
@@ -16,7 +16,15 @@ unset( $_SESSION['ADMIN_UPASS'] );
 unset( $_SESSION['ADMIN_UROLE'] );
 // Destroy the session
 // session_destroy();
- 	
+ 	// Invalidate the global token
+file_put_contents('global_admin_token.txt', '');
+
+// Destroy the current session
+session_destroy();
+
+// Redirect to the login page
+header('Location: login.php');
+exit();
 // 4. Destroy the session
-redirect("index.php");
+//redirect("index.php");
 ?>
