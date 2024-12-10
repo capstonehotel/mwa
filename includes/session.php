@@ -15,6 +15,46 @@ function secure_session() {
     ]);
 }
 secure_session();
+// Define session timeout duration
+define('SESSION_TIMEOUT', 1800); // 30 minutes in seconds
+
+// Check if the user is logged in
+if (isset($_SESSION['session_token'])) {
+    $session_token = $_SESSION['session_token'];
+
+    // Check if the session token exists in the database
+    $query = "SELECT COUNT(*) FROM tblguest WHERE session_token = ?";
+    $stmt = $db->prepare($query);
+    $stmt->execute([$session_token]);
+    $count = $stmt->fetchColumn();
+
+    // If the session token does not exist, log the user out
+    if ($count == 0) {
+        session_unset();
+        session_destroy();
+        header('Location: ../login'); // Redirect to the login page
+        exit;
+    }
+
+    // Check for session timeout
+    if (isset($_SESSION['last_activity'])) {
+        $sessionAge = time() - $_SESSION['last_activity'];
+
+        // If the session has timed out, destroy the session and redirect to the login page
+        if ($sessionAge > SESSION_TIMEOUT) {
+            session_unset(); // Unset all session variables
+            session_destroy(); // Destroy the session
+            header('Location: ../login'); // Redirect to the login page
+            exit;
+        }
+    }
+
+    // Update last activity timestamp
+    $_SESSION['last_activity'] = time(); // Update last activity time
+}
+
+
+
 	
 	//create a new function to check if the session variable member_id is on set
 	function logged_in() {

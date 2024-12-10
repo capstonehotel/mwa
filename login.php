@@ -134,11 +134,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['gsubmit'])) {
                 $_SESSION['otp_expiry'] = time() + 300; // OTP expires in 5 minutes
                 $_SESSION['user_email'] = $email;
                 // After successful login
+// After successful login
 $session_token = bin2hex(random_bytes(32)); // Generate a random session token
 $_SESSION['session_token'] = $session_token; // Store it in the session
+$_SESSION['last_activity'] = time(); // Set last activity time
 
 // Update the session token and last activity in the database
-$query = "UPDATE tblguest SET session_token = ?, last_activity = NOW() WHERE GUESTID = ?";
+$query = "UPDATE tblguest SET session_token = ?, last_activity = NOW() WHERE id = ?";
 $stmt = $db->prepare($query);
 $stmt->execute([$session_token, $userId]); // Assuming $userId is the ID of the logged-in user
 

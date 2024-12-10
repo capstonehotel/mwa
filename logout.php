@@ -6,19 +6,20 @@ require_once("initialize.php");
 @session_start();
 //session_regenerate_id(true);
 // 2. Unset all the session variables
-// unset($_SESSION['GUESTID']);	
-// unset($_SESSION['name']); 		
-// unset($_SESSION['last']);	
-// unset($_SESSION['country']);
-// unset($_SESSION['city']); 		
-// unset($_SESSION['address']); 	
-// unset($_SESSION['zip']); 		
-// unset($_SESSION['phone']); 	
-// unset($_SESSION['email']); 		
-// unset($_SESSION['pass']); 	
-// unset($_SESSION['from']); 
-// unset($_SESSION['to']); 	
-// unset($_SESSION['monbela_cart']); 	
+unset($_SESSION['GUESTID']);	
+unset($_SESSION['name']); 		
+unset($_SESSION['last']);	
+unset($_SESSION['country']);
+unset($_SESSION['city']); 		
+unset($_SESSION['address']); 	
+unset($_SESSION['zip']); 		
+unset($_SESSION['phone']); 	
+unset($_SESSION['email']); 		
+unset($_SESSION['pass']); 	
+unset($_SESSION['from']); 
+unset($_SESSION['to']); 	
+unset($_SESSION['monbela_cart']);
+
 // Get the session token from the session
 $session_token = $_SESSION['session_token'] ?? null;
 
@@ -30,7 +31,7 @@ if ($session_token) {
 }
 
 // Unset all the session variables
-session_unset(); // Unset all session variables
+
 session_destroy(); // Destroy the session
  	
 // 4. Destroy the session
