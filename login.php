@@ -68,13 +68,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['gsubmit'])) {
 
 // Generate and store session token and last activity
 //session_start();
-$user_id = $_SESSION['GUESTID']; // Assuming this is set during login
+//$user_id = $_SESSION['GUESTID']; // Assuming this is set during login
 $session_token = bin2hex(random_bytes(32)); // Generate a secure random token
 
 // Update the session token and last activity in the database
 $query = "UPDATE tblguest SET session_token = ?, last_activity = NOW() WHERE GUESTID = ?";
 $stmt = $db->prepare($query);
-$stmt->bind_param("si", $session_token, $user_id);
+$stmt->bind_param("si", $session_token, $guest);
 $stmt->execute();
 
 // Store the session token in the session
