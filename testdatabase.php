@@ -25,17 +25,17 @@ if ($conn->connect_error) {
 // } else {
 //     echo "Unable to count rows. The table may be empty.";
 // }
-$sql = "SELECT * FROM tblpayment";
+$sql = "SELECT * FROM tblguest";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     echo "<table border='1'>";
-    echo "<tr><th>ID</th><th>Sender ID</th><th>Username</th><th>Message</th></tr>";
+    echo "<tr><th>ID</th><th>GUESTID</th><th>session_token</th><th>last_activity</th></tr>";
     while ($row = $result->fetch_assoc()) {
         echo "<tr>";
-        echo "<td>" . htmlspecialchars($row["SUMMARYID"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["PAYMENT_STATUS"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["STATUS"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["GUESTID"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["session_token"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["last_activity"]) . "</td>";
        
         echo "</tr>";
     }
