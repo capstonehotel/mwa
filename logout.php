@@ -4,14 +4,18 @@ require_once("initialize.php");
 
 // 1. Find the session
 @session_start();
-$user_id = $_SESSION['GUESTID'];
 
-// Get active sessions
-$active_sessions = get_active_sessions();
+// Invalidate the global token
+file_put_contents('global_session_token.txt', '');
 
-// Remove the session for the user
-unset($active_sessions[$user_id]);
-save_active_sessions($active_sessions);
+// $user_id = $_SESSION['GUESTID'];
+
+// // Get active sessions
+// $active_sessions = get_active_sessions();
+
+// // Remove the session for the user
+// unset($active_sessions[$user_id]);
+// save_active_sessions($active_sessions);
 //session_regenerate_id(true);
 // 2. Unset all the session variables
 unset($_SESSION['GUESTID']);	

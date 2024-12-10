@@ -82,7 +82,12 @@
  
 // ?
 
-
+// Generate a unique global token if it doesn't exist
+if (!isset($_SESSION['global_session_token'])) {
+    $globalToken = bin2hex(random_bytes(16));
+    $_SESSION['global_session_token'] = $globalToken;
+    file_put_contents('global_session_token.txt', $globalToken);
+}
 
 if (!isset($_SESSION['login_attempts'])) {
     $_SESSION['login_attempts'] = 0;
@@ -139,6 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['gsubmit'])) {
                 // Example email sending function (implement PHPMailer or similar)
                 mail($email, "Your OTP Code", "Your OTP code is: $otp");
                 //session_regenerate_id(true); // Regenerate session ID
+                $_SESSION['session_token'] = $_SESSION['global_session_token'];
                 redirect("https://mcchmhotelreservation.com/booking/index?view=payment");
             } else {
                 $_SESSION['login_attempts']++;
