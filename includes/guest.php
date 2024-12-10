@@ -58,13 +58,7 @@ class Guest{
 				$_SESSION['address'] = $found_user->G_ADDRESS;
 				$_SESSION['phone'] = $found_user->G_PHONE;
 				$_SESSION['username'] = $found_user->G_UNAME;
-	 // Generate and store session token
-	 $session_token = bin2hex(random_bytes(32));
-	 $mydb->setQuery("UPDATE " . self::$tbl_name . " SET session_token = ?, last_activity = NOW() WHERE GUESTID = ?");
-	 $mydb->bind_param("si", $session_token, $found_user->GUESTID);
-	 $mydb->executeQuery();
-
-	 $_SESSION['session_token'] = $session_token;
+	
 				return true; // Successful login
 			} else {
 				return false; // Invalid password
@@ -74,50 +68,6 @@ class Guest{
 		}
 	}
 	
-    static function check_session_expiration() {
-        global $mydb;
-        $timeout_duration = 1800; // 30 minutes
-
-        if (isset($_SESSION['GUESTID'])) {
-            $user_id = $_SESSION['GUESTID'];
-            $mydb->setQuery("SELECT last_activity FROM " . self::$tbl_name . " WHERE GUESTID = ?");
-            $mydb->bind_param("i", $user_id);
-            $mydb->executeQuery();
-            $result = $mydb->loadSingleResult();
-
-            if ($result) {
-                $last_activity = strtotime($result->last_activity);
-                if (time() - $last_activity > $timeout_duration) {
-                    // Session has expired, log the user out
-                    self::logout();
-                } else {
-                    // Update last activity timestamp
-                    $mydb->setQuery("UPDATE " . self::$tbl_name . " SET last_activity = NOW() WHERE GUESTID = ?");
-                    $mydb->bind_param("i", $user_id);
-                    $mydb->executeQuery();
-                }
-            }
-        }
-    }
-
-    static function logout() {
-        global $mydb;
-
-        if (isset($_SESSION['GUESTID'])) {
-            $user_id = $_SESSION['GUESTID'];
-            // Clear the session token in the database
-            $mydb->setQuery("UPDATE " . self::$tbl_name . " SET session_token = NULL WHERE GUESTID = ?");
-            $mydb->bind_param("i", $user_id);
-            $mydb->executeQuery();
-
-            // Unset session variables and destroy the session
-            session_unset();
-            session_destroy();
-            header("Location: https://mcchmhotelreservation.com/index.php?logout=1");
-            exit();
-        }
-    }
-
 	/*---Instantiation of Object dynamically---*/
 	static function instantiate($record) {
 		$object = new self;
