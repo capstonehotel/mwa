@@ -191,7 +191,7 @@ if (window.__proto__.toString() !== "[object Window]") {
 //     exit("Unauthorized access");
 // }
 ?>
- <script>
+ <!-- <script>
     setInterval(function() {
       console.log('Checking login status...');
         fetch('/check_login_status.php')
@@ -203,7 +203,7 @@ if (window.__proto__.toString() !== "[object Window]") {
                 }
             });
     }, 3000); // Check every 5 seconds
-</script> 
+</script>  -->
 <style>
   .bd-placeholder-img {
     font-size: 1.125rem;

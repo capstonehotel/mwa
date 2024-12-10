@@ -6,7 +6,6 @@ require_once("initialize.php");
 @session_start();
 //session_regenerate_id(true);
 // 2. Unset all the session variables
-
 // unset($_SESSION['GUESTID']);	
 // unset($_SESSION['name']); 		
 // unset($_SESSION['last']);	
@@ -20,17 +19,20 @@ require_once("initialize.php");
 // unset($_SESSION['from']); 
 // unset($_SESSION['to']); 	
 // unset($_SESSION['monbela_cart']); 	
+// Get the session token from the session
+$session_token = $_SESSION['session_token'] ?? null;
 
-// Unset all session variables
+// If a session token exists, remove it from the database
+if ($session_token) {
+    $query = "UPDATE tblguest SET session_token = NULL, last_activity = NULL WHERE session_token = ?";
+    $stmt = $db->prepare($query);
+    $stmt->execute([$session_token]);
+}
 
-// Unset all session variables
-$_SESSION = array();
-
-
-// Destroy the session
-session_destroy();
-
-setcookie("user_logged_in", "", time() - 3600, "/"); // Expire the cookie	
+// Unset all the session variables
+session_unset(); // Unset all session variables
+session_destroy(); // Destroy the session
+ 	
 // 4. Destroy the session
 //session_destroy();
 redirect("https://mcchmhotelreservation.com/index.php?logout=1");
