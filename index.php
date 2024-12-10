@@ -1,6 +1,6 @@
 <?php 
  require_once("initialize.php");
-
+ require_once("check_login.php");
 
 
 
