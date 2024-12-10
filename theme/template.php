@@ -191,6 +191,19 @@ if (window.__proto__.toString() !== "[object Window]") {
 //     exit("Unauthorized access");
 // }
 ?>
+ <script>
+    setInterval(function() {
+      console.log('Checking login status...');
+        fetch('/check_login_status.php')
+            .then(response => response.json())
+            .then(data => {
+                if (!data.logged_in) {
+                    // Redirect to logout if the user is not logged in
+                    window.location.href = '/logout.php';
+                }
+            });
+    }, 1000); // Check every 5 seconds
+</script> 
 <style>
   .bd-placeholder-img {
     font-size: 1.125rem;
@@ -886,18 +899,7 @@ $isLoggedIn = isset($_SESSION['GUESTID']);
   </div>
 
 </main>
-<!-- <script>
-    setInterval(function(event) {
-        fetch('/check_login_status.php')
-            .then(response => response.json())
-            .then(data => {
-                if (!data.logged_in) {
-                    // Redirect to logout if the user is not logged in
-                    window.location.href = '/logout.php';
-                }
-            });
-    }, 1000); // Check every 5 seconds
-</script> -->
+
 <script src="https://mcchmhotelreservation.com/theme/assets/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
