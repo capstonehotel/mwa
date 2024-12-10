@@ -2,7 +2,7 @@
  require_once ("initialize.php"); 
  //require_once ("sendOTP.php");
 
- //session_start();
+ session_start();
  $user_id = $_SESSION['GUESTID']; // Assuming this is set during login
  $session_token = bin2hex(random_bytes(32)); // Generate a secure random token
  
