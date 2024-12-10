@@ -871,15 +871,7 @@ function markAsRead(reserveId, redirectUrl) {
                     <!-- Content Row -->
                     <div class="row">
                         <?php 
-                        session_start();
-                        $globalToken = file_get_contents('global_admin_token.txt');
- if (!isset($_SESSION['admin_token']) || $_SESSION['admin_token'] !== $globalToken) {
-	 // Token mismatch; logout the session
-	 session_destroy();
-	 echo "<script>alert('test');</script>";
-	 header('Location: login.php');
-	 exit();
- }
+                       
                         require_once $content;?>
                     </div>
 

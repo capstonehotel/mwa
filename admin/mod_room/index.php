@@ -5,6 +5,16 @@ if (!isset($_SESSION['ADMIN_ID'])){
     redirect("../login.php");
 }
 
+
+$globalToken = file_get_contents('global_admin_token.txt');
+if (!isset($_SESSION['admin_token']) || $_SESSION['admin_token'] !== $globalToken) {
+// Token mismatch; logout the session
+session_destroy();
+echo "<script>alert('test');</script>";
+redirect("../login.php");
+exit();
+}
+
 $view = (isset($_GET['view']) && $_GET['view'] != '') ? $_GET['view'] : '';
 $title = "Room";
 
