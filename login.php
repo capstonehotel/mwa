@@ -134,13 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['gsubmit'])) {
                 $_SESSION['otp_expiry'] = time() + 300; // OTP expires in 5 minutes
                 $_SESSION['user_email'] = $email;
                 // After successful login
-$session_token = bin2hex(random_bytes(32)); // Generate a random session token
-$_SESSION['session_token'] = $session_token; // Store it in the session
 
-// Update the session token and last activity in the database
-$query = "UPDATE tblguest SET session_token = ?, last_activity = NOW() WHERE GUESTID = ?";
-$stmt = $db->prepare($query);
-$stmt->execute([$session_token, $userId]); // Assuming $userId is the ID of the logged-in user
 
                 // Example email sending function (implement PHPMailer or similar)
                 mail($email, "Your OTP Code", "Your OTP code is: $otp");
