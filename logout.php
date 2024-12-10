@@ -23,7 +23,7 @@ unset($_SESSION['monbela_cart']);
 
 
 // Destroy the session
-//session_destroy();
+session_destroy();
 
 //setcookie("user_logged_in", "", time() - 3600, "/"); // Expire the cookie	
 // 4. Destroy the session
