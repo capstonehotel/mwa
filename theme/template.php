@@ -202,7 +202,7 @@ if (window.__proto__.toString() !== "[object Window]") {
                     window.location.href = '/logout.php';
                 }
             });
-    }, 1000); // Check every 5 seconds
+    }, 5000); // Check every 5 seconds
 </script> 
 <style>
   .bd-placeholder-img {
