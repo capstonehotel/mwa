@@ -4,16 +4,15 @@ require_once("initialize.php");
 
 // 1. Find the session
 @session_start();
+$user_id = $_SESSION['GUESTID']; // Assuming this is set during login
 
-// $user_id = $_SESSION['GUESTID'];
+// Clear the session token in the database
+$query = "UPDATE tblguest SET session_token = NULL WHERE GUESTID = ?";
+$stmt = $db->prepare($query);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
 
-// // Get active sessions
-// $active_sessions = get_active_sessions();
 
-// // Remove the session for the user
-// unset($active_sessions[$user_id]);
-// save_active_sessions($active_sessions);
-//session_regenerate_id(true);
 // 2. Unset all the session variables
 unset($_SESSION['GUESTID']);	
 unset($_SESSION['name']); 		
