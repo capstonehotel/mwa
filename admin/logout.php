@@ -17,10 +17,10 @@ unset( $_SESSION['ADMIN_UROLE'] );
 // Destroy the session
 // session_destroy();
  	// Invalidate the global token
-file_put_contents('global_admin_token.txt', '');
+// file_put_contents('global_admin_token.txt', '');
 
-// Destroy the current session
-session_destroy();
+// // Destroy the current session
+// session_destroy();
 
 // Redirect to the login page
 header('Location: login.php');

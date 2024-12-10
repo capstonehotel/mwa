@@ -16,7 +16,7 @@ $_SESSION['admin_token'] = $globalToken;
  if (!isset($_SESSION['ADMIN_ID'])) {
 	 // Token mismatch; logout the session
 	 session_destroy();
-	 echo "<script>alert('test12');</script>";
+	 //echo "<script>alert('test12');</script>";
 	 header('Location: login.php');
 	 exit();
  }
