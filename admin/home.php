@@ -1,5 +1,5 @@
 <?php
-include 'check_login.php'; 
+//include 'check_login.php'; 
 ?>
 <style>
 .material-symbols-outlined {

@@ -6,7 +6,7 @@ require_once("../includes/initialize.php");
 
 
 // // 1. Find the session
-session_start();
+//session_start();
 
 // 2. Unset all the session variables
 unset( $_SESSION['ADMIN_ID'] );
@@ -23,8 +23,8 @@ unset( $_SESSION['ADMIN_UROLE'] );
 // session_destroy();
 
 // Redirect to the login page
-header('Location: login.php');
-exit();
+// header('Location: login.php');
+// exit();
 // 4. Destroy the session
-//redirect("index.php");
+redirect("index.php");
 ?>
