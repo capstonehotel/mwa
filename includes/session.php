@@ -16,7 +16,7 @@ function secure_session() {
 }
 secure_session();
 // Define session timeout duration
-define('SESSION_TIMEOUT', 1800); // 30 minutes in seconds
+//define('SESSION_TIMEOUT', 1800); // 30 minutes in seconds
 
 // Check if the user is logged in
 if (isset($_SESSION['session_token'])) {
