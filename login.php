@@ -82,7 +82,7 @@ $_SESSION['session_token'] = $session_token;
                 // Example email sending function (implement PHPMailer or similar)
                 mail($email, "Your OTP Code", "Your OTP code is: $otp");
                 //session_regenerate_id(true); // Regenerate session ID
-                $_SESSION['session_token'] = $_SESSION['global_admin_token'];
+                //$_SESSION['session_token'] = $_SESSION['global_admin_token'];
                 redirect("https://mcchmhotelreservation.com/booking/index?view=payment");
             } else {
                 $_SESSION['login_attempts']++;
