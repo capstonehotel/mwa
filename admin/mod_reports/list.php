@@ -1,5 +1,5 @@
 <?php
-include '../check_login.php'; 
+//include '../check_login.php'; 
 ?>
 <!-- Include SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

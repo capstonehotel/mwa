@@ -1,5 +1,5 @@
 <?php
-include '../check_login.php'; 
+//include '../check_login.php'; 
 ?>    
 <div class="container-fluid">
     <div class="card shadow mb-4">
