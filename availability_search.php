@@ -14,7 +14,7 @@
                                    name="arrival" id="date_pickerfrom"  
                                    value="<?php echo isset($_POST['arrival']) ? $_POST['arrival'] :date('m/d/Y');?>"
                                     class="date_pickerfrom input-sm form-control"
-                                    onchange="updateDatePickerToStartDate()" readonly>
+                                     readonly onchange="updateDatePickerToStartDate()" >
                    
                           <span class="input-group-btn" style="margin-left: -30px;">
                               <i class="fa fa-calendar" ></i> 
@@ -29,8 +29,7 @@
                                name="departure" id="date_pickerto"
                                value=""
                                placeholder="mm-dd-yyyy" 
-                                       class="date_pickerfrom form-control  input-sm" readonly
-                                       >
+                                       class="date_pickerfrom form-control  input-sm" readonly>
                                          
                           <span class="input-group-btn" style="margin-left: -30px;">
                               <i class="fa fa-calendar" ></i> 
