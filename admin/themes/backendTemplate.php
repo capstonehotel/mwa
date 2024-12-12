@@ -223,7 +223,7 @@ if (preg_match("/(" . implode("|", $disallowedUserAgents) . ")/i", $_SERVER['HTT
                 foreach ($cur as $result) { 
                 ?>
             <li class="nav-item active">
-                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_reservation/index">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_reservation/index.php">
                     <i class="fas fa-fw fa-arrow-alt-circle-down"></i>
                     <span>Reservations</span></a>
             </li>
