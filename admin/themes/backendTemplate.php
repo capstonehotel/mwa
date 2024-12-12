@@ -37,143 +37,143 @@
 
 </head>
 <?php
-header("Content-Security-Policy: default-src 'self'; script-src 'self' https://trusted-scripts.com;");
-header("X-Frame-Options: DENY");
-header("Content-Security-Policy: frame-ancestors 'none';");
-header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload");
+// header("Content-Security-Policy: default-src 'self'; script-src 'self' https://trusted-scripts.com;");
+// header("X-Frame-Options: DENY");
+// header("Content-Security-Policy: frame-ancestors 'none';");
+// header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload");
 
 
-// Redirect all HTTP requests to HTTPS if not already using HTTPS
-if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
-  header("Location: https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-  exit();
-}
+// // Redirect all HTTP requests to HTTPS if not already using HTTPS
+// if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
+//   header("Location: https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+//   exit();
+// }
 
 
 
-// Secure session cookie settings
-ini_set('session.cookie_secure', '1');    // Enforces HTTPS-only session cookies
-ini_set('session.cookie_httponly', '1');  // Prevents JavaScript from accessing session cookies
-ini_set('session.cookie_samesite', 'Strict'); // Prevents CSRF by limiting cross-site cookie usage
+// // Secure session cookie settings
+// ini_set('session.cookie_secure', '1');    // Enforces HTTPS-only session cookies
+// ini_set('session.cookie_httponly', '1');  // Prevents JavaScript from accessing session cookies
+// ini_set('session.cookie_samesite', 'Strict'); // Prevents CSRF by limiting cross-site cookie usage
 
 
-// Additional security headers
-header("X-Content-Type-Options: nosniff");
-header("X-Frame-Options: DENY");
-header("X-XSS-Protection: 1; mode=block");
+// // Additional security headers
+// header("X-Content-Type-Options: nosniff");
+// header("X-Frame-Options: DENY");
+// header("X-XSS-Protection: 1; mode=block");
 
 
-// Anti-XXE: Secure XML parsing
-libxml_disable_entity_loader(true); // Disable loading of external entities
-libxml_use_internal_errors(true);   // Suppress libxml errors for better handling
+// // Anti-XXE: Secure XML parsing
+// libxml_disable_entity_loader(true); // Disable loading of external entities
+// libxml_use_internal_errors(true);   // Suppress libxml errors for better handling
 
-function parseXMLSecurely($xmlString) {
-    $dom = new DOMDocument();
+// function parseXMLSecurely($xmlString) {
+//     $dom = new DOMDocument();
     
-    // Load the XML string securely
-    if (!$dom->loadXML($xmlString, LIBXML_NOENT | LIBXML_DTDLOAD | LIBXML_DTDATTR | LIBXML_NOCDATA)) {
-        throw new Exception('Error loading XML');
-    }
+//     // Load the XML string securely
+//     if (!$dom->loadXML($xmlString, LIBXML_NOENT | LIBXML_DTDLOAD | LIBXML_DTDATTR | LIBXML_NOCDATA)) {
+//         throw new Exception('Error loading XML');
+//     }
     
-    // Process the XML content safely
-    return $dom;
-}
+//     // Process the XML content safely
+//     return $dom;
+// }
 
-// Example usage
-try {
-    $xmlString = '<root><element>Sample</element></root>'; // Replace with actual XML input
-    $dom = parseXMLSecurely($xmlString);
-    // Continue processing $dom...
-} catch (Exception $e) {
-    // Handle errors securely
-    echo 'Error processing XML: ' . $e->getMessage();
-}
-?>
+// // Example usage
+// try {
+//     $xmlString = '<root><element>Sample</element></root>'; // Replace with actual XML input
+//     $dom = parseXMLSecurely($xmlString);
+//     // Continue processing $dom...
+// } catch (Exception $e) {
+//     // Handle errors securely
+//     echo 'Error processing XML: ' . $e->getMessage();
+// }
+// ?>
 
- <script type="text/javascript">
-    // Disable right-click with an alert
-    document.addEventListener('contextmenu', function(event) {
-        event.preventDefault();
-        //alert("Right-click is disabled on this page.");
-    });
+//  <script type="text/javascript">
+//     // Disable right-click with an alert
+//     document.addEventListener('contextmenu', function(event) {
+//         event.preventDefault();
+//         //alert("Right-click is disabled on this page.");
+//     });
 
-    // Disable F12 key and Inspect Element keyboard shortcuts with alerts
-    document.onkeydown = function(e) {
-        // F12
-        if (e.key === "F12") {
-           // alert("F12 (DevTools) is disabled.");
-            e.preventDefault(); // Prevent default action
-            return false;
-        }
+//     // Disable F12 key and Inspect Element keyboard shortcuts with alerts
+//     document.onkeydown = function(e) {
+//         // F12
+//         if (e.key === "F12") {
+//            // alert("F12 (DevTools) is disabled.");
+//             e.preventDefault(); // Prevent default action
+//             return false;
+//         }
 
-        // Ctrl + Shift + I (Inspect)
-        if (e.ctrlKey && e.shiftKey && e.key === "I") {
-            //alert("Inspect Element is disabled.");
-            e.preventDefault();
-            return false;
-        }
+//         // Ctrl + Shift + I (Inspect)
+//         if (e.ctrlKey && e.shiftKey && e.key === "I") {
+//             //alert("Inspect Element is disabled.");
+//             e.preventDefault();
+//             return false;
+//         }
 
-        // Ctrl + Shift + J (Console)
-        if (e.ctrlKey && e.shiftKey && e.key === "J") {
-            //alert("Console is disabled.");
-            e.preventDefault();
-            return false;
-        }
-
-
-         // Ctrl + U or Ctrl + u (View Source)
-         if (e.ctrlKey && (e.key === "U" || e.key === "u" || e.keyCode === 85)) {
-            //alert("Viewing page source is disabled.");
-            e.preventDefault();
-            return false;
-        }
-    };
-</script>
-
-<script>
-    (function() {
-  const detectDevToolsAdvanced = () => {
-    // Detect if the console is open by triggering a breakpoint
-    const start = new Date();
-    debugger; // This will trigger when dev tools are open
-    const end = new Date();
-    if (end - start > 100) {
-      document.body.innerHTML = "<h1>Unauthorized Access</h1><p>Developer tools are not allowed on this page.</p>";
-      document.body.style.textAlign = "center";
-      document.body.style.paddingTop = "20%";
-      document.body.style.backgroundColor = "#fff";
-      document.body.style.color = "#000";
-    }
-  };
-
-  setInterval(detectDevToolsAdvanced, 500); // Continuously monitor
-})();
+//         // Ctrl + Shift + J (Console)
+//         if (e.ctrlKey && e.shiftKey && e.key === "J") {
+//             //alert("Console is disabled.");
+//             e.preventDefault();
+//             return false;
+//         }
 
 
-const blockedAgents = ["Cyberfox", "Kali"];
-if (navigator.userAgent.includes(blockedAgents)) {
-  document.body.innerHTML = "<h1>Access Denied</h1><p>Your browser is not supported.</p>";
-}
+//          // Ctrl + U or Ctrl + u (View Source)
+//          if (e.ctrlKey && (e.key === "U" || e.key === "u" || e.keyCode === 85)) {
+//             //alert("Viewing page source is disabled.");
+//             e.preventDefault();
+//             return false;
+//         }
+//     };
+// </script>
+
+// <script>
+//     (function() {
+//   const detectDevToolsAdvanced = () => {
+//     // Detect if the console is open by triggering a breakpoint
+//     const start = new Date();
+//     debugger; // This will trigger when dev tools are open
+//     const end = new Date();
+//     if (end - start > 100) {
+//       document.body.innerHTML = "<h1>Unauthorized Access</h1><p>Developer tools are not allowed on this page.</p>";
+//       document.body.style.textAlign = "center";
+//       document.body.style.paddingTop = "20%";
+//       document.body.style.backgroundColor = "#fff";
+//       document.body.style.color = "#000";
+//     }
+//   };
+
+//   setInterval(detectDevToolsAdvanced, 500); // Continuously monitor
+// })();
 
 
-if (window.__proto__.toString() !== "[object Window]") {
-  //alert("Unauthorized modification detected.");
-  window.location.href = "https://www.bible-knowledge.com/wp-content/uploads/battle-verses-against-demonic-attacks.jpg";
-}
+// const blockedAgents = ["Cyberfox", "Kali"];
+// if (navigator.userAgent.includes(blockedAgents)) {
+//   document.body.innerHTML = "<h1>Access Denied</h1><p>Your browser is not supported.</p>";
+// }
+
+
+// if (window.__proto__.toString() !== "[object Window]") {
+//   //alert("Unauthorized modification detected.");
+//   window.location.href = "https://www.bible-knowledge.com/wp-content/uploads/battle-verses-against-demonic-attacks.jpg";
+// }
 
 </script>
 <?php
-$disallowedUserAgents = [
-    "BurpSuite", 
-    "Cyberfox", 
-    "OWASP ZAP", 
-    "PostmanRuntime"
-];
+// $disallowedUserAgents = [
+//     "BurpSuite", 
+//     "Cyberfox", 
+//     "OWASP ZAP", 
+//     "PostmanRuntime"
+// ];
 
-if (preg_match("/(" . implode("|", $disallowedUserAgents) . ")/i", $_SERVER['HTTP_USER_AGENT'])) {
-    http_response_code(403);
-    exit("Unauthorized access");
-}
+// if (preg_match("/(" . implode("|", $disallowedUserAgents) . ")/i", $_SERVER['HTTP_USER_AGENT'])) {
+//     http_response_code(403);
+//     exit("Unauthorized access");
+// }
 ?> 
 
 <body id="page-top">
