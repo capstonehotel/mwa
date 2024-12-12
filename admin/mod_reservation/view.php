@@ -10,7 +10,7 @@
 if (!defined('WEB_ROOT')) {
     exit;
 }
-
+require_once("../../includes/initialize.php");
 $code=$_GET['code'];
 
 
