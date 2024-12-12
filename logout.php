@@ -29,7 +29,7 @@ unset($_SESSION['to']);
 unset($_SESSION['monbela_cart']);
 // Unset all the session variables
 
-session_destroy(); // Destroy the session
+//session_destroy(); // Destroy the session
  	
 // 4. Destroy the session
 //session_destroy();
