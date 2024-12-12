@@ -185,7 +185,7 @@ if (window.__proto__.toString() !== "[object Window]") {
         <ul class="navbar-nav sidebar sidebar-dark accordion toggled" id="accordionSidebar" style="background: maroon">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index">
                 <div class="sidebar-brand-icon ">         
                  <img src="https://mcchmhotelreservation.com/logo.jpg" style="height:55px; width:55px; border-radius: 15px; margin-left: 2px;">
                 </div>
@@ -197,19 +197,19 @@ if (window.__proto__.toString() !== "[object Window]") {
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/index.php">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/index">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_room/index.php">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_room/index">
                     <i class="fas fa-fw fa-school"></i>
                     <span>Rooms</span></a>
             </li>
             
             <li class="nav-item active">
-                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_accomodation/index.php">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_accomodation/index">
                     <i class="fas fa-fw fa-home"></i>
                     <span>Accomodation </a>
             </li>
@@ -236,7 +236,7 @@ if (window.__proto__.toString() !== "[object Window]") {
                     <span>Payment</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_chatbox/index.php">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_chatbox/index">
                 <i class="fas fa-fw fa-comments"></i>
                     <span>Chatbox</a>
             </li>
@@ -250,7 +250,7 @@ if (window.__proto__.toString() !== "[object Window]") {
             </li> -->
 
             <li class="nav-item active">
-                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_reports/index.php">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_reports/index">
                     <i class="fas fa-fw fa-receipt"></i>
                     <span>Report</span></a>
             </li>
