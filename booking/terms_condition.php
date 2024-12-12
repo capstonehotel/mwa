@@ -10,9 +10,9 @@
 <body>
 <div class="view">
   <p>
-TERMS & CONDITIONS
+<h4>TERMS & CONDITIONS<h4>
 <ul>
-< <h4>Reservations</h4>
+ <h4>Reservations</h4>
                         <ul>
                             <li>Through our online booking system, you will be able to check room availability and make your booking. For peace of mind, you will receive by email a reservation confirmation, including the details of your reservation. It is recommended that you keep a copy of this reservation confirmation, preferably by printing the page.</li>
                             <li>If you have to modify or cancel your booking, please contact our reservation office as specified in your reservation confirmation. Also, we do not accept a booking exceeding 1 year reservation prior to the arrival date.</li>
