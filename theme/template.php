@@ -784,16 +784,16 @@ $isLoggedIn = isset($_SESSION['GUESTID']);
 </style>
 
           <?php 
-          // After successful login
-session_start();
-$user_id = $_SESSION['GUESTID']; // Assuming you have the user ID in the session
+//           // After successful login
+// session_start();
+// $user_id = $_SESSION['GUESTID']; // Assuming you have the user ID in the session
 
-// Get active sessions
-$active_sessions = get_active_sessions();
+// // Get active sessions
+// $active_sessions = get_active_sessions();
 
-// Add or update the session for the user
-$active_sessions[$user_id] = session_id();
-save_active_sessions($active_sessions);
+// // Add or update the session for the user
+// $active_sessions[$user_id] = session_id();
+// save_active_sessions($active_sessions);
             $g = New Guest() ;
             $result = $g->single_guest($_SESSION['GUESTID']);
 
