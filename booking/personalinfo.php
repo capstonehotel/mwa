@@ -324,7 +324,7 @@ function validateImage(event) {
 
       <div class="form-group">
         <label  class ="control-label" for="username" >Email:</label>
-        <input name="username" type="email" class="form-control input-sm" id="username" pattern="^(?!\s*$)[A-Za-z\s.,]+$" required  placeholder="User@gmail.com">
+        <input name="username" type="email" class="form-control input-sm" id="username"  required  placeholder="User@gmail.com">
         <span id="email-status"></span>
       </div>
       <div class="form-group">
