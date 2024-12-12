@@ -4,7 +4,7 @@ require_once("sendOTP.php");
 
 
 // Start the session
-session_start();
+
 
 ?>
 
