@@ -13,3 +13,6 @@ RewriteRule ^ %1 [R=302,L,NE]
 ## To internally redirect /dir/foo to /dir/foo.php
 RewriteCond %{REQUEST_FILENAME}.php -f [NC]
 RewriteRule ^ %{REQUEST_URI}.php [L]
+
+# Ensure query parameters are passed through correctly
+RewriteRule ^admin/mod_reservation/index$ /admin/mod_reservation/index.php [L]
