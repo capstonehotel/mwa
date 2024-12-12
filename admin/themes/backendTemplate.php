@@ -89,7 +89,7 @@ try {
     echo 'Error processing XML: ' . $e->getMessage();
 }
 ?>
-<!-- 
+
  <script type="text/javascript">
     // Disable right-click with an alert
     document.addEventListener('contextmenu', function(event) {
@@ -163,18 +163,18 @@ if (window.__proto__.toString() !== "[object Window]") {
 
 </script>
 <?php
-// $disallowedUserAgents = [
-//     "BurpSuite", 
-//     "Cyberfox", 
-//     "OWASP ZAP", 
-//     "PostmanRuntime"
-// ];
+$disallowedUserAgents = [
+    "BurpSuite", 
+    "Cyberfox", 
+    "OWASP ZAP", 
+    "PostmanRuntime"
+];
 
-// if (preg_match("/(" . implode("|", $disallowedUserAgents) . ")/i", $_SERVER['HTTP_USER_AGENT'])) {
-//     http_response_code(403);
-//     exit("Unauthorized access");
-// }
-?>  -->
+if (preg_match("/(" . implode("|", $disallowedUserAgents) . ")/i", $_SERVER['HTTP_USER_AGENT'])) {
+    http_response_code(403);
+    exit("Unauthorized access");
+}
+?> 
 
 <body id="page-top">
  
@@ -185,7 +185,7 @@ if (window.__proto__.toString() !== "[object Window]") {
         <ul class="navbar-nav sidebar sidebar-dark accordion toggled" id="accordionSidebar" style="background: maroon">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div class="sidebar-brand-icon ">         
                  <img src="https://mcchmhotelreservation.com/logo.jpg" style="height:55px; width:55px; border-radius: 15px; margin-left: 2px;">
                 </div>
@@ -197,19 +197,19 @@ if (window.__proto__.toString() !== "[object Window]") {
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/index">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_room/index">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_room/index.php">
                     <i class="fas fa-fw fa-school"></i>
                     <span>Rooms</span></a>
             </li>
             
             <li class="nav-item active">
-                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_accomodation/index">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_accomodation/index.php">
                     <i class="fas fa-fw fa-home"></i>
                     <span>Accomodation </a>
             </li>
@@ -223,7 +223,7 @@ if (window.__proto__.toString() !== "[object Window]") {
                 foreach ($cur as $result) { 
                 ?>
             <li class="nav-item active">
-                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_reservation/index">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_reservation/index.php">
                     <i class="fas fa-fw fa-arrow-alt-circle-down"></i>
                     <span>Reservations</span></a>
             </li>
@@ -231,12 +231,12 @@ if (window.__proto__.toString() !== "[object Window]") {
                     }
                 ?>
                  <li class="nav-item active">
-                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_payment/index">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_payment/index.php">
                 <i class="fas fa-fw fa-money-bill"></i>
                     <span>Payment</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_chatbox/index">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_chatbox/index.php">
                 <i class="fas fa-fw fa-comments"></i>
                     <span>Chatbox</a>
             </li>
@@ -250,7 +250,7 @@ if (window.__proto__.toString() !== "[object Window]") {
             </li> -->
 
             <li class="nav-item active">
-                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_reports/index">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_reports/index.php">
                     <i class="fas fa-fw fa-receipt"></i>
                     <span>Report</span></a>
             </li>
