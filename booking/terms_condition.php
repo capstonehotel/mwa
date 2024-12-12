@@ -10,7 +10,7 @@
 <body>
 <div class="view">
   <p>
-<h4>TERMS & CONDITIONS<h4>
+<h4>TERMS & CONDITIONS</h4>
 <ul>
  <h4>Reservations</h4>
                         <ul>
