@@ -30,7 +30,7 @@
                                value=""
                                placeholder="mm-dd-yyyy" 
                                        class="date_pickerfrom form-control  input-sm" readonly
-                                       onchange="updateDatePickerToStartDate()">
+                                       >
                                          
                           <span class="input-group-btn" style="margin-left: -30px;">
                               <i class="fa fa-calendar" ></i> 
@@ -67,31 +67,17 @@
  </form>
  <script>
     function updateDatePickerToStartDate() {
-        const arrivalInput = document.getElementById("date_pickerfrom");
-        const departureInput = document.getElementById("date_pickerto");
-        
-        const arrivalDate = new Date(arrivalInput.value);
-        if (isNaN(arrivalDate)) return; // Exit if the arrival date is invalid
-        
-        // Add one year to the arrival date
-        const maxDepartureDate = new Date(arrivalDate);
-        maxDepartureDate.setFullYear(maxDepartureDate.getFullYear() + 1);
+        const checkInDate = document.getElementById("date_pickerfrom").value;
+        const checkOutDate = document.getElementById("date_pickerto");
 
-        // Format dates as yyyy-mm-dd
-        const formatDate = (date) => {
-            const yyyy = date.getFullYear();
-            const mm = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
-            const dd = String(date.getDate()).padStart(2, '0');
-            return `${yyyy}-${mm}-${dd}`;
-        };
-
-        // Update the departure date picker
-        departureInput.min = arrivalInput.value;
-        departureInput.max = formatDate(maxDepartureDate);
-
-        // If the current departure date exceeds the max, reset it
-        if (new Date(departureInput.value) > maxDepartureDate) {
-            departureInput.value = "";
+        if (checkInDate) {
+            const checkIn = new Date(checkInDate);
+            const maxDate = new Date(checkIn);
+            maxDate.setFullYear(checkIn.getFullYear() + 1); // Add one year
+            
+            // Limit the checkout date to not exceed the max date
+            checkOutDate.min = checkInDate;
+            checkOutDate.max = maxDate.toISOString().split("T")[0];
         }
     }
 </script>
