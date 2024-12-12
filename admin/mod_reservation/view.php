@@ -183,6 +183,57 @@ $code=$_GET['code'];
 </script> -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Confirm action function
+        function confirmAction(action, code) {
+            let actionText = '';
+
+            switch(action) {
+                case 'pay':
+                    title = 'Pay Partial';
+                    text = 'Proceed to pay partial amount?';
+                    confirmButtonText = 'Proceed';
+                    window.location.href = '../mod_payment/view.php?code=' + code;
+                    return;
+                case 'confirm': actionText = 'confirm'; break;
+                case 'checkin': actionText = 'check in'; break;
+                case 'checkout': actionText = 'check out'; break;
+                case 'cancel': actionText = 'cancel'; break;
+                case 'delete': actionText = 'delete'; break;
+                default: return;
+            }
+
+            Swal.fire({
+                title: `Are you sure you want to ${actionText}?`,
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: `Yes, ${actionText}!`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = `controller.php?action=${action}&code=${code}`;
+                }
+            });
+        }
+
+        // Add event listeners dynamically based on the action buttons
+        var actionButtons = document.querySelectorAll('.btn');
+        if (actionButtons) {
+            actionButtons.forEach(function(button) {
+                button.addEventListener('click', function(e) {
+                    var action = button.getAttribute('data-action');
+                    var code = button.getAttribute('data-code');
+                    if (action && code) {
+                        confirmAction(action, code);
+                    }
+                });
+            });
+        }
+    });
+</script>
+<!-- <script>
 function confirmAction(action, code) {
     let actionText = '';
 
@@ -217,7 +268,7 @@ function confirmAction(action, code) {
         }
     });
 }
-</script>
+</script> -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
  -->
