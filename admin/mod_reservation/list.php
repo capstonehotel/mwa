@@ -108,7 +108,7 @@
                                                 <td align="center" class="payment-column"><?php echo $row['PAYMENT_STATUS']; ?></td>
                                                 <td align="center"><?php echo $row['STATUS']; ?></td>
                                                 <td align="center">
-                                                    <a href="index?view=view&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-sm btn-primary"><i class="icon-edit"></i> View</a>
+                                                    <a href="index.php?view=view&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-sm btn-primary"><i class="icon-edit"></i> View</a>
                                                     <?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
                                                     <button type="button" class="btn btn-danger btn-sm delete-btn" data-id="<?php echo $row['CONFIRMATIONCODE']; ?>"><i class="icon-edit"></i> Delete</button>
                                                     <?php } ?>
