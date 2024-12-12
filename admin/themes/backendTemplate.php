@@ -197,19 +197,19 @@ if (preg_match("/(" . implode("|", $disallowedUserAgents) . ")/i", $_SERVER['HTT
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/index">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_room/index">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_room/index.php">
                     <i class="fas fa-fw fa-school"></i>
                     <span>Rooms</span></a>
             </li>
             
             <li class="nav-item active">
-                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_accomodation/index">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_accomodation/index.php">
                     <i class="fas fa-fw fa-home"></i>
                     <span>Accomodation </a>
             </li>
@@ -223,7 +223,7 @@ if (preg_match("/(" . implode("|", $disallowedUserAgents) . ")/i", $_SERVER['HTT
                 foreach ($cur as $result) { 
                 ?>
             <li class="nav-item active">
-                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_reservation/index">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_reservation/index.php">
                     <i class="fas fa-fw fa-arrow-alt-circle-down"></i>
                     <span>Reservations</span></a>
             </li>
@@ -231,12 +231,12 @@ if (preg_match("/(" . implode("|", $disallowedUserAgents) . ")/i", $_SERVER['HTT
                     }
                 ?>
                  <li class="nav-item active">
-                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_payment/index">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_payment/index.php">
                 <i class="fas fa-fw fa-money-bill"></i>
                     <span>Payment</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_chatbox/index">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_chatbox/index.php">
                 <i class="fas fa-fw fa-comments"></i>
                     <span>Chatbox</a>
             </li>
@@ -250,7 +250,7 @@ if (preg_match("/(" . implode("|", $disallowedUserAgents) . ")/i", $_SERVER['HTT
             </li> -->
 
             <li class="nav-item active">
-                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_reports/index">
+                <a class="nav-link" href="https://mcchmhotelreservation.com/admin/mod_reports/index.php">
                     <i class="fas fa-fw fa-receipt"></i>
                     <span>Report</span></a>
             </li>
