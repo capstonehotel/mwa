@@ -14,7 +14,7 @@
                                    name="arrival" id="date_pickerfrom"  
                                    value="<?php echo isset($_POST['arrival']) ? $_POST['arrival'] :date('m/d/Y');?>"
                                     class="date_pickerfrom input-sm form-control"
-                                     readonly onchange="updateDatePickerToStartDate()" >
+                                     readonly >
                    
                           <span class="input-group-btn" style="margin-left: -30px;">
                               <i class="fa fa-calendar" ></i> 
@@ -64,19 +64,4 @@
         </div>
     </div> 
  </form>
- <script>
-    function updateDatePickerToStartDate() {
-        const checkInDate = document.getElementById("date_pickerfrom").value;
-        const checkOutDate = document.getElementById("date_pickerto");
-
-        if (checkInDate) {
-            const checkIn = new Date(checkInDate);
-            const maxDate = new Date(checkIn);
-            maxDate.setFullYear(checkIn.getFullYear() + 1); // Add one year
-            
-            // Limit the checkout date to not exceed the max date
-            checkOutDate.min = checkInDate;
-            checkOutDate.max = maxDate.toISOString().split("T")[0];
-        }
-    }
-</script>
+ 
