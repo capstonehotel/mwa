@@ -23,25 +23,25 @@ $code=$_GET['code'];
             while ($row = mysqli_fetch_assoc($result)) { ?>
  <?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
                                     <?php if ($row['STATUS'] == "Confirmed" ) { ?>
-                                        <a href="controller.php?action=cancel&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-danger btn-sm ml-2" onclick="confirmAction('cancel', '<?php echo $row['CONFIRMATIONCODE']; ?>'); return false;" ><i class="icon-edit">Cancel</a>
+                                        <a href="controller?action=cancel&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-danger btn-sm ml-2" onclick="confirmAction('cancel', '<?php echo $row['CONFIRMATIONCODE']; ?>'); return false;" ><i class="icon-edit">Cancel</a>
                                         <!-- Check payment status and disable check-in button if partially paid -->
                 <?php if ($row['PAYMENT_STATUS'] != 'Partially Paid') { ?>
-                    <a href="controller.php?action=checkin&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-success btn-sm ml-2" onclick="confirmAction('checkin', '<?php echo $row['CONFIRMATIONCODE']; ?>'); return false;"><i class="icon-edit">Check in</i></a>
+                    <a href="controller?action=checkin&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-success btn-sm ml-2" onclick="confirmAction('checkin', '<?php echo $row['CONFIRMATIONCODE']; ?>'); return false;"><i class="icon-edit">Check in</i></a>
                 <?php } else { ?>
                     <button class="btn btn-secondary btn-sm ml-2" disabled><i class="icon-edit">Check in</i></button>
                 <?php } ?>
                 <?php if ($row['PAYMENT_STATUS'] != 'Fully Paid') { ?>
-        <a href="../mod_payment/index.php?view=view&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-primary btn-sm ml-2"><i class="icon-edit"></i>Pay Partial</a>
+        <a href="../mod_payment/index?view=view&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-primary btn-sm ml-2"><i class="icon-edit"></i>Pay Partial</a>
     <?php } ?>
                 <!-- <a href="../mod_payment/index.php?view=view&code=<?php echo $row['CONFIRMATIONCODE']; ?>"  class="btn btn-primary btn-sm ml-2" ><i class="icon-edit">Pay Partial</a> -->
                                        <!-- <a href="../mod_payment/index.php?view=view&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-info btn-sm ml-2"  onclick="confirmAction('pay', '<?php echo $row['CONFIRMATIONCODE']; ?>'); return false;"><i class="icon-edit">Pay Partial</i></a>-->
                                     <?php } elseif($row['STATUS'] == 'Checkedin') {?>
-                                        <a href="controller.php?action=checkout&code=<?php echo $row['CONFIRMATIONCODE'];?>" class="btn btn-warning btn-sm ml-2"  onclick="confirmAction('checkout', '<?php echo $row['CONFIRMATIONCODE']; ?>'); return false;" ><i class="icon-edit">Check out</a>
+                                        <a href="controller?action=checkout&code=<?php echo $row['CONFIRMATIONCODE'];?>" class="btn btn-warning btn-sm ml-2"  onclick="confirmAction('checkout', '<?php echo $row['CONFIRMATIONCODE']; ?>'); return false;" ><i class="icon-edit">Check out</a>
                                     <?php } elseif($row['STATUS'] == 'Checkedout') {?>
-                                <a href="controller.php?action=delete&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-danger btn-sm ml-2" onclick="confirmAction('delete', '<?php echo $row['CONFIRMATIONCODE']; ?>'); return false;" ><i class="icon-edit">Delete</a>
+                                <a href="controller?action=delete&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-danger btn-sm ml-2" onclick="confirmAction('delete', '<?php echo $row['CONFIRMATIONCODE']; ?>'); return false;" ><i class="icon-edit">Delete</a>
                                     <?php } else {?>
-                                        <a href="controller.php?action=confirm&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-success btn-sm ml-2" onclick="confirmAction('confirm', '<?php echo $row['CONFIRMATIONCODE']; ?>'); return false;" ><i class="icon-edit">Confirm</a>
-                                        <a href="controller.php?action=cancel&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-danger btn-sm ml-2" onclick="confirmAction('cancel', '<?php echo $row['CONFIRMATIONCODE']; ?>'); return false;" ><i class="icon-edit">Cancel</a>
+                                        <a href="controller?action=confirm&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-success btn-sm ml-2" onclick="confirmAction('confirm', '<?php echo $row['CONFIRMATIONCODE']; ?>'); return false;" ><i class="icon-edit">Confirm</a>
+                                        <a href="controller?action=cancel&code=<?php echo $row['CONFIRMATIONCODE']; ?>" class="btn btn-danger btn-sm ml-2" onclick="confirmAction('cancel', '<?php echo $row['CONFIRMATIONCODE']; ?>'); return false;" ><i class="icon-edit">Cancel</a>
 
 
                                             <?php } ?>
@@ -192,7 +192,7 @@ function confirmAction(action, code) {
                 title = 'Pay Partial';
                 text = 'Proceed to pay partial amount?';
                 confirmButtonText = 'Proceed';
-                window.location.href = '../mod_payment/view.php?code=' + code;
+                window.location.href = '../mod_payment/view?code=' + code;
                 return;  
         case 'confirm': actionText = 'confirm'; break;
         case 'checkin': actionText = 'check in'; break;
@@ -213,7 +213,7 @@ function confirmAction(action, code) {
     }).then((result) => {
         if (result.isConfirmed) {
             // Redirect based on the action confirmed
-            window.location.href = `controller.php?action=${action}&code=${code}`;
+            window.location.href = `controller?action=${action}&code=${code}`;
         }
     });
 }

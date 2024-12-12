@@ -20,7 +20,7 @@ switch ($view) {
 		$content    = 'edit.php';		
 		break;
     case 'view' :
-		$content    = 'view';		
+		$content    = 'view.php';		
 		break;
 
 	default :
