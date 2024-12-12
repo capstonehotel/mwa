@@ -31,8 +31,8 @@ if ($paymentMethod === 'gcash') {
     $paymentstatus = $_POST['payment_status'];
 
     // Construct absolute URLs for success and failed redirects
-    $successUrl = 'https://mcchmhotelreservation.com/booking/process_gcash.php?paymentstatus='.$paymentstatus;
-    $failedUrl = 'https://mcchmhotelreservation.com/booking/payment.php';
+    $successUrl = 'https://mcchmhotelreservation.com/booking/process_gcash?paymentstatus='.$paymentstatus;
+    $failedUrl = 'https://mcchmhotelreservation.com/booking/payment';
 
     try {
         // Prepare the payload

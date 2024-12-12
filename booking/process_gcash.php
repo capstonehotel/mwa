@@ -70,12 +70,12 @@ if ($error_message === true) {
     $_SESSION['payment_successful'] = true;
     // Payment successful, redirect to confirmation page
     $paymenstatus = $_GET['paymentstatus'];
-    header("Location: https://mcchmhotelreservation.com/booking/index.php?view=payment&paymentstatus=".$paymenstatus);
+    header("Location: https://mcchmhotelreservation.com/booking/index?view=payment&paymentstatus=".$paymenstatus);
     $_SESSION['status'] = 'success';
     exit();
 } else {
     // Payment failed, redirect back to payment page with error message
-    header("Location: https://mcchmhotelreservation.com/booking/payment.php");
+    header("Location: https://mcchmhotelreservation.com/booking/payment");
     exit();
 }
 
