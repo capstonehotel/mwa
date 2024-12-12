@@ -1,6 +1,4 @@
-<?php
-//include 'check_login.php'; 
-?>
+
 <style>
 .material-symbols-outlined {
     weight: 200px;
@@ -14,7 +12,7 @@
 <?php
 require_once("../includes/initialize.php");
 if (!isset($_SESSION['ADMIN_ID'])) {
-    redirect('login.php');
+    redirect('login');
     return true;
 }
 echo '<div class="row"  style="padding: 10px;">';

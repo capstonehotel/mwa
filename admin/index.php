@@ -3,7 +3,7 @@ require_once("../includes/initialize.php");
 
 
  
-$content='home.php';
+$content='home';
 
  include 'themes/backendTemplate.php';
 
