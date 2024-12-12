@@ -40,7 +40,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
 
                     $.ajax({
                         type: 'POST',
-                        url: 'otp_verify.php',
+                        url: 'otp_verify',
                         data: {
                             otp: result.value,
                             email: '<?php echo $_SESSION['username']; ?>'
@@ -97,7 +97,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'payment' && isset($_GET['verify'])
 
                 $.ajax({
                     type: 'POST',
-                    url: 'resendOTP.php',
+                    url: 'resendOTP',
                     data: {
                         email: '<?php echo $_SESSION['username']; ?>'
                     },
