@@ -91,6 +91,16 @@
             text-align: left;
             display: none; /* Initially hidden */
         }
+
+    /* Hide OTP form if OTP is verified */
+    #otp-form {
+        display: block;
+    }
+
+    /* Hide OTP form after verification */
+    #otp-verified {
+        display: none;
+    }
 </style>
 
 <div class="container">
