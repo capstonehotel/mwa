@@ -101,6 +101,11 @@
     #otp-verified {
         display: none;
     }
+
+    /* Hide password reset fields initially */
+    #password-reset-fields {
+        display: none;
+    }
 </style>
 
 <div class="container">
