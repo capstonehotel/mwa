@@ -92,20 +92,22 @@
             display: none; /* Initially hidden */
         }
 
-    /* Hide OTP form if OTP is verified */
-    #otp-form {
-        display: block;
-    }
+  /* Hide OTP form initially */
+#otp-form {
+    display: block;
+}
+
+/* Hide password reset fields initially */
+#password-reset-fields {
+    display: none;
+}
 
     /* Hide OTP form after verification */
     #otp-verified {
         display: none;
     }
 
-    /* Hide password reset fields initially */
-    #password-reset-fields {
-        display: none;
-    }
+    
 </style>
 
 <div class="container">
@@ -165,9 +167,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['otp'])) {
     if ($result->num_rows > 0) {
         // OTP verified successfully, show password reset form
         echo "<script>
-            document.getElementById('otp-form').style.display = 'none';  // Hide OTP form
-            document.getElementById('password-reset-fields').style.display = 'block';  // Show password reset form
-        </script>";
+        document.getElementById('otp-form').style.display = 'none';  // Hide OTP form
+        document.getElementById('password-reset-fields').style.display = 'block';  // Show password reset form
+    </script>";
     } else {
         echo "<script>
             Swal.fire({
