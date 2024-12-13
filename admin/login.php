@@ -326,48 +326,32 @@ if (isset($_POST['btnlogin'])) {
                     // Redirect to OTP verification
                     echo "<script>
                         Swal.fire({
-    title: 'OTP Sent!',
-    text: 'An OTP has been sent to your email. Please enter it to continue.',
-    input: 'text',
-    inputPlaceholder: 'Enter OTP',
-    confirmButtonText: 'Verify',
-    showCancelButton: false,
-    preConfirm: (input) => {
-        return new Promise((resolve, reject) => {
-            if (!input) {
-                Swal.showValidationMessage('Please enter the OTP');
-                reject();
-            } else {
-                // Send OTP for validation
-                $.ajax({
-                    url: 'login', // Ensure the action points to your PHP handler
-                    type: 'POST',
-                    data: { otp: input },
-                    dataType: 'json',
-                    success: function(response) {
-                        if (response.status === 'success') {
-                            resolve();
-                        } else {
-                            Swal.showValidationMessage(response.message || 'Invalid OTP! Please try again.');
-                            reject();
-                        }
-                    },
-                    error: function() {
-                        Swal.showValidationMessage('An error occurred while validating OTP. Please try again.');
-                        reject();
-                    }
-                });
-            }
-        });
-    }
-}).then((result) => {
-    if (result.isConfirmed) {
-        Swal.fire('Success!', 'OTP verified successfully. Redirecting...', 'success').then(() => {
-            window.location = 'index'; // Redirect to dashboard or desired page
-        });
-    }
-});
-
+                            title: 'OTP Sent!',
+                            text: 'An OTP has been sent to your email. Please enter it to continue.',
+                            input: 'text',
+                            confirmButtonText: 'Verify',
+                            showCancelButton: false,
+                            preConfirm: (input) => {
+                                return new Promise((resolve) => {
+                                    if (input === '') {
+                                        Swal.showValidationMessage('Please enter the OTP');
+                                    } else {
+                                        // Submit OTP for verification
+                                        $.post('login', { otp: input }, function(response) {
+                                            if (response === 'success') {
+                                                Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
+                                                    window.location = 'index';
+                                                });
+                                            } else {
+                                                Swal.fire('Invalid OTP!', 'Please try again.', 'error').then(() => {
+                                                    window.location = 'login';
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
                     </script>";
                 } else {
                     echo "<script>
