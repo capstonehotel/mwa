@@ -116,7 +116,7 @@
      <form id="otpForm" method="POST" action="verify_otp" id="otp-form">
         <label for="otp">Enter OTP:</label>
         <input type="text" id="otp" name="otp" required placeholder="Enter OTP" >
-        <button type="submit">Verify OTP</button>
+        <button type="submit" >Verify OTP</button>
     </form>
 
     <form id="resetForm" method="POST" action="reset_password" style="display: none;" id="password-reset-fields">
@@ -280,4 +280,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_password']) && is
             }
         });
     });
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const otpForm = document.getElementById('otpForm');
+    const otpInput = document.getElementById('otp');
+    const resetForm = document.getElementById('resetForm');
+    const otpButton = document.getElementById('verifyOtpButton');
+
+    // Add event listener for OTP form submission
+    otpForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent the form from reloading the page
+
+        // Show loading spinner or disable the button
+        otpButton.disabled = true;
+        otpButton.textContent = 'Verifying...';
+
+        const otp = otpInput.value;
+        const token = '<?php echo htmlspecialchars($_GET["token"]); ?>';  // Get token from URL
+
+        // Perform AJAX request to verify OTP
+        fetch('verify_otp.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `otp=${otp}&token=${token}`,
+        })
+        .then(response => response.json()) // Expect JSON response
+        .then(data => {
+            if (data.success) {
+                // OTP is verified, show the password reset form
+                document.getElementById('otp-form').style.display = 'none';
+                document.getElementById('password-reset-fields').style.display = 'block';
+            } else {
+                // Show error message if OTP verification fails
+                alert('Invalid or expired OTP. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while verifying OTP. Please try again.');
+        })
+        .finally(() => {
+            // Re-enable the button and change text back to "Verify OTP"
+            otpButton.disabled = false;
+            otpButton.textContent = 'Verify OTP';
+        });
+    });
+});
 </script>
