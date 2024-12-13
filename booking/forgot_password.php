@@ -201,7 +201,7 @@ $result = $stmt->get_result();
 // Generate OTP and store in session
 $otp = rand(100000, 999999);
 $_SESSION['otp'] = $otp;  // Store OTP in session
-
+$_SESSION['otp_email'] = $email;
 
     // Generate a unique reset token and expiration time
     $token = bin2hex(random_bytes(50));
