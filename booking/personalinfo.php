@@ -179,7 +179,7 @@ if (isset($_SESSION['ERRMSG_ARR']) && is_array($_SESSION[' ERRMSG_ARR']) && coun
     <div class="col-md-12">
       <div class="form-group">
         <label class ="control-label" for="image">Avatar</label>
-        <input type="file" name="image" id="image" accept=".jpg, .jpeg, .png"onchange="validateImage(event)" required>
+        <input type="file" name="image" id="image" accept=".jpg, .jpeg, .png" onchange="validateImage(event)" required>
         <img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-width: 150px; max-height: 150px;">
       </div>
       <style>
@@ -193,7 +193,7 @@ if (isset($_SESSION['ERRMSG_ARR']) && is_array($_SESSION[' ERRMSG_ARR']) && coun
     margin-top: 10px;
   }
 </style>
-<script>
+<!-- <script>
 	// document.getElementById('image').disabled = true;
 function validateImage(event) {
     const fileInput = event.target;
@@ -223,7 +223,42 @@ function validateImage(event) {
         reader.readAsDataURL(fileInput.files[0]);
     }
 }
-</script>
+</script> -->
+<script>
+        function validateImage(event) {
+            const fileInput = event.target;
+            const filePath = fileInput.value;
+            const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i; // Allowed file extensions
+
+            // Check for double extensions
+            const fileName = fileInput.files[0].name;
+            const lastDotIndex = fileName.lastIndexOf('.');
+            const firstDotIndex = fileName.indexOf('.');
+
+            // Check if there are multiple dots and if the last extension is valid
+            if (fileName.split('.').length > 2 || !allowedExtensions.exec(filePath)) {
+                // Show SweetAlert2 error message
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid File Type',
+                    text: 'Please upload a valid image file (JPG, JPEG, PNG) without double extensions.',
+                    confirmButtonText: 'OK'
+                });
+                fileInput.value = ""; // Clear the input
+                document.getElementById('imagePreview').style.display = 'none'; // Hide the preview
+                return false;
+            } else {
+                // If valid, show the image preview
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const imagePreview = document.getElementById('imagePreview');
+                    imagePreview.style.display = 'block';
+                    imagePreview.src = e.target.result;
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+    </script>
 <!-- <script>
   function previewImage(event) {
     const input = event.target;
