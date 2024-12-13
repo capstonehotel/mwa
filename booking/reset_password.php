@@ -115,11 +115,11 @@
      <!-- OTP input section -->
      <form id="otpForm" method="POST" action="verify_otp" id="otp-form">
         <label for="otp">Enter OTP:</label>
-        <input type="text" id="otp" name="otp" required placeholder="Enter OTP" style="display: none;" id="password-reset-fields">
+        <input type="text" id="otp" name="otp" required placeholder="Enter OTP" >
         <button type="submit">Verify OTP</button>
     </form>
 
-    <form id="resetForm" method="POST" action="reset_password">
+    <form id="resetForm" method="POST" action="reset_password" style="display: none;" id="password-reset-fields">
         <!-- <label for="username">Enter your email:</label>
         <input type="text" name="username" required placeholder="example@gmail.com"> -->
         
