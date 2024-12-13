@@ -164,7 +164,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['otp'])) {
     $otp = $_POST['otp'];
 
     // Check OTP validity
-    $result = $conn->query("SELECT * FROM tblguest WHERE VERIFICATION_TOKEN = '$token' AND OTP = '$otp' AND OTP_EXPIRE_AT >= NOW()");
+    // $result = $conn->query("SELECT * FROM tblguest WHERE VERIFICATION_TOKEN = '$token' AND OTP = '$otp' AND OTP_EXPIRE_AT >= NOW()");
+    // Check OTP validity using prepared statements
+$stmt = $conn->prepare("SELECT * FROM tblguest WHERE VERIFICATION_TOKEN = ? AND OTP = ? AND OTP_EXPIRE_AT >= NOW()");
+$stmt->bind_param("ss", $token, $otp);
+$stmt->execute();
+$result = $stmt->get_result();
     if ($result->num_rows > 0) {
         // OTP verified successfully, show password reset form
         echo "<script>
@@ -195,12 +200,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_password']) && is
         $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
 
         // Validate the token and reset the password
-        $result = $conn->query("SELECT * FROM tblguest WHERE VERIFICATION_TOKEN = '$token' AND OTP_EXPIRE_AT >= NOW()");
+        // $result = $conn->query("SELECT * FROM tblguest WHERE VERIFICATION_TOKEN = '$token' AND OTP_EXPIRE_AT >= NOW()");
+         // Validate the token and reset the password
+         $stmt = $conn->prepare("SELECT * FROM tblguest WHERE VERIFICATION_TOKEN = ? AND OTP_EXPIRE_AT >= NOW()");
+         $stmt->bind_param("s", $token);
+         $stmt->execute();
         if ($result->num_rows === 0) {
             $error_message = "Invalid or expired token.";
         } else {
             // Update the password and clear the token and OTP
-            $conn->query("UPDATE tblguest SET G_PASS = '$hashed_password', VERIFICATION_TOKEN = NULL, OTP = NULL, OTP_EXPIRE_AT = NULL WHERE VERIFICATION_TOKEN = '$token'");
+            // $conn->query("UPDATE tblguest SET G_PASS = '$hashed_password', VERIFICATION_TOKEN = NULL, OTP = NULL, OTP_EXPIRE_AT = NULL WHERE VERIFICATION_TOKEN = '$token'");
+            // Update the password and clear the token and OTP
+            $stmt = $conn->prepare("UPDATE tblguest SET G_PASS = ?, VERIFICATION_TOKEN = NULL, OTP = NULL, OTP_EXPIRE_AT = NULL WHERE VERIFICATION_TOKEN = ?");
+            $stmt->bind_param("ss", $hashed_password, $token);
+            $stmt->execute();
             echo "<script>
                 Swal.fire({
                     icon: 'success',
