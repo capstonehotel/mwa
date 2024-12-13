@@ -106,9 +106,9 @@
 <div class="container">
     <h2>Reset Your Password</h2>
      <!-- OTP input section -->
-     <form id="otpForm" method="POST" action="verify_otp">
+     <form id="otpForm" method="POST" action="verify_otp" id="otp-form">
         <label for="otp">Enter OTP:</label>
-        <input type="text" id="otp" name="otp" required placeholder="Enter OTP">
+        <input type="text" id="otp" name="otp" required placeholder="Enter OTP" style="display: none;" id="password-reset-fields">
         <button type="submit">Verify OTP</button>
     </form>
 
