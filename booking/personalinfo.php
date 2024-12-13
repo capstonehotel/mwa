@@ -339,7 +339,7 @@ function validateImage(event) {
         oninvalid="setCustomErrorMessage(event)" 
         minlength="8" 
         maxlength="12" 
-        pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$" title="Password must be at least 10 characters long, contain at least one uppercase letter, one number, and one special character."
+        pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$" title="Password must be at least 8 characters long, contain at least one uppercase letter, one number, and one special character."
         required  
         placeholder="Ex@mple123">
         <span id="password-status"></span>
