@@ -334,7 +334,7 @@ function validateImage(event) {
         type="password" 
         class="form-control input-sm" 
         id="password" 
-        onkeyup="validatePassword()" 
+        
         oninput="clearErrorMessage()" 
         oninvalid="setCustomErrorMessage(event)" 
         minlength="8" 
