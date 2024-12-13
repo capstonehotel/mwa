@@ -300,7 +300,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const token = '<?php echo htmlspecialchars($_GET["token"]); ?>';  // Get token from URL
 
         // Perform AJAX request to verify OTP
-        fetch('verify_otp.php', {
+        fetch('verify_otp', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
