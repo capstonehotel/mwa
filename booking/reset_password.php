@@ -104,12 +104,12 @@
          -->
          <label for="new_password">Enter your new password:</label>
         <div class="input-group">
-            <input type="password" id="new_password" name="new_password" minlength="8" maxlength="12" required placeholder="New Password">
+            <input type="password" id="new_password" name="new_password" minlength="8" maxlength="12"  pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$" title="Password must be at least 10 characters long, contain at least one uppercase letter, one number, and one special character." required placeholder="New Password">
             <i class="far fa-eye" id="new_password_toggle"></i>
         </div>
         <label for="confirm_password">Confirm your new password:</label>
         <div class="input-group">
-            <input type="password" id="confirm_password" name="confirm_password" minlength="8" maxlength="12" required placeholder="Confirm Password">
+            <input type="password" id="confirm_password" name="confirm_password" minlength="8" maxlength="12"  pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$" title="Password must be at least 10 characters long, contain at least one uppercase letter, one number, and one special character." required placeholder="Confirm Password">
             <i class="far fa-eye" id="confirm_password_toggle"></i>
         </div>
         <!--<div id="error-message" style="color: red; font-size: 14px; text-align: left; display: none;"></div>-->
