@@ -225,9 +225,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $mail->isHTML(true);
         $mail->Subject = 'Password Reset Request';
-        $mail->Body    = " Your OTP is: <b>{$otp}</b><br><br>
-        This OTP and reset link will expire in 30 minutes
-                        Click the link below to reset your password:<br><br>
+        $mail->Body    = " 
+    Click the link below to reset your password:<br><br>
                           <a href='https://mcchmhotelreservation.com/booking/reset_password?token=$token'>Reset Password</a><br><br>
                           If you did not request a password reset, please ignore this email.";
 

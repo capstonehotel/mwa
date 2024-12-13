@@ -330,12 +330,12 @@ if (isset($_POST['btnlogin'])) {
                                         // Submit OTP for verification
                                         $.post('login', { otp: input }, function(response) {
                                             if (response === 'success') {
-                                                Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
-                                                    window.location = 'index';
-                                                });
-                                            } else {
                                                 Swal.fire('Invalid OTP!', 'Please try again.', 'error').then(() => {
                                                     window.location = 'login';
+                                                });
+                                            } else {
+                                                Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
+                                                    window.location = 'index';
                                                 });
                                             }
                                         });
