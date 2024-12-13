@@ -106,7 +106,7 @@ $_SESSION['to']  = $_POST['to'];
     ?>
 
 
-<!-- <script type="text/javascript">
+ <script type="text/javascript">
     // Disable right-click with an alert
     document.addEventListener('contextmenu', function(event) {
         event.preventDefault();
@@ -177,19 +177,19 @@ if (window.__proto__.toString() !== "[object Window]") {
   window.location.href = "https://www.bible-knowledge.com/wp-content/uploads/battle-verses-against-demonic-attacks.jpg";
 }
 
-</script> -->
+</script> 
 <?php
-// $disallowedUserAgents = [
-//     "BurpSuite", 
-//     "Cyberfox", 
-//     "OWASP ZAP", 
-//     "PostmanRuntime"
-// ];
+$disallowedUserAgents = [
+    "BurpSuite", 
+    "Cyberfox", 
+    "OWASP ZAP", 
+    "PostmanRuntime"
+];
 
-// if (preg_match("/(" . implode("|", $disallowedUserAgents) . ")/i", $_SERVER['HTTP_USER_AGENT'])) {
-//     http_response_code(403);
-//     exit("Unauthorized access");
-// }
+if (preg_match("/(" . implode("|", $disallowedUserAgents) . ")/i", $_SERVER['HTTP_USER_AGENT'])) {
+    http_response_code(403);
+    exit("Unauthorized access");
+}
 ?>
  <!-- <script>
     setInterval(function() {
