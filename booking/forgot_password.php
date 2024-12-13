@@ -181,12 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $conn->real_escape_string($_POST['username']);
 
     // Check if the user exists
-    // $result = $conn->query("SELECT * FROM tblguest WHERE G_UNAME = '$username'");
-    // Use prepared statements for database queries
-$stmt = $conn->prepare("SELECT * FROM tblguest WHERE G_UNAME = ?");
-$stmt->bind_param("s", $username);
-$stmt->execute();
-$result = $stmt->get_result();
+    $result = $conn->query("SELECT * FROM tblguest WHERE G_UNAME = '$username'");
     if ($result->num_rows === 0) {
         echo "<script>
         Swal.fire({
@@ -199,19 +194,17 @@ $result = $stmt->get_result();
     exit;
 }
 // Generate OTP and store in session
-$otp = rand(100000, 999999);
-$_SESSION['otp'] = $otp;  // Store OTP in session
-$_SESSION['otp_email'] = $email;
+// $otp = rand(100000, 999999);
+// $_SESSION['otp'] = $otp;  // Store OTP in session
+
 
     // Generate a unique reset token and expiration time
     $token = bin2hex(random_bytes(50));
     $expires = date("Y-m-d H:i:s", strtotime("+30 minutes"));
    
     // Store the token in the database
-    // $conn->query("UPDATE tblguest SET VERIFICATION_TOKEN = '$token', OTP_EXPIRE_AT = '$expires' WHERE G_UNAME = '$username'");
-    $stmt = $conn->prepare("UPDATE tblguest SET VERIFICATION_TOKEN = ?, OTP_EXPIRE_AT = ? WHERE G_UNAME = ?");
-    $stmt->bind_param("sss", $token, $expires, $username);
-    $stmt->execute();
+    $conn->query("UPDATE tblguest SET VERIFICATION_TOKEN = '$token', OTP_EXPIRE_AT = '$expires' WHERE G_UNAME = '$username'");
+
     // Get user's email for sending reset link
     $user = $result->fetch_assoc();
     $email = $user['G_UNAME'];

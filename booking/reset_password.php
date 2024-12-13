@@ -91,36 +91,11 @@
             text-align: left;
             display: none; /* Initially hidden */
         }
-
-  /* Hide OTP form initially */
-#otp-form {
-    display: block;
-}
-
-/* Hide password reset fields initially */
-#password-reset-fields {
-    display: none;
-}
-
-    /* Hide OTP form after verification */
-    #otp-verified {
-        display: none;
-    }
-
-    
 </style>
 
 <div class="container">
     <h2>Reset Your Password</h2>
-     <!-- OTP input section -->
-     <form id="otpForm" method="POST" action="verify_otp" id="otp-form">
-        <label for="otp">Enter OTP:</label>
-        <input type="text" id="otp" name="otp" required placeholder="Enter OTP" >
-        <input type="hidden" id="otp-email" name="email" value="user@example.com"> <!-- The email -->
-        <button type="submit" id="verifyOtpButton">Verify OTP</button>
-    </form>
-
-    <form id="resetForm" method="POST" action="reset_password" style="display: none;" id="password-reset-fields">
+    <form id="resetForm" method="POST" action="reset_password">
         <!-- <label for="username">Enter your email:</label>
         <input type="text" name="username" required placeholder="example@gmail.com"> -->
         
@@ -153,43 +128,13 @@
 
 <?php
 require_once '../initialize.php';
-// Assuming that you will handle OTP verification in a separate action (verify_otp)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['otp'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
     if ($conn->connect_error) {
         die("Database connection failed: " . $conn->connect_error);
     }
 
     $token = $conn->real_escape_string($_POST['token']);
-    $otp = $_POST['otp'];
-
-    // Check OTP validity
-    // $result = $conn->query("SELECT * FROM tblguest WHERE VERIFICATION_TOKEN = '$token' AND OTP = '$otp' AND OTP_EXPIRE_AT >= NOW()");
-    // Check OTP validity using prepared statements
-$stmt = $conn->prepare("SELECT * FROM tblguest WHERE VERIFICATION_TOKEN = ? AND OTP = ? AND OTP_EXPIRE_AT >= NOW()");
-$stmt->bind_param("ss", $token, $otp);
-$stmt->execute();
-$result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        // OTP verified successfully, show password reset form
-        echo "<script>
-        document.getElementById('otp-form').style.display = 'none';  // Hide OTP form
-        document.getElementById('password-reset-fields').style.display = 'block';  // Show password reset form
-    </script>";
-    } else {
-        echo "<script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Invalid or expired OTP.',
-                confirmButtonText: 'OK'
-            });
-        </script>";
-    }
-}
-
-// Handle the password reset logic
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_password']) && isset($_POST['confirm_password'])) {
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
 
@@ -199,35 +144,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_password']) && is
     } else {
         $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
 
-        // Validate the token and reset the password
-        // $result = $conn->query("SELECT * FROM tblguest WHERE VERIFICATION_TOKEN = '$token' AND OTP_EXPIRE_AT >= NOW()");
-         // Validate the token and reset the password
-         $stmt = $conn->prepare("SELECT * FROM tblguest WHERE VERIFICATION_TOKEN = ? AND OTP_EXPIRE_AT >= NOW()");
-         $stmt->bind_param("s", $token);
-         $stmt->execute();
+        // Validate the token and expiration
+        $result = $conn->query("SELECT * FROM tblguest WHERE VERIFICATION_TOKEN = '$token' AND OTP_EXPIRE_AT >= NOW()");
         if ($result->num_rows === 0) {
             $error_message = "Invalid or expired token.";
         } else {
-            // Update the password and clear the token and OTP
-            // $conn->query("UPDATE tblguest SET G_PASS = '$hashed_password', VERIFICATION_TOKEN = NULL, OTP = NULL, OTP_EXPIRE_AT = NULL WHERE VERIFICATION_TOKEN = '$token'");
-            // Update the password and clear the token and OTP
-            $stmt = $conn->prepare("UPDATE tblguest SET G_PASS = ?, VERIFICATION_TOKEN = NULL, OTP = NULL, OTP_EXPIRE_AT = NULL WHERE VERIFICATION_TOKEN = ?");
-            $stmt->bind_param("ss", $hashed_password, $token);
-            $stmt->execute();
-            echo "<script>
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Password Reset Successfully',
-                    text: 'Your password has been reset successfully.',
-                    confirmButtonText: 'OK'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = 'https://mcchmhotelreservation.com/booking/index.php?view=logininfo';
-                    }
-                });
-            </script>";
+            // Update the password and clear the token
+            $conn->query("UPDATE tblguest SET G_PASS = '$hashed_password', VERIFICATION_TOKEN = NULL, OTP_EXPIRE_AT = NULL WHERE VERIFICATION_TOKEN = '$token'");
+            header('Location: https://mcchmhotelreservation.com/booking/index.php?view=logininfo');
+            exit;
         }
     }
+
+    // Update the password and clear the token
+    $conn->query("UPDATE tblguest SET G_PASS = '$hashed_password', VERIFICATION_TOKEN = NULL, OTP_EXPIRE_AT = NULL WHERE VERIFICATION_TOKEN = '$token'");
+    echo "<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Password Reset Successfully',
+        text: 'Your password has been reset successfully.',
+        confirmButtonText: 'OK'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'https://mcchmhotelreservation.com/booking/index.php?view=logininfo';
+        }
+    });
+    </script>";
+
 }
 ?>
 <script>
@@ -294,52 +237,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_password']) && is
             }
         });
     });
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const otpForm = document.getElementById('otpForm');
-    const otpInput = document.getElementById('otp');
-    const resetForm = document.getElementById('resetForm');
-    const otpButton = document.getElementById('verifyOtpButton');
-
-    otpForm.addEventListener('submit', function (event) {
-        event.preventDefault(); // Prevent default form submission
-
-        const otp = otpInput.value;
-        const email = document.getElementById('otp-email').value;
-
-        // Disable the button and show loading text
-        otpButton.disabled = true;
-        otpButton.textContent = 'Verifying...';
-
-        // Perform AJAX request to verify OTP
-        fetch('verify_otp', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `otp=${otp}&email=${email}`,
-        })
-        .then(response => response.text())  // Expect plain text response
-        .then(data => {
-            if (data === 'valid') {
-                // OTP is valid, show the password reset form
-                document.getElementById('otp-form').style.display = 'none';
-                document.getElementById('password-reset-fields').style.display = 'block';
-            } else {
-                // OTP is invalid, alert the user
-                alert('Invalid OTP. Please try again.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while verifying OTP. Please try again.');
-        })
-        .finally(() => {
-            otpButton.disabled = false;  // Re-enable the button
-            otpButton.textContent = 'Verify OTP';  // Reset button text
-        });
-    });
-});
-
 </script>
