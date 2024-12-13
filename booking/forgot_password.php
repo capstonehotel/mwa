@@ -197,9 +197,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Generate a unique reset token and expiration time
     $token = bin2hex(random_bytes(50));
     $expires = date("Y-m-d H:i:s", strtotime("+30 minutes"));
-
+    $otp = rand(100000, 999999);
     // Store the token in the database
-    $conn->query("UPDATE tblguest SET VERIFICATION_TOKEN = '$token', OTP_EXPIRE_AT = '$expires' WHERE G_UNAME = '$username'");
+    $conn->query("UPDATE tblguest SET VERIFICATION_TOKEN = '$token', OTP = '$otp', OTP_EXPIRE_AT = '$expires' WHERE G_UNAME = '$username'");
 
     // Get user's email for sending reset link
     $user = $result->fetch_assoc();
@@ -221,7 +221,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $mail->isHTML(true);
         $mail->Subject = 'Password Reset Request';
-        $mail->Body    = "Click the link below to reset your password:<br><br>
+        $mail->Body    = " Your OTP is: <b>{$otp}</b><br><br>
+         This OTP and reset link will expire in 30 minutes: <b>{$expires}</b><br><br>
+                        Click the link below to reset your password:<br><br>
                           <a href='https://mcchmhotelreservation.com/booking/reset_password?token=$token'>Reset Password</a><br><br>
                           If you did not request a password reset, please ignore this email.";
 

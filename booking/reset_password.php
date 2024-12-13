@@ -95,6 +95,13 @@
 
 <div class="container">
     <h2>Reset Your Password</h2>
+     <!-- OTP input section -->
+     <form id="otpForm" method="POST" action="verify_otp">
+        <label for="otp">Enter OTP:</label>
+        <input type="text" id="otp" name="otp" required placeholder="Enter OTP">
+        <button type="submit">Verify OTP</button>
+    </form>
+
     <form id="resetForm" method="POST" action="reset_password">
         <!-- <label for="username">Enter your email:</label>
         <input type="text" name="username" required placeholder="example@gmail.com"> -->
@@ -128,13 +135,38 @@
 
 <?php
 require_once '../initialize.php';
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+// Assuming that you will handle OTP verification in a separate action (verify_otp)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['otp'])) {
     $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
     if ($conn->connect_error) {
         die("Database connection failed: " . $conn->connect_error);
     }
 
     $token = $conn->real_escape_string($_POST['token']);
+    $otp = $_POST['otp'];
+
+    // Check OTP validity
+    $result = $conn->query("SELECT * FROM tblguest WHERE VERIFICATION_TOKEN = '$token' AND OTP = '$otp' AND OTP_EXPIRE_AT >= NOW()");
+    if ($result->num_rows > 0) {
+        // OTP verified successfully, show password reset form
+        echo "<script>
+            document.getElementById('otp-form').style.display = 'none';  // Hide OTP form
+            document.getElementById('password-reset-fields').style.display = 'block';  // Show password reset form
+        </script>";
+    } else {
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Invalid or expired OTP.',
+                confirmButtonText: 'OK'
+            });
+        </script>";
+    }
+}
+
+// Handle the password reset logic
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_password']) && isset($_POST['confirm_password'])) {
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
 
@@ -144,33 +176,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
 
-        // Validate the token and expiration
+        // Validate the token and reset the password
         $result = $conn->query("SELECT * FROM tblguest WHERE VERIFICATION_TOKEN = '$token' AND OTP_EXPIRE_AT >= NOW()");
         if ($result->num_rows === 0) {
             $error_message = "Invalid or expired token.";
         } else {
-            // Update the password and clear the token
-            $conn->query("UPDATE tblguest SET G_PASS = '$hashed_password', VERIFICATION_TOKEN = NULL, OTP_EXPIRE_AT = NULL WHERE VERIFICATION_TOKEN = '$token'");
-            header('Location: https://mcchmhotelreservation.com/booking/index.php?view=logininfo');
-            exit;
+            // Update the password and clear the token and OTP
+            $conn->query("UPDATE tblguest SET G_PASS = '$hashed_password', VERIFICATION_TOKEN = NULL, OTP = NULL, OTP_EXPIRE_AT = NULL WHERE VERIFICATION_TOKEN = '$token'");
+            echo "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Password Reset Successfully',
+                    text: 'Your password has been reset successfully.',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = 'https://mcchmhotelreservation.com/booking/index.php?view=logininfo';
+                    }
+                });
+            </script>";
         }
     }
-
-    // Update the password and clear the token
-    $conn->query("UPDATE tblguest SET G_PASS = '$hashed_password', VERIFICATION_TOKEN = NULL, OTP_EXPIRE_AT = NULL WHERE VERIFICATION_TOKEN = '$token'");
-    echo "<script>
-    Swal.fire({
-        icon: 'success',
-        title: 'Password Reset Successfully',
-        text: 'Your password has been reset successfully.',
-        confirmButtonText: 'OK'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = 'https://mcchmhotelreservation.com/booking/index.php?view=logininfo';
-        }
-    });
-    </script>";
-
 }
 ?>
 <script>
