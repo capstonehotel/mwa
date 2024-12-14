@@ -129,7 +129,7 @@ if (isset($_POST['save_room'])) {
               <!-- Room Name Input -->
               <div class="form-group">
                 <label for="ROOM">Name:</label>
-                <input required class="form-control" id="ROOM" name="ROOM" pattern="^(?!\s*$)[A-Za-z\s.,]+$" placeholder="Room Name" type="text" value="<?= isset($ROOM) ? htmlspecialchars($ROOM) : ''; ?>">
+                <input required class="form-control" id="ROOM" name="ROOM" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$" placeholder="Room Name" type="text" value="<?= isset($ROOM) ? htmlspecialchars($ROOM) : ''; ?>">
               </div>
               <!-- Accommodation Selection -->
               <div class="form-group">
