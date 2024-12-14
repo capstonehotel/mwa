@@ -241,7 +241,7 @@ function validateImage(event) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Invalid File Type',
-                    text: 'Please upload a valid image file (JPG, JPEG, PNG) without double extensions.',
+                    text: 'Please upload a valid image file (JPG, JPEG, PNG).',
                     confirmButtonText: 'OK'
                 });
                 fileInput.value = ""; // Clear the input
