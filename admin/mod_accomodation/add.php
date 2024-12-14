@@ -91,7 +91,7 @@ if (isset($_POST['save_accomodation'])) {
               <div class="col-md-12 col-sm-12">
                 <label class="col-md-4 control-label" for="ACCOMODATION">Name:</label>
                 <div class="col-md-12">
-                  <input required class="form-control input-sm" id="ACCOMODATION" name="ACCOMODATION"  pattern="^(?!\s*$)[A-Za-z\s.,]+$" placeholder="Accommodation" type="text" value="">
+                  <input required class="form-control input-sm" id="ACCOMODATION" name="ACCOMODATION"   placeholder="Accommodation" type="text" value="">
                 </div>
               </div>
             </div>
