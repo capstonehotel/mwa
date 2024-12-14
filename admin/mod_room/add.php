@@ -170,8 +170,43 @@ if (isset($_POST['save_room'])) {
                 <label for="image">Upload Image:</label>
                 <input required type="file" name="image" id="image" accept=".jpg, .jpeg, .png, .webp">
                 <img src="#" alt="Image Preview" id="image-preview" style="display: none; max-width: 100%; max-height: 200px;">
-
                 <script>
+        document.getElementById('image').addEventListener('change', function(event) {
+            const fileInput = event.target;
+            const filePath = fileInput.value;
+            const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.webp)$/i; // Allowed file extensions
+            const file = fileInput.files[0];
+
+            // Check for double extensions
+            const fileName = file ? file.name : '';
+            const fileType = file ? file.type : '';
+            const validImageTypes = ['image/jpeg', 'image/png', 'image/webp'];
+            const imagePreview = document.getElementById('image-preview');
+
+            // Check if there are multiple dots and if the last extension is valid
+            if (fileName.split('.').length > 2 || !allowedExtensions.exec(filePath) || !validImageTypes.includes(fileType)) {
+                // Show SweetAlert2 error message
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid File Type',
+                    text: 'Please upload a valid image file (JPG, JPEG, PNG, WEBP).',
+                    confirmButtonText: 'OK'
+                });
+                fileInput.value = ""; // Clear the input
+                imagePreview.style.display = 'none'; // Hide the preview
+                return false;
+            } else {
+                // If valid, show the image preview
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result; // Update the image source
+                    imagePreview.style.display = 'block'; // Show the image preview
+                };
+                reader.readAsDataURL(file); // Read the file as a data URL
+            }
+        });
+    </script>
+                <!-- <script>
                 document.getElementById('image').addEventListener('change', function() {
                     const file = this.files[0];
                     const imagePreview = document.getElementById('image-preview');
@@ -205,7 +240,7 @@ if (isset($_POST['save_room'])) {
                         }
                     }
                 });
-                </script>
+                </script> -->
 
               </div>
           </div>
