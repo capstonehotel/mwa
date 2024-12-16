@@ -200,40 +200,6 @@ require_once("../includes/initialize.php");
   if (isset($_POST['btnlogin'])) {
       $uname = sanitize_input($_POST['email']);
       $upass = sanitize_input($_POST['pass']);
-      $hcaptcha_response = $_POST['h-captcha-response'];  // Get the hCaptcha response
-
-      // Verify hCaptcha response
-      $secret_key = 'ES_84f7194c2cd04982851c0b2c910b33f3';  // Replace with your hCaptcha Secret Key
-      $url = 'https://hcaptcha.com/siteverify';
-      $data = [
-          'secret' => $secret_key,
-          'response' => $hcaptcha_response,
-      ];
-
-      // Use cURL to send request to hCaptcha
-      $ch = curl_init();
-      curl_setopt($ch, CURLOPT_URL, $url);
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-      curl_setopt($ch, CURLOPT_POST, 1);
-      curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-      $result = curl_exec($ch);
-      curl_close($ch);
-
-      $verification = json_decode($result);
-
-      if (!$verification->success) {
-          // hCaptcha failed
-          echo "<script>
-              Swal.fire({
-                  icon: 'error',
-                  title: 'hCaptcha Verification Failed',
-                  text: 'Please verify that you are not a robot.'
-              }).then(() => {
-                      window.location = 'login';
-                  });
-          </script>";
-          return;
-      }
 
       // Check for login attempt limits
       if (isset($_SESSION['attempts']) && $_SESSION['attempts'] >= MAX_ATTEMPTS) {
@@ -275,7 +241,7 @@ require_once("../includes/initialize.php");
               // Store user data in session
               $_SESSION['ADMIN_ID'] = $row['USERID'];
               $_SESSION['ADMIN_UNAME'] = $row['UNAME'];
-              $_SESSION['ADMIN_USERNAME'] = $row['USER_NAME'];
+ $_SESSION['ADMIN_USERNAME'] = $row['USER_NAME'];
               $_SESSION['ADMIN_UPASS'] = $row['UPASS'];
               $_SESSION['ADMIN_UROLE'] = $row['ROLE'];
               echo "<script>
@@ -284,12 +250,11 @@ require_once("../includes/initialize.php");
                   title: 'Welcome back!',
                   text: 'Hello, {$row['UNAME']}.',
                   timer: 2500,
-                  showConfirmButton: falses
+                  showConfirmButton: false
               }).then(() => {
                   window.location = 'index';
               });
           </script>";
-              //header("Location: index");
               exit();
           } else {
               $_SESSION['attempts'] = isset($_SESSION['attempts']) ? $_SESSION['attempts'] + 1 : 1;
@@ -319,7 +284,7 @@ require_once("../includes/initialize.php");
                     <i class="far fa-eye" id="eyeIcon"></i>
                 </div>
                  <!-- hCaptcha widget -->
-                 <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div> <!-- Replace with your hCaptcha Site Key -->
+                 <!-- <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div> Replace with your hCaptcha Site Key -->
                  <div id="hCaptchaError" style="display: <?php echo $lockout_error ? 'block' : 'none'; ?>; color: red; font-size: 14px; text-align: center; margin-top: 10px;"></div>
                 <button type="submit" name="btnlogin">Login</button>
                
