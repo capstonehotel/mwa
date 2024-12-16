@@ -25,43 +25,24 @@ if ($conn->connect_error) {
 // } else {
 //     echo "Unable to count rows. The table may be empty.";
 // }
+$sql = "SELECT * FROM tblguest";
+$result = $conn->query($sql);
 
-// $sql = "SELECT * FROM tblguest";
-// $result = $conn->query($sql);
-
-// if ($result->num_rows > 0) {
-//     echo "<table border='1'>";
-//     echo "<tr><th>ID</th><th>GUESTID</th><th>session_token</th><th>last_activity</th></tr>";
-//     while ($row = $result->fetch_assoc()) {
-//         echo "<tr>";
-//         echo "<td>" . htmlspecialchars($row["GUESTID"]) . "</td>";
-//         echo "<td>" . htmlspecialchars($row["session_token"]) . "</td>";
-//         echo "<td>" . htmlspecialchars($row["last_activity"]) . "</td>";
+if ($result->num_rows > 0) {
+    echo "<table border='1'>";
+    echo "<tr><th>ID</th><th>GUESTID</th><th>session_token</th><th>last_activity</th></tr>";
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>" . htmlspecialchars($row["GUESTID"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["session_token"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["last_activity"]) . "</td>";
        
-//         echo "</tr>";
-//     }
-//     echo "</table>";
-// } else {
-//     echo "No records found.";
-// }
-
-// SQL query to create the table
-$sql = "CREATE TABLE user_devices (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    device_identifier VARCHAR(255) NOT NULL,
-    registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE (user_id, device_identifier),
-    FOREIGN KEY (user_id) REFERENCES tbluseraccount(USERID)
-)";
-
-// Execute the query
-if ($conn->query($sql) === TRUE) {
-    echo "Table 'user_devices' created successfully!";
+        echo "</tr>";
+    }
+    echo "</table>";
 } else {
-    echo "Error creating table: " . $conn->error;
+    echo "No records found.";
 }
-
 
  $conn->close();
 
