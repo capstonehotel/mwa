@@ -1,6 +1,6 @@
 <?php
 require_once("../includes/initialize.php");
-//require_once("sendOTP.php");
+require_once("sendOTP.php");
 
 
 // Start the session
@@ -166,136 +166,211 @@ require_once("../includes/initialize.php");
 
   <?php
   // Define the max number of attempts and lockout time (5 minutes)
-  define('MAX_ATTEMPTS', 3);
-  define('LOCKOUT_TIME', 300); // 5 minutes in seconds
+define('MAX_ATTEMPTS', 3);
+define('LOCKOUT_TIME', 300); // 5 minutes in seconds
 
-  // Check if the user is already locked out
-  if (isset($_SESSION['lockout_time']) && (time() - $_SESSION['lockout_time'] < LOCKOUT_TIME)) {
-      // User is locked out, show the countdown message
-      $remaining_time = LOCKOUT_TIME - (time() - $_SESSION['lockout_time']);
-      $lockout_message = "You have " . ceil($remaining_time / 60) . " minute(s) remaining before you can try again.";
-  } else {
-      // Reset lockout message if the lockout period has passed
-      unset($_SESSION['lockout_time']);
-      $lockout_message = '';
-  }
+// Check if the user is already locked out
+if (isset($_SESSION['lockout_time']) && (time() - $_SESSION['lockout_time'] < LOCKOUT_TIME)) {
+    // User is locked out, show the countdown message
+    $remaining_time = LOCKOUT_TIME - (time() - $_SESSION['lockout_time']);
+    $lockout_message = "You have " . ceil($remaining_time / 60) . " minute(s) remaining before you can try again.";
+} else {
+    // Reset lockout message if the lockout period has passed
+    unset($_SESSION['lockout_time']);
+    $lockout_message = '';
+}
+
+// Handle OTP verification
+if (isset($_POST['otp'])) {
+    $entered_otp = sanitize_input($_POST['otp']);
+    if (isset($_SESSION['OTP']) && $entered_otp == $_SESSION['OTP'] && time() < $_SESSION['OTP_EXPIRY']) {
+        // OTP is valid, log the user in
+        $_SESSION['ADMIN_ID'] = $_SESSION['TEMP_ADMIN_ID'];
+        $_SESSION['ADMIN_UNAME'] = $_SESSION['TEMP_ADMIN_UNAME'];
+        $_SESSION['ADMIN_USERNAME'] = $_SESSION['TEMP_ADMIN_USERNAME'];
+        $_SESSION['ADMIN_UPASS'] = $_SESSION['TEMP_ADMIN_UPASS'];
+        $_SESSION['ADMIN_UROLE'] = $_SESSION['TEMP_ADMIN_UROLE'];
+
+        // Clear OTP session variables
+        unset($_SESSION['OTP']);
+        unset($_SESSION['OTP_EXPIRY']);
+        unset($_SESSION['TEMP_ADMIN_ID']);
+        unset($_SESSION['TEMP_ADMIN_UNAME']);
+        unset($_SESSION['TEMP_ADMIN_USERNAME']);
+        unset($_SESSION['TEMP_ADMIN_UPASS']);
+        unset($_SESSION['TEMP_ADMIN_UROLE']);
+
+        header("Location: index");
+        exit();
+    } else {
+        // Invalid OTP
+        $otp_error = "Invalid OTP! Please try again.";
+    }
+}
+
 
   // Function to sanitize inputs for XSS protection
-  function sanitize_input($data) {
-      return htmlspecialchars(trim($data), ENT_QUOTES, 'UTF-8');
-  }
+function sanitize_input($data) {
+    return htmlspecialchars(trim($data), ENT_QUOTES, 'UTF-8');
+}
 
-  // Function to validate email format
-  function validate_email($email) {
-      return filter_var($email, FILTER_VALIDATE_EMAIL);
-  }
+// Function to validate email format
+function validate_email($email) {
+    return filter_var($email, FILTER_VALIDATE_EMAIL);
+}
+if (admin_logged_in()) { ?>
+    <script>
+        window.location = "index";
+    </script>
+<?php
+}
 
-  if (admin_logged_in()) { ?>
-      <script>
-          window.location = "index";
-      </script>
-  <?php
-  }
+if (isset($_POST['btnlogin'])) {
+    $uname = sanitize_input($_POST['email']);
+    $upass = sanitize_input($_POST['pass']);
+    $hcaptcha_response = $_POST['h-captcha-response'];  // Get the hCaptcha response
 
-  if (isset($_POST['btnlogin'])) {
-      $uname = sanitize_input($_POST['email']);
-      $upass = sanitize_input($_POST['pass']);
-      $hcaptcha_response = $_POST['h-captcha-response'];  // Get the hCaptcha response
+    // Verify hCaptcha response
+    $secret_key = 'ES_84f7194c2cd04982851c0b2c910b33f3';  // Replace with your hCaptcha Secret Key
+    $url = 'https://hcaptcha.com/siteverify';
+    $data = [
+        'secret' => $secret_key,
+        'response' => $hcaptcha_response,
+    ];
 
-      // Verify hCaptcha response
-      $secret_key = 'ES_84f7194c2cd04982851c0b2c910b33f3';  // Replace with your hCaptcha Secret Key
-      $url = 'https://hcaptcha.com/siteverify';
-      $data = [
-          'secret' => $secret_key,
-          'response' => $hcaptcha_response,
-      ];
+    // Use cURL to send request to hCaptcha
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    $result = curl_exec($ch);
+    curl_close($ch);
 
-      // Use cURL to send request to hCaptcha
-      $ch = curl_init();
-      curl_setopt($ch, CURLOPT_URL, $url);
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-      curl_setopt($ch, CURLOPT_POST, 1);
-      curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-      $result = curl_exec($ch);
-      curl_close($ch);
+    $verification = json_decode($result);
 
-      $verification = json_decode($result);
+    if (!$verification->success) {
+        // hCaptcha failed
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'hCaptcha Verification Failed',
+                text: 'Please verify that you are not a robot.'
+            }).then(() => {
+                    window.location = 'login';
+                });
+        </script>";
+        return;
+    }
+       // Check for login attempt limits
+       if (isset($_SESSION['attempts']) && $_SESSION['attempts'] >= MAX_ATTEMPTS) {
+        // Lockout user if they exceeded the max attempts
+        $_SESSION['lockout_time'] = time();
+        $lockout_message = 'You have reached the maximum number of login attempts. Please try again later.';
+        $lockout_error = true;
+    }
+    if ($uname == '' || $upass == '') {
+        $_SESSION['attempts'] = isset($_SESSION['attempts']) ? $_SESSION['attempts'] + 1 : 1;
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Invalid Username and Password!'
+            });
+        </script>";
+    } elseif (!validate_email($uname)) {
+        $_SESSION['attempts'] = isset($_SESSION['attempts']) ? $_SESSION['attempts'] + 1 : 1;
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Email Format',
+                text: 'Please enter a valid email address.'
+            });
+        </script>";
+    } else {
+        $sql = "SELECT * FROM tbluseraccount WHERE USER_NAME = '$uname'";
+        $result = $connection->query($sql);
 
-      if (!$verification->success) {
-          // hCaptcha failed
-          echo "<script>
-              Swal.fire({
-                  icon: 'error',
-                  title: 'hCaptcha Verification Failed',
-                  text: 'Please verify that you are not a robot.'
-              }).then(() => {
-                      window.location = 'login';
-                  });
-          </script>";
-          return;
-      }
+        if (!$result) {
+            die("Database query failed: " . mysqli_error($connection));
+        }
 
-      // Check for login attempt limits
-      if (isset($_SESSION['attempts']) && $_SESSION['attempts'] >= MAX_ATTEMPTS) {
-          // Lockout user if they exceeded the max attempts
-          $_SESSION['lockout_time'] = time();
-          $lockout_message = 'You have reached the maximum number of login attempts. Please try again later.';
-          $lockout_error = true;
-      }
+        $row = mysqli_fetch_assoc($result);
 
-      if ($uname == '' || $upass == '') {
-          $_SESSION['attempts'] = isset($_SESSION['attempts']) ? $_SESSION['attempts'] + 1 : 1;
-          echo "<script>
-              Swal.fire({
-                  icon: 'error',
-                  title: 'Oops...',
-                  text: 'Invalid Username and Password!'
-              });
-          </script>";
-      } elseif (!validate_email($uname)) {
-          $_SESSION['attempts'] = isset($_SESSION['attempts']) ? $_SESSION['attempts'] + 1 : 1;
-          echo "<script>
-              Swal.fire({
-                  icon : 'error',
-                  title: 'Invalid Email Format',
-                  text: 'Please enter a valid email address.'
-              });
-          </script>";
-      } else {
-          $sql = "SELECT * FROM tbluseraccount WHERE USER_NAME = '$uname'";
-          $result = $connection->query($sql);
+        if ($row && password_verify($upass, $row['UPASS'])) {
+            // Store temporary user data in session
+            $_SESSION['TEMP_ADMIN_ID'] = $row['USERID'];
+            $_SESSION['TEMP_ADMIN_UNAME'] = $row['UNAME'];
+            $_SESSION['TEMP_ADMIN_USERNAME'] = $row['USER_NAME'];
+            $_SESSION['TEMP_ADMIN_UPASS'] = $row['UPASS'];
+            $_SESSION['TEMP_ADMIN_UROLE'] = $row['ROLE'];
 
-          if (!$result) {
-              die("Database query failed: " . mysqli_error($connection));
-          }
 
-          $row = mysqli_fetch_assoc($result);
+            // Generate OTP
+    $otp = random_int(100000, 999999); // Generate a 6-digit OTP
+    $_SESSION['OTP'] = $otp; // Store OTP in session for verification
+    $_SESSION['OTP_EXPIRY'] = time() + 300; // Set OTP expiry time (5 minutes)
 
-          if ($row && password_verify($upass, $row['UPASS'])) {
-              // Store user data in session
-              $_SESSION['ADMIN_ID'] = $row['USERID'];
-              $_SESSION['ADMIN_UNAME'] = $row['UNAME'];
-              $_SESSION['ADMIN_USERNAME'] = $row['USER_NAME'];
-              $_SESSION['ADMIN_UPASS'] = $row['UPASS'];
-              $_SESSION['ADMIN_UROLE'] = $row['ROLE'];
+    
+                // Send OTP to user's email
+                if (sendOTPEmail($row['USER_NAME'], $otp)) {
+                    // Redirect to OTP verification
+                    echo "<script>
+                        Swal.fire({
+                            title: 'OTP Sent!',
+                            text: 'An OTP has been sent to your email. Please enter it to continue.',
+                            input: 'text',
+                            confirmButtonText: 'Verify',
+                            showCancelButton: false,
+                            preConfirm: (input) => {
+                                return new Promise((resolve) => {
+                                    if (input === '') {
+                                        Swal.showValidationMessage('Please enter the OTP');
+                                    } else {
+                                        // Submit OTP for verification
+                                        $.post('login', { otp: input }, function(response) {
+                                            if (response === 'success') {
+                                                Swal.fire('Invalid OTP!', 'Please try again.', 'error').then(() => {
+                                                    window.location = 'login';
+                                                });
+                                            } else {
+                                                Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
+                                                    window.location = 'index';
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    </script>";
+                } else {
+                    echo "<script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Failed to send OTP. Please try again later.'
+                        });
+                    </script>";
+                }
+        } else {
+            $_SESSION['attempts'] = isset($_SESSION['attempts']) ? $_SESSION['attempts'] + 1 : 1;
+            echo "<script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Login Failed',
+                    text: 'Username or Password Not Registered! Contact Your administrator.',
+                }).then(() => {
+                    window.location = 'login';
+                });
+            </script>";
+        }
+    }
+}
 
-              header("Location: index");
-              exit();
-          } else {
-              $_SESSION['attempts'] = isset($_SESSION['attempts']) ? $_SESSION['attempts'] + 1 : 1;
-              echo "<script>
-                  Swal.fire({
-                      icon: 'error',
-                      title: 'Login Failed',
-                      text: 'Username or Password Not Registered! Contact Your administrator.',
-                  }).then(() => {
-                      window.location = 'login';
-                  });
-              </script>";
-          }
-      }
-  }
-  ?>
+
+
+?>
     <div class="container">
         <div class="right">
             <h2>LOGIN CREDENTIALS</h2>
