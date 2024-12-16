@@ -278,8 +278,18 @@ require_once("../includes/initialize.php");
               $_SESSION['ADMIN_USERNAME'] = $row['USER_NAME'];
               $_SESSION['ADMIN_UPASS'] = $row['UPASS'];
               $_SESSION['ADMIN_UROLE'] = $row['ROLE'];
-
-              header("Location: index");
+              echo "<script>
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Welcome back!',
+                  text: 'Hello, {$row['UNAME']}.',
+                  timer: 2000,
+                  showConfirmButton: false
+              }).then(() => {
+                  window.location = 'index.php';
+              });
+          </script>";
+              //header("Location: index");
               exit();
           } else {
               $_SESSION['attempts'] = isset($_SESSION['attempts']) ? $_SESSION['attempts'] + 1 : 1;
