@@ -286,7 +286,7 @@ require_once("../includes/initialize.php");
                   timer: 2000,
                   showConfirmButton: false
               }).then(() => {
-                  window.location = 'index.php';
+                  window.location = 'index';
               });
           </script>";
               //header("Location: index");
