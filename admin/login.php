@@ -283,7 +283,7 @@ require_once("../includes/initialize.php");
                   icon: 'success',
                   title: 'Welcome back!',
                   text: 'Hello, {$row['UNAME']}.',
-                  timer: 2000,
+                  timer: 3000,
                   showConfirmButton: false
               }).then(() => {
                   window.location = 'index';
