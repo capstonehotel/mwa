@@ -428,8 +428,7 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
   $_SESSION['ADMIN_UPASS'] = $_SESSION['TEMP_ADMIN_UPASS'];
   $_SESSION['ADMIN_UROLE'] = $_SESSION['TEMP_ADMIN_UROLE'];
 
-  header("Location: index");
-  exit();
+ 
     
 }
 
