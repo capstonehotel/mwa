@@ -374,13 +374,11 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
                                     location: '$location',
                                     ip_address: '$ip_address'
                                 }, function(insertResponse) {
-                                    if (insertResponse === 'success') {
+                                   
                                         Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
                                             window.location = 'index';
                                         });
-                                    } else {
-                                        Swal.fire('Error', 'Failed to create session', 'error');
-                                    }
+                                    
                                 });
                                                  }
                                              });
