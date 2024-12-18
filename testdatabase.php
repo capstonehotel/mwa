@@ -44,15 +44,15 @@ if ($conn->connect_error) {
 // } else {
 //     echo "No records found.";
 // }
-$sql = "TRUNCATE TABLE sessions";
+// $sql = "TRUNCATE TABLE sessions";
 
 
-// Execute the query
-if ($conn->query($sql) === TRUE) {
-    echo "Table 'truncated' created successfully!";
-} else {
-    echo "Error creating table: " . $conn->error;
-}
+// // Execute the query
+// if ($conn->query($sql) === TRUE) {
+//     echo "Table 'truncated' created successfully!";
+// } else {
+//     echo "Error creating table: " . $conn->error;
+// }
 
 // $sql = "DROP TABLE IF EXISTS user_devices";
 
