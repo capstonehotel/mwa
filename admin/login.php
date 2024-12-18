@@ -396,22 +396,22 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
                      $stmt = $connection->prepare("INSERT INTO sessions (user, device, location, ip_address) VALUES (?, ?, ?, ?)");
                      $stmt->bind_param("ssss", $user, $device, $location, $ip_address);
                      if ($stmt->execute()) {
-                         echo "<script>
-                             Swal.fire({
-                                 icon: 'error',
-                                 title: 'Invalid Email Format',
-                                 text: 'added'
-                             });
-                         </script>";
+                        //  echo "<script>
+                        //      Swal.fire({
+                        //          icon: 'error',
+                        //          title: 'Invalid Email Format',
+                        //          text: 'added'
+                        //      });
+                        //  </script>";
                      } else {
                          // echo "Error logging session: " . $stmt->error;
-                         echo "<script>
-                             Swal.fire({
-                                 icon: 'error',
-                                 title: 'Invalid Email Format',
-                                 text: 'error'
-                             });
-                         </script>";
+                        //  echo "<script>
+                        //      Swal.fire({
+                        //          icon: 'error',
+                        //          title: 'Invalid Email Format',
+                        //          text: 'error'
+                        //      });
+                        //  </script>";
                      }
 
 } else {
