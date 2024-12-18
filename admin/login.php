@@ -312,14 +312,7 @@ function isNewDevice($connection, $user, $device, $ip_address) {
 }
 
 
-            // Store temporary user data in session
-            $_SESSION['TEMP_ADMIN_ID'] = $row['USERID'];
-            $_SESSION['TEMP_ADMIN_UNAME'] = $row['UNAME'];
-            $_SESSION['TEMP_ADMIN_USERNAME'] = $row['USER_NAME'];
-            $_SESSION['TEMP_ADMIN_UPASS'] = $row['UPASS'];
-            $_SESSION['TEMP_ADMIN_UROLE'] = $row['ROLE'];
-
-
+        
 // Example login check
 $user = "admin"; // This should be fetched from the session or login credentials
 $device = $_SERVER['HTTP_USER_AGENT']; // Device info (User-Agent)
@@ -334,6 +327,12 @@ if ($response) {
     }
 }
 
+ // Store temporary user data in session
+ $_SESSION['TEMP_ADMIN_ID'] = $row['USERID'];
+ $_SESSION['TEMP_ADMIN_UNAME'] = $row['UNAME'];
+ $_SESSION['TEMP_ADMIN_USERNAME'] = $row['USER_NAME'];
+ $_SESSION['TEMP_ADMIN_UPASS'] = $row['UPASS'];
+ $_SESSION['TEMP_ADMIN_UROLE'] = $row['ROLE'];
 if (isNewDevice($connection, $user, $device, $ip_address)) {
     // Log the session
          // Generate OTP
@@ -364,6 +363,8 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
                                                          window.location = 'login';
                                                      });
                                                  } else {";
+   
+
 
                                                  $stmt = $connection->prepare("INSERT INTO sessions (user, device, location, ip_address) VALUES (?, ?, ?, ?)");
 $stmt->bind_param("ssss", $user, $device, $location, $ip_address);
