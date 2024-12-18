@@ -2,7 +2,7 @@
 require_once("../includes/initialize.php");
 require_once("sendOTP.php");
 
-
+session_start();
 // Start the session
 
 error_reporting(E_ALL);
