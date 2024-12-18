@@ -348,7 +348,7 @@ $_SESSION['OTP_EXPIRY'] = time() + 300; // Set OTP expiry time (5 minutes)
 
 // Send OTP to user's email
 if (sendOTPEmail($row['USER_NAME'], $otp)) {
-    // Redirect to OTP verification
+   
     echo "<script>
         Swal.fire({
             title: 'OTP Sent!',
