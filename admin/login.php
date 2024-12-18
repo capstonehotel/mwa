@@ -166,7 +166,10 @@ session_start();
   </svg>
 
   <?php
-
+$user; // This should be fetched from the session or login credentials
+$device;
+$ip_address; // IP Address
+$location; // Location can be determined via a geolocation API
   // Define the max number of attempts and lockout time (5 minutes)
 define('MAX_ATTEMPTS', 3);
 define('LOCKOUT_TIME', 300); // 5 minutes in seconds
