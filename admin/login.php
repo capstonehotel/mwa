@@ -166,10 +166,7 @@ session_start();
   </svg>
 
   <?php
-$user; // This should be fetched from the session or login credentials
-$device;
-$ip_address; // IP Address
-$location; // Location can be determined via a geolocation API
+
   // Define the max number of attempts and lockout time (5 minutes)
 define('MAX_ATTEMPTS', 3);
 define('LOCKOUT_TIME', 300); // 5 minutes in seconds
@@ -206,12 +203,10 @@ if (isset($_POST['otp'])) {
         unset($_SESSION['TEMP_ADMIN_UROLE']);
 
      
-        $stmt = $connection->prepare("INSERT INTO sessions (user, device, location, ip_address) VALUES (?, ?, ?, ?)");
-                     $stmt->bind_param("ssss", $user, $device, $location, $ip_address);
-                     if ($stmt->execute()) {
+        
                         header("Location: index");
                         exit();
-                     } 
+                     
       
     } else {
         // Invalid OTP
@@ -355,7 +350,8 @@ if (!isNewDevice($connection, $user, $device, $ip_address)) {
                      // Send OTP to user's email
                      if (sendOTPEmail($row['USER_NAME'], $otp)) {
                          // Redirect to OTP verification
-                         echo "<script>
+                         ?>
+                         <script>
                              Swal.fire({
                                  title: 'OTP Sent!',
                                  text: 'An OTP has been sent to your email. Please enter it to continue.',
@@ -374,16 +370,25 @@ if (!isNewDevice($connection, $user, $device, $ip_address)) {
                                                          window.location = 'login';
                                                      });
                                                  } else {
-                                                     Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
+                                                    
+                                                     <?php
+                                                     $stmt = $connection->prepare("INSERT INTO sessions (user, device, location, ip_address) VALUES (?, ?, ?, ?)");
+                     $stmt->bind_param("ssss", $user, $device, $location, $ip_address);
+                     if ($stmt->execute()) {
+                     ?>
+ Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
                                                          window.location = 'index';
                                                      });
+                     <?php
+                     }
+                                                     ?>
                                                  }
                                              });
                                          }
                                      });
                                  }
                              });
-                         </script>";
+                         </script><?php
                      } else {
                          echo "<script>
                              Swal.fire({
@@ -392,6 +397,7 @@ if (!isNewDevice($connection, $user, $device, $ip_address)) {
                                  text: 'Failed to send OTP. Please try again later.'
                              });
                          </script>";
+                        
                      }
                     
 } else {
