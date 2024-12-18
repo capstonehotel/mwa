@@ -332,18 +332,6 @@ function isNewDevice($connection, $user, $device, $ip_address) {
 }
 
 
-$user = "admin"; // This should be fetched from the session or login credentials
-$device = $_SERVER['HTTP_USER_AGENT']; // Device info (User-Agent)
-$ip_address = $_SERVER['REMOTE_ADDR']; // IP Address
-$location = "Unknown"; // Location can be determined via a geolocation API
-// Fetch location using ip-api
-$response = file_get_contents("http://ip-api.com/json/$ip_address");
-if ($response) {
-    $data = json_decode($response, true);
-    if ($data['status'] === 'success') {
-        $location = $data['city'] . ', ' . $data['regionName'] . ', ' . $data['country'];
-    }
-}
 if (isNewDevice($connection, $user, $device, $ip_address)) {
     // Log the session
          // Generate OTP
