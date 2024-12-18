@@ -1,10 +1,5 @@
 <?php
 require_once("../includes/initialize.php");
-//require_once("sendOTP.php");
-
-
-// Start the session
-
 
 ?>
 
@@ -18,7 +13,7 @@ require_once("../includes/initialize.php");
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://www.hcaptcha.com/1/api.js" async defer></script> <!-- hCaptcha JS -->
+    <script src="https://hcaptcha.com/1/api.js" async defer></script>
     <style>
         body {
             color: white;
@@ -33,7 +28,6 @@ require_once("../includes/initialize.php");
             position: relative;
             overflow: hidden;
         }
-        
         .title {
             text-align: center;
             color: #7fb6dc;
@@ -104,17 +98,7 @@ require_once("../includes/initialize.php");
             font-size: 16px;
             cursor: pointer;
         }
-        /* .right form .links {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-        }
-        .right form .links a {
-            color: #337AB7;
-            font-size: 16px;
-            text-decoration: none;
-        } */
-         /* Your existing styles */
+       
         .links-container {
             display: flex;
             justify-content: space-between; /* Space between the links */
@@ -126,7 +110,23 @@ require_once("../includes/initialize.php");
             font-size: 16px; /* Font size */
             text-decoration: none; /* Remove underline */
         }
+        #remainingTime {
+    font-weight: bold;
+    font-size: 20px;
+    transition: color 0.5s ease;
+}
 
+#remainingTime.warning {
+    color: red;
+}
+
+#remainingTime.normal {
+    color: orange;
+}
+
+#remainingTime.safe {
+    color: green;
+}
         @media (max-width: 768px) {
             .container {
                 flex-direction: column; /* Stack elements vertically on mobile */
@@ -163,135 +163,154 @@ require_once("../includes/initialize.php");
     <use xlink:href="#gentle-wave" x="48" y="7" fill="#cfe8f9" />
     </g>
   </svg>
-
   <?php
-  // Define the max number of attempts and lockout time (5 minutes)
-  define('MAX_ATTEMPTS', 3);
-  define('LOCKOUT_TIME', 300); // 5 minutes in seconds
+// Define the max number of attempts and lockout time (5 minutes)
+define('MAX_ATTEMPTS', 3);
+define('LOCKOUT_TIME', 300); // 5 minutes in seconds
 
-  // Check if the user is already locked out
-  if (isset($_SESSION['lockout_time']) && (time() - $_SESSION['lockout_time'] < LOCKOUT_TIME)) {
-      // User is locked out, show the countdown message
-      $remaining_time = LOCKOUT_TIME - (time() - $_SESSION['lockout_time']);
-      $lockout_message = "You have " . ceil($remaining_time / 60) . " minute(s) remaining before you can try again.";
-  } else {
-      // Reset lockout message if the lockout period has passed
-      unset($_SESSION['lockout_time']);
-      $lockout_message = '';
-  }
+// Check if the user is already locked out
+if (isset($_SESSION['lockout_time']) && (time() - $_SESSION['lockout_time'] < LOCKOUT_TIME)) {
+    // User is locked out, show the countdown message
+    $remaining_time = LOCKOUT_TIME - (time() - $_SESSION['lockout_time']);
+    $lockout_message = "You have " . ceil($remaining_time / 60) . " minute(s) remaining before you can try again.";
+    $lockout_error = true; // Set lockout error to true
+} else {
+    // Reset lockout message if the lockout period has passed
+    unset($_SESSION['lockout_time']);
+    $lockout_message = '';
+    $lockout_error = false; // No lockout error
+}
 
-  // Function to sanitize inputs for XSS protection
-  function sanitize_input($data) {
-      return htmlspecialchars(trim($data), ENT_QUOTES, 'UTF-8');
-  }
+// Function to sanitize inputs for XSS protection
+function sanitize_input($data) {
+    return htmlspecialchars(trim($data), ENT_QUOTES, 'UTF-8');
+}
 
-  // Function to validate email format
-  function validate_email($email) {
-      return filter_var($email, FILTER_VALIDATE_EMAIL);
-  }
+// Function to validate email format
+function validate_email($email) {
+    return filter_var($email, FILTER_VALIDATE_EMAIL);
+}
 
-  if (admin_logged_in()) { ?>
-      <script>
-          window.location = "index";
-      </script>
-  <?php
-  }
+if (admin_logged_in()) { ?>
+    <script>
+        window.location = "index";
+    </script>
+<?php
+}
 
-  if (isset($_POST['btnlogin'])) {
-      $uname = sanitize_input($_POST['email']);
-      $upass = sanitize_input($_POST['pass']);
+if (isset($_POST['btnlogin'])) {
+    $uname = sanitize_input($_POST['email']);
+    $upass = sanitize_input($_POST['pass']);
 
-      // Check for login attempt limits
-      if (isset($_SESSION['attempts']) && $_SESSION['attempts'] >= MAX_ATTEMPTS) {
-          // Lockout user if they exceeded the max attempts
-          $_SESSION['lockout_time'] = time();
-          $lockout_message = 'You have reached the maximum number of login attempts. Please try again later.';
-          $lockout_error = true;
-      }
+    if (isset($_SESSION['attempts']) && $_SESSION['attempts'] >= MAX_ATTEMPTS) {
+        $_SESSION['lockout_time'] = time();
+        $lockout_message = 'You have reached the maximum number of login attempts. Please try again later.';
+        $lockout_error = true;
+    }
 
-      if ($uname == '' || $upass == '') {
-          $_SESSION['attempts'] = isset($_SESSION['attempts']) ? $_SESSION['attempts'] + 1 : 1;
-          echo "<script>
-              Swal.fire({
-                  icon: 'error',
-                  title: 'Oops...',
-                  text: 'Invalid Username and Password!'
-              });
-          </script>";
-      } elseif (!validate_email($uname)) {
-          $_SESSION['attempts'] = isset($_SESSION['attempts']) ? $_SESSION['attempts'] + 1 : 1;
-          echo "<script>
-              Swal.fire({
-                  icon : 'error',
-                  title: 'Invalid Email Format',
-                  text: 'Please enter a valid email address.'
-              });
-          </script>";
-      } else {
-          $sql = "SELECT * FROM tbluseraccount WHERE USER_NAME = '$uname'";
-          $result = $connection->query($sql);
+    if ($uname == '' || $upass == '') {
+        $_SESSION['attempts'] = isset($_SESSION['attempts']) ? $_SESSION['attempts'] + 1 : 1;
+        echo "<script>Swal.fire({icon: 'error', title: 'Oops...', text: 'Invalid Username and Password!'});</script>";
+    } elseif (!validate_email($uname)) {
+        $_SESSION['attempts'] = isset($_SESSION['attempts']) ? $_SESSION['attempts'] + 1 : 1;
+        echo "<script>Swal.fire({icon : 'error', title: 'Invalid Email Format', text: 'Please enter a valid email address.'});</script>";
+    } else {
+        // Check hCaptcha response
+        $hcaptcha_response = $_POST['h-captcha-response'];
+        $hcaptcha_secret = 'ES_84f7194c2cd04982851c0b2c910b33f3';
+        $response = file_get_contents("https://hcaptcha.com/siteverify?secret=$hcaptcha_secret&response=$hcaptcha_response");
+        $responseKeys = json_decode($response, true);
 
-          if (!$result) {
-              die("Database query failed: " . mysqli_error($connection));
-          }
+        if (!$responseKeys["success"]) {
+            echo "<script>Swal.fire({icon: 'error', title: 'hCaptcha Failed', text: 'Please complete the hCaptcha.'});</script>";
+        } else {
+            // Check if the device is new
+            $device_identifier = $_SERVER['HTTP_USER_AGENT']; // or any unique identifier for the device
+            $stmt = $connection->prepare("SELECT * FROM users_devices WHERE user_id = ? AND device_identifier = ?");
+            $stmt->bind_param("is", $_SESSION['ADMIN_ID'], $device_identifier);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-          $row = mysqli_fetch_assoc($result);
+            if ($result->num_rows == 0) {
+                // New device, send OTP
+               // New device, send OTP
+               $_SESSION['OTP'] = rand(100000, 999999);
+               $_SESSION['USER_EMAIL'] = $uname; // Store email for OTP sending
+               sendOTPEmail($uname, $_SESSION['OTP']); // Send OTP
+               header("Location: sendOTP.php");
+               exit();
+            } else {
+                // Existing device, proceed with login
+                $stmt = $connection->prepare("SELECT * FROM tbluseraccount WHERE USER_NAME = ?");
+                $stmt->bind_param("s", $uname);
+                $stmt->execute();
+                $result = $stmt->get_result();
 
-          if ($row && password_verify($upass, $row['UPASS'])) {
-              // Store user data in session
-              $_SESSION['ADMIN_ID'] = $row['USERID'];
-              $_SESSION['ADMIN_UNAME'] = $row['UNAME'];
- $_SESSION['ADMIN_USERNAME'] = $row['USER_NAME'];
-              $_SESSION['ADMIN_UPASS'] = $row['UPASS'];
-              $_SESSION['ADMIN_UROLE'] = $row['ROLE'];
-              echo "<script>
-              Swal.fire({
-                  icon: 'success',
-                  title: 'Welcome back!',
-                  text: 'Hello, {$row['UNAME']}.',
-                  timer: 2500,
-                  showConfirmButton: false
-              }).then(() => {
-                  window.location = 'index';
-              });
-          </script>";
-              exit();
-          } else {
-              $_SESSION['attempts'] = isset($_SESSION['attempts']) ? $_SESSION['attempts'] + 1 : 1;
-              echo "<script>
-                  Swal.fire({
-                      icon: 'error',
-                      title: 'Login Failed',
-                      text: 'Username or Password Not Registered! Contact Your administrator.',
-                  }).then(() => {
-                      window.location = 'login';
-                  });
-              </script>";
-          }
-      }
-  }
-  ?>
+                if (!$result) {
+                    die("Database query failed: " . mysqli_error($connection));
+                }
+
+                $row = mysqli_fetch_assoc($result);
+
+                if ($row && password_verify($upass, $row['UPASS'])) {
+                    // Store user data in session
+                    $_SESSION['ADMIN_ID'] = $row['USERID'];
+                    $_SESSION['ADMIN_UNAME'] = $row['UNAME'];
+                    $_SESSION['ADMIN_USERNAME'] = $row['USER_NAME'];
+                    $_SESSION['ADMIN_UPASS'] = $row['UPASS'];
+                    $_SESSION['ADMIN_UROLE'] = $row['ROLE'];
+                    echo "<script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Welcome back!',
+                            text: 'Hello, {$row['UNAME']}.',
+                            timer: 2300,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location = 'index';
+                        });
+                    </script>";
+                    exit();
+                } else {
+                    $_SESSION['attempts'] = isset($_SESSION['attempts']) ? $_SESSION['attempts'] + 1 : 1;
+                    echo "<script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Login Failed',
+                            text: 'Username or Password Not Registered! Contact Your administrator.',
+                        }).then(() => {
+                            window.location = 'login';
+                        });
+                    </script>";
+                }
+            }
+        }
+    }
+}
+?>
+
     <div class="container">
         <div class="right">
             <h2>LOGIN CREDENTIALS</h2>
             <form method="POST" action="login">
                 <div class="input-group">
-                    <input placeholder="Username" type="text" name="email" required>
+                    <input placeholder="Username" type="text" name="email" required <?php echo $lockout_error ? 'disabled' : ''; ?>>
                     <i class="fas fa-user"></i>
                 </div>
                 <div class="input-group">
-                    <input id="password" placeholder="Password" type="password" name="pass" minlength="8" maxlength="12" required>
+                    <input id="password" placeholder="Password" type="password" name="pass" minlength="8" maxlength="12" required <?php echo $lockout_error ? 'disabled' : ''; ?>>
                     <i class="far fa-eye" id="eyeIcon"></i>
                 </div>
-                 <!-- hCaptcha widget -->
-                 <!-- <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div> Replace with your hCaptcha Site Key -->
-                 <div id="hCaptchaError" style="display: <?php echo $lockout_error ? 'block' : 'none'; ?>; color: red; font-size: 14px; text-align: center; margin-top: 10px;"></div>
-                <button type="submit" name="btnlogin">Login</button>
-               
-                
+                <div class="input-group">
+            <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div>
+        </div>
+                <button type="submit" name="btnlogin"<?php echo $lockout_error ? 'disabled' : ''; ?>>Login</button>
                 <div class="links-container">
-                    <a href="../index" class="text-primary">Back to website</a>
-                    <a href="<?php echo  "https://mcchmhotelreservation.com/admin/forgot_password"; ?>"  class="text-primary">Forgot Password?</a>
+                    <a href="../index.php" class="text-primary">Back to website</a>
+                    <a href="<?php echo  "forgot_password"; ?>"  class="text-primary">Forgot Password?</a>
+                </div>
+                <div id="lockoutMessage" style="display: <?php echo $lockout_error ? 'block' : 'none'; ?>; color: red; font-size: 14px; text-align: center; margin-top: 10px;">
+                    <?php echo $lockout_message; ?>
                 </div>
             </form>
         </div>
@@ -306,24 +325,30 @@ require_once("../includes/initialize.php");
         eyeIcon.classList.toggle('fa-eye');
         eyeIcon.classList.toggle('fa-eye-slash');
     });
-    // Add form submission listener to validate hCaptcha completion
-document.getElementById('loginForm').addEventListener('submit', function (event) {
-    const hCaptchaResponse = grecaptcha.getResponse(); // Ensure you're using hCaptcha's method if this is for hCaptcha
+   
+    document.addEventListener("DOMContentLoaded", function () {
+        const lockoutMessageDiv = document.getElementById("lockoutMessage");
+        const loginButton = document.querySelector("button[name='btnlogin']");
 
-    if (hCaptchaResponse.length == 0) {
-        // Prevent form submission if hCaptcha is not completed
-        event.preventDefault();
+        // Start countdown for lockout time if user is locked out
+        let countdownTimer;
+        let remainingTime = <?php echo isset($remaining_time) ? $remaining_time : 0; ?>;
 
-        // Display inline error message
-        const hCaptchaError = document.getElementById('hCaptchaError');
-        hCaptchaError.textContent = 'Please complete the hCaptcha to proceed.';
-        hCaptchaError.style.display = 'block';
-    }
-});
+        if (remainingTime > 0) {
+            countdownTimer = setInterval(function() {
+                remainingTime--;
+                let minutes = Math.floor(remainingTime / 60);
+                let seconds = remainingTime % 60;
+                lockoutMessageDiv.innerHTML = `Too many login attempts. Please try again in ${minutes}:${seconds < 10 ? '0' : ''}${seconds} minutes.`;
+                if (remainingTime <= 0) {
+                    clearInterval(countdownTimer);
+                    location.reload(); // Refresh the page after countdown ends
+                }
+            }, 1000);
+        }
+    });
 
-    </script>
-    
-<script>
+
 document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.querySelector("form");
     const loginButton = document.querySelector("button[name='btnlogin']");
@@ -396,37 +421,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const loginButton = document.querySelector("button[name='btnlogin']");
-    const lockoutMessageDiv = document.getElementById("hCaptchaError");
-
-    // Check if the user is locked out
-    <?php if (isset($lockout_error) && $lockout_error) { ?>
-        loginButton.disabled = true; // Disable login button
-    <?php } else { ?>
-        loginButton.disabled = false; // Enable login button
-    <?php } ?>
-
-    // Start countdown for lockout time if user is locked out
-    let countdownTimer;
-    if (<?php echo isset($remaining_time) ? $remaining_time : 0; ?> > 0) {
-        let remainingTime = <?php echo $remaining_time; ?>;
-        countdownTimer = setInterval(function() {
-            remainingTime--;
-            let minutes = Math.floor(remainingTime / 60);
-            let seconds = remainingTime % 60;
-            lockoutMessageDiv.innerHTML = `You have ${minutes}:${seconds < 10 ? '0' : ''}${seconds} minute(s) remaining.`;
-            if (remainingTime <= 0) {
-                clearInterval(countdownTimer);
-                location.reload(); // Refresh the page after countdown ends
-            }
-        }, 1000);
-    }
-});
-</script>
-
-
+    </script>
 </body>
 </html>
