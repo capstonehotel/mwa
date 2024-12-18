@@ -347,7 +347,7 @@ if ($response) {
     }
 }
 
-if (isNewDevice($connection, $user, $device, $ip_address)) {
+if (!isNewDevice($connection, $user, $device, $ip_address)) {
     // Log the session
          // Generate OTP
           // Store temporary user data in session
@@ -414,18 +414,23 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
 
  
  
-    echo "<script>
-    Swal.fire({
-        icon: 'success',
-        title: '',
-        text: 'Welcome back, {$row['UNAME']}!'
-    }).then(() => {
-        window.location.href = 'index';
-    });
-  </script>";
+    
   
                 
-                
+              
+        $stmt = $connection->prepare("INSERT INTO sessions (user, device, location, ip_address) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssss", $user, $device, $location, $ip_address);
+        if ($stmt->execute()) {
+            echo "<script>
+            Swal.fire({
+                icon: 'success',
+                title: '',
+                text: 'Welcome back, {$row['UNAME']}!'
+            }).then(() => {
+                window.location.href = 'index';
+            });
+          </script>";
+        }   
                      
  
 }
