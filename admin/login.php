@@ -408,13 +408,19 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
                      }
 
 } else {
-     echo "<script>
-                             Swal.fire({
-                                 icon: 'success',
-                                 title: 'Welcome',
-                                 text: 'Welcome'
-                             });
-                         </script>";
+    echo "<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Welcome',
+        text: 'Welcome'
+    }).then(() => {
+        // Redirect to index.php after a short delay
+        setTimeout(function() {
+            window.location.href = 'index';
+        }, 1500);  // Adjust delay (1500 ms = 1.5 seconds) as needed
+    });
+</script>";
+
   // OTP is valid, log the user in
   $_SESSION['ADMIN_ID'] = $_SESSION['TEMP_ADMIN_ID'];
   $_SESSION['ADMIN_UNAME'] = $_SESSION['TEMP_ADMIN_UNAME'];
