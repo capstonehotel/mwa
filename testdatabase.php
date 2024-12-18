@@ -44,20 +44,19 @@ if ($conn->connect_error) {
 // } else {
 //     echo "No records found.";
 // }
-
-// SQL query to create the table
-$sql = "CREATE TABLE `users_devices` (
-  `id` int(11) NOT NULL,
-  `user_type` enum('account','guest') NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `device_identifier` varchar(255) NOT NULL,
-  `hcaptcha_verified` tinyint(1) DEFAULT 0,
-  `registered_at` timestamp NOT NULL DEFAULT current_timestamp()
+$sql = "CREATE TABLE sessions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user VARCHAR(255) NOT NULL,
+    device VARCHAR(255) NOT NULL,
+    date_logged timestamp NOT NULL DEFAULT current_timestamp(),
+    location VARCHAR(255) NOT NULL,
+    ip_address VARCHAR(45) NOT NULL
 )";
+
 
 // Execute the query
 if ($conn->query($sql) === TRUE) {
-    echo "Table 'user_devices' created successfully!";
+    echo "Table 'sessions' created successfully!";
 } else {
     echo "Error creating table: " . $conn->error;
 }
