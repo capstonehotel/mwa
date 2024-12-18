@@ -76,7 +76,7 @@ if ($result->num_rows > 0) {
     echo "<th>Device</th>";
     echo "<th>Location</th>";
     echo "<th>IP Address</th>";
-    echo "<th>Session ID</th>";
+    echo "<th>Date</th>";
     echo "<th>Action</th>";
     echo "</tr>";
     echo "</thead>";
@@ -89,7 +89,7 @@ if ($result->num_rows > 0) {
         echo "<td>" . htmlspecialchars($row['device']) . "</td>";
         echo "<td>" . htmlspecialchars($row['location']) . "</td>";
         echo "<td>" . htmlspecialchars($row['ip_address']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['session_id']) . "</td>"; // Adjust based on your actual column name
+        echo "<td>" . htmlspecialchars($row['date_logged']) . "</td>"; // Adjust based on your actual column name
         echo "<td><a href='delete_session.php?id=" . $row['id'] . "'>Delete</a></td>"; // Optional: link to delete session
         echo "</tr>";
     }
