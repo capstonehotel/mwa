@@ -368,16 +368,19 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
                                                      });
                                                  } else {
                                                       // OTP verified successfully, now execute PHP code to insert the session
-                                Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
-                                            window.location = 'index';
-                                        });
-                                                      $.post('insert_session.php', {
+                                $.post('insert_session.php', {
                                     user: '$user',
                                     device: '$device',
                                     location: '$location',
                                     ip_address: '$ip_address'
                                 }, function(insertResponse) {
-                                    
+                                    if (insertResponse === 'success') {
+                                        Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
+                                            window.location = 'index';
+                                        });
+                                    } else {
+                                        Swal.fire('Error', 'Failed to create session', 'error');
+                                    }
                                 });
                                                  }
                                              });
