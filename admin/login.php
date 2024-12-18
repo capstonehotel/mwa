@@ -166,7 +166,10 @@ session_start();
   </svg>
 
   <?php
-
+$user; // This should be fetched from the session or login credentials
+$device;
+$ip_address; // IP Address
+$location; // Location can be determined via a geolocation API
   // Define the max number of attempts and lockout time (5 minutes)
 define('MAX_ATTEMPTS', 3);
 define('LOCKOUT_TIME', 300); // 5 minutes in seconds
@@ -370,17 +373,13 @@ if (!isNewDevice($connection, $user, $device, $ip_address)) {
                                                          window.location = 'login';
                                                      });
                                                  } else {
-                                                    
+                                                     Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
+                                                         window.location = 'index';
+                                                     });
                                                      <?php
                                                      $stmt = $connection->prepare("INSERT INTO sessions (user, device, location, ip_address) VALUES (?, ?, ?, ?)");
                      $stmt->bind_param("ssss", $user, $device, $location, $ip_address);
-                     if ($stmt->execute()) {
-                     ?>
- Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
-                                                         window.location = 'index';
-                                                     });
-                     <?php
-                     }
+                     if ($stmt->execute()) {}
                                                      ?>
                                                  }
                                              });
