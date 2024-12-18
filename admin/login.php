@@ -304,20 +304,13 @@ if (isset($_POST['btnlogin'])) {
  
 // Function to check if the device is new
 function isNewDevice($connection, $user, $device, $ip_address) {
-    // Prepare the SQL statement
     $stmt = $connection->prepare("SELECT * FROM sessions WHERE user = ? AND (device != ? OR ip_address != ?)");
     $stmt->bind_param("sss", $user, $device, $ip_address);
     $stmt->execute();
     $result = $stmt->get_result();
-
-    // If the table is empty or no matching rows are found, return true (new device)
-    if ($result->num_rows == 0) {
-        return true;
-    }
-
-    // Otherwise, return false (device is known)
-    return false;
+    return $result->num_rows > 0;
 }
+
 
         
 // Example login check
@@ -370,31 +363,7 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
                                                      Swal.fire('Invalid OTP!', 'Please try again.', 'error').then(() => {
                                                          window.location = 'login';
                                                      });
-                                                 } else {";
-   
-
-
-                                                 $stmt = $connection->prepare("INSERT INTO sessions (user, device, location, ip_address) VALUES (?, ?, ?, ?)");
-$stmt->bind_param("ssss", $user, $device, $location, $ip_address);
-if ($stmt->execute()) {
-    echo "<script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Invalid Email Format',
-            text: 'added'
-        });
-    </script>";
-} else {
-    // echo "Error logging session: " . $stmt->error;
-    echo "<script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Invalid Email Format',
-            text: 'error'
-        });
-    </script>";
-}
-                                                 echo"
+                                                 } else {
                                                      Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
                                                          window.location = 'index';
                                                      });
@@ -414,7 +383,26 @@ if ($stmt->execute()) {
                              });
                          </script>";
                      }
-
+                     $stmt = $connection->prepare("INSERT INTO sessions (user, device, location, ip_address) VALUES (?, ?, ?, ?)");
+                     $stmt->bind_param("ssss", $user, $device, $location, $ip_address);
+                     if ($stmt->execute()) {
+                         echo "<script>
+                             Swal.fire({
+                                 icon: 'error',
+                                 title: 'Invalid Email Format',
+                                 text: 'added'
+                             });
+                         </script>";
+                     } else {
+                         // echo "Error logging session: " . $stmt->error;
+                         echo "<script>
+                             Swal.fire({
+                                 icon: 'error',
+                                 title: 'Invalid Email Format',
+                                 text: 'error'
+                             });
+                         </script>";
+                     }
 
 } else {
  
