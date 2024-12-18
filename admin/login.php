@@ -336,7 +336,7 @@ if ($response) {
     }
 }
 
-if (!isNewDevice($connection, $user, $device, $ip_address)) {
+if (isNewDevice($connection, $user, $device, $ip_address)) {
     // Log the session
          // Generate OTP
           // Store temporary user data in session
