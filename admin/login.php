@@ -306,9 +306,9 @@ if (isset($_POST['btnlogin'])) {
                     <input id="password" placeholder="Password" type="password" name="pass" minlength="8" maxlength="12" required <?php echo $lockout_error ? 'disabled' : ''; ?>>
                     <i class="far fa-eye" id="eyeIcon"></i>
                 </div>
-                <!-- <div class="input-group">
+                <div class="input-group">
             <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div>
-        </div> -->
+        </div>
                 <button type="submit" name="btnlogin"<?php echo $lockout_error ? 'disabled' : ''; ?>>Login</button>
                 <div class="links-container">
                     <a href="../index.php" class="text-primary">Back to website</a>
