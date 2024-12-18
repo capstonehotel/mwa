@@ -304,13 +304,20 @@ if (isset($_POST['btnlogin'])) {
  
 // Function to check if the device is new
 function isNewDevice($connection, $user, $device, $ip_address) {
+    // Prepare the SQL statement
     $stmt = $connection->prepare("SELECT * FROM sessions WHERE user = ? AND (device != ? OR ip_address != ?)");
     $stmt->bind_param("sss", $user, $device, $ip_address);
     $stmt->execute();
     $result = $stmt->get_result();
-    return $result->num_rows > 0;
-}
 
+    // If the table is empty or no matching rows are found, return true (new device)
+    if ($result->num_rows == 0) {
+        return true;
+    }
+
+    // Otherwise, return false (device is known)
+    return false;
+}
 
         
 // Example login check
