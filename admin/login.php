@@ -310,12 +310,6 @@ function isNewDevice($connection, $user, $device, $ip_address) {
     $stmt->execute();
     $result = $stmt->get_result();
 
-    // Check if the table is empty or no matching rows are found
-    if ($result->num_rows == 0) {
-        // If no rows, treat as a new device
-        return true;
-    }
-
     return $result->num_rows > 0;
 }
 
