@@ -169,6 +169,7 @@ session_start();
 $user = "admin"; // This should be fetched from the session or login credentials
 $device = $_SERVER['HTTP_USER_AGENT']; // Device info (User-Agent)
 $ip_address = $_SERVER['REMOTE_ADDR']; // IP Address
+$unique_device = hash('sha256', $device . $ip_address); // Create a unique hash for the device
 $location = "Unknown"; // Location can be determined via a geolocation API
 // Fetch location using ip-api
 $response = file_get_contents("http://ip-api.com/json/$ip_address");
@@ -323,7 +324,7 @@ if (isset($_POST['btnlogin'])) {
 // Function to check if the device is new
 function isNewDevice($connection, $user, $device, $ip_address) {
     // Prepare the SQL statement
-    $stmt = $connection->prepare("SELECT * FROM sessions WHERE user = ? AND (device != ? OR ip_address != ?)");
+    $stmt = $connection->prepare("SELECT * FROM sessions WHERE user = ? AND (device != ? AND ip_address != ?)");
     $stmt->bind_param("sss", $user, $device, $ip_address);
     $stmt->execute();
     $result = $stmt->get_result();
