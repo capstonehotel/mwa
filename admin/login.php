@@ -379,7 +379,7 @@ Swal.fire({
         location: '<?php echo $location; ?>',
         ip_address: '<?php echo $ip_address; ?>'
     }, function(insertResponse) {
-        if (insertResponse === 'success') {
+        if (insertResponse == 'success') {
             // Redirect if session insertion is successful
             window.location = 'index';
         } else {
