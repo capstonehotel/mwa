@@ -44,19 +44,12 @@ if ($conn->connect_error) {
 // } else {
 //     echo "No records found.";
 // }
-$sql = "CREATE TABLE sessions (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user VARCHAR(255) NOT NULL,
-    device VARCHAR(255) NOT NULL,
-    date_logged timestamp NOT NULL DEFAULT current_timestamp(),
-    location VARCHAR(255) NOT NULL,
-    ip_address VARCHAR(45) NOT NULL
-)";
+$sql = "TRUNCATE TABLE sessions";
 
 
 // Execute the query
 if ($conn->query($sql) === TRUE) {
-    echo "Table 'sessions' created successfully!";
+    echo "Table 'truncated' created successfully!";
 } else {
     echo "Error creating table: " . $conn->error;
 }
