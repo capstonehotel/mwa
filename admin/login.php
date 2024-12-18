@@ -316,8 +316,7 @@ function isNewDevice($connection, $user, $device, $ip_address) {
         return true;
     }
 
-    // Otherwise, if there are rows, it's a known device
-    return false;
+    return $result->num_rows > 0;
 }
 
 
