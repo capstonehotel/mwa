@@ -400,17 +400,17 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
 
 
     
-  $username = htmlspecialchars($row['UNAME'], ENT_QUOTES, 'UTF-8');
-  echo "<script>
-    Swal.fire({
-        icon: 'success',
-        title: '',
-        text: 'Welcome back, $username!'
-    }).then(() => {
-        window.location.href = 'index';
-    });
-  </script>";
-  
+$username = htmlspecialchars($row['UNAME'], ENT_QUOTES, 'UTF-8');
+echo "<script>
+  Swal.fire({
+      icon: 'success',
+      title: '',
+      text: 'Welcome back, $username!'
+  }).then(() => {
+      window.location.href = 'index';
+  });
+</script>";
+
  
 }
 
