@@ -5,7 +5,8 @@ require_once("sendOTP.php");
 
 // Start the session
 
-
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 ?>
 
 <!DOCTYPE html>
@@ -299,7 +300,8 @@ if (isset($_POST['btnlogin'])) {
         $row = mysqli_fetch_assoc($result);
 
         if ($row && password_verify($upass, $row['UPASS'])) {
-
+            echo "<script>alert('test')<script>";
+ 
 // Function to check if the device is new
 function isNewDevice($conn, $user, $device, $ip_address) {
     $stmt = $conn->prepare("SELECT * FROM sessions WHERE user = ? AND (device != ? OR ip_address != ?)");
@@ -324,17 +326,17 @@ if ($response) {
 }
 
 if (isNewDevice($conn, $user, $device, $ip_address)) {
-    echo "New device detected! Please verify.";
+    echo "<script>alert('New device detected! Please verify.')<script>";
     // Additional actions, e.g., send verification email or prompt for verification
 } else {
-    echo "Welcome back!";
+    echo "<script>alert('Welcome')<script>";
 }
 
 // Log the session
 $stmt = $conn->prepare("INSERT INTO sessions (user, device, location, ip_address) VALUES (?, ?, ?, ?)");
 $stmt->bind_param("ssss", $user, $device, $location, $ip_address);
 if ($stmt->execute()) {
-    echo "Session logged successfully.";
+    echo "<script>alert('Added')<script>";
 } else {
     echo "Error logging session: " . $stmt->error;
 }
