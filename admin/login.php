@@ -414,10 +414,11 @@ if ($stmt->execute()) {
    // Additional actions, e.g., send verification email or prompt for verification
 } else {
     echo "<script>
-   Swal.fire('Welcome back1, {$row['UNAME']}!', '', 'success').then(() => {
-                                                         window.location = 'index';
-                                                     });
+   Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success');
 </script>";
+header("Location: index");
+        exit();
+
 }
 
 
