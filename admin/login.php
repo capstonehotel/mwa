@@ -379,7 +379,7 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
                                             window.location = 'index';
                                         });
                                     } else {
-                                        Swal.fire('Error', 'insertResponse', 'error');
+                                        Swal.fire('Error', insertResponse, 'error');
                                     }
                                 });
                                                  }
