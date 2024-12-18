@@ -321,18 +321,21 @@ if (isset($_POST['btnlogin'])) {
         if ($row && password_verify($upass, $row['UPASS'])) {
            
  
-// Function to check if the device is new
-function isNewDevice($connection, $user, $device, $ip_address) {
-    // Prepare the SQL statement to find a mismatch in either device or IP address
-    $stmt = $connection->prepare("SELECT * FROM sessions WHERE user = ? AND (device != ? OR ip_address != ?)");
-    $stmt->bind_param("sss", $user, $device, $ip_address);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    // If any row is returned, it means this is a new device/IP
-    return $result->num_rows > 0;
-}
-
+            function isNewDevice($connection, $user, $device, $location) {
+                // Prepare the SQL statement to check if the device and location already exist for the user
+                $stmt = $connection->prepare("SELECT 1 FROM sessions WHERE user = ? AND device = ? AND location = ?");
+                $stmt->bind_param("sss", $user, $device, $location);
+                $stmt->execute();
+                $result = $stmt->get_result();
+            
+                // If at least one row is returned, the device and location already exist
+                if ($result->num_rows > 0) {
+                    return false; // Device and location exist
+                } else {
+                    return true; // Device and location do not exist
+                }
+            }
+            
 
 $user = "admin"; // This should be fetched from the session or login credentials
 $device = $_SERVER['HTTP_USER_AGENT'];
@@ -347,7 +350,7 @@ if ($response) {
     }
 }
 
-if (!isNewDevice($connection, $user, $device, $ip_address)) {
+if (isNewDevice($connection, $user, $device, $ip_address)) {
     // Log the session
          // Generate OTP
           // Store temporary user data in session
