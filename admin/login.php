@@ -422,15 +422,6 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
   $_SESSION['ADMIN_UPASS'] = $_SESSION['TEMP_ADMIN_UPASS'];
   $_SESSION['ADMIN_UROLE'] = $_SESSION['TEMP_ADMIN_UROLE'];
 
-  // Clear OTP session variables
-  unset($_SESSION['OTP']);
-  unset($_SESSION['OTP_EXPIRY']);
-  unset($_SESSION['TEMP_ADMIN_ID']);
-  unset($_SESSION['TEMP_ADMIN_UNAME']);
-  unset($_SESSION['TEMP_ADMIN_USERNAME']);
-  unset($_SESSION['TEMP_ADMIN_UPASS']);
-  unset($_SESSION['TEMP_ADMIN_UROLE']);
-
   header("Location: index");
   exit();
     
