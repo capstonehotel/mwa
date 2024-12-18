@@ -44,15 +44,15 @@ if ($conn->connect_error) {
 // } else {
 //     echo "No records found.";
 // }
-$sql = "TRUNCATE TABLE sessions";
+// $sql = "TRUNCATE TABLE sessions";
 
 
-// Execute the query
-if ($conn->query($sql) === TRUE) {
-    echo "Table 'truncated' created successfully!";
-} else {
-    echo "Error creating table: " . $conn->error;
-}
+// // Execute the query
+// if ($conn->query($sql) === TRUE) {
+//     echo "Table 'truncated' created successfully!";
+// } else {
+//     echo "Error creating table: " . $conn->error;
+// }
 // SQL to drop the user_devices table
 // $sql = "DROP TABLE IF EXISTS user_devices";
 
@@ -61,6 +61,45 @@ if ($conn->query($sql) === TRUE) {
 // } else {
 //     echo "Error deleting table: " . $conn->error;
 // }
+
+
+// SQL query to fetch all rows from the sessions table
+$sql = "SELECT * FROM sessions";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // Start the HTML table
+    echo "<table border='1' cellpadding='10' cellspacing='0'>";
+    echo "<thead>";
+    echo "<tr>";
+    echo "<th>User</th>";
+    echo "<th>Device</th>";
+    echo "<th>Location</th>";
+    echo "<th>IP Address</th>";
+    echo "<th>Session ID</th>";
+    echo "<th>Action</th>";
+    echo "</tr>";
+    echo "</thead>";
+
+    // Fetch and display the rows
+    echo "<tbody>";
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>" . htmlspecialchars($row['user']) . "</td>";
+        echo "<td>" . htmlspecialchars($row['device']) . "</td>";
+        echo "<td>" . htmlspecialchars($row['location']) . "</td>";
+        echo "<td>" . htmlspecialchars($row['ip_address']) . "</td>";
+        echo "<td>" . htmlspecialchars($row['session_id']) . "</td>"; // Adjust based on your actual column name
+        echo "<td><a href='delete_session.php?id=" . $row['id'] . "'>Delete</a></td>"; // Optional: link to delete session
+        echo "</tr>";
+    }
+    echo "</tbody>";
+
+    // End the HTML table
+    echo "</table>";
+} else {
+    echo "No sessions found.";
+}
 
  $conn->close();
 
