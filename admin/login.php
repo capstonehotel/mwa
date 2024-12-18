@@ -369,7 +369,7 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
                                                  } else {
                                                      // OTP verified successfully, now execute PHP code to insert the session
 Swal.fire({
-    title: 'Welcome back, ' + '<?php echo $row['UNAME']; ?>' + '!',
+    title: 'Welcome back, {$row['UNAME']}!',
     icon: 'success'
 }).then(() => {
     // Perform the POST request to insert session
