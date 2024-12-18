@@ -303,8 +303,8 @@ if (isset($_POST['btnlogin'])) {
            
  
 // Function to check if the device is new
-function isNewDevice($conn, $user, $device, $ip_address) {
-    $stmt = $conn->prepare("SELECT * FROM sessions WHERE user = ? AND (device != ? OR ip_address != ?)");
+function isNewDevice($connection, $user, $device, $ip_address) {
+    $stmt = $connection->prepare("SELECT * FROM sessions WHERE user = ? AND (device != ? OR ip_address != ?)");
     $stmt->bind_param("sss", $user, $device, $ip_address);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -325,7 +325,7 @@ if ($response) {
     }
 }
 
-if (isNewDevice($conn, $user, $device, $ip_address)) {
+if (isNewDevice($connection, $user, $device, $ip_address)) {
     echo "<script>
     Swal.fire({
         icon: 'error',
@@ -344,7 +344,7 @@ if (isNewDevice($conn, $user, $device, $ip_address)) {
 }
 
 // Log the session
-$stmt = $conn->prepare("INSERT INTO sessions (user, device, location, ip_address) VALUES (?, ?, ?, ?)");
+$stmt = $connection->prepare("INSERT INTO sessions (user, device, location, ip_address) VALUES (?, ?, ?, ?)");
 $stmt->bind_param("ssss", $user, $device, $location, $ip_address);
 if ($stmt->execute()) {
     echo "<script>
