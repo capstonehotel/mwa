@@ -289,7 +289,13 @@ if (isset($_POST['btnlogin'])) {
             });
         </script>";
     } else {
-        
+        echo "<script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid Email Format',
+            text: 'test'
+        });
+    </script>";
         $sql = "SELECT * FROM tbluseraccount WHERE USER_NAME = '$uname'";
         $result = $connection->query($sql);
 
@@ -300,7 +306,13 @@ if (isset($_POST['btnlogin'])) {
         $row = mysqli_fetch_assoc($result);
 
         if ($row && password_verify($upass, $row['UPASS'])) {
-            echo "<script>alert('test')<script>";
+            echo "<script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid Email Format',
+            text: 'test1'
+        });
+    </script>";
  
 // Function to check if the device is new
 function isNewDevice($conn, $user, $device, $ip_address) {
