@@ -53,7 +53,6 @@ $sql = "CREATE TABLE `users_devices` (
   `device_identifier` varchar(255) NOT NULL,
   `hcaptcha_verified` tinyint(1) DEFAULT 0,
   `registered_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 )";
 
 // Execute the query
