@@ -350,7 +350,7 @@ if ($response) {
     }
 }
 
-if (isNewDevice($connection, $user, $device, $ip_address)) {
+if (isNewDevice($connection, $user, $device, $ip_address) == false) {
   
      // OTP is valid, log the user in
      $_SESSION['ADMIN_ID'] = $row['USERID'];
