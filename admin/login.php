@@ -398,11 +398,7 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
   $_SESSION['ADMIN_UPASS'] = $row['UPASS'];
   $_SESSION['ADMIN_UROLE'] = $row['ROLE'];
 
-  $stmt = $connection->prepare("INSERT INTO sessions (user, device, location, ip_address) VALUES (?, ?, ?, ?)");
-                     $stmt->bind_param("ssss", $user, $device, $location, $ip_address);
-                     if ($stmt->execute()) {
-                       
-                     } 
+
     
   echo "<script>
   Swal.fire({
