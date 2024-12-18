@@ -46,21 +46,22 @@ if ($conn->connect_error) {
 // }
 
 // SQL query to create the table
-// $sql = "CREATE TABLE user_devices (
-//     id INT AUTO_INCREMENT PRIMARY KEY,
-//     user_id INT NOT NULL,
-//     device_identifier VARCHAR(255) NOT NULL,
-//     registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-//     UNIQUE (user_id, device_identifier),
-//     FOREIGN KEY (user_id) REFERENCES tbluseraccount(USERID)
-// )";
+$sql = "CREATE TABLE `users_devices` (
+  `id` int(11) NOT NULL,
+  `user_type` enum('account','guest') NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `device_identifier` varchar(255) NOT NULL,
+  `hcaptcha_verified` tinyint(1) DEFAULT 0,
+  `registered_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+)";
 
-// // Execute the query
-// if ($conn->query($sql) === TRUE) {
-//     echo "Table 'user_devices' created successfully!";
-// } else {
-//     echo "Error creating table: " . $conn->error;
-// }
+// Execute the query
+if ($conn->query($sql) === TRUE) {
+    echo "Table 'user_devices' created successfully!";
+} else {
+    echo "Error creating table: " . $conn->error;
+}
 // SQL to drop the user_devices table
 // $sql = "DROP TABLE IF EXISTS user_devices";
 
