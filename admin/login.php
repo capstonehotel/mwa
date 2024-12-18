@@ -410,13 +410,9 @@ if ($stmt->execute()) {
 
 
 } else {
-    $_SESSION['TEMP_ADMIN_ID'] = $row['USERID'];
-    $_SESSION['TEMP_ADMIN_UNAME'] = $row['UNAME'];
-    $_SESSION['TEMP_ADMIN_USERNAME'] = $row['USER_NAME'];
-    $_SESSION['TEMP_ADMIN_UPASS'] = $row['UPASS'];
-    $_SESSION['TEMP_ADMIN_UROLE'] = $row['ROLE'];
+ 
     echo "<script>
-   Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
+   Swal.fire('Welcome back1, {$row['UNAME']}!', '', 'success').then(() => {
                                                          window.location = 'index';
                                                      });
 </script>";
