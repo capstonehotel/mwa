@@ -408,12 +408,32 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
                      }
 
 } else {
- 
-    echo "<script>
-   Swal.fire('Welcome back1, {$row['UNAME']}!', '', 'success').then(() => {
-                                                         window.location = 'index';
-                                                     });
-</script>";
+     echo "<script>
+                             Swal.fire({
+                                 icon: 'success',
+                                 title: 'Welcome',
+                                 text: 'Welcome'
+                             });
+                         </script>";
+  // OTP is valid, log the user in
+  $_SESSION['ADMIN_ID'] = $_SESSION['TEMP_ADMIN_ID'];
+  $_SESSION['ADMIN_UNAME'] = $_SESSION['TEMP_ADMIN_UNAME'];
+  $_SESSION['ADMIN_USERNAME'] = $_SESSION['TEMP_ADMIN_USERNAME'];
+  $_SESSION['ADMIN_UPASS'] = $_SESSION['TEMP_ADMIN_UPASS'];
+  $_SESSION['ADMIN_UROLE'] = $_SESSION['TEMP_ADMIN_UROLE'];
+
+  // Clear OTP session variables
+  unset($_SESSION['OTP']);
+  unset($_SESSION['OTP_EXPIRY']);
+  unset($_SESSION['TEMP_ADMIN_ID']);
+  unset($_SESSION['TEMP_ADMIN_UNAME']);
+  unset($_SESSION['TEMP_ADMIN_USERNAME']);
+  unset($_SESSION['TEMP_ADMIN_UPASS']);
+  unset($_SESSION['TEMP_ADMIN_UROLE']);
+
+  header("Location: index");
+  exit();
+    
 }
 
 
