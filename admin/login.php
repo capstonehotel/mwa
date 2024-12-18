@@ -417,18 +417,17 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
 
  
     
-    echo "<script>
-    Swal.fire({
-        icon: 'success',
-        title: 'Welcome',
-        text: 'Welcome'
-    }).then(() => {
-        // Redirect to index.php after a short delay
-        setTimeout(function() {
-            window.location.href = 'index';
-        }, 1500);  // Adjust delay (1500 ms = 1.5 seconds) as needed
-    });
+  echo "<script>
+  Swal.fire({
+      icon: 'success',
+      title: 'Welcome',
+      text: 'Welcome'
+  }).then(() => {
+      // Redirect to index.php after a short delay
+      window.location.href = 'index';
+  });
 </script>";
+
 
  
 }
