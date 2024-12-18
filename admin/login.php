@@ -367,21 +367,28 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
                                                          window.location = 'login';
                                                      });
                                                  } else {
-                                                      // OTP verified successfully, now execute PHP code to insert the session
-                                $.post('insert_session.php', {
-                                    user: '$user',
-                                    device: '$device',
-                                    location: '$location',
-                                    ip_address: '$ip_address'
-                                }, function(insertResponse) {
-                                    if (insertResponse === 'success') {
-                                        Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
-                                            window.location = 'index';
-                                        });
-                                    } else {
-                                        Swal.fire('Error', insertResponse, 'error');
-                                    }
-                                });
+                                                     // OTP verified successfully, now execute PHP code to insert the session
+Swal.fire({
+    title: 'Welcome back, ' + '<?php echo $row['UNAME']; ?>' + '!',
+    icon: 'success'
+}).then(() => {
+    // Perform the POST request to insert session
+    $.post('insert_session.php', {
+        user: '<?php echo $user; ?>',
+        device: '<?php echo $device; ?>',
+        location: '<?php echo $location; ?>',
+        ip_address: '<?php echo $ip_address; ?>'
+    }, function(insertResponse) {
+        if (insertResponse === 'success') {
+            // Redirect if session insertion is successful
+            window.location = 'index';
+        } else {
+            // Show an error if session insertion fails
+            Swal.fire('Error', 'Failed to create session', 'error');
+        }
+    });
+});
+
                                                  }
                                              });
                                          }
