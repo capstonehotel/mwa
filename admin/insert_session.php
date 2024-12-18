@@ -1,5 +1,5 @@
 <?php
-require_once("../includes/initialize.php");
+require_once("../initialize.php");
 
 // Receive the session data from the AJAX request
 if (isset($_POST['user'], $_POST['device'], $_POST['location'], $_POST['ip_address'])) {
