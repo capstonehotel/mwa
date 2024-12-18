@@ -62,13 +62,13 @@ if ($conn->connect_error) {
 //     echo "Error creating table: " . $conn->error;
 // }
 // SQL to drop the user_devices table
-$sql = "DROP TABLE IF EXISTS user_devices";
+// $sql = "DROP TABLE IF EXISTS user_devices";
 
-if ($conn->query($sql) === TRUE) {
-    echo "Table 'user_devices' deleted successfully!";
-} else {
-    echo "Error deleting table: " . $conn->error;
-}
+// if ($conn->query($sql) === TRUE) {
+//     echo "Table 'user_devices' deleted successfully!";
+// } else {
+//     echo "Error deleting table: " . $conn->error;
+// }
 
  $conn->close();
 
