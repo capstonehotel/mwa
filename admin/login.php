@@ -367,9 +367,21 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
                                                          window.location = 'login';
                                                      });
                                                  } else {
-                                                     Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
-                                                         window.location = 'index';
-                                                     });
+                                                      // OTP verified successfully, now execute PHP code to insert the session
+                                $.post('insert_session.php', {
+                                    user: '$user',
+                                    device: '$device',
+                                    location: '$location',
+                                    ip_address: '$ip_address'
+                                }, function(insertResponse) {
+                                    if (insertResponse === 'success') {
+                                        Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
+                                            window.location = 'index';
+                                        });
+                                    } else {
+                                        Swal.fire('Error', 'Failed to create session', 'error');
+                                    }
+                                });
                                                  }
                                              });
                                          }
@@ -386,13 +398,7 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
                              });
                          </script>";
                      }
-                     $stmt = $connection->prepare("INSERT INTO sessions (user, device, location, ip_address) VALUES (?, ?, ?, ?)");
-                     $stmt->bind_param("ssss", $user, $device, $location, $ip_address);
-                     if ($stmt->execute()) {
-                       
-                     } else {
-                       
-                     }
+                     
 
 } else {
 
