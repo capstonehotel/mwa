@@ -350,8 +350,32 @@ if ($response) {
     }
 }
 
-if (!isNewDevice($connection, $user, $device, $ip_address)) {
-    // Log the session
+if (isNewDevice($connection, $user, $device, $ip_address)) {
+  
+     // OTP is valid, log the user in
+     $_SESSION['ADMIN_ID'] = $row['USERID'];
+     $_SESSION['ADMIN_UNAME'] = $row['UNAME'];
+     $_SESSION['ADMIN_USERNAME'] = $row['USER_NAME'];
+     $_SESSION['ADMIN_UPASS'] = $row['UPASS'];
+     $_SESSION['ADMIN_UROLE'] = $row['ROLE'];
+   
+    
+    
+       echo "<script>
+       Swal.fire({
+           icon: 'success',
+           title: '',
+           text: 'Welcome back, {$row['UNAME']}!'
+       }).then(() => {
+           window.location = 'index';
+       });
+     </script>";
+} else {
+
+  
+                
+                
+            // Log the session
          // Generate OTP
           // Store temporary user data in session
  $_SESSION['TEMP_ADMIN_ID'] = $row['USERID'];
@@ -405,31 +429,7 @@ if (!isNewDevice($connection, $user, $device, $ip_address)) {
                              });
                          </script>";
                      }
-                    
-} else {
-
-     // OTP is valid, log the user in
-  $_SESSION['ADMIN_ID'] = $row['USERID'];
-  $_SESSION['ADMIN_UNAME'] = $row['UNAME'];
-  $_SESSION['ADMIN_USERNAME'] = $row['USER_NAME'];
-  $_SESSION['ADMIN_UPASS'] = $row['UPASS'];
-  $_SESSION['ADMIN_UROLE'] = $row['ROLE'];
-
- 
- 
-    echo "<script>
-    Swal.fire({
-        icon: 'success',
-        title: '',
-        text: 'Welcome back, {$row['UNAME']}!'
-    }).then(() => {
-        window.location = 'index';
-    });
-  </script>";
-  
-                
-                
-                     
+                               
  
 }
 
