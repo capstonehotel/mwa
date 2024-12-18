@@ -203,7 +203,7 @@ if (isset($_POST['otp'])) {
         unset($_SESSION['TEMP_ADMIN_UROLE']);
 
         $user = "admin"; // This should be fetched from the session or login credentials
-$device = hash('sha256', $_SERVER['HTTP_USER_AGENT']);
+$device = $_SERVER['HTTP_USER_AGENT'];
 $ip_address = $_SERVER['REMOTE_ADDR']; // IP Address
 $location = "Unknown"; // Location can be determined via a geolocation API
 // Fetch location using ip-api
@@ -323,17 +323,19 @@ if (isset($_POST['btnlogin'])) {
  
 // Function to check if the device is new
 function isNewDevice($connection, $user, $device, $ip_address) {
-    // Prepare the SQL statement
+    // Prepare the SQL statement to find a mismatch in either device or IP address
     $stmt = $connection->prepare("SELECT * FROM sessions WHERE user = ? AND (device != ? OR ip_address != ?)");
     $stmt->bind_param("sss", $user, $device, $ip_address);
     $stmt->execute();
     $result = $stmt->get_result();
 
+    // If any row is returned, it means this is a new device/IP
     return $result->num_rows > 0;
 }
 
+
 $user = "admin"; // This should be fetched from the session or login credentials
-$device = hash('sha256', $_SERVER['HTTP_USER_AGENT']);
+$device = $_SERVER['HTTP_USER_AGENT'];
 $ip_address = $_SERVER['REMOTE_ADDR']; // IP Address
 $location = "Unknown"; // Location can be determined via a geolocation API
 // Fetch location using ip-api
