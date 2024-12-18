@@ -330,9 +330,9 @@ if (isset($_POST['btnlogin'])) {
             
                 // If at least one row is returned, the device and location already exist
                 if ($result->num_rows > 0) {
-                    return true; // Device and location exist
+                    return false; // Device and location exist
                 } else {
-                    return false; // Device and location do not exist
+                    return true; // Device and location do not exist
                 }
             }
             
