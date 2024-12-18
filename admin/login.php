@@ -400,8 +400,7 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
                              });
                          </script>";
                      }
-                     
-
+                    
 } else {
 
      // OTP is valid, log the user in
