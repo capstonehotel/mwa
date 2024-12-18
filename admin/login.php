@@ -413,11 +413,9 @@ if ($stmt->execute()) {
    // Additional actions, e.g., send verification email or prompt for verification
 } else {
     echo "<script>
-    Swal.fire({
-        icon: 'error',
-        title: 'Invalid Email Format',
-        text: 'welcome'
-    });
+   Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
+                                                         window.location = 'index';
+                                                     });
 </script>";
 }
 
