@@ -326,24 +326,7 @@ if ($response) {
 }
 
 if (isNewDevice($connection, $user, $device, $ip_address)) {
-    echo "<script>
-    Swal.fire({
-        icon: 'error',
-        title: 'Invalid Email Format',
-        text: 'new device'
-    });
-</script>";  // Additional actions, e.g., send verification email or prompt for verification
-} else {
-    echo "<script>
-    Swal.fire({
-        icon: 'error',
-        title: 'Invalid Email Format',
-        text: 'welcome'
-    });
-</script>";
-}
-
-// Log the session
+    // Log the session
 $stmt = $connection->prepare("INSERT INTO sessions (user, device, location, ip_address) VALUES (?, ?, ?, ?)");
 $stmt->bind_param("ssss", $user, $device, $location, $ip_address);
 if ($stmt->execute()) {
@@ -364,6 +347,24 @@ if ($stmt->execute()) {
         });
     </script>";
 }
+    echo "<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Invalid Email Format',
+        text: 'new device'
+    });
+</script>";  // Additional actions, e.g., send verification email or prompt for verification
+} else {
+    echo "<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Invalid Email Format',
+        text: 'welcome'
+    });
+</script>";
+}
+
+
 
 
 
