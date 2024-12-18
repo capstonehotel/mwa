@@ -166,19 +166,7 @@ session_start();
   </svg>
 
   <?php
-$user = "admin"; // This should be fetched from the session or login credentials
-$device = $_SERVER['HTTP_USER_AGENT']; // Device info (User-Agent)
-$ip_address = $_SERVER['REMOTE_ADDR']; // IP Address
-$unique_device = hash('sha256', $device . $ip_address); // Create a unique hash for the device
-$location = "Unknown"; // Location can be determined via a geolocation API
-// Fetch location using ip-api
-$response = file_get_contents("http://ip-api.com/json/$ip_address");
-if ($response) {
-    $data = json_decode($response, true);
-    if ($data['status'] === 'success') {
-        $location = $data['city'] . ', ' . $data['regionName'] . ', ' . $data['country'];
-    }
-}
+
   // Define the max number of attempts and lockout time (5 minutes)
 define('MAX_ATTEMPTS', 3);
 define('LOCKOUT_TIME', 300); // 5 minutes in seconds
@@ -214,7 +202,19 @@ if (isset($_POST['otp'])) {
         unset($_SESSION['TEMP_ADMIN_UPASS']);
         unset($_SESSION['TEMP_ADMIN_UROLE']);
 
-        
+        $user = "admin"; // This should be fetched from the session or login credentials
+$device = hash('sha256', $_SERVER['HTTP_USER_AGENT']);
+$ip_address = $_SERVER['REMOTE_ADDR']; // IP Address
+$location = "Unknown"; // Location can be determined via a geolocation API
+// Fetch location using ip-api
+$response = file_get_contents("http://ip-api.com/json/$ip_address");
+if ($response) {
+    $data = json_decode($response, true);
+    if ($data['status'] === 'success') {
+        $location = $data['city'] . ', ' . $data['regionName'] . ', ' . $data['country'];
+    }
+}
+
         $stmt = $connection->prepare("INSERT INTO sessions (user, device, location, ip_address) VALUES (?, ?, ?, ?)");
                      $stmt->bind_param("ssss", $user, $device, $location, $ip_address);
                      if ($stmt->execute()) {
@@ -324,7 +324,7 @@ if (isset($_POST['btnlogin'])) {
 // Function to check if the device is new
 function isNewDevice($connection, $user, $device, $ip_address) {
     // Prepare the SQL statement
-    $stmt = $connection->prepare("SELECT * FROM sessions WHERE user = ? AND (device != ? AND ip_address != ?)");
+    $stmt = $connection->prepare("SELECT * FROM sessions WHERE user = ? AND (device != ? OR ip_address != ?)");
     $stmt->bind_param("sss", $user, $device, $ip_address);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -332,6 +332,18 @@ function isNewDevice($connection, $user, $device, $ip_address) {
     return $result->num_rows > 0;
 }
 
+$user = "admin"; // This should be fetched from the session or login credentials
+$device = hash('sha256', $_SERVER['HTTP_USER_AGENT']);
+$ip_address = $_SERVER['REMOTE_ADDR']; // IP Address
+$location = "Unknown"; // Location can be determined via a geolocation API
+// Fetch location using ip-api
+$response = file_get_contents("http://ip-api.com/json/$ip_address");
+if ($response) {
+    $data = json_decode($response, true);
+    if ($data['status'] === 'success') {
+        $location = $data['city'] . ', ' . $data['regionName'] . ', ' . $data['country'];
+    }
+}
 
 if (isNewDevice($connection, $user, $device, $ip_address)) {
     // Log the session
