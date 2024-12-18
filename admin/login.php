@@ -389,22 +389,9 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
                      $stmt = $connection->prepare("INSERT INTO sessions (user, device, location, ip_address) VALUES (?, ?, ?, ?)");
                      $stmt->bind_param("ssss", $user, $device, $location, $ip_address);
                      if ($stmt->execute()) {
-                        //  echo "<script>
-                        //      Swal.fire({
-                        //          icon: 'error',
-                        //          title: 'Invalid Email Format',
-                        //          text: 'added'
-                        //      });
-                        //  </script>";
+                       
                      } else {
-                         // echo "Error logging session: " . $stmt->error;
-                        //  echo "<script>
-                        //      Swal.fire({
-                        //          icon: 'error',
-                        //          title: 'Invalid Email Format',
-                        //          text: 'error'
-                        //      });
-                        //  </script>";
+                       
                      }
 
 } else {
@@ -421,8 +408,8 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
   echo "<script>
   Swal.fire({
       icon: 'success',
-      title: 'Welcome',
-      text: 'Welcome'
+      title: '',
+      text: Welcome back, {$row['UNAME']}!
   }).then(() => {
       // Redirect to index.php after a short delay
       window.location.href = 'index';
