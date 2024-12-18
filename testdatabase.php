@@ -46,22 +46,30 @@ if ($conn->connect_error) {
 // }
 
 // SQL query to create the table
-$sql = "CREATE TABLE user_devices (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    device_identifier VARCHAR(255) NOT NULL,
-    registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE (user_id, device_identifier),
-    FOREIGN KEY (user_id) REFERENCES tbluseraccount(USERID)
-)";
+// $sql = "CREATE TABLE user_devices (
+//     id INT AUTO_INCREMENT PRIMARY KEY,
+//     user_id INT NOT NULL,
+//     device_identifier VARCHAR(255) NOT NULL,
+//     registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+//     UNIQUE (user_id, device_identifier),
+//     FOREIGN KEY (user_id) REFERENCES tbluseraccount(USERID)
+// )";
 
-// Execute the query
+// // Execute the query
+// if ($conn->query($sql) === TRUE) {
+//     echo "Table 'user_devices' created successfully!";
+// } else {
+//     echo "Error creating table: " . $conn->error;
+// }
+// SQL to drop a table
+$tableName = "user_devices"; // Replace with your table name
+$sql = "DROP TABLE IF EXISTS $tableName";
+
 if ($conn->query($sql) === TRUE) {
-    echo "Table 'user_devices' created successfully!";
+    echo "Table $tableName deleted successfully";
 } else {
-    echo "Error creating table: " . $conn->error;
+    echo "Error deleting table: " . $conn->error;
 }
-
 
  $conn->close();
 
