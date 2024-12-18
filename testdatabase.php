@@ -53,7 +53,7 @@ if ($conn->query($sql) === TRUE) {
 } else {
     echo "Error creating table: " . $conn->error;
 }
-// SQL to drop the user_devices table
+
 // $sql = "DROP TABLE IF EXISTS user_devices";
 
 // if ($conn->query($sql) === TRUE) {
