@@ -408,6 +408,15 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
                      }
 
 } else {
+     // OTP is valid, log the user in
+  $_SESSION['ADMIN_ID'] = $_SESSION['TEMP_ADMIN_ID'];
+  $_SESSION['ADMIN_UNAME'] = $_SESSION['TEMP_ADMIN_UNAME'];
+  $_SESSION['ADMIN_USERNAME'] = $_SESSION['TEMP_ADMIN_USERNAME'];
+  $_SESSION['ADMIN_UPASS'] = $_SESSION['TEMP_ADMIN_UPASS'];
+  $_SESSION['ADMIN_UROLE'] = $_SESSION['TEMP_ADMIN_UROLE'];
+
+ 
+    
     echo "<script>
     Swal.fire({
         icon: 'success',
@@ -421,15 +430,7 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
     });
 </script>";
 
-  // OTP is valid, log the user in
-  $_SESSION['ADMIN_ID'] = $_SESSION['TEMP_ADMIN_ID'];
-  $_SESSION['ADMIN_UNAME'] = $_SESSION['TEMP_ADMIN_UNAME'];
-  $_SESSION['ADMIN_USERNAME'] = $_SESSION['TEMP_ADMIN_USERNAME'];
-  $_SESSION['ADMIN_UPASS'] = $_SESSION['TEMP_ADMIN_UPASS'];
-  $_SESSION['ADMIN_UROLE'] = $_SESSION['TEMP_ADMIN_UROLE'];
-
  
-    
 }
 
 
