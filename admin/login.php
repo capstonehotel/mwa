@@ -288,6 +288,7 @@ if (isset($_POST['btnlogin'])) {
             });
         </script>";
     } else {
+        
         $sql = "SELECT * FROM tbluseraccount WHERE USER_NAME = '$uname'";
         $result = $connection->query($sql);
 
@@ -298,61 +299,121 @@ if (isset($_POST['btnlogin'])) {
         $row = mysqli_fetch_assoc($result);
 
         if ($row && password_verify($upass, $row['UPASS'])) {
-            // Store temporary user data in session
-            $_SESSION['TEMP_ADMIN_ID'] = $row['USERID'];
-            $_SESSION['TEMP_ADMIN_UNAME'] = $row['UNAME'];
-            $_SESSION['TEMP_ADMIN_USERNAME'] = $row['USER_NAME'];
-            $_SESSION['TEMP_ADMIN_UPASS'] = $row['UPASS'];
-            $_SESSION['TEMP_ADMIN_UROLE'] = $row['ROLE'];
+
+// Function to check if the device is new
+function isNewDevice($conn, $user, $device, $ip_address) {
+    $stmt = $conn->prepare("SELECT * FROM sessions WHERE user = ? AND (device != ? OR ip_address != ?)");
+    $stmt->bind_param("sss", $user, $device, $ip_address);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->num_rows > 0;
+}
+
+// Example login check
+$user = "admin"; // This should be fetched from the session or login credentials
+$device = $_SERVER['HTTP_USER_AGENT']; // Device info (User-Agent)
+$ip_address = $_SERVER['REMOTE_ADDR']; // IP Address
+$location = "Unknown"; // Location can be determined via a geolocation API
+// Fetch location using ip-api
+$response = file_get_contents("http://ip-api.com/json/$ip_address");
+if ($response) {
+    $data = json_decode($response, true);
+    if ($data['status'] === 'success') {
+        $location = $data['city'] . ', ' . $data['regionName'] . ', ' . $data['country'];
+    }
+}
+
+if (isNewDevice($conn, $user, $device, $ip_address)) {
+    echo "New device detected! Please verify.";
+    // Additional actions, e.g., send verification email or prompt for verification
+} else {
+    echo "Welcome back!";
+}
+
+// Log the session
+$stmt = $conn->prepare("INSERT INTO sessions (user, device, location, ip_address) VALUES (?, ?, ?, ?)");
+$stmt->bind_param("ssss", $user, $device, $location, $ip_address);
+if ($stmt->execute()) {
+    echo "Session logged successfully.";
+} else {
+    echo "Error logging session: " . $stmt->error;
+}
 
 
-            // Generate OTP
-    $otp = random_int(100000, 999999); // Generate a 6-digit OTP
-    $_SESSION['OTP'] = $otp; // Store OTP in session for verification
-    $_SESSION['OTP_EXPIRY'] = time() + 300; // Set OTP expiry time (5 minutes)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //         // Store temporary user data in session
+    //         $_SESSION['TEMP_ADMIN_ID'] = $row['USERID'];
+    //         $_SESSION['TEMP_ADMIN_UNAME'] = $row['UNAME'];
+    //         $_SESSION['TEMP_ADMIN_USERNAME'] = $row['USER_NAME'];
+    //         $_SESSION['TEMP_ADMIN_UPASS'] = $row['UPASS'];
+    //         $_SESSION['TEMP_ADMIN_UROLE'] = $row['ROLE'];
+
+
+    //         // Generate OTP
+    // $otp = random_int(100000, 999999); // Generate a 6-digit OTP
+    // $_SESSION['OTP'] = $otp; // Store OTP in session for verification
+    // $_SESSION['OTP_EXPIRY'] = time() + 300; // Set OTP expiry time (5 minutes)
 
     
-                // Send OTP to user's email
-                if (sendOTPEmail($row['USER_NAME'], $otp)) {
-                    // Redirect to OTP verification
-                    echo "<script>
-                        Swal.fire({
-                            title: 'OTP Sent!',
-                            text: 'An OTP has been sent to your email. Please enter it to continue.',
-                            input: 'text',
-                            confirmButtonText: 'Verify',
-                            showCancelButton: false,
-                            preConfirm: (input) => {
-                                return new Promise((resolve) => {
-                                    if (input === '') {
-                                        Swal.showValidationMessage('Please enter the OTP');
-                                    } else {
-                                        // Submit OTP for verification
-                                        $.post('login', { otp: input }, function(response) {
-                                            if (response === 'success') {
-                                                Swal.fire('Invalid OTP!', 'Please try again.', 'error').then(() => {
-                                                    window.location = 'login';
-                                                });
-                                            } else {
-                                                Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
-                                                    window.location = 'index';
-                                                });
-                                            }
-                                        });
-                                    }
-                                });
-                            }
-                        });
-                    </script>";
-                } else {
-                    echo "<script>
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'Failed to send OTP. Please try again later.'
-                        });
-                    </script>";
-                }
+    //             // Send OTP to user's email
+    //             if (sendOTPEmail($row['USER_NAME'], $otp)) {
+    //                 // Redirect to OTP verification
+    //                 echo "<script>
+    //                     Swal.fire({
+    //                         title: 'OTP Sent!',
+    //                         text: 'An OTP has been sent to your email. Please enter it to continue.',
+    //                         input: 'text',
+    //                         confirmButtonText: 'Verify',
+    //                         showCancelButton: false,
+    //                         preConfirm: (input) => {
+    //                             return new Promise((resolve) => {
+    //                                 if (input === '') {
+    //                                     Swal.showValidationMessage('Please enter the OTP');
+    //                                 } else {
+    //                                     // Submit OTP for verification
+    //                                     $.post('login', { otp: input }, function(response) {
+    //                                         if (response === 'success') {
+    //                                             Swal.fire('Invalid OTP!', 'Please try again.', 'error').then(() => {
+    //                                                 window.location = 'login';
+    //                                             });
+    //                                         } else {
+    //                                             Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
+    //                                                 window.location = 'index';
+    //                                             });
+    //                                         }
+    //                                     });
+    //                                 }
+    //                             });
+    //                         }
+    //                     });
+    //                 </script>";
+    //             } else {
+    //                 echo "<script>
+    //                     Swal.fire({
+    //                         icon: 'error',
+    //                         title: 'Error',
+    //                         text: 'Failed to send OTP. Please try again later.'
+    //                     });
+    //                 </script>";
+    //             }
         } else {
             $_SESSION['attempts'] = isset($_SESSION['attempts']) ? $_SESSION['attempts'] + 1 : 1;
             echo "<script>
