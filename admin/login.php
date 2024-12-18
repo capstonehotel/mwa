@@ -166,7 +166,18 @@ session_start();
   </svg>
 
   <?php
-
+$user = "admin"; // This should be fetched from the session or login credentials
+$device = $_SERVER['HTTP_USER_AGENT']; // Device info (User-Agent)
+$ip_address = $_SERVER['REMOTE_ADDR']; // IP Address
+$location = "Unknown"; // Location can be determined via a geolocation API
+// Fetch location using ip-api
+$response = file_get_contents("http://ip-api.com/json/$ip_address");
+if ($response) {
+    $data = json_decode($response, true);
+    if ($data['status'] === 'success') {
+        $location = $data['city'] . ', ' . $data['regionName'] . ', ' . $data['country'];
+    }
+}
   // Define the max number of attempts and lockout time (5 minutes)
 define('MAX_ATTEMPTS', 3);
 define('LOCKOUT_TIME', 300); // 5 minutes in seconds
@@ -202,25 +213,14 @@ if (isset($_POST['otp'])) {
         unset($_SESSION['TEMP_ADMIN_UPASS']);
         unset($_SESSION['TEMP_ADMIN_UROLE']);
 
-        $user = "admin"; // This should be fetched from the session or login credentials
-        $device = $_SERVER['HTTP_USER_AGENT']; // Device info (User-Agent)
-        $ip_address = $_SERVER['REMOTE_ADDR']; // IP Address
-        $location = "Unknown"; // Location can be determined via a geolocation API
-        // Fetch location using ip-api
-        $response = file_get_contents("http://ip-api.com/json/$ip_address");
-        if ($response) {
-            $data = json_decode($response, true);
-            if ($data['status'] === 'success') {
-                $location = $data['city'] . ', ' . $data['regionName'] . ', ' . $data['country'];
-            }
-        }
+        
         $stmt = $connection->prepare("INSERT INTO sessions (user, device, location, ip_address) VALUES (?, ?, ?, ?)");
                      $stmt->bind_param("ssss", $user, $device, $location, $ip_address);
                      if ($stmt->execute()) {
-                       
+                        header("Location: index");
+                        exit();
                      } 
-        header("Location: index");
-        exit();
+      
     } else {
         // Invalid OTP
         $otp_error = "Invalid OTP! Please try again.";
