@@ -1,6 +1,7 @@
 <?php
 require_once("../includes/initialize.php");
-
+error_reporting(E_ALL); // Report all PHP errors
+ini_set('display_errors', 1); // Display errors on the screen
 ?>
 
 <!DOCTYPE html>
