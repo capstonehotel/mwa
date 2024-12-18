@@ -391,6 +391,9 @@ if (sendOTPEmail($row['USER_NAME'], $otp)) {
             }
         });
     </script>";
+
+
+    
 } else {
     echo "<script>
         Swal.fire({
@@ -403,7 +406,16 @@ if (sendOTPEmail($row['USER_NAME'], $otp)) {
 
 
 } else {
- 
+  // OTP is correct, log the session in the database
+                                // Proceed with session logging only after successful OTP verification
+                                $stmt = $connection->prepare('INSERT INTO sessions (user, device, location, ip_address) VALUES (?, ?, ?, ?)');
+                                $stmt->bind_param('ssss', $user, $device, $location, $ip_address);
+                                
+                                if ($stmt->execute()) {
+                                   
+                                } else {
+                                  
+                                }
     echo "<script>
    Swal.fire('Welcome back1, {$row['UNAME']}!', '', 'success').then(() => {
                                                          window.location = 'index';
