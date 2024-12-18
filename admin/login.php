@@ -327,15 +327,16 @@ if ($response) {
     }
 }
 
- // Store temporary user data in session
+
+if (isNewDevice($connection, $user, $device, $ip_address)) {
+    // Log the session
+         // Generate OTP
+          // Store temporary user data in session
  $_SESSION['TEMP_ADMIN_ID'] = $row['USERID'];
  $_SESSION['TEMP_ADMIN_UNAME'] = $row['UNAME'];
  $_SESSION['TEMP_ADMIN_USERNAME'] = $row['USER_NAME'];
  $_SESSION['TEMP_ADMIN_UPASS'] = $row['UPASS'];
  $_SESSION['TEMP_ADMIN_UROLE'] = $row['ROLE'];
-if (isNewDevice($connection, $user, $device, $ip_address)) {
-    // Log the session
-         // Generate OTP
          $otp = random_int(100000, 999999); // Generate a 6-digit OTP
          $_SESSION['OTP'] = $otp; // Store OTP in session for verification
          $_SESSION['OTP_EXPIRY'] = time() + 300; // Set OTP expiry time (5 minutes)
@@ -413,7 +414,7 @@ if ($stmt->execute()) {
    // Additional actions, e.g., send verification email or prompt for verification
 } else {
     echo "<script>
-   Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
+   Swal.fire('Welcome back1, {$row['UNAME']}!', '', 'success').then(() => {
                                                          window.location = 'index';
                                                      });
 </script>";
