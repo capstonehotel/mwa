@@ -61,12 +61,11 @@ if ($conn->connect_error) {
 // } else {
 //     echo "Error creating table: " . $conn->error;
 // }
-// SQL to drop a table
-$tableName = "user_devices"; // Replace with your table name
-$sql = "DROP TABLE IF EXISTS $tableName";
+// SQL to drop the user_devices table
+$sql = "DROP TABLE IF EXISTS user_devices";
 
 if ($conn->query($sql) === TRUE) {
-    echo "Table $tableName deleted successfully";
+    echo "Table 'user_devices' deleted successfully!";
 } else {
     echo "Error deleting table: " . $conn->error;
 }
