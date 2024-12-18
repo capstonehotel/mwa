@@ -235,8 +235,7 @@ if (isset($_POST['btnlogin'])) {
             $result = $stmt->get_result();
 
             if ($result->num_rows == 0) {
-                echo "<script>Swal.fire({icon: 'error', title: 'hCaptcha Failed', text: 'test1.'});</script>";
-     
+                echo "<script>alert('test1');</script>";
                 // New device, send OTP
                // New device, send OTP
                $_SESSION['OTP'] = rand(100000, 999999);
@@ -245,7 +244,7 @@ if (isset($_POST['btnlogin'])) {
                header("Location: sendOTP.php");
                exit();
             } else {
-                echo "<script>Swal.fire({icon: 'error', title: 'hCaptcha Failed', text: 'test2.'});</script>";
+                echo "<script>alert('test2');</script>";
      
                 // Existing device, proceed with login
                 $stmt = $connection->prepare("SELECT * FROM tbluseraccount WHERE USER_NAME = ?");
