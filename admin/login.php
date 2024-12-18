@@ -216,6 +216,8 @@ if (isset($_POST['btnlogin'])) {
         $_SESSION['attempts'] = isset($_SESSION['attempts']) ? $_SESSION['attempts'] + 1 : 1;
         echo "<script>Swal.fire({icon : 'error', title: 'Invalid Email Format', text: 'Please enter a valid email address.'});</script>";
     } else {
+        echo "<script>Swal.fire({icon: 'error', title: 'hCaptcha Failed', text: 'test.'});</script>";
+     
         // Check hCaptcha response
         $hcaptcha_response = $_POST['h-captcha-response'];
         $hcaptcha_secret = 'ES_84f7194c2cd04982851c0b2c910b33f3';
@@ -225,6 +227,8 @@ if (isset($_POST['btnlogin'])) {
         if (!$responseKeys["success"]) {
             echo "<script>Swal.fire({icon: 'error', title: 'hCaptcha Failed', text: 'Please complete the hCaptcha.'});</script>";
         } else {
+            echo "<script>Swal.fire({icon: 'error', title: 'hCaptcha Failed', text: 'test1.'});</script>";
+     
             // Check if the device is new
             $device_identifier = $_SERVER['HTTP_USER_AGENT']; // or any unique identifier for the device
             $stmt = $connection->prepare("SELECT * FROM users_devices WHERE user_id = ? AND device_identifier = ?");
