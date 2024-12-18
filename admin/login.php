@@ -4,9 +4,11 @@ require_once("sendOTP.php");
 
 session_start();
 // Start the session
-
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// Example login check
+$user = "admin"; // This should be fetched from the session or login credentials
+$device = $_SERVER['HTTP_USER_AGENT']; // Device info (User-Agent)
+$ip_address = $_SERVER['REMOTE_ADDR']; // IP Address
+$location = "Unknown"; // Location can be determined via a geolocation API
 ?>
 
 <!DOCTYPE html>
@@ -166,6 +168,7 @@ ini_set('display_errors', 1);
   </svg>
 
   <?php
+
   // Define the max number of attempts and lockout time (5 minutes)
 define('MAX_ATTEMPTS', 3);
 define('LOCKOUT_TIME', 300); // 5 minutes in seconds
@@ -201,6 +204,11 @@ if (isset($_POST['otp'])) {
         unset($_SESSION['TEMP_ADMIN_UPASS']);
         unset($_SESSION['TEMP_ADMIN_UROLE']);
 
+        $stmt = $connection->prepare("INSERT INTO sessions (user, device, location, ip_address) VALUES (?, ?, ?, ?)");
+                     $stmt->bind_param("ssss", $user, $device, $location, $ip_address);
+                     if ($stmt->execute()) {
+                       
+                     } 
         header("Location: index");
         exit();
     } else {
@@ -316,11 +324,7 @@ function isNewDevice($connection, $user, $device, $ip_address) {
 
 
         
-// Example login check
-$user = "admin"; // This should be fetched from the session or login credentials
-$device = $_SERVER['HTTP_USER_AGENT']; // Device info (User-Agent)
-$ip_address = $_SERVER['REMOTE_ADDR']; // IP Address
-$location = "Unknown"; // Location can be determined via a geolocation API
+
 // Fetch location using ip-api
 $response = file_get_contents("http://ip-api.com/json/$ip_address");
 if ($response) {
@@ -367,28 +371,9 @@ if (isNewDevice($connection, $user, $device, $ip_address)) {
                                                          window.location = 'login';
                                                      });
                                                  } else {
-                                                     // OTP verified successfully, now execute PHP code to insert the session
-Swal.fire({
-    title: 'Welcome back, {$row['UNAME']}!',
-    icon: 'success'
-}).then(() => {
-    // Perform the POST request to insert session
-    $.post('insert_session.php', {
-        user: '<?php echo $user; ?>',
-        device: '<?php echo $device; ?>',
-        location: '<?php echo $location; ?>',
-        ip_address: '<?php echo $ip_address; ?>'
-    }, function(insertResponse) {
-        if (insertResponse == 'success') {
-            // Redirect if session insertion is successful
-            window.location = 'index';
-        } else {
-            // Show an error if session insertion fails
-            Swal.fire('Error', 'Failed to create session', 'error');
-        }
-    });
-});
-
+                                                     Swal.fire('Welcome back, {$row['UNAME']}!', '', 'success').then(() => {
+                                                         window.location = 'index';
+                                                     });
                                                  }
                                              });
                                          }
