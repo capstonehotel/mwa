@@ -176,7 +176,7 @@ $result1 = mysqli_query($connection, $query1);
 <section class="invoice" id="printthis">
     <!-- Add your logo here, outside of the invoice-header -->
     <div class="invoice-logo" style="text-align: center; margin-top: 40px;">
-    <img src="headers.png" alt="Logo" style="object-fit: cover; max-width: 100px; max-height: 50px;">
+    <img src="headers.png" alt="Logo" style="object-fit: cover; ">
 </div>
 <br><br><br><br><br><br><br>
     <div class="invoice-header">
