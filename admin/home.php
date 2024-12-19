@@ -507,23 +507,30 @@ function lineChart() {
 }
 
 function barChart() {
+    let barData = <?php echo json_encode($barData); ?>;
+    barData = barData.filter(item => item.value > 0); // Remove months with no data
+
     window.barChart = Morris.Bar({
         element: 'bar-chart',
-        data: <?php echo json_encode($lineData); ?>, // Use the same data as line chart
-        xkey: 'y',
-        ykeys: ['a', 'b', 'c'],
-        labels: ['Total Invoice','Total of Partial Payment','Total of Full Payment'],
-        barColors: ['#009688', '#FF6384', '#36A2EB'],
+        data: barData,
+        xkey: 'month',
+        ykeys: ['value'],
+        labels: ['Value'],
+        xLabelFormat: function (x) {
+            // Format months as Jan, Feb, etc.
+            return x.toLocaleString('en-US', { month: 'short' });
+        },
+        barColors: ['#36A2EB'],
         resize: true,
         redraw: true
     });
 
+    // Add the current year below the chart
     let chartElement = document.getElementById('bar-chart');
     let currentYearLabel = document.createElement('div');
     currentYearLabel.innerHTML = `<span style="font-size: 14px; color: #666; display: block; text-align: center; margin-top: -10px;">${new Date().getFullYear()}</span>`;
     chartElement.parentNode.insertBefore(currentYearLabel, chartElement.nextSibling);
 }
-
 
 </script>
     <!-- Include jQuery and Morris.js -->
