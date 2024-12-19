@@ -506,27 +506,27 @@ function lineChart() {
     chartElement.parentNode.insertBefore(currentYearLabel, chartElement.nextSibling);
 }
 
-
 function barChart() {
-    let barData = <?php echo json_encode($barData); ?>;
-    barData = barData.filter(item => item.value > 0); // Remove months with no data
+    // Get the current month (0-based, so January is 0)
+    const currentMonth = new Date().getMonth();
+
+    // Filter the bar data to include only months up to the current one
+    const filteredData = <?php echo json_encode($lineData); ?>.filter(item => {
+        const month = new Date(item.y).getMonth();
+        return month <= currentMonth; // Keep months up to the current one
+    });
 
     window.barChart = Morris.Bar({
         element: 'bar-chart',
-        data: barData,
-        xkey: 'month',
-        ykeys: ['value'],
-        labels: ['Value'],
-        xLabelFormat: function (x) {
-            // Use month names (e.g., Jan, Feb) from the data
-            return x.src.month;
-        },
-        barColors: ['#36A2EB'],
+        data: filteredData,
+        xkey: 'y',
+        ykeys: ['a', 'b', 'c'],
+        labels: ['Total Invoice', 'Total of Partial Payment', 'Total of Full Payment'],
+        barColors: ['#009688', '#FF6384', '#36A2EB'],
         resize: true,
         redraw: true
     });
 
-    // Add the current year below the chart
     let chartElement = document.getElementById('bar-chart');
     let currentYearLabel = document.createElement('div');
     currentYearLabel.innerHTML = `<span style="font-size: 14px; color: #666; display: block; text-align: center; margin-top: -10px;">${new Date().getFullYear()}</span>`;
