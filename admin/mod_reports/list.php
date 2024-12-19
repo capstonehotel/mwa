@@ -149,7 +149,7 @@ if (isset($_GET['code'])) {
 $code = mysqli_real_escape_string($connection, $_GET['code']);
 
 $queryp = "SELECT g.GUESTID, g.G_FNAME, g.G_LNAME, g.G_ADDRESS, g.G_CITY, g.ZIP, g.G_NATIONALITY, 
-                      r.CONFIRMATIONCODE, r.TRANSDATE, r.ARRIVAL, r.DEPARTURE, r.RPRICE, 
+                      r.CONFIRMATIONCODE, r.TRANSDATE, r.ARRIVAL, r.DEPARTURE, r.RPRICE, r.STATUS, 
                       p.PAID_DATE, p.PAYMENT_METHOD
                FROM tblguest g
                JOIN tblreservation r ON g.GUESTID = r.GUESTID
@@ -176,7 +176,7 @@ $result1 = mysqli_query($connection, $query1);
 <section class="invoice" id="printthis">
     <!-- Add your logo here, outside of the invoice-header -->
     <div class="invoice-logo" style="position: absolute; top: 0; right: 0; margin-top: 40px;">
-    <img src="logo.jpg" alt="Logo" style="width: 120px; height: 120px; object-fit: cover; border-radius: 50%;">
+    <img src="headers.png" alt="Logo" style="width: 120px; height: 120px; object-fit: cover; border-radius: 50%;">
 </div>
 <br><br><br><br><br><br><br>
     <div class="invoice-header">
@@ -207,8 +207,9 @@ $result1 = mysqli_query($connection, $query1);
         <div class="col-sm-4 invoice-col">
             <b>Invoice No.</b> 00<?php echo $row['GUESTID']; ?><br>
             <b>Confirmation ID:</b> <?php echo $row['CONFIRMATIONCODE']; ?><br>
-            <b>Transaction Date:</b> <?php echo date("m/d/Y", strtotime($row['PAID_DATE'])); ?><br>
+            <b>Paid Date:</b> <?php echo date("m/d/Y", strtotime($row['PAID_DATE'])); ?><br>
             <b>Payment Method:</b> <?php echo $row['PAYMENT_METHOD']; ?>
+            <b>Booking Status:</b> <?php echo $row['STATUS']; ?><br>
         </div>
     </div>
     <div class="row">

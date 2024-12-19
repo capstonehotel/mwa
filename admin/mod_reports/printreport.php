@@ -8,7 +8,7 @@ if (!isset($_GET['code']) || empty($_GET['code'])) {
 
 $code = mysqli_real_escape_string($connection, $_GET['code']);
 
-$query = "SELECT g.`GUESTID`, `G_FNAME`, `G_LNAME`, `G_ADDRESS`, `G_CITY`, `ZIP`, `G_NATIONALITY`, `CONFIRMATIONCODE`, `TRANSDATE`, `ARRIVAL`, `DEPARTURE`, `RPRICE`
+$query = "SELECT g.`GUESTID`, `G_FNAME`, `G_LNAME`, `G_ADDRESS`, `G_CITY`, `ZIP`, `G_NATIONALITY`, `CONFIRMATIONCODE`, `TRANSDATE`, `ARRIVAL`, `DEPARTURE`, `RPRICE`, `STATUS`
           FROM `tblguest` g
           JOIN `tblreservation` r ON g.`GUESTID` = r.`GUESTID`
           WHERE `CONFIRMATIONCODE` = '$code'";
@@ -123,6 +123,7 @@ $result1 = mysqli_query($connection, $query1);
                     <b>Invoice No.</b> 00<?php echo $row['GUESTID']; ?><br>
                     <b>Confirmation ID:</b> <?php echo $row['CONFIRMATIONCODE']; ?><br>
                     <b>Transaction Date:</b> <?php echo $row['TRANSDATE']; ?>
+                    <b>Booking Status:</b> <?php echo $row['STATUS']; ?><br>
                 </div>
             </div>
             <div class="row">

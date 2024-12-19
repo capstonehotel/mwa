@@ -59,7 +59,7 @@
             Crossing Bunakan<br>
             Bunakan, Madridejos, Cebu<br>
             Phone: 09317622381<br>
-            Email: Hmhotelreservation@gmail.com
+            Email: mcchmhotelreservation@gmail.com
           </address>
         </div>
 
