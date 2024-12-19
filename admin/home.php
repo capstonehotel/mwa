@@ -506,99 +506,6 @@ function lineChart() {
     chartElement.parentNode.insertBefore(currentYearLabel, chartElement.nextSibling);
 }
 
-f<div class="col-md-12 col-lg-6">
-    <div class="card shadow mb-4">
-        <div class="card card-chart" style="height: 400px;"> <!-- Ensure consistent height -->
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="card-title m-0 font-weight-bold text-primary">LINE CHART</h6>
-            </div>
-            <div class="card-body">
-                <div id="line-chart" style="height: 300px; width: 100%;"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="col-md-12 col-lg-6">
-    <div class="card shadow mb-4">
-        <div class="card card-chart" style="height: 400px;"> <!-- Ensure consistent height -->
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="card-title m-0 font-weight-bold text-primary">DONUT CHART</h6>
-            </div>
-            <div class="card-body">
-                <div id="donut-chart" style="height: 300px; width: 100%;"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="col-md-12 col-lg-6">
-    <div class="card shadow mb-4">
-        <div class="card card-chart" style="height: 400px;"> <!-- Ensure consistent height -->
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="card-title m-0 font-weight-bold text-primary">BAR CHART</h6>
-            </div>
-            <div class="card-body">
-                <div id="bar-chart" style="height: 300px; width: 100%;"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-$(document).ready(function() {
-    donutChart();
-    lineChart();
-    barChart();
-    $(window).resize(function() {
-        window.donutChart.redraw();
-        window.lineChart.redraw();
-        window.barChart.redraw();
-    });
-});
-
-function donutChart() {
-    window.donutChart = Morris.Donut({
-        element: 'donut-chart',
-        data: [
-            { label: "Rooms", value: <?php echo $cnt[0]; ?> },
-            { label: "Confirmed", value: <?php echo $cnt4[0]; ?> },
-            { label: "Cancelled", value: <?php echo $cnt7[0]; ?> },
-            { label: "Checked In", value: <?php echo $cnt5[0]; ?> },
-            { label: "Checked Out", value: <?php echo $cnt6[0]; ?> },
-            { label: "Reservations", value: <?php echo $cnt2[0]; ?> },
-        ],
-        backgroundColor: '#f2f5fa',
-        labelColor: '#009688',
-        colors:['#0a9458','#0BA462', '#6dc8a1', '#54bf91', '#23ad72', '#087646'],
-        resize: true,
-    });
-}
-
-function lineChart() {
-    window.lineChart = Morris.Line({
-        element: 'line-chart',
-        data: <?php echo json_encode($lineData); ?>,
-        xkey: 'y',
-        ykeys: ['a', 'b', 'c'],
-        labels: ['Total Invoice','Total of Partial Payment','Total of Full Payment'],
-        xLabels: 'month', // Display only months
-        xLabelFormat: function (x) {
-            // Format months as Jan, Feb, etc.
-            return x.toLocaleString('en-US', { month: 'short' });
-        },
-        lineColors:  ['#009688', '#FF6384', '#36A2EB', '#FFCE56'],
-        lineWidth: '3px',
-        resize: true,
-        redraw: true
-    });
-
-    // Add the current year below the chart
-    let chartElement = document.getElementById('line-chart');
-    let currentYearLabel = document.createElement('div');
-    currentYearLabel.innerHTML = `<span style="font-size: 14px; color: #666; display: block; text-align: center; margin-top: -10px;">${new Date().getFullYear()}</span>`;
-    chartElement.parentNode.insertBefore(currentYearLabel, chartElement.nextSibling);
-}
 
 function barChart() {
     let barData = <?php echo json_encode($barData); ?>;
@@ -625,7 +532,6 @@ function barChart() {
     currentYearLabel.innerHTML = `<span style="font-size: 14px; color: #666; display: block; text-align: center; margin-top: -10px;">${new Date().getFullYear()}</span>`;
     chartElement.parentNode.insertBefore(currentYearLabel, chartElement.nextSibling);
 }
-</script>
 
 
 </script>
