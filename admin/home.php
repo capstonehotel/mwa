@@ -408,6 +408,37 @@ for ($year = $startYear; $year <= $currentYear; $year++) {
         ];
     }
 }
+
+// Prepare $bardata for the bar chart
+$bardata = [];
+$startYear = 2024;
+$currentYear = date("Y"); // dynamically get the current year
+
+// Get the first TRANSDATE to determine the starting point for the chart
+$sqlDate = "SELECT MIN(TRANSDATE) as firstTransDate FROM `tblreservation`";
+$dateResult = mysqli_query($connection, $sqlDate);
+$dateRow = mysqli_fetch_assoc($dateResult);
+$firstDate = strtotime($dateRow['firstTransDate']); // Find earliest TRANSDATE
+
+// Loop through each year and month to create the bar chart data
+for ($year = $startYear; $year <= $currentYear; $year++) {
+    for ($month = 1; $month <= 12; $month++) {
+        $date = sprintf('%04d-%02d', $year, $month); // Format as YYYY-MM
+
+        // Check if there are any reservations for the current month and year
+        $sql = "SELECT COUNT(*) AS count FROM tblreservation 
+                WHERE DATE_FORMAT(TRANSDATE, '%Y-%m') = '$date' AND CONFIRMATIONCODE != 'Reservations'";
+        $result = mysqli_query($connection, $sql);
+        $row = mysqli_fetch_assoc($result);
+        $reservationCount = (int)$row['count'];
+
+        // Add zero for months without data
+        $bardata[] = [
+            'y' => $date,
+            'a' => $reservationCount,  // Count of Reservations
+        ];
+    }
+}
 ?>
 
 
@@ -509,7 +540,7 @@ function lineChart() {
 
 function barChart() {
     // Format the month labels in your data before passing to the chart
-    let formattedData = <?php echo json_encode($lineData); ?>;
+    let formattedData = <?php echo json_encode($bardata); ?>;
     
     // Map over the data to change the 'y' key (which contains the date) to a formatted month name
     formattedData = formattedData.map(item => {
@@ -523,9 +554,9 @@ function barChart() {
         element: 'bar-chart',
         data: formattedData, // Use the formatted data with month names
         xkey: 'y',
-        ykeys: ['a', 'b', 'c'],
-        labels: ['Total Invoice','Total of Partial Payment','Total of Full Payment'],
-        barColors: ['#009688', '#FF6384', '#36A2EB'],
+        ykeys: ['a'],
+        labels: ['Reservations'],
+        barColors: ['#009688'],
         resize: true,
         redraw: true
     });
