@@ -436,6 +436,7 @@ for ($year = $startYear; $year <= $currentYear; $year++) {
         </div>
     </div>
 </div>
+
 <div class="col-md-12 col-lg-6">
     <div class="card shadow mb-4">
         <div class="card card-chart" style="height: 400px;"> <!-- Ensure consistent height -->
@@ -443,7 +444,7 @@ for ($year = $startYear; $year <= $currentYear; $year++) {
                 <h6 class="card-title m-0 font-weight-bold text-primary">BAR CHART</h6>
             </div>
             <div class="card-body">
-                <div id="myChart" style="height: 300px; width: 100%;"></div>
+                <div id="bar-chart" style="height: 300px; width: 100%;"></div>
             </div>
         </div>
     </div>
@@ -454,9 +455,11 @@ for ($year = $startYear; $year <= $currentYear; $year++) {
 $(document).ready(function() {
     donutChart();
     lineChart();
+    barChart();
     $(window).resize(function() {
         window.donutChart.redraw();
         window.lineChart.redraw();
+        window.barChart.redraw();
     });
 });
 
@@ -503,6 +506,25 @@ function lineChart() {
     chartElement.parentNode.insertBefore(currentYearLabel, chartElement.nextSibling);
 }
 
+function barChart() {
+    window.barChart = Morris.Bar({
+        element: 'bar-chart',
+        data: <?php echo json_encode($lineData); ?>, // Use the same data as line chart
+        xkey: 'y',
+        ykeys: ['a', 'b', 'c'],
+        labels: ['Total Invoice','Total of Partial Payment','Total of Full Payment'],
+        barColors: ['#009688', '#FF6384', '#36A2EB'],
+        resize: true,
+        redraw: true
+    });
+
+    let chartElement = document.getElementById('bar-chart');
+    let currentYearLabel = document.createElement('div');
+    currentYearLabel.innerHTML = `<span style="font-size: 14px; color: #666; display: block; text-align: center; margin-top: -10px;">${new Date().getFullYear()}</span>`;
+    chartElement.parentNode.insertBefore(currentYearLabel, chartElement.nextSibling);
+}
+
+
 </script>
     <!-- Include jQuery and Morris.js -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -534,77 +556,3 @@ function donutChart() {
 }
 </script> -->
 
-<!-- <div class="col-xl-8 col-lg-7">
-    <div class="card shadow mb-4"> -->
-        <!-- Card Header - Dropdown -->
-        <!-- <div
-            class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Graph</h6>
-        </div> -->
-        <!-- Card Body -->
-        <!-- <div class="card-body">
-            <div class="chart-area">
-                <canvas id="myChart" style="width:auto; max-width: 650px;"></canvas>
-            </div>
-        </div>
-    </div>
-</div> -->
-
-<script type="text/javascript" src="bar.js"></script>
-<?php 
-
-
-
-
-
-
-
-
-$sqli="SELECT count(*) FROM  `tblreservation` WHERE TRANSDATE=DATE(NOW()) != 'Booked' ";
-    $resultas=mysqli_query($connection,$sqli);
-    $cnt5=mysqli_fetch_array($resultas);
-
-    $sli="SELECT count(*) FROM  `tblreservation` WHERE STATUS = 'Cancelled' ";
-    $resulta=mysqli_query($connection,$sli);
-    $cnt1=mysqli_fetch_array($resulta);
-
-$sqla="SELECT count(*) FROM  `tblreservation` WHERE STATUS = 'Confirmed' ";
-    $res=mysqli_query($connection,$sqla);
-    $cntaS=mysqli_fetch_array($res);
-$sqlaS="SELECT count(*) FROM  `tblreservation` WHERE STATUS = 'Checkedin' ";
-    $resT=mysqli_query($connection,$sqlaS);
-    $cntS=mysqli_fetch_array($resT);
-
-$select="SELECT count(*) FROM tblroom where ROOM != '' ";
-    $result=mysqli_query($connection,$select);
-    $cnt=mysqli_fetch_array($result);
-
-
-// $query=" SELECT COUNT(*) FROM `tblreservation` WHERE TRANSDATE=DATE(NOW())!= 'Booked' ";
-//      $resultas=mysqli_query($connection,$query);
-//     $cnt5=mysqli_fetch_array($resultas);
-
- ?>
-<script>
-var xValues = ["Booked", "Confirmed", "Cancelled", "Checked in", "Rooms"];
-var yValues = [<?php echo $cnt5[0]; ?>, <?php echo $cntaS[0]; ?>, <?php echo $cnt1[0]; ?>, <?php echo $cntS[0]; ?>,<?php echo $cnt[0]; ?>];
-var barColors = ["red","green","blue","orange","brown"];
-
-new Chart("myChart", {
-  type: "bar",
-  data: {
-    labels: xValues,
-    datasets: [{
-      backgroundColor: barColors,
-      data: yValues
-    }]
-  },
-  options: {
-    legend: {display: false},
-    title: {
-      display: true,
-      text: "ROOM"
-    }
-  }
-});
-</script>
