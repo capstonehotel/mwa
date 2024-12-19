@@ -105,7 +105,7 @@ $_SESSION['to']  = $_POST['to'];
 
     ?>
 
-
+<!-- 
  <script type="text/javascript">
     // Disable right-click with an alert
     document.addEventListener('contextmenu', function(event) {
@@ -177,33 +177,21 @@ if (window.__proto__.toString() !== "[object Window]") {
   window.location.href = "https://www.bible-knowledge.com/wp-content/uploads/battle-verses-against-demonic-attacks.jpg";
 }
 
-</script> 
-<?php
-$disallowedUserAgents = [
-    "BurpSuite", 
-    "Cyberfox", 
-    "OWASP ZAP", 
-    "PostmanRuntime"
-];
-
-if (preg_match("/(" . implode("|", $disallowedUserAgents) . ")/i", $_SERVER['HTTP_USER_AGENT'])) {
-    http_response_code(403);
-    exit("Unauthorized access");
-}
-?>
- <!-- <script>
-    setInterval(function() {
-      console.log('Checking login status...');
-        fetch('/check_login_status.php')
-            .then(response => response.json())
-            .then(data => {
-                if (!data.logged_in) {
-                    // Redirect to logout if the user is not logged in
-                    window.location.href = '/logout.php';
-                }
-            });
-    }, 3000); // Check every 5 seconds
 </script>  -->
+<?php
+// $disallowedUserAgents = [
+//     "BurpSuite", 
+//     "Cyberfox", 
+//     "OWASP ZAP", 
+//     "PostmanRuntime"
+// ];
+
+// if (preg_match("/(" . implode("|", $disallowedUserAgents) . ")/i", $_SERVER['HTTP_USER_AGENT'])) {
+//     http_response_code(403);
+//     exit("Unauthorized access");
+// }
+?>
+ 
 <style>
   .bd-placeholder-img {
     font-size: 1.125rem;
