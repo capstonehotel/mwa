@@ -286,13 +286,13 @@ $_SESSION['departure'] =date_format(date_create($_POST['departure']),"Y-m-d");
         <small><?php print  $accomodation; ?></small>
         </h1> 
     </div>
-    <nav aria-label="breadcrumb" >
+    <!-- <nav aria-label="breadcrumb" >
       <ol class="breadcrumb" style="margin-top: 10px;">
         <li class="breadcrumb-item"><a href="<?php echo WEB_ROOT ;?>index.php">Home</a></li>
         <li class="breadcrumb-item active" aria-current="page"><?php print $title  ; ?></li>
         <li class="breadcrumb-item " style="color: #02aace; float:right"> <?php print  $msg; ?></li>
       </ol>
-    </nav>
+    </nav> -->
     <div class="container">
         <div class="row">
             <?php 
