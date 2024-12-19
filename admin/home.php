@@ -381,6 +381,7 @@ $cnt10 = mysqli_fetch_array($result10);
 $lineData = [];
 $startYear = 2024;
 $currentYear = date("Y"); // dynamically get the current year
+
 // Get the first TRANSDATE or PAID_DATE to determine the starting point for the chart
 $sqlDate = "SELECT MIN(TRANSDATE) as firstTransDate, MIN(PAID_DATE) as firstPaidDate FROM `tblpayment`";
 $dateResult = mysqli_query($connection, $sqlDate);
@@ -507,26 +508,29 @@ function lineChart() {
 }
 
 function barChart() {
-    // Get the current month (0-based, so January is 0)
-    const currentMonth = new Date().getMonth();
-
-    // Filter the bar data to include only months up to the current one
-    const filteredData = <?php echo json_encode($lineData); ?>.filter(item => {
-        const month = new Date(item.y).getMonth();
-        return month <= currentMonth; // Keep months up to the current one
+    // Format the month labels in your data before passing to the chart
+    let formattedData = <?php echo json_encode($lineData); ?>;
+    
+    // Map over the data to change the 'y' key (which contains the date) to a formatted month name
+    formattedData = formattedData.map(item => {
+        const date = new Date(item.y); // Convert the 'y' value (YYYY-MM) to a Date object
+        const monthName = date.toLocaleString('en-US', { month: 'short' }); // Format as Jan, Feb, etc.
+        item.y = monthName; // Replace 'y' with the formatted month name
+        return item;
     });
 
     window.barChart = Morris.Bar({
         element: 'bar-chart',
-        data: filteredData,
+        data: formattedData, // Use the formatted data with month names
         xkey: 'y',
         ykeys: ['a', 'b', 'c'],
-        labels: ['Total Invoice', 'Total of Partial Payment', 'Total of Full Payment'],
+        labels: ['Total Invoice','Total of Partial Payment','Total of Full Payment'],
         barColors: ['#009688', '#FF6384', '#36A2EB'],
         resize: true,
         redraw: true
     });
 
+    // Add the current year below the chart
     let chartElement = document.getElementById('bar-chart');
     let currentYearLabel = document.createElement('div');
     currentYearLabel.innerHTML = `<span style="font-size: 14px; color: #666; display: block; text-align: center; margin-top: -10px;">${new Date().getFullYear()}</span>`;
