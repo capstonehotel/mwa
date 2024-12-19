@@ -339,13 +339,13 @@ if (!$msg1) {
     <div class="pagetitle">
         <h1>Billing Details</h1>
     </div>
-    <nav aria-label="breadcrumb">
+    <!-- <nav aria-label="breadcrumb">
         <ol class="breadcrumb" style="margin-top: 10px;">
             <li class="breadcrumb-item"><a href="<?php echo WEB_ROOT; ?>index.php">Home</a></li>
             <li class="breadcrumb-item"><a href="<?php echo WEB_ROOT; ?>booking/">Booking Cart</a></li>
             <li class="breadcrumb-item active" aria-current="page">Billing Details</li>
         </ol>
-    </nav>
+    </nav> -->
     <div class="container">
         <div class="row">
             <form action="index?view=payment" method="post" name="personal" enctype="multipart/form-data" id="bookingForm">

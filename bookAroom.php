@@ -286,7 +286,7 @@ $_SESSION['departure'] =date_format(date_create($_POST['departure']),"Y-m-d");
         <small><?php print  $accomodation; ?></small>
         </h1> 
     </div>
-    <br><br>
+    <br>
     <!-- <nav aria-label="breadcrumb" >
       <ol class="breadcrumb" style="margin-top: 10px;">
         <li class="breadcrumb-item"><a href="<?php echo WEB_ROOT ;?>index.php">Home</a></li>

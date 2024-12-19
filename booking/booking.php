@@ -16,12 +16,13 @@ if (isset($_POST['clear'])) {
     <div class="pagetitle">
         <h1>Booking Cart</h1>
     </div>
-    <nav aria-label="breadcrumb">
+    <br>
+    <!-- <nav aria-label="breadcrumb">
         <ol class="breadcrumb" style="margin-top: 10px;">
             <li class="breadcrumb-item"><a href="../index.php">Home</a></li>
             <li class="breadcrumb-item active" aria-current="page">Booking Cart</li>
         </ol>
-    </nav>
+    </nav> -->
     <div class="container">
         <div class="row">
             <div class="table-responsive">
