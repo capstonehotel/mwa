@@ -523,12 +523,17 @@ function barChart() {
         redraw: true
     });
 
-    let chartElement = document.getElementById('bar-chart');
+//     let chartElement = document.getElementById('bar-chart');
+//     let currentYearLabel = document.createElement('div');
+//     currentYearLabel.innerHTML = `<span style="font-size: 14px; color: #666; display: block; text-align: center; margin-top: -10px;">${new Date().getFullYear()}</span>`;
+//     chartElement.parentNode.insertBefore(currentYearLabel, chartElement.nextSibling);
+// }
+// Add the current year below the chart
+let chartElement = document.getElementById('bar-chart');
     let currentYearLabel = document.createElement('div');
     currentYearLabel.innerHTML = `<span style="font-size: 14px; color: #666; display: block; text-align: center; margin-top: -10px;">${new Date().getFullYear()}</span>`;
     chartElement.parentNode.insertBefore(currentYearLabel, chartElement.nextSibling);
 }
-
 
 </script>
     <!-- Include jQuery and Morris.js -->
