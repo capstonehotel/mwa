@@ -625,7 +625,7 @@ function barChart() {
     currentYearLabel.innerHTML = `<span style="font-size: 14px; color: #666; display: block; text-align: center; margin-top: -10px;">${new Date().getFullYear()}</span>`;
     chartElement.parentNode.insertBefore(currentYearLabel, chartElement.nextSibling);
 }
-
+</script>
 
 
 </script>
