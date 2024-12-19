@@ -520,3 +520,78 @@ function donutChart() {
     });
 }
 </script> -->
+
+<div class="col-xl-8 col-lg-7">
+    <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div
+            class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Graph</h6>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+            <div class="chart-area">
+                <canvas id="myChart" style="width:auto; max-width: 650px;"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="bar.js"></script>
+<?php 
+
+
+
+
+
+
+
+
+$sqli="SELECT count(*) FROM  `tblreservation` WHERE TRANSDATE=DATE(NOW()) != 'Booked' ";
+    $resultas=mysqli_query($connection,$sqli);
+    $cnt5=mysqli_fetch_array($resultas);
+
+    $sli="SELECT count(*) FROM  `tblreservation` WHERE STATUS = 'Cancelled' ";
+    $resulta=mysqli_query($connection,$sli);
+    $cnt1=mysqli_fetch_array($resulta);
+
+$sqla="SELECT count(*) FROM  `tblreservation` WHERE STATUS = 'Confirmed' ";
+    $res=mysqli_query($connection,$sqla);
+    $cntaS=mysqli_fetch_array($res);
+$sqlaS="SELECT count(*) FROM  `tblreservation` WHERE STATUS = 'Checkedin' ";
+    $resT=mysqli_query($connection,$sqlaS);
+    $cntS=mysqli_fetch_array($resT);
+
+$select="SELECT count(*) FROM tblroom where ROOM != '' ";
+    $result=mysqli_query($connection,$select);
+    $cnt=mysqli_fetch_array($result);
+
+
+// $query=" SELECT COUNT(*) FROM `tblreservation` WHERE TRANSDATE=DATE(NOW())!= 'Booked' ";
+//      $resultas=mysqli_query($connection,$query);
+//     $cnt5=mysqli_fetch_array($resultas);
+
+ ?>
+<script>
+var xValues = ["Booked", "Confirmed", "Cancelled", "Checked in", "Rooms"];
+var yValues = [<?php echo $cnt5[0]; ?>, <?php echo $cntaS[0]; ?>, <?php echo $cnt1[0]; ?>, <?php echo $cntS[0]; ?>,<?php echo $cnt[0]; ?>];
+var barColors = ["red","green","blue","orange","brown"];
+
+new Chart("myChart", {
+  type: "bar",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    title: {
+      display: true,
+      text: "ROOM"
+    }
+  }
+});
+</script>
