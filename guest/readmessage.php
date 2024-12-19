@@ -29,7 +29,7 @@
 
   <?php 
   require_once("../includes/initialize.php");
-  $query ="SELECT g.`GUESTID`, `G_FNAME`, `G_LNAME`, `G_ADDRESS`, `G_CITY` , `ZIP`, `G_NATIONALITY`,`CONFIRMATIONCODE`, `TRANSDATE`, `ARRIVAL`, `DEPARTURE`, `RPRICE` 
+  $query ="SELECT g.`GUESTID`, `G_FNAME`, `G_LNAME`, `G_ADDRESS`, `G_CITY` , `ZIP`, `G_NATIONALITY`,`CONFIRMATIONCODE`, `TRANSDATE`, `ARRIVAL`, `DEPARTURE`, `RPRICE`, `STATUS` 
            FROM `tblguest` g ,`tblreservation` r 
            WHERE g.`GUESTID`=r.`GUESTID` 
            AND `CONFIRMATIONCODE` ='".$_GET['code']."'";
@@ -78,6 +78,7 @@
           <b>Invoice No.</b> 00<?php echo $row['GUESTID']; ?><br>
           <b>Confirmation ID:</b> <?php echo $row['CONFIRMATIONCODE']; ?><br>
           <b>Transaction Date:</b> <?php echo $row['TRANSDATE']; ?><br>
+          <b>Booking Status:</b> <?php echo $row['STATUS']; ?><br>
         </div>
       </div>
 
