@@ -513,6 +513,11 @@ function barChart() {
         xkey: 'y',
         ykeys: ['a', 'b', 'c'],
         labels: ['Total Invoice','Total of Partial Payment','Total of Full Payment'],
+        xLabels: 'month', // Display only months
+        xLabelFormat: function (x) {
+            // Format months as Jan, Feb, etc.
+            return x.toLocaleString('en-US', { month: 'short' });
+        },
         barColors: ['#009688', '#FF6384', '#36A2EB'],
         resize: true,
         redraw: true
