@@ -538,9 +538,39 @@ function lineChart() {
     chartElement.parentNode.insertBefore(currentYearLabel, chartElement.nextSibling);
 }
 
+// function barChart() {
+//     // Format the month labels in your data before passing to the chart
+//     let formattedData = <?php echo json_encode($bardata); ?>;
+    
+//     // Map over the data to change the 'y' key (which contains the date) to a formatted month name
+//     formattedData = formattedData.map(item => {
+//         const date = new Date(item.y); // Convert the 'y' value (YYYY-MM) to a Date object
+//         const monthName = date.toLocaleString('en-US', { month: 'short' }); // Format as Jan, Feb, etc.
+//         item.y = monthName; // Replace 'y' with the formatted month name
+//         return item;
+//     });
+
+//     window.barChart = Morris.Bar({
+//         element: 'bar-chart',
+//         data: formattedData, // Use the formatted data with month names
+//         xkey: 'y',
+//         ykeys: ['a'],
+//         labels: ['Reservations'],
+//         barColors: ['#009688'],
+//         resize: true,
+//         redraw: true
+//     });
+
+//     // Add the current year below the chart
+//     let chartElement = document.getElementById('bar-chart');
+//     let currentYearLabel = document.createElement('div');
+//     currentYearLabel.innerHTML = `<span style="font-size: 14px; color: #666; display: block; text-align: center; margin-top: -10px;">${new Date().getFullYear()}</span>`;
+//     chartElement.parentNode.insertBefore(currentYearLabel, chartElement.nextSibling);
+// }
+
 function barChart() {
     // Format the month labels in your data before passing to the chart
-    let formattedData = <?php echo json_encode($bardata); ?>;
+    let formattedData = <?php echo json_encode($lineData); ?>;
     
     // Map over the data to change the 'y' key (which contains the date) to a formatted month name
     formattedData = formattedData.map(item => {
@@ -554,9 +584,9 @@ function barChart() {
         element: 'bar-chart',
         data: formattedData, // Use the formatted data with month names
         xkey: 'y',
-        ykeys: ['a'],
-        labels: ['Reservations'],
-        barColors: ['#009688'],
+        ykeys: ['a', 'b', 'c'],
+        labels: ['Total Invoice','Total of Partial Payment','Total of Full Payment'],
+        barColors: ['#009688', '#FF6384', '#36A2EB'],
         resize: true,
         redraw: true
     });
@@ -567,8 +597,6 @@ function barChart() {
     currentYearLabel.innerHTML = `<span style="font-size: 14px; color: #666; display: block; text-align: center; margin-top: -10px;">${new Date().getFullYear()}</span>`;
     chartElement.parentNode.insertBefore(currentYearLabel, chartElement.nextSibling);
 }
-
-
 </script>
     <!-- Include jQuery and Morris.js -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
