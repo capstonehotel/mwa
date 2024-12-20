@@ -266,12 +266,8 @@ $result1 = mysqli_query($connection, $query1);
             <p><strong>Authorized Signature</strong></p>
         </div> -->
         <div class="col-sm-6">
-        <p>
-        <strong>Guest Name: </strong>
-        <span style="text-decoration: underline; display: inline-block; width: 200px;"></span>
-    </p>
-            <!-- <p>__________________________</p>
-            <p><strong>Front Desk Signature</strong></p> -->
+            <p>__________________________</p>
+            <p><strong>Front Desk Signature</strong></p>
         </div>
     </div>
 </section>
