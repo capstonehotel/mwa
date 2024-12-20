@@ -208,7 +208,7 @@ $result1 = mysqli_query($connection, $query1);
             <b>Invoice No.</b> 00<?php echo $row['GUESTID']; ?><br>
             <b>Confirmation ID:</b> <?php echo $row['CONFIRMATIONCODE']; ?><br>
             <b>Paid Date:</b> <?php echo date("m/d/Y", strtotime($row['PAID_DATE'])); ?><br>
-            <b>Payment Method:</b> <?php echo $row['PAYMENT_METHOD']; ?>
+            <b>Payment Method:</b> <?php echo $row['PAYMENT_METHOD']; ?><br>
             <b>Booking Status:</b> <?php echo $row['STATUS']; ?><br>
         </div>
     </div>
