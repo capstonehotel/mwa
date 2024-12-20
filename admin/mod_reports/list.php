@@ -259,8 +259,13 @@ $result1 = mysqli_query($connection, $query1);
             </table>
         </div>
     </div>
+    <!-- Signature Section -->
+    <div style="margin-top: 40px; text-align: center;">
+        <p style="margin-bottom: 10px;">___________________________</p>
+        <p><strong>Name / Signature</strong></p>
+    </div>
       <!-- Signature Section -->
-      <div class="row" style="margin-top: 50px; text-align: center;">
+      <!-- <div class="row" style="margin-top: 50px; text-align: center;">
         <div class="col-sm-6">
             <p>__________________________</p>
             <p><strong>Authorized Signature</strong></p>
@@ -269,7 +274,7 @@ $result1 = mysqli_query($connection, $query1);
             <p>__________________________</p>
             <p><strong>Guest Signature</strong></p>
         </div>
-    </div>
+    </div> -->
 </section>
 <?php } else { ?>
 <!-- You can add content here if needed when 'code' parameter is not set -->
