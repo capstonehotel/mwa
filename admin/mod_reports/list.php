@@ -261,10 +261,10 @@ $result1 = mysqli_query($connection, $query1);
     </div>
       <!-- Signature Section -->
       <div class="row" style="margin-top: 50px; text-align: center;">
-        <!-- <div class="col-sm-6">
-            <p>__________________________</p>
-            <p><strong>Authorized Signature</strong></p>
-        </div> -->
+        <div class="col-sm-6">
+            <!-- <p>__________________________</p>
+            <p><strong>Authorized Signature</strong></p> -->
+        </div>
         <div class="col-sm-6">
             <p>__________________________</p>
             <p><strong>Front Desk Signature</strong></p>
