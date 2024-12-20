@@ -5,64 +5,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
 
-<style>
-        body {
-            background-color: #f8f9fa;
-            font-family: Arial, sans-serif;
-        }
 
-        .billing-container {
-            margin: 50px auto;
-            padding: 20px;
-            max-width: 800px;
-            background: #fff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
-
-        .billing-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .billing-header h2 {
-            font-weight: bold;
-            color: #343a40;
-        }
-
-        .form-group label {
-            font-weight: 600;
-        }
-
-        .btn-primary {
-            background-color: #009688;
-            border-color: #009688;
-        }
-
-        .btn-primary:hover {
-            background-color: #00796b;
-            border-color: #00796b;
-        }
-
-        .summary-card {
-            background: #e9ecef;
-            border-radius: 8px;
-            padding: 15px;
-        }
-
-        .summary-card h4 {
-            color: #343a40;
-        }
-
-        .summary-card p {
-            margin: 0;
-            color: #6c757d;
-        }
-
-        .text-right {
-            text-align: right;
-        }
-    </style>
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
