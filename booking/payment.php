@@ -350,9 +350,13 @@ if (!$msg1) {
     }
     .billing-info ul li {
         padding: 10px 0;
-        border-bottom: 1px solid #e0e0e0;
+        border-bottom: 1px solid #e0e0e0; /* Add line between rows */
         display: flex;
-        justify-content: space-between;
+        justify-content: space-between; /* Align items to the sides */
+    }
+    .billing-info ul li span {
+        text-align: right; /* Align text to the right */
+        flex: 1; /* Allow span to take available space */
     }
 </style>
 <div class="card rounded" style="padding: 20px; margin: 20px;">
