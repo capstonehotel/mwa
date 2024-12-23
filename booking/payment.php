@@ -359,30 +359,32 @@ if (!$msg1) {
         </div>
                     <div class="form-group d-flex align-items-center">
                         <label style="margin-right: 10px;">Address:</label>
+                        <p class="form-control-plaintext" >
                         <?php echo isset($_SESSION['city']) ? $_SESSION['city'] : ' ' . ' ' . (isset($_SESSION['address']) ? $_SESSION['address'] : ' '); ?> 
+</p>
                     </div>
                     <div class=" form-group d-flex align-items-center">
                         <label style="margin-right: 10px;">Phone #:</label>
+                        <p class="form-control-plaintext" >
                         <?php echo $_SESSION['phone']; ?>
+                        </p>
                     </div>
 </div>
                 </div>
                 <div class="col-md-4">
-                <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group d-flex align-items-center">
+                    <div class=" form-group d-flex align-items-center">
                         <label style="margin-right: 10px;">Transaction Date:</label>
+                        <p class="form-control-plaintext" >
                         <?php echo date("m/d/Y"); ?>
+                        </p>
                     </div>
                     
-                    <div class="form-group d-flex align-items-center">
+                    <div class=" form-group d-flex align-items-center">
     <label style="margin-right: 10px;" >Transaction Id:</label>
-    <span   name="realconfirmation"><?php echo $_SESSION['confirmation']; ?></span>
+    <p class="form-control-plaintext" >
+    <span   name="realconfirmation"><?php echo $_SESSION['confirmation']; ?></span></p>
     <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
     <input type="hidden" id="payment_status_input"  name="txtstatus">
-</div>
-</div>
-</div>
 </div>
 <div class="col-md-12 col-sm-2" style="display: flex; align-items: center;">
     <label for="paymentAmount" id="paymentLabel" style="margin-right: 10px;">Select Payment Option:</label>
@@ -398,7 +400,7 @@ if (!$msg1) {
         <div>
             <input type="radio" id="gcash" name="payment_method" value="gcash" required>
             <label for="gcash">
-                <img src="../GCashlogo.png" alt="Pay with GCash" style="height: 40px; margin-right: 5px; border-radus:10px;">
+                <img src="../GCashlogo.png" alt="Pay with GCash" style="height: 20px; margin-right: 5px;">
                 Pay with GCash
             </label>
         </div>
