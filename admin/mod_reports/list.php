@@ -267,7 +267,7 @@ $result1 = mysqli_query($connection, $query1);
         </div>
         <div class="col-sm-6">
             <p>__________________________</p>
-            <p><strong>Front Desk Signature</strong></p>
+            <p><strong>Signature</strong></p>
         </div>
     </div>
 </section>
