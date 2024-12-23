@@ -259,35 +259,17 @@ $result1 = mysqli_query($connection, $query1);
             </table>
         </div>
     </div>
-    <!-- Signature Section -->
-<div class="row" style="margin-top: 50px; text-align: center;">
-    <div class="col-sm-6">
-        <!-- Optionally, you can leave this empty or add something else -->
-    </div>
-    <div class="col-sm-6">
-        <p>__________________________</p>
-        <p style="text-decoration: underline;">
-            <strong>
-                <?php
-                // Echo the user's name and apply underlining via CSS style
-                echo $_SESSION['USER_FIRST_NAME'] . ' ' . $_SESSION['USER_LAST_NAME'];
-                ?>
-            </strong>
-        </p>
-    </div>
-</div>
-
       <!-- Signature Section -->
-      <!-- <div class="row" style="margin-top: 50px; text-align: center;">
-        <div class="col-sm-6"> -->
+      <div class="row" style="margin-top: 50px; text-align: center;">
+        <div class="col-sm-6">
             <!-- <p>__________________________</p>
             <p><strong>Authorized Signature</strong></p> -->
-        <!-- </div>
+        </div>
         <div class="col-sm-6">
             <p>__________________________</p>
             <p><strong>Signature</strong></p>
         </div>
-    </div> -->
+    </div>
 </section>
 <?php } else { ?>
 <!-- You can add content here if needed when 'code' parameter is not set -->
