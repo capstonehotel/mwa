@@ -446,8 +446,7 @@ if (!$msg1) {
                 </div> -->
             </form>
         </div>
-    </div>
-</div>
+   
                 <div id="confirmModal" class="modal fade" role="dialog" >
     <div class="modal-dialog modal-sm" >
         <div class="modal-content" >
