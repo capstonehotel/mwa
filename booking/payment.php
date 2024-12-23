@@ -374,7 +374,7 @@ if (!$msg1) {
                     </div>
                 </div>
 
-                <div class="room-details">
+                <div class="room-details billing-info">
                     <h3>Room Details</h3>
                     <ul>
                         <?php
@@ -403,7 +403,7 @@ if (!$msg1) {
                     </ul>
                 </div>
 
-                <div class="payment-options">
+                <div class="payment-options billing-info">
                     <h3>Payment Options</h3>
                     <div class="col-md-12">
                         <div class="form-group d-flex align-items-center">
