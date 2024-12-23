@@ -387,13 +387,13 @@ if (!$msg1) {
                             $cur = $mydb->loadResultList();
                             foreach ($cur as $result) {
                                 echo '<li>';
-                                echo 'Room: ' . $result->ROOM . ' ' . $result->ROOMDESC . '<br>';
-                                echo 'Checked in: ' . date_format(date_create($_SESSION['monbela_cart'][$i]['monbelacheckin']), "m/d/Y") . '<br>';
-                                echo 'Checked out: ' . date_format(date_create($_SESSION['monbela_cart'][$i]['monbelacheckout']), "m/d/Y") . '<br>';
-                                echo 'Price: &#8369 ' . $result->PRICE . '<br>';
-                                echo 'Night(s): ' . $_SESSION['monbela_cart'][$i]['monbeladay'] . '<br>';
-                                echo 'Subtotal: &#8369 ' . $_SESSION['monbela_cart'][$i]['monbelaroomprice'];
-                                echo '</li>';
+                    echo 'Room: <span>' . $result->ROOM . ' ' . $result->ROOMDESC . '</span><br>';
+                    echo 'Checked in: <span>' . date_format(date_create($_SESSION['monbela_cart'][$i]['monbelacheckin']), "m/d/Y") . '</span><br>';
+                    echo 'Checked out: <span>' . date_format(date_create($_SESSION['monbela_cart'][$i]['monbelacheckout']), "m/d/Y") . '</span><br>';
+                    echo 'Price: <span>&#8369 ' . $result->PRICE . '</span><br>';
+                    echo 'Night(s): <span>' . $_SESSION['monbela_cart'][$i]['monbeladay'] . '</span><br>';
+                    echo 'Subtotal: <span>&#8369 ' . $_SESSION['monbela_cart'][$i]['monbelaroomprice'] . '</span>';
+                    echo '</li>';
                                 $payable += $_SESSION['monbela_cart'][$i]['monbelaroomprice'];
                             }
                         }
