@@ -405,11 +405,6 @@ if (!$msg1) {
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
-            <button type="submit" class="btn btn-primary">Proceed to Payment</button>
-        </div>
-    </form>
-</div>
 
                 <div class="table-responsive">
                     <table class="table table-striped">
