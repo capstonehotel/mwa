@@ -236,22 +236,22 @@ $mydb->setQuery($query8);
 $cur8 = $mydb->loadResultList();
 foreach ($cur8 as $result8) {
 ?>
-<div class="col-xl-3 col-md-6 mb-4">
+<div class="col-xl-4 col-md-6 mb-4">
     <div class="card board1 fill">
         <div class="card shadow h-100 py-2" style="border-radius: 0;">
             <div class="card-body">
                 <div class="dash-widget-header">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; padding-left: 5px; ">
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 25px; padding-left: 5px;">
                                 ₱<?php echo isset($result8->Total) ? number_format($result8->Total, 2, '.', ',') : '0.00'; ?>
                             </div>
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="font-size: 10px; padding-left: 5px;">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="font-size: 10px; padding-left: 5px;">
                                 Overall Total Payment
                             </div>
                         </div>
                         <div class="col-auto" style="padding-left: 5px;">
-                        <span class="material-symbols-outlined">account_balance_wallet</span>
+                            <span class="material-symbols-outlined">account_balance_wallet</span>
                         </div>
                     </div>
                 </div>
@@ -260,6 +260,7 @@ foreach ($cur8 as $result8) {
     </div>
 </div>
 <?php } ?>
+
 <?php
 $query9 = "SELECT SUM(COALESCE(AMOUNT_PAID, 0)) as Total 
             FROM `tblpayment` 
@@ -268,7 +269,7 @@ $mydb->setQuery($query9);
 $cur9 = $mydb->loadResultList();
 foreach ($cur9 as $result9) {
 ?>
-<div class="col-xl-3 col-md-6 mb-4">
+<div class="col-xl-4 col-md-6 mb-4">
     <div class="card board1 fill">
         <div class="card shadow h-100 py-2" style="border-radius: 0;">
             <div class="card-body">
@@ -279,7 +280,7 @@ foreach ($cur9 as $result9) {
                                 ₱<?php echo isset($result9->Total) ? number_format($result9->Total, 2, '.', ',') : '0.00'; ?>
                             </div>
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="font-size: 10px; padding-left: 5px;">
-                               Overall Total of Partial Payment 
+                                Overall Total of Partial Payment 
                             </div>
                         </div>
                         <div class="col-auto" style="padding-left: 5px;">
@@ -301,7 +302,7 @@ $mydb->setQuery($query10);
 $cur10 = $mydb->loadResultList();
 foreach ($cur10 as $result10) {
 ?>
-<div class="col-xl-3 col-md-6 mb-4">
+<div class="col-xl-4 col-md-6 mb-4">
     <div class="card board1 fill">
         <div class="card shadow h-100 py-2" style="border-radius: 0;">
             <div class="card-body">
