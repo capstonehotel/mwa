@@ -379,33 +379,36 @@ if (!$msg1) {
                 </div>
 
                 <div class="room-details billing-info">
-                <h3>Room Details</h3>
-                <ul>
-                    <?php
-                    $payable = 0;
-                    if (isset($_SESSION['monbela_cart'])) {
-                        $count_cart = count($_SESSION['monbela_cart']);
-                        for ($i = 0; $i < $count_cart; $i++) {
-                            $query = "SELECT * FROM `tblroom` r ,`tblaccomodation` a WHERE r.`ACCOMID`=a.`ACCOMID` AND ROOMID=" . $_SESSION['monbela_cart'][$i]['monbelaroomid'];
-                            $mydb->setQuery($query);
-                            $cur = $mydb->loadResultList();
-                            foreach ($cur as $result) {
-                                echo '<li>';
-                    echo 'Room: <span>' . $result->ROOM . ' ' . $result->ROOMDESC . '</span><br>';
-                    echo 'Checked in: <span>' . date_format(date_create($_SESSION['monbela_cart'][$i]['monbelacheckin']), "m/d/Y") . '</span><br>';
-                    echo 'Checked out: <span>' . date_format(date_create($_SESSION['monbela_cart'][$i]['monbelacheckout']), "m/d/Y") . '</span><br>';
-                    echo 'Price: <span>&#8369 ' . $result->PRICE . '</span><br>';
-                    echo 'Night(s): <span>' . $_SESSION['monbela_cart'][$i]['monbeladay'] . '</span><br>';
-                    echo 'Subtotal: <span>&#8369 ' . $_SESSION['monbela_cart'][$i]['monbelaroomprice'] . '</span>';
+    <h3>Room Details</h3>
+    <ul>
+        <?php
+        $payable = 0;
+        if (isset($_SESSION['monbela_cart'])) {
+            $count_cart = count($_SESSION['monbela_cart']);
+            for ($i = 0; $i < $count_cart; $i++) {
+                $query = "SELECT * FROM `tblroom` r ,`tblaccomodation` a WHERE r.`ACCOMID`=a.`ACCOMID` AND ROOMID=" . $_SESSION['monbela_cart'][$i]['monbelaroomid'];
+                $mydb->setQuery($query);
+                $cur = $mydb->loadResultList();
+                foreach ($cur as $result) {
+                    echo '<li>';
+                    echo 'Room: <span>' . $result->ROOM . ' ' . $result->ROOMDESC . '</span>';
+                    echo '<ul>';
+                    echo '<li>Checked in: <span>' . date_format(date_create($_SESSION['monbela_cart'][$i]['monbelacheckin']), "m/d/Y") . '</span></li>';
+                    echo '<li>Checked out: <span>' . date_format(date_create($_SESSION['monbela_cart'][$i]['monbelacheckout']), "m/d/Y") . '</span></li>';
+                    echo '<li>Price: <span>&#8369 ' . $result->PRICE . '</span></li>';
+                    echo '<li>Night(s): <span>' . $_SESSION['monbela_cart'][$i]['monbeladay'] . '</span></li>';
+                    echo '<li>Subtotal: <span>&#8369 ' . $_SESSION['monbela_cart'][$i]['monbelaroomprice'] . '</span></li>';
+                    echo '</ul>';
                     echo '</li>';
-                                $payable += $_SESSION['monbela_cart'][$i]['monbelaroomprice'];
-                            }
-                        }
-                        $_SESSION['pay'] = $payable;
-                    }
-                    ?>
-                </ul>
-            </div>
+                    $payable += $_SESSION['monbela_cart'][$i]['monbelaroomprice'];
+                }
+            }
+            $_SESSION['pay'] = $payable;
+        }
+        ?>
+    </ul>
+</div>
+           
 
                 <div class="payment-options billing-info">
                     <h3>Payment Options</h3>
