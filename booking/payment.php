@@ -390,16 +390,16 @@ if (!$msg1) {
                 $mydb->setQuery($query);
                 $cur = $mydb->loadResultList();
                 foreach ($cur as $result) {
+                    echo '<ul>';
                     echo '<li>';
                     echo 'Room: <span>' . $result->ROOM . ' ' . $result->ROOMDESC . '</span>';
-                    echo '<ul>';
                     echo '<li>Checked in: <span>' . date_format(date_create($_SESSION['monbela_cart'][$i]['monbelacheckin']), "m/d/Y") . '</span></li>';
                     echo '<li>Checked out: <span>' . date_format(date_create($_SESSION['monbela_cart'][$i]['monbelacheckout']), "m/d/Y") . '</span></li>';
                     echo '<li>Price: <span>&#8369 ' . $result->PRICE . '</span></li>';
                     echo '<li>Night(s): <span>' . $_SESSION['monbela_cart'][$i]['monbeladay'] . '</span></li>';
                     echo '<li>Subtotal: <span>&#8369 ' . $_SESSION['monbela_cart'][$i]['monbelaroomprice'] . '</span></li>';
-                    echo '</ul>';
                     echo '</li>';
+                    echo '</ul>';
                     $payable += $_SESSION['monbela_cart'][$i]['monbelaroomprice'];
                 }
             }
