@@ -679,7 +679,7 @@ $isLoggedIn = isset($_SESSION['GUESTID']);
 </script>
 
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Offcanvas navbar large">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Offcanvas navbar large" style="background: linear-gradient(to bottom, #a0201c, #790505 70%);">
     <div class="container-fluid">
       <a class="navbar-brand"><img src="https://mcchmhotelreservation.com/images/logo2.jpg" style="width: 40px; height: 40px; border-radius: 30px; margin-left: 2px;">  HM Hotel Reservation</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
