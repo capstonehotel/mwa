@@ -367,11 +367,11 @@ if (!$msg1) {
                     <div class="billing-info">
                         <h3>Billing Details</h3>
                         <ul>
-                            <li>Name: <span><?php echo $_SESSION['name'] . ' ' . $_SESSION['last']; ?></span></li>
+                            <li>Name: <span><?php echo $_SESSION['name'] . ' ' . $_SESSION['last']; echo $count_cart; ?></span></li>
                             <li>Address: <span><?php echo isset($_SESSION['city']) ? $_SESSION['city'] : ' ' . (isset($_SESSION['address']) ? $_SESSION['address'] : ' '); ?></span></li>
                             <li>Phone#: <span><?php echo $_SESSION['phone']; ?></span></li>
                             <li>Transaction Date: <span><?php echo date("m/d/Y"); ?></span></li>
-                            <li>Transaction Id: <span><?php echo $_SESSION['confirmation']; ?></span></li>
+                            <li>Transaction Id: <span name="realconfirmation"><?php echo $_SESSION['confirmation']; ?></span></li>
                         </ul>
                         <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
                         <input type="hidden" id="payment_status_input" name="txtstatus">
