@@ -349,11 +349,11 @@ if (!$msg1) {
         <div class="row">
             <form action="index?view=payment" method="post" name="personal" enctype="multipart/form-data" id="bookingForm">
                 <div class="col-md-8 col-sm-4">
-                    <div class=" form-group d-flex align-items-center" >
+                    <div class="col-md-12 form-group d-flex align-items-center" >
                         <label style="margin-right: 10px;">Name:</label>
                         <?php echo $_SESSION['name'] . ' ' . $_SESSION['last']; echo $count_cart; ?>
                     </div>
-                    <div class=" form-group d-flex align-items-center">
+                    <div class="col-md-12 form-group d-flex align-items-center">
                         <label style="margin-right: 10px;">Address:</label>
                         <?php echo isset($_SESSION['city']) ? $_SESSION['city'] : ' ' . ' ' . (isset($_SESSION['address']) ? $_SESSION['address'] : ' '); ?> 
                     </div>
