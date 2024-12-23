@@ -365,8 +365,9 @@ if (!$msg1) {
                         <label style="margin-right: 10px;">Phone #:</label>
                         <?php echo $_SESSION['phone']; ?>
                     </div>
+</div>
                 </div>
-                
+                <div class="col-md-8">
                     <div class=" form-group d-flex align-items-center">
                         <label style="margin-right: 10px;">Transaction Date:</label>
                         <?php echo date("m/d/Y"); ?>
@@ -377,6 +378,7 @@ if (!$msg1) {
     <span   name="realconfirmation"><?php echo $_SESSION['confirmation']; ?></span>
     <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
     <input type="hidden" id="payment_status_input"  name="txtstatus">
+</div>
 </div>
 <div class="col-md-12 col-sm-2" style="display: flex; align-items: center;">
     <label for="paymentAmount" id="paymentLabel" style="margin-right: 10px;">Select Payment Option:</label>
