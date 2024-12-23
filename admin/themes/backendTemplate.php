@@ -182,7 +182,7 @@ if (window.__proto__.toString() !== "[object Window]") {
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav sidebar sidebar-dark accordion toggled" id="accordionSidebar" style="background: maroon">
+        <ul class="navbar-nav sidebar sidebar-dark accordion toggled" id="accordionSidebar" style="background: linear-gradient(to bottom, #a0201c, #790505 15%);">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
@@ -271,7 +271,7 @@ if (window.__proto__.toString() !== "[object Window]") {
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" >
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"  style="background: linear-gradient(to bottom, #a0201c, #790505 70%);">
 
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">

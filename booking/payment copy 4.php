@@ -407,28 +407,28 @@ if (!$msg1) {
         <div class="row">
             <form action="index?view=payment" method="post" name="personal" enctype="multipart/form-data" id="bookingForm">
                 <div class="col-md-8 col-sm-4">
-                    <div class="col-md-12 form-group d-flex align-items-center" >
-                        <label style="margin-right: 10px;">Name:</label>
+                    <div class="col-md-12">
+                        <label>Name:</label>
                         <?php echo $_SESSION['name'] . ' ' . $_SESSION['last']; echo $count_cart; ?>
                     </div>
-                    <div class="col-md-12 form-group d-flex align-items-center">
-                        <label style="margin-right: 10px;">Address:</label>
+                    <div class="col-md-12">
+                        <label>Address:</label>
                         <?php echo isset($_SESSION['city']) ? $_SESSION['city'] : ' ' . ' ' . (isset($_SESSION['address']) ? $_SESSION['address'] : ' '); ?> 
                     </div>
-                    <div class="col-md-12 form-group d-flex align-items-center">
-                        <label style="margin-right: 10px;">Phone #:</label>
+                    <div class="col-md-12">
+                        <label>Phone #:</label>
                         <?php echo $_SESSION['phone']; ?>
                     </div>
                 </div>
                 
-                    <div class="col-md-12 form-group d-flex align-items-center">
-                        <label style="margin-right: 10px;">Transaction Date:</label>
+                    <div class="col-md-12">
+                        <label>Transaction Date:</label>
                         <?php echo date("m/d/Y"); ?>
                     </div>
                     
-                    <div class="col-md-12 form-group d-flex align-items-center">
-    <label style="margin-right: 10px;" >Transaction Id:</label>
-    <span   name="realconfirmation"><?php echo $_SESSION['confirmation']; ?></span>
+                    <div class="col-md-12">
+    <label style="display: none;" >Transaction Id:</label>
+    <span  style="display: none;" name="realconfirmation"><?php echo $_SESSION['confirmation']; ?></span>
     <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
     <input type="hidden" id="payment_status_input"  name="txtstatus">
 </div>
