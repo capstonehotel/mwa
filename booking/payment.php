@@ -372,37 +372,36 @@ if (!$msg1) {
                         <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
                         <input type="hidden" id="payment_status_input" name="txtstatus">
                     </div>
-                    </div>
+                </div>
 
                 <div class="room-details billing-info">
-                    <h3>Room Details</h3>
-                    <ul>
+                <h3>Room Details</h3>
+                <ul>
                     <?php
-                        $payable = 0;
-                        if (isset($_SESSION['monbela_cart'])) {
-                            $count_cart = count($_SESSION['monbela_cart']);
-                            for ($i = 0; $i < $count_cart; $i++) {
-                                $query = "SELECT * FROM `tblroom` r ,`tblaccomodation` a WHERE r.`ACCOMID`=a.`ACCOMID` AND ROOMID=" . $_SESSION['monbela_cart'][$i]['monbelaroomid'];
-                                $mydb->setQuery($query);
-                                $cur = $mydb->loadResultList();
-                                foreach ($cur as $result) {
-                                    echo '<li>';
-                                    echo 'Room: <span>' . $result->ROOM . ' ' . $result->ROOMDESC . '</span>, ';
-                                    echo 'Checked in: <span>' . date_format(date_create($_SESSION['monbela_cart'][$i]['monbelacheckin']), "m/d/Y") . '</span>, ';
-                                    echo 'Checked out: <span>' . date_format(date_create($_SESSION['monbela_cart'][$i]['monbelacheckout']), "m/d/Y") . '</span>, ';
-                                    echo 'Price: <span>&#8369 ' . $result->PRICE . '</span>, ';
-                                    echo 'Night(s): <span>' . $_SESSION['monbela_cart'][$i]['monbeladay'] . '</span>, ';
-                                    echo 'Subtotal: <span>&#8369 ' . $_SESSION['monbela_cart'][$i]['monbelaroomprice'] . '</span>';
-                                    echo '</li>';
-                                    $payable += $_SESSION['monbela_cart'][$i]['monbelaroomprice'];
-                                }
+                    $payable = 0;
+                    if (isset($_SESSION['monbela_cart'])) {
+                        $count_cart = count($_SESSION['monbela_cart']);
+                        for ($i = 0; $i < $count_cart; $i++) {
+                            $query = "SELECT * FROM `tblroom` r ,`tblaccomodation` a WHERE r.`ACCOMID`=a.`ACCOMID` AND ROOMID=" . $_SESSION['monbela_cart'][$i]['monbelaroomid'];
+                            $mydb->setQuery($query);
+                            $cur = $mydb->loadResultList();
+                            foreach ($cur as $result) {
+                                echo '<li>';
+                                echo 'Room: ' . $result->ROOM . ' ' . $result->ROOMDESC . '<br>';
+                                echo 'Checked in: ' . date_format(date_create($_SESSION['monbela_cart'][$i]['monbelacheckin']), "m/d/Y") . '<br>';
+                                echo 'Checked out: ' . date_format(date_create($_SESSION['monbela_cart'][$i]['monbelacheckout']), "m/d/Y") . '<br>';
+                                echo 'Price: &#8369 ' . $result->PRICE . '<br>';
+                                echo 'Night(s): ' . $_SESSION['monbela_cart'][$i]['monbeladay'] . '<br>';
+                                echo 'Subtotal: &#8369 ' . $_SESSION['monbela_cart'][$i]['monbelaroomprice'];
+                                echo '</li>';
+                                $payable += $_SESSION['monbela_cart'][$i]['monbelaroomprice'];
                             }
-                            $_SESSION['pay'] = $payable;
                         }
-                        ?>
-                    </ul>
-                </div>
-                
+                        $_SESSION['pay'] = $payable;
+                    }
+                    ?>
+                </ul>
+            </div>
 
                 <div class="payment-options billing-info">
                     <h3>Payment Options</h3>
