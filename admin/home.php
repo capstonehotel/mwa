@@ -442,9 +442,9 @@ for ($year = $startYear; $year <= $currentYear; $year++) {
 ?>
 
 
-<div class="col-lg-6">
+<div class="col-md-6">
     <div class="card shadow mb-4">
-        <div class="card card-chart" style="height: 400px;"> <!-- Ensure consistent height -->
+        <div class="card card-chart" style="height: 400px;">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="card-title m-0 font-weight-bold text-primary">LINE CHART</h6>
             </div>
@@ -454,7 +454,6 @@ for ($year = $startYear; $year <= $currentYear; $year++) {
         </div>
     </div>
 </div>
-
 
 <div class="col-md-12 col-lg-6">
     <div class="card shadow mb-4">
