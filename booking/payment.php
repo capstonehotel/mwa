@@ -348,7 +348,7 @@ if (!$msg1) {
     <div class="container">
         <div class="row">
             <form action="index?view=payment" method="post" name="personal" enctype="multipart/form-data" id="bookingForm">
-            <div class="row mb-4">
+            <div class="row mb-2">
                 <div class="col-md-8">
                 <div class="form-group d-flex align-items-center">
             <label style="margin-right: 10px;">Name:</label>
