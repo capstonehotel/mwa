@@ -443,7 +443,7 @@ mysqli_close($conn);
 
 ?>
 <li class="nav-item my-auto" style="position: relative;">
-    <a href="javascript:void(0);" class="text-dark" id="bookingNotification" onclick="toggleNotificationMenu(event)">
+    <a href="javascript:void(0);" class="text-white" id="bookingNotification" onclick="toggleNotificationMenu(event)">
         <i class="fa fa-bell"></i>
         <?php if ($total_notifications > 0): ?>
             <span class="badge badge-pill badge-danger notification-badge"><?php echo $total_notifications; ?></span>
@@ -834,7 +834,7 @@ function markAsRead(reserveId, redirectUrl) {
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php
+                                <span class="mr-2 d-none d-lg-inline text-white-600 small"><?php
                       while($row = mysqli_fetch_assoc($result)){
                       echo $row['ROLE'];
                        ?></span>
