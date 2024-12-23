@@ -182,7 +182,7 @@ if (window.__proto__.toString() !== "[object Window]") {
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav sidebar sidebar-dark accordion toggled" id="accordionSidebar" style="background: linear-gradient(to bottom, #a0201c, #790505 15%);">
+        <ul class="navbar-nav sidebar sidebar-dark accordion toggled" id="accordionSidebar" style="background: linear-gradient(to bottom, #a0201c, #790505 30%);">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
@@ -526,9 +526,9 @@ mysqli_close($conn);
                 <p style="margin: 0 0 2px 0;">
                     <strong><?php echo $fullName; ?></strong> has made a booking in <strong><?php echo $roomName; ?></strong> (<?php echo $roomDesc; ?>) and <?php echo $paidstatus; ?> ₱ <?php echo $paid; ?> pesos.
                 </p>
-                <p class="time" style="margin-bottom: 5px;" title="<?php echo $exactDate; ?>">
+                <!-- <p class="time" style="margin-bottom: 5px;" title="<?php echo $exactDate; ?>">
                      <?php echo $exactDate; ?>
-                </p>
+                </p> -->
             </div>
         </div>
     </a>
