@@ -410,34 +410,36 @@ if (!$msg1) {
 </div>
            
 
-                <div class="payment-options billing-info">
-                    <h3>Payment Options</h3>
-                    <div class="col-md-12">
-                        <div class="form-group d-flex align-items-center">
-                            <label for="paymentAmount" id="paymentLabel" style="margin-right: 10px;">Select Payment Option:</label>
-                            <select id="paymentAmount" name="payment_amount" required>
-                                <option value="Fully Paid">Full Payment</option>
-                                <option value="Partially Paid">Partial Payment</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group d-flex align-items-center">
-                            <label id="paymentLabel" style="margin-right: 10px;">Payment Method:</label>
-                            <div>
-                                <input type="radio" id="gcash" name="payment_method" value="gcash" required>
-                                <label for="gcash">
-                                    <img src="../GCashlogo.png" alt="Pay with GCash" style="height: 30px; margin-right: 5px; border-radius: 10px;">
-                                    Pay with GCash
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+<div class="payment-options billing-info">
+    <h3>Payment Options</h3>
+    <ul>
+        <li>
+            <div class="form-group d-flex align-items-center">
+                <label for="paymentAmount" style="margin-right: 10px;">Select Payment Option:</label>
+                <select id="paymentAmount" name="payment_amount" required>
+                    <option value="Fully Paid">Full Payment</option>
+                    <option value="Partially Paid">Partial Payment</option>
+                </select>
+            </div>
+        </li>
+        <li>
+            <div class="form-group d-flex align-items-center">
+                <label style="margin-right: 10px;">Payment Method:</label>
+                <div>
+                    <input type="radio" id="gcash" name="payment_method" value="gcash" required>
+                    <label for="gcash">
+                        <img src="../GCashlogo.png" alt="Pay with GCash" style="height: 30px; margin-right: 5px; border-radius: 10px;">
+                        Pay with GCash
+                    </label>
                 </div>
+            </div>
+        </li>
+    </ul>
+</div>
 
-                <div class="col-md-12">
+                <!-- <div class="col-md-12">
                     <button type="submit" class="btn btn-primary ">Proceed to Payment</button>
-                </div>
+                </div> -->
             </form>
         </div>
     </div>
