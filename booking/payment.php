@@ -398,7 +398,7 @@ if (!$msg1) {
         <div>
             <input type="radio" id="gcash" name="payment_method" value="gcash" required>
             <label for="gcash">
-                <img src="../GCashlogo.png" alt="Pay with GCash" style="height: 20px; margin-right: 5px;">
+                <img src="../GCashlogo.png" alt="Pay with GCash" style="height: 40px; margin-right: 5px;">
                 Pay with GCash
             </label>
         </div>
