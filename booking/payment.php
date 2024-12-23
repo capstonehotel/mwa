@@ -367,7 +367,7 @@ if (!$msg1) {
                     </div>
 </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-4">
                     <div class=" form-group d-flex align-items-center">
                         <label style="margin-right: 10px;">Transaction Date:</label>
                         <?php echo date("m/d/Y"); ?>
