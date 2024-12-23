@@ -372,7 +372,7 @@ if (!$msg1) {
                         <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
                         <input type="hidden" id="payment_status_input" name="txtstatus">
                     </div>
-                </div>
+               
 
                 <div class="room-details billing-info">
                     <h3>Room Details</h3>
@@ -386,14 +386,14 @@ if (!$msg1) {
                                 $mydb->setQuery($query);
                                 $cur = $mydb->loadResultList();
                                 foreach ($cur as $result) {
-                                    echo '<li>';
-                                    echo 'Room: ' . $result->ROOM . ' ' . $result->ROOMDESC . '<br>';
-                                    echo 'Checked in: ' . date_format(date_create($_SESSION['monbela_cart'][$i]['monbelacheckin']), "m/d/Y") . '<br>';
-                                    echo 'Checked out: ' . date_format(date_create($_SESSION['monbela_cart'][$i]['monbelacheckout']), "m/d/Y") . '<br>';
-                                    echo 'Price: &#8369 ' . $result->PRICE . '<br>';
-                                    echo 'Night(s): ' . $_SESSION['monbela_cart'][$i]['monbeladay'] . '<br>';
-                                    echo 'Subtotal: &#8369 ' . $_SESSION['monbela_cart'][$i]['monbelaroomprice'];
-                                    echo '</li>';
+                                    echo '<ul>';
+                                    echo '<li>Room: ' . $result->ROOM . ' ' . $result->ROOMDESC . '</li><br>';
+                                    echo '<li>Checked in: ' . date_format(date_create($_SESSION['monbela_cart'][$i]['monbelacheckin']), "m/d/Y") . '</li><br>';
+                                    echo '<li>Checked out: ' . date_format(date_create($_SESSION['monbela_cart'][$i]['monbelacheckout']), "m/d/Y") . '</li><br>';
+                                    echo '<li>Price: &#8369 ' . $result->PRICE . '</li><br>';
+                                    echo '<li>Night(s): ' . $_SESSION['monbela_cart'][$i]['monbeladay'] . '</li><br>';
+                                    echo '<li>Subtotal: &#8369 ' . $_SESSION['monbela_cart'][$i]['monbelaroomprice']. '</li>';
+                                    echo '</ul>';
                                     $payable += $_SESSION['monbela_cart'][$i]['monbelaroomprice'];
                                 }
                             }
@@ -401,6 +401,7 @@ if (!$msg1) {
                         }
                         ?>
                     </ul>
+                </div>
                 </div>
 
                 <div class="payment-options billing-info">
