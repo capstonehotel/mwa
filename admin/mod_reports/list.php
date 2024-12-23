@@ -262,22 +262,18 @@ $result1 = mysqli_query($connection, $query1);
     <!-- Signature Section -->
 <div class="row" style="margin-top: 50px; text-align: center;">
     <div class="col-sm-6">
-        <!-- Empty space for additional signature if needed -->
+        <!-- Optionally, you can leave this empty or add something else -->
     </div>
     <div class="col-sm-6">
-        <?php
-        // Fetch the name from tbluseraccount using UNAME
-        $unameQuery = "SELECT UNAME FROM tbluseraccount WHERE USERID = '{$_SESSION['USERID']}'";
-        $unameResult = mysqli_query($connection, $unameQuery);
-        if ($unameResult && mysqli_num_rows($unameResult) > 0) {
-            $unameRow = mysqli_fetch_assoc($unameResult);
-            $username = $unameRow['UNAME'];
-        } else {
-            $username = "Authorized Personnel"; // Fallback if name is unavailable
-        }
-        ?>
         <p>__________________________</p>
-        <p><strong><?php echo $username; ?></strong></p>
+        <p style="text-decoration: underline;">
+            <strong>
+                <?php
+                // Echo the user's name and apply underlining via CSS style
+                echo $_SESSION['USER_FIRST_NAME'] . ' ' . $_SESSION['USER_LAST_NAME'];
+                ?>
+            </strong>
+        </p>
     </div>
 </div>
 
