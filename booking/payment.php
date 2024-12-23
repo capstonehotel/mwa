@@ -368,16 +368,20 @@ if (!$msg1) {
 </div>
                 </div>
                 <div class="col-md-4">
-                    <div class=" form-group d-flex align-items-center">
+                <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group d-flex align-items-center">
                         <label style="margin-right: 10px;">Transaction Date:</label>
                         <?php echo date("m/d/Y"); ?>
                     </div>
                     
-                    <div class=" form-group d-flex align-items-center">
+                    <div class="form-group d-flex align-items-center">
     <label style="margin-right: 10px;" >Transaction Id:</label>
     <span   name="realconfirmation"><?php echo $_SESSION['confirmation']; ?></span>
     <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
     <input type="hidden" id="payment_status_input"  name="txtstatus">
+</div>
+</div>
 </div>
 </div>
 <div class="col-md-12 col-sm-2" style="display: flex; align-items: center;">
