@@ -334,14 +334,14 @@ if (!$msg1) {
  
 <!-- Add this in your HTML head section -->
 <style>
-    .billing-info, .billing-section {
+    .billing-info {
         padding: 20px;
         margin: 10px;
         border: 1px solid #ddd;
         border-radius: 8px;
         background-color: #fafafa;
     }
-    .billing-info h3, .billing-section h3 {
+    .billing-info h3 {
         margin-bottom: 15px;
     }
     .billing-info ul {
@@ -363,25 +363,18 @@ if (!$msg1) {
     <div class="container">
         <div class="row">
             <form action="index?view=payment" method="post" name="personal" enctype="multipart/form-data" id="bookingForm">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="billing-info">
                         <h3>Billing Information</h3>
                         <ul>
                             <li>Name: <span><?php echo $_SESSION['name'] . ' ' . $_SESSION['last']; ?></span></li>
                             <li>Address: <span><?php echo isset($_SESSION['city']) ? $_SESSION['city'] : ' ' . (isset($_SESSION['address']) ? $_SESSION['address'] : ' '); ?></span></li>
                             <li>Phone#: <span><?php echo $_SESSION['phone']; ?></span></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="billing-info">
-                        <h3>Transaction Details</h3>
-                        <ul>
                             <li>Transaction Date: <span><?php echo date("m/d/Y"); ?></span></li>
                             <li>Transaction Id: <span><?php echo $_SESSION['confirmation']; ?></span></li>
-                            <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
-                            <input type="hidden" id="payment_status_input" name="txtstatus">
                         </ul>
+                        <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
+                        <input type="hidden" id="payment_status_input" name="txtstatus">
                     </div>
                 </div>
                 <div class="col-md-12">
