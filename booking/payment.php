@@ -377,10 +377,8 @@ if (!$msg1) {
                         <input type="hidden" id="payment_status_input" name="txtstatus">
                     </div>
                 </div>
-            </form>
-        </div>
-    </div>
-</div>
+            
+       
 
 <div class="payment-options">
     <form action="index?view=payment" method="post" name="paymentOptions" enctype="multipart/form-data">
