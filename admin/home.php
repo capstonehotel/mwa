@@ -441,6 +441,7 @@ for ($year = $startYear; $year <= $currentYear; $year++) {
 }
 ?>
 
+
 <div class="row" style="padding: 10px;">
     <div class="col-md-12">
         <div class="card shadow mb-4">
@@ -479,33 +480,6 @@ for ($year = $startYear; $year <= $currentYear; $year++) {
                 <div class="card-body">
                     <div id="bar-chart" style="height: 300px; width: 100%;"></div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="col-md-12 col-lg-6">
-    <div class="card shadow mb-4">
-        <div class="card card-chart" style="height: 400px;"> <!-- Ensure consistent height -->
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="card-title m-0 font-weight-bold text-primary">DONUT CHART</h6>
-            </div>
-            <div class="card-body">
-                <div id="donut-chart" style="height: 300px; width: 100%;"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="col-md-12 col-lg-6">
-    <div class="card shadow mb-4">
-        <div class="card card-chart" style="height: 400px;"> <!-- Ensure consistent height -->
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="card-title m-0 font-weight-bold text-primary">BAR CHART</h6>
-            </div>
-            <div class="card-body">
-                <div id="bar-chart" style="height: 300px; width: 100%;"></div>
             </div>
         </div>
     </div>
