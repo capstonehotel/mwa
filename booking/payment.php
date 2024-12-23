@@ -333,75 +333,85 @@ if (!$msg1) {
 
  
 <!-- Add this in your HTML head section -->
+<style>
+    .billing-info, .billing-section {
+        padding: 20px;
+        margin: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fafafa;
+    }
+    .billing-info h3, .billing-section h3 {
+        margin-bottom: 15px;
+    }
+    .billing-info ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    .billing-info ul li {
+        padding: 10px 0;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
 
 <div class="card rounded" style="padding: 20px; margin: 20px;">
     <div class="pagetitle">
         <h1>Billing Details</h1>
     </div>
-    <!-- <nav aria-label="breadcrumb">
-        <ol class="breadcrumb" style="margin-top: 10px;">
-            <li class="breadcrumb-item"><a href="<?php echo WEB_ROOT; ?>index.php">Home</a></li>
-            <li class="breadcrumb-item"><a href="<?php echo WEB_ROOT; ?>booking/">Booking Cart</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Billing Details</li>
-        </ol>
-    </nav> -->
     <div class="container">
         <div class="row">
             <form action="index?view=payment" method="post" name="personal" enctype="multipart/form-data" id="bookingForm">
-            <div class="row mb-2">
                 <div class="col-md-8">
-                <div class="form-group d-flex align-items-center">
-            <label style="margin-right: 10px;">Name:</label>
-            <p class="form-control-plaintext" >
-                <?php echo $_SESSION['name'] . ' ' . $_SESSION['last']; ?>
-            </p>
-        </div>
-                    <div class="form-group d-flex align-items-center">
-                        <label  style="margin-right: 10px;">Address:</label>
-                        <p class="form-control-plaintext"><?php echo isset($_SESSION['city']) ? $_SESSION['city'] : ' ' . (isset($_SESSION['address']) ? $_SESSION['address'] : ' '); ?></p>
-                    </div>
-                    <div class="form-group d-flex align-items-center">
-                        <label style="margin-right: 10px;">Phone#:</label>
-                        <p class="form-control-plaintext"><?php echo $_SESSION['phone']; ?></p>
+                    <div class="billing-info">
+                        <h3>Billing Information</h3>
+                        <ul>
+                            <li>Name: <span><?php echo $_SESSION['name'] . ' ' . $_SESSION['last']; ?></span></li>
+                            <li>Address: <span><?php echo isset($_SESSION['city']) ? $_SESSION['city'] : ' ' . (isset($_SESSION['address']) ? $_SESSION['address'] : ' '); ?></span></li>
+                            <li>Phone#: <span><?php echo $_SESSION['phone']; ?></span></li>
+                        </ul>
                     </div>
                 </div>
                 <div class="col-md-4">
-               
-        <div class="form-group d-flex align-items-center">
-            <label style="margin-right: 10px;" >TransactionDate:</label>
-            <p class="form-control-plaintext" >
-                <?php echo date("m/d/Y"); ?>
-            </p>
+                    <div class="billing-info">
+                        <h3>Transaction Details</h3>
+                        <ul>
+                            <li>Transaction Date: <span><?php echo date("m/d/Y"); ?></span></li>
+                            <li>Transaction Id: <span><?php echo $_SESSION['confirmation']; ?></span></li>
+                            <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
+                            <input type="hidden" id="payment_status_input" name="txtstatus">
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group d-flex align-items-center">
+                        <label for="paymentAmount" id="paymentLabel" style="margin-right: 10px;">Select Payment Option:</label>
+                        <select id="paymentAmount" name="payment_amount" required>
+                            <option value="Fully Paid">Full Payment</option>
+                            <option value="Partially Paid">Partial Payment</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group d-flex align-items-center">
+                        <label id="paymentLabel" style="margin-right: 10px;">Payment Method:</label>
+                        <div>
+                            <input type="radio" id="gcash" name="payment_method" value="gcash" required>
+                            <label for="gcash">
+                                <img src="../GCashlogo.png" alt="Pay with GCash" style="height: 30px; margin-right: 5px; border-radius: 30px;">
+                                Pay with GCash
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+                </div>
+            </form>
         </div>
-                   
-           
-                    <div class="col-md-12 form-group d-flex align-items-center">
-    <label style="margin-right: 10px;" >Transaction Id:</label>
-    <span   name="realconfirmation"><?php echo $_SESSION['confirmation']; ?></span>
-    <input type="hidden" name="realconfirmation" value="<?php echo $_SESSION['confirmation']; ?>" />
-    <input type="hidden" id="payment_status_input"  name="txtstatus">
-</div>
-</div>
-</div>
-<div class="col-md-12 col-sm-2" style="display: flex; align-items: center;">
-    <label for="paymentAmount" id="paymentLabel" style="margin-right: 10px;">Select Payment Option:</label>
-    <div>
-        <select id="paymentAmount" name="payment_amount" required>
-            <option value="Fully Paid">Full Payment</option>
-            <option value="Partially Paid">Partial Payment</option>
-        </select>
     </div>
 </div>
-<div class="col-md-12 col-sm-2">
-        <label id="paymentLabel">Payment Method:</label>
-        <div>
-            <input type="radio" id="gcash" name="payment_method" value="gcash" required>
-            <label for="gcash">
-                <img src="../GCashlogo.png" alt="Pay with GCash" style="height: 30px; margin-right: 5px; border-radius: 30px;">
-                Pay with GCash
-            </label>
-        </div>
-    </div>
 
                 <div class="table-responsive">
                     <table class="table table-striped">
