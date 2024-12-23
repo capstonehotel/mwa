@@ -355,17 +355,13 @@ if (!$msg1) {
         justify-content: space-between;
     }
 </style>
-
 <div class="card rounded" style="padding: 20px; margin: 20px;">
-    <!-- <div class="pagetitle">
-        <h1>Billing Details</h1>
-    </div> -->
     <div class="container">
         <div class="row">
             <form action="index?view=payment" method="post" name="personal" enctype="multipart/form-data" id="bookingForm">
                 <div class="col-md-12">
                     <div class="billing-info">
-                        <h3>Billing Information</h3>
+                        <h3>Billing Details</h3>
                         <ul>
                             <li>Name: <span><?php echo $_SESSION['name'] . ' ' . $_SESSION['last']; ?></span></li>
                             <li>Address: <span><?php echo isset($_SESSION['city']) ? $_SESSION['city'] : ' ' . (isset($_SESSION['address']) ? $_SESSION['address'] : ' '); ?></span></li>
@@ -377,83 +373,64 @@ if (!$msg1) {
                         <input type="hidden" id="payment_status_input" name="txtstatus">
                     </div>
                 </div>
-            
-       
 
-<div class="payment-options">
-    <form action="index?view=payment" method="post" name="paymentOptions" enctype="multipart/form-data">
-        <div class="col-md-12">
-            <div class="form-group d-flex align-items-center">
-                <label for="paymentAmount" id="paymentLabel" style="margin-right: 10px;">Select Payment Option:</label>
-                <select id="paymentAmount" name="payment_amount" required>
-                    <option value="Fully Paid">Full Payment</option>
-                    <option value="Partially Paid">Partial Payment</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="form-group d-flex align-items-center">
-                <label id="paymentLabel" style="margin-right: 10px;">Payment Method:</label>
-                <div>
-                    <input type="radio" id="gcash" name="payment_method" value="gcash" required>
-                    <label for="gcash">
-                        <img src="../GCashlogo.png" alt="Pay with GCash" style="height: 30px; margin-right: 5px; border-radius: 30px;">
-                        Pay with GCash
-                    </label>
+                <div class="payment-options">
+                    <h3>Payment Options</h3>
+                    <div class="col-md-12">
+                        <div class="form-group d-flex align-items-center">
+                            <label for="paymentAmount" id="paymentLabel" style="margin-right: 10px;">Select Payment Option:</label>
+                            <select id="paymentAmount" name="payment_amount" required>
+                                <option value="Fully Paid">Full Payment</option>
+                                <option value="Partially Paid">Partial Payment</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group d-flex align-items-center">
+                            <label id="paymentLabel" style="margin-right: 10px;">Payment Method:</label>
+                            <div>
+                                <input type="radio" id="gcash" name="payment_method" value="gcash" required>
+                                <label for="gcash">
+                                    <img src="../GCashlogo.png" alt="Pay with GCash" style="height: 30px; margin-right: 5px; border-radius: 10px;">
+                                    Pay with GCash
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+
+                <div class="room-details">
+                    <h3>Room Details</h3>
+                    <ul>
+                        <?php
+                        $payable = 0;
+                        if (isset($_SESSION['monbela_cart'])) {
+                            $count_cart = count($_SESSION['monbela_cart']);
+                            for ($i = 0; $i < $count_cart; $i++) {
+                                $query = "SELECT * FROM `tblroom` r ,`tblaccomodation` a WHERE r.`ACCOMID`=a.`ACCOMID` AND ROOMID=" . $_SESSION['monbela_cart'][$i]['monbelaroomid'];
+                                $mydb->setQuery($query);
+                                $cur = $mydb->loadResultList();
+                                foreach ($cur as $result) {
+                                    echo '<li>';
+                                    echo 'Room: ' . $result->ROOM . ' ' . $result->ROOMDESC . '<br>';
+                                    echo 'Checked in: ' . date_format(date_create($_SESSION['monbela_cart'][$i]['monbelacheckin']), "m/d/Y") . '<br>';
+                                    echo 'Checked out: ' . date_format(date_create($_SESSION['monbela_cart'][$i]['monbelacheckout']), "m/d/Y") . '<br>';
+                                    echo 'Price: &#8369 ' . $result->PRICE . '<br>';
+                                    echo 'Night(s): ' . $_SESSION['monbela_cart'][$i]['monbeladay'] . '<br>';
+                                    echo 'Subtotal: &#8369 ' . $_SESSION['monbela_cart'][$i]['monbelaroomprice'];
+                                    echo '</li>';
+                                    $payable += $_SESSION['monbela_cart'][$i]['monbelaroomprice'];
+                                }
+                            }
+                            $_SESSION['pay'] = $payable;
+                        }
+                        ?>
+                    </ul>
+                </div>
+            </form>
         </div>
-
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <td>Room</td>
-                                <td>Checked in</td>
-                                <td>Checked out</td>
-                                <td>Price</td>
-                                <td>Night(s)</td>
-                                <td>Subtotal</td>
-                            </tr>
-                        </thead>
-                      
-<?php
-$payable = 0;
-if (isset( $_SESSION['monbela_cart'])){ 
-$count_cart = count($_SESSION['monbela_cart']);
-
-
-for ($i=0; $i < $count_cart  ; $i++) {  
-
-  $query = "SELECT * FROM `tblroom` r ,`tblaccomodation` a WHERE r.`ACCOMID`=a.`ACCOMID` AND ROOMID=" . $_SESSION['monbela_cart'][$i]['monbelaroomid'];
-   $mydb->setQuery($query);
-   $cur = $mydb->loadResultList(); 
-    foreach ($cur as $result) { 
-
-
-?>
-
-      
-        <tr>
-          <td><?php echo  $result->ROOM.' '. $result->ROOMDESC; ?></td>
-          <td><?php echo  date_format(date_create( $_SESSION['monbela_cart'][$i]['monbelacheckin']),"m/d/Y"); ?></td>
-          <td><?php echo  date_format(date_create( $_SESSION['monbela_cart'][$i]['monbelacheckout']),"m/d/Y"); ?></td>
-          <td><?php echo  ' &#8369 '. $result->PRICE; ?></td>
-          <td><?php echo   $_SESSION['monbela_cart'][$i]['monbeladay']; ?></td>
-          <td><?php echo ' &#8369 '.   $_SESSION['monbela_cart'][$i]['monbelaroomprice']; ?></td>
-        </tr>
-<?php
-       $payable += $_SESSION['monbela_cart'][$i]['monbelaroomprice'] ;
-      }
-
-    } 
-     $_SESSION['pay'] = $payable;
- } 
- ?> 
-      </tbody>
-                 </table>
-            </div>
-
+    </div>
+</div>
                 <div id="confirmModal" class="modal fade" role="dialog" >
     <div class="modal-dialog modal-sm" >
         <div class="modal-content" >
