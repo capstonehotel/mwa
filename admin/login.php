@@ -248,17 +248,17 @@ if (admin_logged_in()) { ?>
 if (isset($_POST['btnlogin'])) {
     $uname = sanitize_input($_POST['email']);
     $upass = sanitize_input($_POST['pass']);
-    $recaptcha_response = $_POST['g-recaptcha-response'];  // Get the reCAPTCHA response
+    $hcaptcha_response = $_POST['h-captcha-response'];  // Get the hCaptcha response
 
-    // Verify reCAPTCHA response
-    $secret_key = '6LcNAKgqAAAAAH28EsWK32xbdyMtVN9YX_L6cMDH';  // Replace with your reCAPTCHA Secret Key
-    $url = 'https://www.google.com/recaptcha/api/siteverify';
+    // Verify hCaptcha response
+    $secret_key = 'ES_84f7194c2cd04982851c0b2c910b33f3';  // Replace with your hCaptcha Secret Key
+    $url = 'https://hcaptcha.com/siteverify';
     $data = [
         'secret' => $secret_key,
-        'response' => $recaptcha_response,
+        'response' => $hcaptcha_response,
     ];
 
-    // Use cURL to send request to reCAPTCHA
+    // Use cURL to send request to hCaptcha
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -270,11 +270,11 @@ if (isset($_POST['btnlogin'])) {
     $verification = json_decode($result);
 
     if (!$verification->success) {
-        // reCAPTCHA failed
+        // hCaptcha failed
         echo "<script>
             Swal.fire({
                 icon: 'error',
-                title: 'reCAPTCHA Verification Failed',
+                title: 'hCaptcha Verification Failed',
                 text: 'Please verify that you are not a robot.'
             }).then(() => {
                     window.location = 'login';
@@ -485,11 +485,9 @@ if (isNewDevice($connection, $user, $device, $ip_address) == true) {
                     <input id="password" placeholder="Password" type="password" name="pass" minlength="8" maxlength="12" required>
                     <i class="far fa-eye" id="eyeIcon"></i>
                 </div>
-                <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
-                <div id="hCaptchaError" style="display: <?php echo $lockout_error ? 'block' : 'none'; ?>; color: red; font-size: 14px; text-align: center; margin-top: 10px;"></div>
                  <!-- hCaptcha widget -->
-                 <!--<div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div>--> <!-- Replace with your hCaptcha Site Key-->
-                 <!-- <div id="hCaptchaError" style="display: <?php echo $lockout_error ? 'block' : 'none'; ?>; color: red; font-size: 14px; text-align: center; margin-top: 10px;"></div> -->
+                 <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div> <!-- Replace with your hCaptcha Site Key -->
+                 <div id="hCaptchaError" style="display: <?php echo $lockout_error ? 'block' : 'none'; ?>; color: red; font-size: 14px; text-align: center; margin-top: 10px;"></div>
                 <button type="submit" name="btnlogin">Login</button>
                
                 
@@ -511,19 +509,19 @@ if (isNewDevice($connection, $user, $device, $ip_address) == true) {
         eyeIcon.classList.toggle('fa-eye-slash');
     });
     // Add form submission listener to validate hCaptcha completion
-// document.getElementById('loginForm').addEventListener('submit', function (event) {
-//     const hCaptchaResponse = grecaptcha.getResponse(); // Ensure you're using hCaptcha's method if this is for hCaptcha
+document.getElementById('loginForm').addEventListener('submit', function (event) {
+    const hCaptchaResponse = grecaptcha.getResponse(); // Ensure you're using hCaptcha's method if this is for hCaptcha
 
-//     if (hCaptchaResponse.length == 0) {
-//         // Prevent form submission if hCaptcha is not completed
-//         event.preventDefault();
+    if (hCaptchaResponse.length == 0) {
+        // Prevent form submission if hCaptcha is not completed
+        event.preventDefault();
 
-//         // Display inline error message
-//         const hCaptchaError = document.getElementById('hCaptchaError');
-//         hCaptchaError.textContent = 'Please complete the hCaptcha to proceed.';
-//         hCaptchaError.style.display = 'block';
-//     }
-// });
+        // Display inline error message
+        const hCaptchaError = document.getElementById('hCaptchaError');
+        hCaptchaError.textContent = 'Please complete the hCaptcha to proceed.';
+        hCaptchaError.style.display = 'block';
+    }
+});
 
     </script>
     
@@ -629,16 +627,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 1000);
     }
 });
-
-document.getElementById('loginForm').addEventListener('submit', function (event) {
-        event.preventDefault(); // Prevent default form submission
-        grecaptcha.ready(function() {
-            grecaptcha.execute('6LcNAKgqAAAAAC32P9S8sz1_1GVIYbNaXl9Fbjj9', {action: 'login'}).then(function(token) {
-                document.getElementById('g-recaptcha-response').value = token; // Set the token value
-                document.getElementById('loginForm').submit(); // Submit the form
-            });
-        });
-    });
 </script>
 
 
