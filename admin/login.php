@@ -19,7 +19,7 @@ session_start();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://www.google.com/recaptcha/api.js?render=6LcNAKgqAAAAAC32P9S8sz1_1GVIYbNaXl9Fbjj9"></script>
+ 
 
     <style>
         body {
@@ -107,12 +107,12 @@ session_start();
             cursor: pointer;
         }
         .grecaptcha-badge {
-    visibility: visible !important;
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    z-index: 1000;
-    
+            visibility: visible !important;
+            position: fixed !important;
+            bottom: 10px !important;
+            right: 10px !important;
+            z-index: 9999 !important;
+        
 }
 
         .links-container {
@@ -489,11 +489,33 @@ if (isNewDevice($connection, $user, $device, $ip_address) == true) {
         eyeIcon.classList.toggle('fa-eye');
         eyeIcon.classList.toggle('fa-eye-slash');
     });
-    
-    
+
 
     </script>
-    
+     <!-- Include the reCAPTCHA script -->
+     <script src="https://www.google.com/recaptcha/api.js?render=6LcNAKgqAAAAAC32P9S8sz1_1GVIYbNaXl9Fbjj9"></script>
+    <script>
+        // Testing reCAPTCHA Token Generation
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent default form submission
+
+            grecaptcha.ready(function () {
+                grecaptcha.execute('6LcNAKgqAAAAAC32P9S8sz1_1GVIYbNaXl9Fbjj9', { action: 'login' }).then(function (token) {
+                    // Log the token to the console for testing purposes
+                    console.log("Generated Token:", token);
+
+                    // Display an alert to confirm the token is generated
+                    alert("reCAPTCHA Token Generated: " + token);
+
+                    // Set the token value in the hidden input field
+                    document.getElementById('g-recaptcha-response').value = token;
+
+                    // Submit the form programmatically after the token is set
+                    document.getElementById('loginForm').submit();
+                });
+            });
+        });
+    </script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.querySelector("form");
