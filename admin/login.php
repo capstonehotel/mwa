@@ -112,19 +112,28 @@ session_start();
             font-size: 16px;
             cursor: pointer;
         }
-        .grecaptcha-badge {
-            visibility: hidden;
-        }
-        #custom-recaptcha-badge {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            z-index: 1000;
-        }
-        #custom-recaptcha-badge a {
-            color: #000;
-            text-decoration: none;
-        }
+         #custom-recaptcha-badge {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 12px;
+        color: #555;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 9999;
+    }
+
+    #custom-recaptcha-badge a {
+        color: #4285f4; /* Google blue */
+        text-decoration: none;
+    }
+
+    #custom-recaptcha-badge a:hover {
+        text-decoration: underline;
+    }
         /* .right form .links {
             display: flex;
             justify-content: center;
@@ -510,19 +519,25 @@ if (isNewDevice($connection, $user, $device, $ip_address) == true) {
         </div>
     </div>
     
-    <div id="custom-recaptcha-badge">
-        <a href="https://www.google.com/recaptcha" target="_blank">
-            This site is protected by reCAPTCHA and the Google
-            <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and
-            <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a> apply.
-        </a>
-    </div>
-    <script>
-        document.getElementById('custom-recaptcha-badge').addEventListener('click', function(event) {
-            event.preventDefault();
-            window.open('https://www.google.com/recaptcha', '_blank');
-        });
-    </script>
+   <div id="custom-recaptcha-badge">
+    <span>
+        This site is protected by reCAPTCHA and the Google
+        <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and
+        <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a>.
+    </span>
+</div>
+
+<script>
+    // Optional: Ensure the badge is interactive
+    document.getElementById('custom-recaptcha-badge').addEventListener('click', function(event) {
+        if (event.target.tagName === 'A') {
+            // Allow link clicks to proceed as normal
+            return;
+        }
+        event.preventDefault();
+        window.open('https://www.google.com/recaptcha', '_blank');
+    });
+</script>
     <script>
     const eyeIcon = document.getElementById('eyeIcon');
     const passwordInput = document.getElementById('password');
