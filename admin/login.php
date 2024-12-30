@@ -112,20 +112,35 @@ session_start();
             font-size: 16px;
             cursor: pointer;
         }
-         #custom-recaptcha-badge {
+        /* Style for the custom reCAPTCHA badge */
+    #custom-recaptcha-badge {
         position: fixed;
         bottom: 10px;
         right: 10px;
-        background-color: #f9f9f9;
+        background-color: #ffffff;
         border: 1px solid #ddd;
-        border-radius: 5px;
-        padding: 10px;
-        font-size: 12px;
+        border-radius: 8px;
+        width: 100px;
+        height: 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 10px;
         color: #555;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         z-index: 9999;
+        text-align: center;
     }
 
+    /* Logo styling */
+    #custom-recaptcha-badge img {
+        width: 50px;
+        height: auto;
+        margin-bottom: 5px;
+    }
+
+    /* Link styling */
     #custom-recaptcha-badge a {
         color: #4285f4; /* Google blue */
         text-decoration: none;
@@ -519,16 +534,17 @@ if (isNewDevice($connection, $user, $device, $ip_address) == true) {
         </div>
     </div>
     
-   <div id="custom-recaptcha-badge">
+  <div id="custom-recaptcha-badge">
+    <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="Google reCAPTCHA">
     <span>
-        This site is protected by reCAPTCHA and the Google
-        <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and
-        <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a>.
+        Protected by <br> reCAPTCHA
     </span>
+    <a href="https://policies.google.com/privacy" target="_blank">Privacy</a> &nbsp; | &nbsp;
+    <a href="https://policies.google.com/terms" target="_blank">Terms</a>
 </div>
 
 <script>
-    // Optional: Ensure the badge is interactive
+    // Optional: Make the badge clickable
     document.getElementById('custom-recaptcha-badge').addEventListener('click', function(event) {
         if (event.target.tagName === 'A') {
             // Allow link clicks to proceed as normal
