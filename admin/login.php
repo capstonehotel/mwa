@@ -19,7 +19,8 @@ session_start();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://www.hcaptcha.com/1/api.js" async defer></script> <!-- hCaptcha JS -->
+    <script src="https://www.google.com/recaptcha/api.js?render=6LcNAKgqAAAAAC32P9S8sz1_1GVIYbNaXl9Fbjj9"></script>
+
     <style>
         body {
             color: white;
@@ -105,17 +106,16 @@ session_start();
             font-size: 16px;
             cursor: pointer;
         }
-        /* .right form .links {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-        }
-        .right form .links a {
-            color: #337AB7;
-            font-size: 16px;
-            text-decoration: none;
-        } */
-         /* Your existing styles */
+        .grecaptcha-badge {
+    visibility: visible !important;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1000;
+    left: 10px;
+    right: auto;
+}
+
         .links-container {
             display: flex;
             justify-content: space-between; /* Space between the links */
@@ -166,7 +166,22 @@ session_start();
   </svg>
 
   <?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $recaptchaResponse = $_POST['g-recaptcha-response'];
+    $secretKey = '6LcNAKgqAAAAAH28EsWK32xbdyMtVN9YX_L6cMDH'; // Replace with your secret key
+    $verifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
 
+    $response = file_get_contents($verifyUrl . '?secret=' . $secretKey . '&response=' . $recaptchaResponse);
+    $responseData = json_decode($response);
+
+    if ($responseData->success && $responseData->score >= 0.5) {
+        // Success: Proceed with login logic
+        echo "Login successful.";
+    } else {
+        // Failure: Reject login attempt
+        echo "Suspicious activity detected. Please try again.";
+    }
+}
   // Define the max number of attempts and lockout time (5 minutes)
 define('MAX_ATTEMPTS', 3);
 define('LOCKOUT_TIME', 300); // 5 minutes in seconds
@@ -421,6 +436,8 @@ if (isNewDevice($connection, $user, $device, $ip_address) == true) {
 
 
 
+
+
    
         } else {
             $_SESSION['attempts'] = isset($_SESSION['attempts']) ? $_SESSION['attempts'] + 1 : 1;
@@ -443,7 +460,7 @@ if (isNewDevice($connection, $user, $device, $ip_address) == true) {
     <div class="container">
         <div class="right">
             <h2>LOGIN CREDENTIALS</h2>
-            <form method="POST" action="login">
+            <form method="POST" action="login" id="loginForm">
                 <div class="input-group">
                     <input placeholder="Username" type="text" name="email" required>
                     <i class="fas fa-user"></i>
@@ -452,7 +469,7 @@ if (isNewDevice($connection, $user, $device, $ip_address) == true) {
                     <input id="password" placeholder="Password" type="password" name="pass" minlength="8" maxlength="12" required>
                     <i class="far fa-eye" id="eyeIcon"></i>
                 </div>
-                
+                <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
                 <button type="submit" name="btnlogin">Login</button>
                
                 
@@ -473,7 +490,20 @@ if (isNewDevice($connection, $user, $device, $ip_address) == true) {
         eyeIcon.classList.toggle('fa-eye');
         eyeIcon.classList.toggle('fa-eye-slash');
     });
- 
+    
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
+        e.preventDefault(); // Prevent default form submission
+
+        grecaptcha.ready(function () {
+            grecaptcha.execute('6LcNAKgqAAAAAC32P9S8sz1_1GVIYbNaXl9Fbjj9', { action: 'login' }).then(function (token) {
+                // Set the token in the hidden input field
+                document.getElementById('g-recaptcha-response').value = token;
+
+                // Submit the form
+                document.getElementById('loginForm').submit();
+            });
+        });
+    });
 
     </script>
     
