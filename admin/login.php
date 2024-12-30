@@ -112,7 +112,7 @@ session_start();
             font-size: 16px;
             cursor: pointer;
         }
-        /* Style for the custom reCAPTCHA badge */
+       /* Style for the custom reCAPTCHA badge */
     #custom-recaptcha-badge {
         position: fixed;
         bottom: 10px;
@@ -120,8 +120,8 @@ session_start();
         background-color: #ffffff;
         border: 1px solid #ddd;
         border-radius: 8px;
-        width: 100px;
-        height: 100px;
+        width: 120px;
+        height: 120px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -131,23 +131,25 @@ session_start();
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         z-index: 9999;
         text-align: center;
-    }
-
-    /* Logo styling */
-    #custom-recaptcha-badge img {
-        width: 50px;
-        height: auto;
-        margin-bottom: 5px;
+        padding: 5px;
     }
 
     /* Link styling */
     #custom-recaptcha-badge a {
         color: #4285f4; /* Google blue */
         text-decoration: none;
+        margin-top: 5px;
     }
 
     #custom-recaptcha-badge a:hover {
         text-decoration: underline;
+    }
+
+    /* SVG styling */
+    #custom-recaptcha-badge svg {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 5px;
     }
         /* .right form .links {
             display: flex;
@@ -533,18 +535,23 @@ if (isNewDevice($connection, $user, $device, $ip_address) == true) {
             </form>
         </div>
     </div>
-    
   <div id="custom-recaptcha-badge">
-    <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="Google reCAPTCHA">
+    <!-- Embedded SVG Logo -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+        <path fill="#0F9D58" d="M24 4V0L14.41 9.59 24 19.17V14c5.52 0 10 4.48 10 10 0 2.54-.94 4.84-2.48 6.63l2.83 2.83C36.08 30.01 38 26.21 38 22c0-7.73-6.27-14-14-14z"></path>
+        <path fill="#F4B400" d="M24 4V0L14.41 9.59 24 19.17V14c5.52 0 10 4.48 10 10 0 2.54-.94 4.84-2.48 6.63l2.83 2.83C36.08 30.01 38 26.21 38 22c0-7.73-6.27-14-14-14z"></path>
+        <path fill="#FFDA44" d="M24 4V0L14.41 9.59 24 19.17V14c5.52 0 10 4.48 10 10 0 2.54-.94 4.84-2.48 6.63l2.83 2.83C36.08 30.01 38 26.21 38 22c0-7.73-6.27-14-14-14z"></path>
+        <path fill="#4285F4" d="M22 24H4V12h18v6h6V12h-6V4h-6v8H6v10h16v4h6v-4z"></path>
+    </svg>
     <span>
-        Protected by <br> reCAPTCHA
+        Protected by reCAPTCHA
     </span>
     <a href="https://policies.google.com/privacy" target="_blank">Privacy</a> &nbsp; | &nbsp;
     <a href="https://policies.google.com/terms" target="_blank">Terms</a>
 </div>
 
 <script>
-    // Optional: Make the badge clickable
+    // Optional: Add interactivity to the badge
     document.getElementById('custom-recaptcha-badge').addEventListener('click', function(event) {
         if (event.target.tagName === 'A') {
             // Allow link clicks to proceed as normal
