@@ -19,7 +19,14 @@ session_start();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  
+    <script src="https://www.google.com/recaptcha/api.js?render='6LcNAKgqAAAAAC32P9S8sz1_1GVIYbNaXl9Fbjj9"></script>
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6LcNAKgqAAAAAC32P9S8sz1_1GVIYbNaXl9Fbjj9', {action: 'login'}).then(function(token) {
+                document.getElementById('recaptchaResponse').value = token;
+            });
+        });
+    </script>
     <style>
         body {
             color: white;
@@ -166,7 +173,27 @@ session_start();
   </svg>
 
   <?php
+// Your reCAPTCHA secret key
+$recaptcha_secret = '6LcNAKgqAAAAAH28EsWK32xbdyMtVN9YX_L6cMDH';
 
+// Function to verify reCAPTCHA response
+function verify_recaptcha($response, $secret) {
+    $url = 'https://www.google.com/recaptcha/api/siteverify';
+    $data = [
+        'secret' => $secret,
+        'response' => $response
+    ];
+    $options = [
+        'http' => [
+            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method'  => 'POST',
+            'content' => http_build_query($data),
+        ],
+    ];
+    $context  = stream_context_create($options);
+    $result = file_get_contents($url, false, $context);
+    return json_decode($result, true);
+}
   // Define the max number of attempts and lockout time (5 minutes)
 define('MAX_ATTEMPTS', 3);
 define('LOCKOUT_TIME', 300); // 5 minutes in seconds
@@ -246,8 +273,13 @@ if (admin_logged_in()) { ?>
 }
 
 if (isset($_POST['btnlogin'])) {
-    $uname = sanitize_input($_POST['email']);
-    $upass = sanitize_input($_POST['pass']);
+    $recaptcha_response = $_POST['recaptcha_response'];
+    $recaptcha = verify_recaptcha($recaptcha_response, $recaptcha_secret);
+
+    if ($recaptcha['success'] && $recaptcha['score'] >= 0.5) {
+        // Perform your login logic here
+        $uname = sanitize_input($_POST['email']);
+        $upass = sanitize_input($_POST['pass']);
  
        // Check for login attempt limits
        if (isset($_SESSION['attempts']) && $_SESSION['attempts'] >= MAX_ATTEMPTS) {
@@ -397,7 +429,7 @@ if (isNewDevice($connection, $user, $device, $ip_address) == true) {
                          </script>";
                      }
                                
- 
+                    
 }
 
 
@@ -437,13 +469,14 @@ if (isNewDevice($connection, $user, $device, $ip_address) == true) {
     }
 }
 
-
+}
 
 ?>
     <div class="container">
         <div class="right">
             <h2>LOGIN CREDENTIALS</h2>
             <form method="POST" action="login">
+            <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
                 <div class="input-group">
                     <input placeholder="Username" type="text" name="email" required>
                     <i class="fas fa-user"></i>
