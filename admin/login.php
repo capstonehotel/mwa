@@ -112,6 +112,19 @@ session_start();
             font-size: 16px;
             cursor: pointer;
         }
+        .grecaptcha-badge {
+            visibility: hidden;
+        }
+        #custom-recaptcha-badge {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+        #custom-recaptcha-badge a {
+            color: #000;
+            text-decoration: none;
+        }
         /* .right form .links {
             display: flex;
             justify-content: center;
@@ -496,6 +509,20 @@ if (isNewDevice($connection, $user, $device, $ip_address) == true) {
             </form>
         </div>
     </div>
+    
+    <div id="custom-recaptcha-badge">
+        <a href="https://www.google.com/recaptcha" target="_blank">
+            This site is protected by reCAPTCHA and the Google
+            <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and
+            <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a> apply.
+        </a>
+    </div>
+    <script>
+        document.getElementById('custom-recaptcha-badge').addEventListener('click', function(event) {
+            event.preventDefault();
+            window.open('https://www.google.com/recaptcha', '_blank');
+        });
+    </script>
     <script>
     const eyeIcon = document.getElementById('eyeIcon');
     const passwordInput = document.getElementById('password');
