@@ -112,8 +112,7 @@ session_start();
     bottom: 10px;
     right: 10px;
     z-index: 1000;
-    left: 10px;
-    right: auto;
+    
 }
 
         .links-container {
