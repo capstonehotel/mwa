@@ -19,14 +19,7 @@ session_start();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://www.google.com/recaptcha/api.js?render='6LcNAKgqAAAAAC32P9S8sz1_1GVIYbNaXl9Fbjj9"></script>
-    <script>
-        grecaptcha.ready(function() {
-            grecaptcha.execute('6LcNAKgqAAAAAC32P9S8sz1_1GVIYbNaXl9Fbjj9', {action: 'login'}).then(function(token) {
-                document.getElementById('recaptchaResponse').value = token;
-            });
-        });
-    </script>
+    <script src="https://www.hcaptcha.com/1/api.js" async defer></script> <!-- hCaptcha JS -->
     <style>
         body {
             color: white;
@@ -112,45 +105,6 @@ session_start();
             font-size: 16px;
             cursor: pointer;
         }
-       /* Style for the custom reCAPTCHA badge */
-    #custom-recaptcha-badge {
-        position: fixed;
-        bottom: 10px;
-        right: 10px;
-        background-color: #ffffff;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        width: 120px;
-        height: 120px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        font-size: 10px;
-        color: #555;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        z-index: 9999;
-        text-align: center;
-        padding: 5px;
-    }
-
-    /* Link styling */
-    #custom-recaptcha-badge a {
-        color: #4285f4; /* Google blue */
-        text-decoration: none;
-        margin-top: 5px;
-    }
-
-    #custom-recaptcha-badge a:hover {
-        text-decoration: underline;
-    }
-
-    /* SVG styling */
-    #custom-recaptcha-badge svg {
-        width: 50px;
-        height: 50px;
-        margin-bottom: 5px;
-    }
         /* .right form .links {
             display: flex;
             justify-content: center;
@@ -212,27 +166,7 @@ session_start();
   </svg>
 
   <?php
-// Your reCAPTCHA secret key
-$recaptcha_secret = '6LcNAKgqAAAAAH28EsWK32xbdyMtVN9YX_L6cMDH';
 
-// Function to verify reCAPTCHA response
-function verify_recaptcha($response, $secret) {
-    $url = 'https://www.google.com/recaptcha/api/siteverify';
-    $data = [
-        'secret' => $secret,
-        'response' => $response
-    ];
-    $options = [
-        'http' => [
-            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-            'method'  => 'POST',
-            'content' => http_build_query($data),
-        ],
-    ];
-    $context  = stream_context_create($options);
-    $result = file_get_contents($url, false, $context);
-    return json_decode($result, true);
-}
   // Define the max number of attempts and lockout time (5 minutes)
 define('MAX_ATTEMPTS', 3);
 define('LOCKOUT_TIME', 300); // 5 minutes in seconds
@@ -312,14 +246,42 @@ if (admin_logged_in()) { ?>
 }
 
 if (isset($_POST['btnlogin'])) {
-    $recaptcha_response = $_POST['recaptcha_response'];
-    $recaptcha = verify_recaptcha($recaptcha_response, $recaptcha_secret);
+    $uname = sanitize_input($_POST['email']);
+    $upass = sanitize_input($_POST['pass']);
+    $hcaptcha_response = $_POST['h-captcha-response'];  // Get the hCaptcha response
 
-    if ($recaptcha['success'] && $recaptcha['score'] >= 0.5) {
-        // Perform your login logic here
-        $uname = sanitize_input($_POST['email']);
-        $upass = sanitize_input($_POST['pass']);
- 
+    // Verify hCaptcha response
+    $secret_key = 'ES_84f7194c2cd04982851c0b2c910b33f3';  // Replace with your hCaptcha Secret Key
+    $url = 'https://hcaptcha.com/siteverify';
+    $data = [
+        'secret' => $secret_key,
+        'response' => $hcaptcha_response,
+    ];
+
+    // Use cURL to send request to hCaptcha
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    $result = curl_exec($ch);
+    curl_close($ch);
+
+    $verification = json_decode($result);
+
+    if (!$verification->success) {
+        // hCaptcha failed
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'hCaptcha Verification Failed',
+                text: 'Please verify that you are not a robot.'
+            }).then(() => {
+                    window.location = 'login';
+                });
+        </script>";
+        return;
+    }
        // Check for login attempt limits
        if (isset($_SESSION['attempts']) && $_SESSION['attempts'] >= MAX_ATTEMPTS) {
         // Lockout user if they exceeded the max attempts
@@ -468,7 +430,7 @@ if (isNewDevice($connection, $user, $device, $ip_address) == true) {
                          </script>";
                      }
                                
-                    
+ 
 }
 
 
@@ -508,14 +470,13 @@ if (isNewDevice($connection, $user, $device, $ip_address) == true) {
     }
 }
 
-}
+
 
 ?>
     <div class="container">
         <div class="right">
             <h2>LOGIN CREDENTIALS</h2>
             <form method="POST" action="login">
-            <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
                 <div class="input-group">
                     <input placeholder="Username" type="text" name="email" required>
                     <i class="fas fa-user"></i>
@@ -524,7 +485,9 @@ if (isNewDevice($connection, $user, $device, $ip_address) == true) {
                     <input id="password" placeholder="Password" type="password" name="pass" minlength="8" maxlength="12" required>
                     <i class="far fa-eye" id="eyeIcon"></i>
                 </div>
-                
+                 <!-- hCaptcha widget -->
+                 <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div> <!-- Replace with your hCaptcha Site Key -->
+                 <div id="hCaptchaError" style="display: <?php echo $lockout_error ? 'block' : 'none'; ?>; color: red; font-size: 14px; text-align: center; margin-top: 10px;"></div>
                 <button type="submit" name="btnlogin">Login</button>
                
                 
@@ -535,32 +498,6 @@ if (isNewDevice($connection, $user, $device, $ip_address) == true) {
             </form>
         </div>
     </div>
-  <div id="custom-recaptcha-badge">
-    <!-- Embedded SVG Logo -->
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-        <path fill="#0F9D58" d="M24 4V0L14.41 9.59 24 19.17V14c5.52 0 10 4.48 10 10 0 2.54-.94 4.84-2.48 6.63l2.83 2.83C36.08 30.01 38 26.21 38 22c0-7.73-6.27-14-14-14z"></path>
-        <path fill="#F4B400" d="M24 4V0L14.41 9.59 24 19.17V14c5.52 0 10 4.48 10 10 0 2.54-.94 4.84-2.48 6.63l2.83 2.83C36.08 30.01 38 26.21 38 22c0-7.73-6.27-14-14-14z"></path>
-        <path fill="#FFDA44" d="M24 4V0L14.41 9.59 24 19.17V14c5.52 0 10 4.48 10 10 0 2.54-.94 4.84-2.48 6.63l2.83 2.83C36.08 30.01 38 26.21 38 22c0-7.73-6.27-14-14-14z"></path>
-        <path fill="#4285F4" d="M22 24H4V12h18v6h6V12h-6V4h-6v8H6v10h16v4h6v-4z"></path>
-    </svg>
-    <span>
-        Protected by reCAPTCHA
-    </span>
-    <a href="https://policies.google.com/privacy" target="_blank">Privacy</a> &nbsp; | &nbsp;
-    <a href="https://policies.google.com/terms" target="_blank">Terms</a>
-</div>
-
-<script>
-    // Optional: Add interactivity to the badge
-    document.getElementById('custom-recaptcha-badge').addEventListener('click', function(event) {
-        if (event.target.tagName === 'A') {
-            // Allow link clicks to proceed as normal
-            return;
-        }
-        event.preventDefault();
-        window.open('https://www.google.com/recaptcha', '_blank');
-    });
-</script>
     <script>
     const eyeIcon = document.getElementById('eyeIcon');
     const passwordInput = document.getElementById('password');
@@ -571,7 +508,20 @@ if (isNewDevice($connection, $user, $device, $ip_address) == true) {
         eyeIcon.classList.toggle('fa-eye');
         eyeIcon.classList.toggle('fa-eye-slash');
     });
- 
+    // Add form submission listener to validate hCaptcha completion
+document.getElementById('loginForm').addEventListener('submit', function (event) {
+    const hCaptchaResponse = grecaptcha.getResponse(); // Ensure you're using hCaptcha's method if this is for hCaptcha
+
+    if (hCaptchaResponse.length == 0) {
+        // Prevent form submission if hCaptcha is not completed
+        event.preventDefault();
+
+        // Display inline error message
+        const hCaptchaError = document.getElementById('hCaptchaError');
+        hCaptchaError.textContent = 'Please complete the hCaptcha to proceed.';
+        hCaptchaError.style.display = 'block';
+    }
+});
 
     </script>
     
