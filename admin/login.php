@@ -490,19 +490,7 @@ if (isNewDevice($connection, $user, $device, $ip_address) == true) {
         eyeIcon.classList.toggle('fa-eye-slash');
     });
     
-    document.getElementById('loginForm').addEventListener('submit', function (e) {
-        e.preventDefault(); // Prevent default form submission
-
-        grecaptcha.ready(function () {
-            grecaptcha.execute('6LcNAKgqAAAAAC32P9S8sz1_1GVIYbNaXl9Fbjj9', { action: 'login' }).then(function (token) {
-                // Set the token in the hidden input field
-                document.getElementById('g-recaptcha-response').value = token;
-
-                // Submit the form
-                document.getElementById('loginForm').submit();
-            });
-        });
-    });
+    
 
     </script>
     
