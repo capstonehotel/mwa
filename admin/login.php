@@ -248,40 +248,7 @@ if (admin_logged_in()) { ?>
 if (isset($_POST['btnlogin'])) {
     $uname = sanitize_input($_POST['email']);
     $upass = sanitize_input($_POST['pass']);
-    $hcaptcha_response = $_POST['h-captcha-response'];  // Get the hCaptcha response
-
-    // Verify hCaptcha response
-    $secret_key = 'ES_84f7194c2cd04982851c0b2c910b33f3';  // Replace with your hCaptcha Secret Key
-    $url = 'https://hcaptcha.com/siteverify';
-    $data = [
-        'secret' => $secret_key,
-        'response' => $hcaptcha_response,
-    ];
-
-    // Use cURL to send request to hCaptcha
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-    $result = curl_exec($ch);
-    curl_close($ch);
-
-    $verification = json_decode($result);
-
-    if (!$verification->success) {
-        // hCaptcha failed
-        echo "<script>
-            Swal.fire({
-                icon: 'error',
-                title: 'hCaptcha Verification Failed',
-                text: 'Please verify that you are not a robot.'
-            }).then(() => {
-                    window.location = 'login';
-                });
-        </script>";
-        return;
-    }
+  
        // Check for login attempt limits
        if (isset($_SESSION['attempts']) && $_SESSION['attempts'] >= MAX_ATTEMPTS) {
         // Lockout user if they exceeded the max attempts
@@ -486,8 +453,8 @@ if (isNewDevice($connection, $user, $device, $ip_address) == true) {
                     <i class="far fa-eye" id="eyeIcon"></i>
                 </div>
                  <!-- hCaptcha widget -->
-                 <div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div> <!-- Replace with your hCaptcha Site Key -->
-                 <div id="hCaptchaError" style="display: <?php echo $lockout_error ? 'block' : 'none'; ?>; color: red; font-size: 14px; text-align: center; margin-top: 10px;"></div>
+                 <!--<div class="h-captcha" data-sitekey="09b62f1c-dad4-40c4-8394-001ef4d0a126"></div>--> <!-- Replace with your hCaptcha Site Key -->
+                 <!--<div id="hCaptchaError" style="display: <?php echo $lockout_error ? 'block' : 'none'; ?>; color: red; font-size: 14px; text-align: center; margin-top: 10px;"></div>-->
                 <button type="submit" name="btnlogin">Login</button>
                
                 
@@ -508,20 +475,7 @@ if (isNewDevice($connection, $user, $device, $ip_address) == true) {
         eyeIcon.classList.toggle('fa-eye');
         eyeIcon.classList.toggle('fa-eye-slash');
     });
-    // Add form submission listener to validate hCaptcha completion
-document.getElementById('loginForm').addEventListener('submit', function (event) {
-    const hCaptchaResponse = grecaptcha.getResponse(); // Ensure you're using hCaptcha's method if this is for hCaptcha
-
-    if (hCaptchaResponse.length == 0) {
-        // Prevent form submission if hCaptcha is not completed
-        event.preventDefault();
-
-        // Display inline error message
-        const hCaptchaError = document.getElementById('hCaptchaError');
-        hCaptchaError.textContent = 'Please complete the hCaptcha to proceed.';
-        hCaptchaError.style.display = 'block';
-    }
-});
+  
 
     </script>
     
